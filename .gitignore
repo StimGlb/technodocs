@@ -1,0 +1,34 @@
+# Operating System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+Desktop.ini
+
+# Editor directories and files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+*.sublime-project
+*.sublime-workspace
+
+# Netlify
+.netlify/
+
+# Temporary files
+*.log
+*.tmp
+*.temp
+
+# Node modules (if you ever add npm packages)
+node_modules/
+
+# Local environment files
+.env
+.env.local
+.env.*.local
