@@ -1,0 +1,17 @@
+{
+  "name": "technodocs",
+  "version": "1.0.0",
+  "description": "Application de flashcards pour l'enseignement de l'Indice de Réparabilité",
+  "scripts": {
+    "deploy": "bash deploy.sh",
+    "deploy:win": "deploy.bat"
+  },
+  "keywords": [
+    "flashcards",
+    "education",
+    "reparabilite",
+    "technologie"
+  ],
+  "author": "",
+  "license": "MIT"
+}
