@@ -28,6 +28,11 @@ Desktop.ini
 # Node modules (if you ever add npm packages)
 node_modules/
 
+# Vite build files
+dist/
+dist-ssr/
+*.local
+
 # Local environment files
 .env
 .env.local
@@ -37,4 +42,10 @@ node_modules/
 deploy.bat
 deploy.sh
 package.json
+vite.config.js
 DEPLOYMENT.md
+
+# Package manager lock files
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
