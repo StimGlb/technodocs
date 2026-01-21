@@ -8,6 +8,9 @@
   # No build command needed for static HTML site
   command = ""
 
+  # Ne lance le build que si des fichiers dans src ou le package.json ont changé
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- dist/ package.json"
+
 # Headers for caching and security
 [[headers]]
   for = "/*"
