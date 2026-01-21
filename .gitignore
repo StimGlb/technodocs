@@ -29,9 +29,15 @@ Desktop.ini
 node_modules/
 
 # Vite build files
-dist/
+# Note: dist/ contains source files for this static site, not build artifacts
 dist-ssr/
 *.local
+
+# Vite dev directories (created at root during dev, should be ignored)
+/css/
+/js/
+/pages/
+/public/
 
 # Local environment files
 .env
