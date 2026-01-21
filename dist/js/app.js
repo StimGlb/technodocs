@@ -98,11 +98,21 @@ const initHeaderScroll = () => {
 // Initialisation
 // ============================================
 document.addEventListener('DOMContentLoaded', () => {
-    initMobileNav();
-    initScrollAnimations();
-    initHeaderScroll();
+    try {
+        initMobileNav();
+        initScrollAnimations();
+        initHeaderScroll();
 
-    console.log('🚀 TechnoDocs initialisé');
+        // Log uniquement en développement
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            console.log('🚀 TechnoDocs initialisé');
+        }
+    } catch (error) {
+        // Gestion d'erreur silencieuse en production
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+            console.error('Erreur initialisation:', error);
+        }
+    }
 });
 
 // Export pour utilisation modulaire future

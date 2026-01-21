@@ -8,7 +8,11 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "bash deploy.sh",
-    "deploy:win": "deploy.bat"
+    "deploy:win": "deploy.bat",
+    "security-check": "node security-check.js",
+    "security-check:prod": "node security-check.js https://votre-site.netlify.app",
+    "commit": "bash ./scripts/commit.sh",
+    "commit:win": "./scripts/commit.bat"
   },
   "keywords": [
     "flashcards",
