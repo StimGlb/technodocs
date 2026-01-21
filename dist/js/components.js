@@ -6,6 +6,23 @@
 // Import de la fonction d'initialisation de la navigation
 import { initMobileNav } from './app.js';
 
+/**
+ * Injecte du HTML de manière sécurisée en utilisant DOMParser
+ * @param {HTMLElement} placeholder - L'élément à remplacer
+ * @param {string} htmlString - La chaîne HTML à injecter
+ */
+const safeInject = (placeholder, htmlString) => {
+    if (!placeholder) return;
+    
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, 'text/html');
+    const newElement = doc.body.firstElementChild;
+    
+    if (newElement) {
+        placeholder.replaceWith(newElement);
+    }
+};
+
 // Fonction pour charger le header
 async function loadHeader() {
     const headerPlaceholder = document.getElementById('header-placeholder');
@@ -17,7 +34,9 @@ async function loadHeader() {
             throw new Error('Impossible de charger le header');
         }
         const html = await response.text();
-        headerPlaceholder.outerHTML = html;
+        
+        // Injection sécurisée (Zéro innerHTML/outerHTML)
+        safeInject(headerPlaceholder, html);
 
         // Réinitialiser la navigation mobile après l'injection du header
         initMobileNav();
@@ -51,7 +70,9 @@ async function loadFooter() {
             throw new Error('Impossible de charger le footer');
         }
         const html = await response.text();
-        footerPlaceholder.outerHTML = html;
+        
+        // Injection sécurisée (Zéro innerHTML/outerHTML)
+        safeInject(footerPlaceholder, html);
     } catch (error) {
         // En production : afficher un message utilisateur générique (sans innerHTML pour sécurité)
         const fallbackFooter = document.createElement('footer');
