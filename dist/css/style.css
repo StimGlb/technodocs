@@ -562,7 +562,7 @@ main {
     border-radius: var(--radius-xl);
     color: var(--color-white);
     text-align: center;
-    transition: var(--transition-base);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
     position: relative;
     overflow: hidden;
 }
@@ -572,6 +572,7 @@ main {
     position: absolute;
     inset: 0;
     background: linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.1) 100%);
+    pointer-events: none;
 }
 
 .revision-card--flashcards {
@@ -606,6 +607,68 @@ main {
 }
 
 .revision-card__text {
+    font-size: var(--text-sm);
+    opacity: 0.9;
+    position: relative;
+}
+
+/* ---------- Correction Grid ---------- */
+.correction-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+}
+
+.correction-card {
+    display: block;
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    color: var(--color-white);
+    text-align: center;
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+    position: relative;
+    overflow: hidden;
+}
+
+.correction-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, transparent 0%, rgba(0,0,0,0.1) 100%);
+    pointer-events: none;
+}
+
+.correction-card--fiches {
+    background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+}
+
+.correction-card--quiz {
+    background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+}
+
+.correction-card--eval {
+    background: linear-gradient(135deg, #14b8a6 0%, #5eead4 100%);
+}
+
+.correction-card:hover {
+    box-shadow: var(--shadow-xl);
+}
+
+.correction-card__icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-4);
+    position: relative;
+}
+
+.correction-card__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+    position: relative;
+}
+
+.correction-card__text {
     font-size: var(--text-sm);
     opacity: 0.9;
     position: relative;
