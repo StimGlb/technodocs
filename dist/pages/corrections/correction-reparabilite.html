@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="/dist/css/markdown.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@400;500&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
     <div id="header-placeholder"></div>
@@ -77,6 +77,92 @@
         };
 
         /**
+         * Génère une Table des Matières avec les Activités (h3) et Questions (h4)
+         * @param {HTMLElement} container - Le conteneur avec le contenu Markdown
+         */
+        const generateTOC = (container) => {
+            const h3Elements = container.querySelectorAll('h3');
+
+            if (h3Elements.length === 0) return; // Pas d'activités, pas de TOC
+
+            // Créer le conteneur de la TOC
+            const tocContainer = document.createElement('nav');
+            tocContainer.className = 'md-toc';
+            tocContainer.setAttribute('aria-label', 'Table des matières');
+
+            const tocTitle = document.createElement('div');
+            tocTitle.className = 'md-toc-title';
+            tocTitle.textContent = 'Table des matières';
+
+            const tocList = document.createElement('ul');
+            tocList.className = 'md-toc-list';
+
+            h3Elements.forEach((h3, index) => {
+                // Créer un ID unique pour le h3 s'il n'en a pas
+                if (!h3.id) {
+                    h3.id = `activite-${index + 1}`;
+                }
+
+                // Créer l'élément d'activité
+                const activityItem = document.createElement('li');
+                activityItem.className = 'md-toc-activity';
+
+                const activityLink = document.createElement('a');
+                activityLink.href = `#${h3.id}`;
+                activityLink.textContent = h3.textContent;
+
+                activityItem.appendChild(activityLink);
+
+                // Trouver tous les h4 qui suivent ce h3 jusqu'au prochain h3
+                const questions = [];
+                let nextElement = h3.nextElementSibling;
+
+                while (nextElement && nextElement.tagName !== 'H3') {
+                    if (nextElement.tagName === 'H4') {
+                        questions.push(nextElement);
+                    }
+                    nextElement = nextElement.nextElementSibling;
+                }
+
+                // Si des questions existent, créer une sous-liste
+                if (questions.length > 0) {
+                    const questionsList = document.createElement('ul');
+                    questionsList.className = 'md-toc-questions';
+
+                    questions.forEach((h4, qIndex) => {
+                        // Créer un ID unique pour le h4 s'il n'en a pas
+                        if (!h4.id) {
+                            h4.id = `activite-${index + 1}-question-${qIndex + 1}`;
+                        }
+
+                        const questionItem = document.createElement('li');
+                        const questionLink = document.createElement('a');
+                        questionLink.href = `#${h4.id}`;
+                        questionLink.textContent = h4.textContent;
+
+                        questionItem.appendChild(questionLink);
+                        questionsList.appendChild(questionItem);
+                    });
+
+                    activityItem.appendChild(questionsList);
+                }
+
+                tocList.appendChild(activityItem);
+            });
+
+            tocContainer.appendChild(tocTitle);
+            tocContainer.appendChild(tocList);
+
+            // Insérer la TOC après le premier h1 ou h2
+            const firstHeading = container.querySelector('h1, h2');
+            if (firstHeading && firstHeading.nextElementSibling) {
+                firstHeading.parentNode.insertBefore(tocContainer, firstHeading.nextElementSibling);
+            } else {
+                container.insertBefore(tocContainer, container.firstChild);
+            }
+        };
+
+        /**
          * Charge et affiche le fichier Markdown de correction
          */
         async function loadCorrection() {
@@ -94,6 +180,9 @@
 
                 // Injection sécurisée via DOMParser (Zéro innerHTML)
                 safeInjectHTML(container, htmlContent);
+
+                // Générer la Table des Matières
+                generateTOC(container);
 
                 // Met à jour le titre avec le premier H1
                 const firstH1 = container.querySelector('h1');

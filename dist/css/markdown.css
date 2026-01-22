@@ -9,6 +9,8 @@
             border-radius: var(--radius-lg);
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
             font-size: 1.125rem;
+            font-family: 'Lexend', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            letter-spacing: 0.01em;
         }
 
         .md-content h1 {
@@ -204,13 +206,97 @@
             font-weight: 700;
         }
         
+        /* Table des matières */
+        .md-toc {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0e7ff 100%);
+            border: 2px solid var(--color-indigo-200);
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            margin: var(--space-6) 0 var(--space-8) 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .md-toc-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--color-indigo-700);
+            margin-bottom: var(--space-4);
+            padding-bottom: var(--space-2);
+            border-bottom: 2px solid var(--color-indigo-300);
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+
+        .md-toc-title::before {
+            content: "📑";
+            font-size: 1.5rem;
+        }
+
+        .md-toc-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .md-toc-activity {
+            margin-bottom: var(--space-3);
+        }
+
+        .md-toc-activity > a {
+            display: block;
+            font-weight: 600;
+            font-size: 1.05rem;
+            color: var(--color-indigo-700);
+            text-decoration: none;
+            padding: var(--space-2) var(--space-3);
+            border-radius: var(--radius-md);
+            transition: all 0.2s ease;
+        }
+
+        .md-toc-activity > a:hover {
+            background: var(--color-indigo-100);
+            transform: translateX(4px);
+        }
+
+        .md-toc-questions {
+            list-style: none;
+            padding-left: var(--space-6);
+            margin-top: var(--space-2);
+        }
+
+        .md-toc-questions li {
+            margin-bottom: var(--space-1);
+        }
+
+        .md-toc-questions a {
+            display: block;
+            font-size: 0.95rem;
+            color: var(--color-gray-600);
+            text-decoration: none;
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+        }
+
+        .md-toc-questions a:hover {
+            color: var(--color-indigo-600);
+            background: var(--color-indigo-50);
+            transform: translateX(2px);
+        }
+
+        .md-toc-questions a::before {
+            content: "→ ";
+            color: var(--color-indigo-400);
+        }
+
         /* Loading state */
         .md-loading {
             text-align: center;
             padding: var(--space-8);
             color: var(--color-gray-500);
         }
-        
+
         .md-error {
             background: #fef2f2;
             border: 1px solid #fecaca;
