@@ -15,7 +15,7 @@ trigger: always_on
 - **CSP Compliance**: Ensure all new scripts or styles respect the strict CSP defined in `netlify.toml`.
 
 ## Netlify & Build Optimization
-- **Build Credits**: Group modifications to save Netlify build minutes (Current usage: 195/300).
+- **Build Credits**: Group modifications to save Netlify build minutes (Current usage: 240/300).
 - **Deployment**: Check `netlify.toml` headers (HSTS, CSP, Permissions-Policy) before suggesting network-related changes.
 
 ## Educational Quality
