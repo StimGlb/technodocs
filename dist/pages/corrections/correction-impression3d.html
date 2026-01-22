@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Correction détaillée de l'activité Impression 3D - TechnoDocs">
+    <title>Correction Impression 3D | TechnoDocs</title>
+    <link rel="stylesheet" href="/dist/css/style.css">
+    <link rel="stylesheet" href="/dist/css/markdown.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <article class="md-content" id="markdown-container">
+            <div class="md-loading">Chargement de la correction...</div>
+        </article>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Marked.js en local (sécurité CSP) -->
+    <script src="/dist/js/libs/marked.min.js"></script>
+
+    <script type="module">
+        import { loadComponents } from '/dist/js/components.js';
+
+        // Charger header/footer
+        loadComponents();
+
+        // Configuration de Marked
+        marked.setOptions({
+            breaks: true,
+            gfm: true,
+            headerIds: true,
+            mangle: false
+        });
+
+        /**
+         * Injecte du HTML de manière sécurisée en utilisant DOMParser
+         * @param {HTMLElement} container - L'élément cible
+         * @param {string} htmlString - La chaîne HTML à injecter
+         */
+        const safeInjectHTML = (container, htmlString) => {
+            if (!container) return;
+
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlString, 'text/html');
+
+            container.textContent = '';
+            Array.from(doc.body.childNodes).forEach(node => {
+                container.appendChild(node.cloneNode(true));
+            });
+        };
+
+        /**
+         * Crée un message d'erreur de manière sécurisée
+         * @param {string} message - Le message d'erreur
+         * @returns {HTMLElement} - L'élément d'erreur
+         */
+        const createErrorMessage = (message) => {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'md-error';
+
+            const strong = document.createElement('strong');
+            strong.textContent = 'Erreur : ';
+
+            const text = document.createTextNode(message);
+
+            errorDiv.appendChild(strong);
+            errorDiv.appendChild(text);
+
+            return errorDiv;
+        };
+
+        /**
+         * Charge et affiche le fichier Markdown de correction
+         */
+        async function loadCorrection() {
+            const container = document.getElementById('markdown-container');
+
+            try {
+                const response = await fetch('/dist/pages/content/md/correction-impression3d.md');
+
+                if (!response.ok) {
+                    throw new Error('Impossible de charger la correction');
+                }
+
+                const mdText = await response.text();
+                const htmlContent = marked.parse(mdText);
+
+                // Injection sécurisée via DOMParser (Zéro innerHTML)
+                safeInjectHTML(container, htmlContent);
+
+                // Met à jour le titre avec le premier H1
+                const firstH1 = container.querySelector('h1');
+                if (firstH1) {
+                    document.title = `${firstH1.textContent} | TechnoDocs`;
+                }
+
+            } catch (error) {
+                container.textContent = '';
+                container.appendChild(createErrorMessage(error.message));
+                console.error('Erreur chargement correction:', error);
+            }
+        }
+
+        // Charger automatiquement la correction
+        loadCorrection();
+    </script>
+</body>
+</html>

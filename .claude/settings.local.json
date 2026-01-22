@@ -3,7 +3,8 @@
     "allow": [
       "Bash(git checkout:*)",
       "Bash(npm run security-check:*)",
-      "Bash(npm i:*)"
+      "Bash(npm i:*)",
+      "Bash(curl:*)"
     ],
     "deny": [],
     "ask": []

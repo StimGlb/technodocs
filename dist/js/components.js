@@ -89,9 +89,17 @@ async function loadFooter() {
     }
 }
 
-// Charger les composants au chargement de la page
-document.addEventListener('DOMContentLoaded', async () => {
+/**
+ * Charge header et footer en parallèle
+ * Fonction publique exportée pour utilisation dans md-template.html
+ */
+export async function loadComponents() {
     await Promise.all([loadHeader(), loadFooter()]);
+}
+
+// Charger les composants au chargement de la page (auto-init pour pages normales)
+document.addEventListener('DOMContentLoaded', async () => {
+    await loadComponents();
 });
 
 // Export pour utilisation modulaire
