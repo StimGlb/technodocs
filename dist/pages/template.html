@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Page template pour TechnoDocs">
-    <title>TechnoDocs | Template</title>
+    <meta name="description" content="Page template pour TechnoDocs - Personnalisez cette page">
+    <title>TechnoDocs | Template Page</title>
     <link rel="stylesheet" href="/dist/css/style.css">
     <!-- Google Fonts - Police moderne et lisible -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -15,277 +15,34 @@
     <!-- Header dynamique -->
     <div id="header-placeholder"></div>
 
-<div class="container">
-        <header>
-            <div class="logo-icon">♻️</div>
-            <h1>Indice de Réparabilité</h1>
-            <p class="subtitle">50 flashcards pour maîtriser les concepts de réparabilité</p>
-        </header>
-
-        <div class="controls">
-            <div class="search-box">
-                <input type="text" id="searchInput" placeholder="Rechercher une question...">
+    <main>
+        <!-- Section principale -->
+        <section class="section">
+            <div class="section__header">
+                <div class="logo-icon">📄</div>
+                <h1 class="section__title">Titre de votre page</h1>
+                <p class="section__description">Description courte de votre contenu</p>
             </div>
-            <button class="btn" id="shuffleBtn">🔀 Mélanger</button>
-            <button class="btn" id="modeBtn">📋 Mode carte unique</button>
-            <button class="btn btn-primary" id="flipAllBtn">🔄 Tout retourner</button>
-        </div>
 
-        <div class="stats">
-            <div class="stat">
-                <div class="stat-value" id="totalCards">50</div>
-                <div class="stat-label">Cartes totales</div>
+            <!-- Conteneur principal -->
+            <div class="container">
+                <!-- Ajoutez votre contenu ici -->
+
+                <div class="content-wrapper">
+                    <h2>Section 1</h2>
+                    <p>Votre contenu personnalisé...</p>
+                </div>
+
+                <div class="content-wrapper">
+                    <h2>Section 2</h2>
+                    <p>Autre contenu...</p>
+                </div>
             </div>
-            <div class="stat">
-                <div class="stat-value" id="visibleCards">50</div>
-                <div class="stat-label">Cartes affichées</div>
-            </div>
-        </div>
-
-        <div class="flashcard-grid" id="flashcardGrid"></div>
-
-        <div class="navigation">
-            <button class="nav-btn" id="prevBtn">◀</button>
-            <div class="page-indicator">
-                <strong id="currentCard">1</strong> / <span id="totalFiltered">50</span>
-            </div>
-            <button class="nav-btn" id="nextBtn">▶</button>
-        </div>
-
-        <footer>
-            <p>Créé pour l'enseignement de la Technologie au Collège</p>
-        </footer>
-    </div>
+        </section>
+    </main>
 
     <!-- Footer dynamique -->
     <div id="footer-placeholder"></div>
-
-      <script>
-        // Flashcard data
-        const flashcardsData = [
-            { q: "Qu'est-ce que l'Indice de Réparabilité ?", a: "C'est une note sur 10 qui évalue la facilité avec laquelle un produit peut être réparé." },
-            { q: "Selon l'infographie, quel pourcentage des Français ont une bonne image de la réparation ?", a: "81% des Français ont une bonne image de la réparation." },
-            { q: "Citez une raison pour laquelle la réparation a une bonne image en France.", a: "Elle participe à la préservation de l'environnement, contribue à l'économie locale ou permet de réaliser des économies." },
-            { q: "Quel pourcentage des Français se déclarent prêts à envisager de réparer un objet tombé en panne ?", a: "85% des Français se déclarent prêts à envisager une réparation." },
-            { q: "Quel est le taux de réparation réel des produits électriques et électroniques en panne ?", a: "Seulement 40% des produits en panne sont effectivement réparés." },
-            { q: "Quel est le premier objectif de l'Indice de Réparabilité ?", a: "Atteindre un taux de réparation de 60% pour les produits électriques et électroniques d'ici 5 ans." },
-            { q: "Le deuxième objectif de l'Indice de Réparabilité est de réduire les quantités de déchets et de préserver les _____.", a: "ressources" },
-            { q: "Quel est le troisième objectif de l'Indice de Réparabilité envers les fabricants ?", a: "Les inciter à améliorer la conception de leurs produits pour plus de réparabilité." },
-            { q: "Nommez l'un des 5 critères pris en compte pour calculer l'Indice de Réparabilité.", a: "La disponibilité de la documentation technique, la facilité de démontage, la disponibilité des pièces détachées ou le prix des pièces détachées." },
-            { q: "La facilité de _____ du produit est un critère clé de l'Indice de Réparabilité.", a: "démontage" },
-            { q: "Nommez deux des cinq catégories d'équipements concernées par l'Indice de Réparabilité.", a: "Les lave-linges, téléviseurs, ordinateurs portables, smartphones, ou tondeuses à gazon électriques." },
-            { q: "Quelle note globale de réparabilité a obtenu la \"Lampe de poche rechargeable à dynamo\" ?", a: "La note globale est de 8,5/10." },
-            { q: "Quel score a été attribué au critère \"Documentation\" pour la lampe de poche ?", a: "Le score pour la documentation est de 1,8/2." },
-            { q: "Quels éléments ont permis d'obtenir un bon score en \"Documentation\" pour la lampe de poche ?", a: "La présence d'un manuel de réparation et de schémas techniques." },
-            { q: "Quel score a été attribué au critère \"Démontabilité\" pour la lampe de poche ?", a: "Le score pour la démontabilité est de 1,8/2." },
-            { q: "Qu'est-ce qui a facilité la \"Démontabilité\" de la lampe de poche ?", a: "L'utilisation de vis standard et l'accès facile aux composants." },
-            { q: "Quel score a été attribué à la \"Disponibilité des pièces détachées\" pour la lampe de poche ?", a: "Le score est de 1,3/2." },
-            { q: "Quels facteurs justifient le score de disponibilité des pièces pour la lampe de poche ?", a: "Une disponibilité assurée pendant 7 ans et un catalogue de pièces en ligne." },
-            { q: "Quel score a été attribué au \"Prix des pièces\" pour la lampe de poche ?", a: "Le score est de 1,2/1,5." },
-            { q: "Comment est évalué le critère \"Prix des pièces\" pour la lampe de poche ?", a: "Le coût des pièces doit être inférieur à 30% du prix d'achat du produit neuf." },
-            { q: "Quel score a obtenu la lampe de poche pour le critère \"Spécificité des outils\" ?", a: "Elle a obtenu le score maximal de 1/1." },
-            { q: "Pourquoi la lampe de poche a-t-elle eu un score parfait pour la \"Spécificité des outils\" ?", a: "Parce qu'elle ne nécessite qu'un tournevis standard et aucun outil spécifique." },
-            { q: "Quel score a été attribué à l'\"Assistance technique\" pour la lampe de poche ?", a: "Le score est de 1,3/1,5." },
-            { q: "Quels services sont offerts pour justifier le score d'\"Assistance technique\" de la lampe ?", a: "Un support par email et des tutoriels vidéo en ligne." },
-            { q: "Quelle est la toute première étape pour évaluer la réparabilité d'un appareil ?", a: "Rechercher les informations sur l'appareil testé (notices, schémas, etc.)." },
-            { q: "Après avoir recueilli les informations, que fait-on pour chaque critère de l'indice ?", a: "On attribue une note selon le barème pour chaque critère." },
-            { q: "Comment est calculée la note globale de l'Indice de Réparabilité ?", a: "On calcule la moyenne pondérée des notes obtenues pour chaque critère." },
-            { q: "Quel est le titre de la méthodologie de réparation proposée dans l'activité ?", a: "Méthodologie de diagnostic d'une panne." },
-            { q: "La méthodologie de diagnostic d'une panne se déroule en combien d'étapes ?", a: "Elle se déroule en 5 étapes." },
-            { q: "Quelle est la première étape de la méthodologie de diagnostic ?", a: "1. OBSERVER." },
-            { q: "En quoi consiste l'étape \"OBSERVER\" pour une lampe qui ne s'allume pas ?", a: "Vérifier si le câble est abîmé ou si l'ampoule est cassée, sans toucher l'objet." },
-            { q: "Quelle est la deuxième étape de la méthodologie de diagnostic ?", a: "2. TESTER." },
-            { q: "Que doit-on faire lors de l'étape \"TESTER\" ?", a: "Vérifier l'alimentation électrique et les connexions." },
-            { q: "La troisième étape de la méthodologie de diagnostic est _____.", a: "3. DÉMONTER" },
-            { q: "Que signifie démonter de manière \"non destructive\" ?", a: "Ouvrir l'objet sans le casser, afin de pouvoir le remonter." },
-            { q: "Quelle est la quatrième étape de la méthodologie de diagnostic ?", a: "4. IDENTIFIER." },
-            { q: "Quelle est l'action à réaliser lors de l'étape \"IDENTIFIER\" ?", a: "Localiser les composants défaillants." },
-            { q: "Quelle est la cinquième et dernière étape de la méthodologie de diagnostic ?", a: "5. DIAGNOSTIQUER." },
-            { q: "Que doit-on faire lors de l'étape \"DIAGNOSTIQUER\" ?", a: "Établir la cause probable de la panne." },
-            { q: "Quelle est la précaution de sécurité la plus essentielle avant de manipuler un appareil électrique ?", a: "Débrancher l'appareil de la prise de courant." },
-            { q: "Citez au moins deux autres précautions de sécurité à prendre avec un appareil électrique.", a: "Travailler sur une surface sèche, ne pas avoir les mains mouillées, ne pas utiliser d'outils métalliques non isolés." },
-            { q: "Dans le cas de la lampe de chevet, quels sont les 3 composants les plus susceptibles d'être en panne ?", a: "L'ampoule LED, l'interrupteur et le câble d'alimentation." },
-            { q: "Parmi les pannes possibles d'une lampe, laquelle est la plus facile à réparer ?", a: "Le changement de l'ampoule." },
-            { q: "Parmi les points \"À retenir\", la réparabilité est un enjeu _____ et _____ majeur.", a: "environnemental, économique" },
-            { q: "Quel est le point \"À retenir\" concernant la sécurité ?", a: "La sécurité est primordiale lors de toute intervention sur un objet électrique." },
-            { q: "Quel est le point \"À retenir\" concernant les documents techniques ?", a: "L'analyse des schémas et notices est essentielle avant toute réparation." },
-            { q: "Quel est l'un des objectifs pédagogiques du schéma technique de la lampe de chevet ?", a: "Identifier les composants électriques, comprendre le circuit, ou localiser les points de panne potentiels." },
-            { q: "Quels sont les cinq composants principaux d'une lampe de chevet simple ?", a: "Le socle, le câble d'alimentation, l'interrupteur, la douille et l'ampoule LED." },
-            { q: "Quel code couleur est recommandé pour représenter le circuit électrique dans le schéma de la lampe ?", a: "Un code couleur rouge/bleu." },
-            { q: "Quel outil sera utilisé lors de la prochaine séance pour améliorer le diagnostic ?", a: "L'intelligence artificielle." }
-        ];
-
-        // State
-        let cards = [...flashcardsData];
-        let filteredCards = [...cards];
-        let currentIndex = 0;
-        let singleMode = false;
-        let allFlipped = false;
-
-        // DOM elements
-        const grid = document.getElementById('flashcardGrid');
-        const searchInput = document.getElementById('searchInput');
-        const shuffleBtn = document.getElementById('shuffleBtn');
-        const modeBtn = document.getElementById('modeBtn');
-        const flipAllBtn = document.getElementById('flipAllBtn');
-        const totalCardsEl = document.getElementById('totalCards');
-        const visibleCardsEl = document.getElementById('visibleCards');
-        const currentCardEl = document.getElementById('currentCard');
-        const totalFilteredEl = document.getElementById('totalFiltered');
-        const prevBtn = document.getElementById('prevBtn');
-        const nextBtn = document.getElementById('nextBtn');
-
-        // Functions
-        function createFlashcard(card, index, originalIndex) {
-            const delay = singleMode ? 0 : index * 0.05;
-            return `
-                <div class="flashcard-container" style="animation-delay: ${delay}s" data-index="${index}">
-                    <div class="flashcard" onclick="flipCard(this)">
-                        <div class="flashcard-face flashcard-front">
-                            <span class="card-number">${originalIndex + 1}</span>
-                            <div class="card-label">Question</div>
-                            <div class="card-content">${card.q}</div>
-                            <div class="flip-hint">👆 Cliquer pour voir la réponse</div>
-                        </div>
-                        <div class="flashcard-face flashcard-back">
-                            <span class="card-number">${originalIndex + 1}</span>
-                            <div class="card-label">Réponse</div>
-                            <div class="card-content">${card.a}</div>
-                            <div class="flip-hint">👆 Cliquer pour voir la question</div>
-                        </div>
-                    </div>
-                </div>
-            `;
-        }
-
-        function renderCards() {
-            if (filteredCards.length === 0) {
-                grid.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-state-icon">🔍</div>
-                        <p>Aucune carte ne correspond à votre recherche</p>
-                    </div>
-                `;
-                return;
-            }
-
-            if (singleMode) {
-                const card = filteredCards[currentIndex];
-                const originalIndex = cards.indexOf(card);
-                grid.innerHTML = createFlashcard(card, 0, originalIndex);
-            } else {
-                grid.innerHTML = filteredCards.map((card, i) => {
-                    const originalIndex = cards.indexOf(card);
-                    return createFlashcard(card, i, originalIndex);
-                }).join('');
-            }
-
-            updateStats();
-            updateNavigation();
-        }
-
-        function flipCard(el) {
-            el.classList.toggle('flipped');
-        }
-
-        function updateStats() {
-            totalCardsEl.textContent = cards.length;
-            visibleCardsEl.textContent = filteredCards.length;
-            currentCardEl.textContent = currentIndex + 1;
-            totalFilteredEl.textContent = filteredCards.length;
-        }
-
-        function updateNavigation() {
-            prevBtn.disabled = currentIndex === 0;
-            nextBtn.disabled = currentIndex >= filteredCards.length - 1;
-        }
-
-        function shuffle(array) {
-            const newArray = [...array];
-            for (let i = newArray.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
-            }
-            return newArray;
-        }
-
-        function filterCards(query) {
-            const q = query.toLowerCase().trim();
-            if (!q) {
-                filteredCards = [...cards];
-            } else {
-                filteredCards = cards.filter(card => 
-                    card.q.toLowerCase().includes(q) || 
-                    card.a.toLowerCase().includes(q)
-                );
-            }
-            currentIndex = 0;
-            renderCards();
-        }
-
-        // Event listeners
-        searchInput.addEventListener('input', (e) => {
-            filterCards(e.target.value);
-        });
-
-        shuffleBtn.addEventListener('click', () => {
-            cards = shuffle(cards);
-            filterCards(searchInput.value);
-        });
-
-        modeBtn.addEventListener('click', () => {
-            singleMode = !singleMode;
-            document.body.classList.toggle('single-card-mode', singleMode);
-            modeBtn.textContent = singleMode ? '📋 Mode grille' : '📋 Mode carte unique';
-            currentIndex = 0;
-            renderCards();
-        });
-
-        flipAllBtn.addEventListener('click', () => {
-            allFlipped = !allFlipped;
-            document.querySelectorAll('.flashcard').forEach(card => {
-                if (allFlipped) {
-                    card.classList.add('flipped');
-                } else {
-                    card.classList.remove('flipped');
-                }
-            });
-        });
-
-        prevBtn.addEventListener('click', () => {
-            if (currentIndex > 0) {
-                currentIndex--;
-                renderCards();
-            }
-        });
-
-        nextBtn.addEventListener('click', () => {
-            if (currentIndex < filteredCards.length - 1) {
-                currentIndex++;
-                renderCards();
-            }
-        });
-
-        // Keyboard navigation
-        document.addEventListener('keydown', (e) => {
-            if (singleMode) {
-                if (e.key === 'ArrowLeft' && currentIndex > 0) {
-                    currentIndex--;
-                    renderCards();
-                } else if (e.key === 'ArrowRight' && currentIndex < filteredCards.length - 1) {
-                    currentIndex++;
-                    renderCards();
-                } else if (e.key === ' ' || e.key === 'Enter') {
-                    e.preventDefault();
-                    const card = document.querySelector('.flashcard');
-                    if (card) flipCard(card);
-                }
-            }
-        });
-
-        // Initial render
-        renderCards();
-    </script>
 
     <!-- Scripts - components.js AVANT app.js -->
     <script type="module" src="/dist/js/components.js"></script>
