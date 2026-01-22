@@ -1,8 +1,5 @@
----
+## **FICHE D'ACTIVITÉ : IMPRESSION 3D \- CORRECTION**
 
-# **Fiche de Correction**
-
-**Séquence 3 \- Séance 1 : Imprimante 3D**
 
 ---
 
