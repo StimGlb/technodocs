@@ -12,7 +12,8 @@
       "Bash(icacls:*)",
       "Bash(git check-ignore:*)",
       "Bash(npm audit:*)",
-      "Bash(node security-check.js:*)"
+      "Bash(node security-check.js:*)",
+      "Bash(git fetch:*)"
     ],
     "deny": [],
     "ask": []
