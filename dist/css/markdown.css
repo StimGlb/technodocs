@@ -1,105 +1,207 @@
  /* Styles spécifiques au rendu Markdown */
         .md-content {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: var(--space-6);
-            line-height: 1.7;
+            max-width: 900px;
+            margin: var(--space-8) auto;
+            padding: var(--space-8);
+            line-height: 1.8;
+            background: #fefdfb;
+            border: 1px solid var(--color-gray-200);
+            border-radius: var(--radius-lg);
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+            font-size: 1.125rem;
         }
-        
-        .md-content h1 { 
-            font-size: var(--text-3xl); 
-            margin-bottom: var(--space-4);
+
+        .md-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-6);
+            padding-bottom: var(--space-4);
             color: var(--color-indigo-600);
+            line-height: 1.3;
         }
-        
-        .md-content h2 { 
-            font-size: var(--text-2xl); 
-            margin-top: var(--space-8);
-            margin-bottom: var(--space-3);
-            padding-bottom: var(--space-2);
+
+        .md-content h2 {
+            font-size: 2rem;
+            margin-top: var(--space-10);
+            margin-bottom: var(--space-5);
+            padding-bottom: var(--space-3);
             border-bottom: 2px solid var(--color-indigo-100);
+            line-height: 1.4;
         }
-        
-        .md-content h3 { 
-            font-size: var(--text-xl); 
-            margin-top: var(--space-6);
+
+        .md-content h3 {
+            font-size: 1.5rem;
+            margin-top: var(--space-8);
+            margin-bottom: var(--space-4);
             color: var(--color-gray-700);
+            line-height: 1.5;
         }
-        
-        .md-content p { 
-            margin-bottom: var(--space-4); 
+
+        .md-content h4 {
+            font-size: 1.25rem;
+            margin-top: var(--space-6);
+            margin-bottom: var(--space-3);
+            color: var(--color-gray-800);
+            font-weight: 600;
+            line-height: 1.5;
+        }
+
+        .md-content p {
+            margin-bottom: var(--space-5);
+            color: var(--color-gray-700);
         }
         
         .md-content code {
             background: var(--color-gray-100);
-            padding: 0.2em 0.4em;
+            padding: 0.25em 0.5em;
             border-radius: var(--radius-sm);
             font-family: 'Fira Code', monospace;
             font-size: 0.9em;
+            color: var(--color-indigo-700);
+            border: 1px solid var(--color-gray-200);
         }
-        
+
         .md-content pre {
             background: var(--color-gray-900);
             color: var(--color-gray-100);
-            padding: var(--space-4);
+            padding: var(--space-5);
             border-radius: var(--radius-md);
             overflow-x: auto;
-            margin: var(--space-4) 0;
+            margin: var(--space-6) 0;
+            line-height: 1.6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
-        
+
         .md-content pre code {
             background: none;
             padding: 0;
             color: inherit;
+            border: none;
         }
         
         .md-content ul, .md-content ol {
-            margin: var(--space-4) 0;
-            padding-left: var(--space-6);
+            margin: var(--space-5) 0;
+            padding-left: var(--space-8);
         }
-        
-        .md-content li { 
-            margin-bottom: var(--space-2); 
+
+        .md-content li {
+            margin-bottom: var(--space-3);
+            line-height: 1.7;
+            display: list-item;
+            list-style-position: outside;
         }
-        
+
+        .md-content ul > li {
+            list-style-type: disc;
+        }
+
+        .md-content ol > li {
+            list-style-type: decimal;
+        }
+
+        .md-content li > p {
+            margin-bottom: var(--space-2);
+        }
+
+        /* Listes imbriquées */
+        .md-content ul ul,
+        .md-content ol ul {
+            margin: var(--space-2) 0;
+        }
+
+        .md-content ul ul > li {
+            list-style-type: circle;
+        }
+
+        .md-content ul ul ul > li {
+            list-style-type: square;
+        }
+
         .md-content blockquote {
             border-left: 4px solid var(--color-indigo-400);
-            margin: var(--space-4) 0;
-            padding: var(--space-3) var(--space-4);
+            margin: var(--space-6) 0;
+            padding: var(--space-4) var(--space-5);
             background: var(--color-indigo-50);
             border-radius: 0 var(--radius-md) var(--radius-md) 0;
+            font-style: italic;
+            color: var(--color-gray-700);
         }
-        
+
+        .md-content hr {
+            border: none;
+            border-top: 2px solid var(--color-gray-200);
+            margin: var(--space-8) 0;
+        }
+
         .md-content table {
             width: 100%;
             border-collapse: collapse;
-            margin: var(--space-4) 0;
+            margin: var(--space-6) 0;
+            font-size: 1rem;
         }
-        
+
         .md-content th, .md-content td {
             border: 1px solid var(--color-gray-200);
-            padding: var(--space-3);
+            padding: var(--space-4);
             text-align: left;
+            line-height: 1.6;
         }
-        
+
         .md-content th {
-            background: var(--color-gray-50);
+            background: var(--color-indigo-50);
             font-weight: 600;
+            color: var(--color-indigo-900);
+        }
+
+        .md-content tbody tr:nth-child(even) {
+            background: var(--color-gray-50);
+        }
+
+        .md-content tbody tr:hover {
+            background: var(--color-indigo-50);
+            transition: background 0.2s ease;
         }
         
         .md-content img {
             max-width: 100%;
             border-radius: var(--radius-md);
-            margin: var(--space-4) 0;
+            margin: var(--space-6) 0;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
-        
+
         .md-content a {
             color: var(--color-indigo-600);
             text-decoration: underline;
+            text-underline-offset: 2px;
+            transition: color 0.2s ease;
         }
-        
+
         .md-content a:hover {
             color: var(--color-indigo-800);
+            text-decoration-thickness: 2px;
+        }
+
+        .md-content strong {
+            color: var(--color-gray-900);
+            font-weight: 600;
+        }
+
+        .md-content em {
+            color: var(--color-gray-700);
+        }
+
+        /* Style spécial pour "Compétence évaluée" */
+        .md-content p:has(strong:first-child) {
+            background: linear-gradient(to right, var(--color-indigo-50), var(--color-purple-50));
+            border-left: 4px solid var(--color-indigo-500);
+            padding: var(--space-3) var(--space-4);
+            border-radius: var(--radius-md);
+            margin: var(--space-4) 0;
+            font-size: 1.05rem;
+        }
+
+        .md-content p:has(strong:first-child) strong {
+            color: var(--color-indigo-700);
+            font-weight: 700;
         }
         
         /* Loading state */

@@ -17,12 +17,6 @@
 
 **Compétence évaluée :** Comprendre les enjeux sociétaux et environnementaux de la technologie
 
-**Critères de réussite :**
-
-* 🟢 **Acquis** : Les 4 éléments clés sont présents  
-* 🟡 **En cours** : 2-3 éléments présents  
-* 🔴 **Non acquis** : Moins de 2 éléments ou confusion avec d'autres indices
-
 ---
 
 #### **Question 2 : Tableau des critères de réparabilité**
@@ -82,16 +76,6 @@
 #### **Question 4 : Réflexion personnelle**
 
 **Cette question est personnelle et subjective. Pas de réponse modèle.**
-
-**Objectif pédagogique :** Créer un lien avec le vécu de l'élève et valoriser l'expérience familiale.
-
-**Critères de validation :**
-
-* ✅ L'élève partage une expérience personnelle (vraie ou observée)  
-* ✅ Il décrit l'objet et le type de réparation  
-* ✅ Il indique si la réparation a réussi ou échoué
-
-**💡 Attention :** Certains élèves peuvent répondre "non, jamais" → C'est une réponse valide qui montre justement l'enjeu de développer cette culture de la réparation.
 
 ---
 
@@ -250,8 +234,6 @@
 ---
 
 #### **Question 8 : Indice de réparabilité de la lampe**
-
-**Réponse modèle :**
 
 **Estimation : FACILE (8-9/10)**
 
@@ -424,12 +406,6 @@
 | Demande claire et structurée |  |  |  |
 | Niveau de compétence indiqué |  |  |  |
 | Mention de la sécurité |  |  |  |
-
-**Décision :**
-
-* ✅ **VALIDER** si au moins 6 critères sur 8 sont présents  
-* ⚠️ **À AMÉLIORER** si 4-5 critères → demander au groupe de compléter  
-* ❌ **REFUSER** si moins de 4 critères → reprendre la structure avec le groupe
 
 ---
 
