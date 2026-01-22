@@ -21,7 +21,7 @@
         <section class="hero">
             <div class="hero__content">
                 <h1 class="hero__title">Bienvenue sur <span class="highlight">TechnoDocs</span></h1>
-                <p class="hero__subtitle">Découvre, apprends et crée avec les outils numériques !</p>
+                <p class="hero__subtitle">Consulte les ressources, accède aux outils, révise le cours et vérifie les corrections</p>
                 <div class="hero__actions">
                     <a href="#cours" class="btn btn--primary">Commencer</a>
                     <a href="#outils" class="btn btn--secondary">Voir les outils</a>
@@ -39,11 +39,10 @@
         <!-- Section Cours -->
         <section id="cours" class="section">
             <div class="section__header">
-                <h2 class="section__title">📚 Cours</h2>
-                <p class="section__description">Accède aux leçons et supports visuels</p>
+                <h2 class="section__title">📚 Ressources</h2>
+                <p class="section__description">Accède aux documents et supports visuels</p>
             </div>
             
-            <div class="cards-grid">
             <div class="cards-grid" id="flashcard-category-grid">
                 <!-- Les catégories seront chargées ici par JS ou définies statiquement -->
                 <a href="pages/conception-3d.html" class="card card--cours">
@@ -58,7 +57,7 @@
                     <p class="card__text">Indice de réparabilité, diagnostic de panne et améliorations</p>
                 </a>
 
-                <a href="pages/programmation.html" class="card card--cours">
+                <!-- <a href="pages/programmation.html" class="card card--cours">
                     <div class="card__icon">💻</div>
                     <h3 class="card__title">Programmation</h3>
                     <p class="card__text">Scratch, Python et Arduino</p>
@@ -68,8 +67,7 @@
                     <div class="card__icon">🌐</div>
                     <h3 class="card__title">Internet & Réseaux</h3>
                     <p class="card__text">Web, sécurité et communication</p>
-                </a>
-            </div>
+                </a> -->
             </div>
         </section>
        <!-- Section Outils -->
@@ -80,9 +78,9 @@
             </div>
             
             <div class="tools-grid">                
-                <a href="https://www.tinkercad.com/" target="_blank" rel="noopener" class="tool-card">
-                    <div class="tool-card__logo">🎨</div>
-                    <span class="tool-card__name">Tinkercad</span>
+                <a href="dist\pages\outils\tinkercad-classes.html" target="_blank" rel="noopener" class="tool-card">
+                    <img src="/dist/images/logo-tinkercad.png" alt="Tinkercad" class="selector-icon">
+                    <span class="tool-card__name">Rejoignez votre classe</span>
                     <span class="tool-card__tag">3D / Circuits</span>
                 </a>
 
@@ -111,34 +109,6 @@
                 </a>
             </div>
         </section>
-        
-        <!-- Section Corrections -->
-        <section id="corrections" class="section">
-            <div class="section__header">
-                <h2 class="section__title">📝 Corrections</h2>
-                <p class="section__description">Retrouvez toutes les corrections des activités et évaluations</p>
-            </div>
-
-            <div class="correction-grid">
-                <a href="/dist/pages/corrections/fiches_activites.html" class="correction-card correction-card--fiches">
-                    <div class="correction-card__icon">📋</div>
-                    <h3 class="correction-card__title">Fiches d'activités</h3>
-                    <p class="correction-card__text">Corrections des fiches d'activités en classe</p>
-                </a>
-
-                <a href="/dist/pages/corrections/quiz.html" class="correction-card correction-card--quiz">
-                    <div class="correction-card__icon">❓</div>
-                    <h3 class="correction-card__title">Quiz</h3>
-                    <p class="correction-card__text">Réponses et explications des quiz</p>
-                </a>
-
-                <a href="/dist/pages/corrections/evaluations.html" class="correction-card correction-card--eval">
-                    <div class="correction-card__icon">📊</div>
-                    <h3 class="correction-card__title">Évaluations</h3>
-                    <p class="correction-card__text">Corrigés détaillés des évaluations</p>
-                </a>
-            </div>
-        </section>
 
         <!-- Section Révisions -->
         <section id="revisions" class="section">
@@ -164,6 +134,34 @@
                     <div class="revision-card__icon">❓</div>
                     <h3 class="revision-card__title">Évaluations</h3>
                     <p class="revision-card__text">Teste tes connaissances et tes compétences</p>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Section Corrections -->
+        <section id="corrections" class="section">
+            <div class="section__header">
+                <h2 class="section__title">📝 Corrections</h2>
+                <p class="section__description">Toutes les corrections des activités et évaluations</p>
+            </div>
+
+            <div class="correction-grid">
+                <a href="/dist/pages/corrections/fiches_activites.html" class="correction-card correction-card--fiches">
+                    <div class="correction-card__icon">📋</div>
+                    <h3 class="correction-card__title">Fiches d'activités</h3>
+                    <p class="correction-card__text">Corrections des fiches d'activités en classe</p>
+                </a>
+
+                <a href="/dist/pages/corrections/quiz.html" class="correction-card correction-card--quiz">
+                    <div class="correction-card__icon">❓</div>
+                    <h3 class="correction-card__title">Quiz</h3>
+                    <p class="correction-card__text">Réponses et explications des quiz</p>
+                </a>
+
+                <a href="/dist/pages/corrections/evaluations.html" class="correction-card correction-card--eval">
+                    <div class="correction-card__icon">📊</div>
+                    <h3 class="correction-card__title">Évaluations</h3>
+                    <p class="correction-card__text">Corrigés détaillés des évaluations</p>
                 </a>
             </div>
         </section>

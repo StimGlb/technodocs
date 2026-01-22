@@ -538,6 +538,7 @@ main {
 .tool-card__name {
     font-weight: 600;
     color: var(--color-gray-900);
+    margin-top: var(--space-4);
     margin-bottom: var(--space-1);
 }
 
