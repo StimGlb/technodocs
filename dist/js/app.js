@@ -97,11 +97,17 @@ const initHeaderScroll = () => {
 // ============================================
 // Initialisation
 // ============================================
-document.addEventListener('DOMContentLoaded', () => {
+import { loadLinks } from './links-loader.js';
+
+document.addEventListener('DOMContentLoaded', async () => {
     try {
+        // Charger les composants dynamiques (header/footer)
         initMobileNav();
         initScrollAnimations();
         initHeaderScroll();
+
+        // Charger les liens depuis links.json
+        await loadLinks();
 
         // Log uniquement en développement
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {

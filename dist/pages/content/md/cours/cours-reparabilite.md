@@ -1,0 +1,1 @@
+Synthèse de la Séquence Pédagogique sur la Réparabilité et le Diagnostic Assisté par IA
