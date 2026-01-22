@@ -24,5 +24,5 @@ trigger: always_on
 - **Content**: Align with French "Cycle 4" Technology curriculum (Robotics, 3D Design, Networks).
 
 ## Git Workflow
-- **Branch**: Currently working on `security-dev`. 
+- **Branch**: Currently working on `ag-security-dev`.
 - **Commits**: Follow the project's commit scripts (e.g., `npm run commit`).
