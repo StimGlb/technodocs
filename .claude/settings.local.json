@@ -1,18 +1,9 @@
 {
   "permissions": {
     "allow": [
-      "Bash(git clone:*)",
-      "Bash(git config:*)",
-      "Bash(git add:*)",
-      "Bash(git commit:*)",
-      "Bash(git push:*)",
-      "Bash(test:*)",
-      "Bash(npm run dev:*)",
-      "Bash(timeout 5 bash -c \"while lsof ''F:\\Projects\\technodocs'' 2>/dev/null | grep -q .; do sleep 0.5; done\")",
-      "Bash(icacls:*)",
-      "Bash(git check-ignore:*)",
       "Bash(git checkout:*)",
-      "Bash(git branch:*)"
+      "Bash(npm run security-check:*)",
+      "Bash(npm i:*)"
     ],
     "deny": [],
     "ask": []
