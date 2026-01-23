@@ -24,9 +24,6 @@
     # Content Security Policy (CSP) - Protection contre XSS
     Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 
-    # Exemple de CSP avec Firebase
-    Content-Security-Policy = "default-src 'self'; script-src 'self' https://*.firebaseio.com https://*.googleapis.com; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com wss://*.firebaseio.com; font-src 'self' https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'"
-
     # HTTP Strict Transport Security (HSTS) - Force HTTPS
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
 
