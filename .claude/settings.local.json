@@ -8,7 +8,15 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(git push:*)",
-      "Bash(git merge:*)"
+      "Bash(git merge:*)",
+      "Bash(find:*)",
+      "Bash(git ls-tree:*)",
+      "Bash(cat:*)",
+      "Bash(mkdir:*)",
+      "Bash(npm run build:*)",
+      "Bash(npm run preview:*)",
+      "Bash(tree:*)",
+      "Bash(npx http-server -p 8080 -o)"
     ],
     "deny": [],
     "ask": []

@@ -22,7 +22,8 @@
     Referrer-Policy = "strict-origin-when-cross-origin"
 
     # Content Security Policy (CSP) - Protection contre XSS
-    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
+    # Note: 'unsafe-inline' temporairement ajouté pour style-src pour permettre les styles inline dynamiques
+    Content-Security-Policy = "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 
     # HTTP Strict Transport Security (HSTS) - Force HTTPS
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"

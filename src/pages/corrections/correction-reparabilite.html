@@ -1,12 +1,12 @@
-<!-- dist/pages/md-template.html -->
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document | TechnoDocs</title>
-    <link rel="stylesheet" href="/dist/css/style.css">
-    <link rel="stylesheet" href="/dist/css/markdown.css">
+    <meta name="description" content="Correction détaillée de l'activité Réparabilité - TechnoDocs">
+    <title>Correction Réparabilité | TechnoDocs</title>
+    <link rel="stylesheet" href="../../css/style.css">
+    <link rel="stylesheet" href="../../css/markdown.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@400;500&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -16,27 +16,27 @@
 
     <main>
         <article class="md-content" id="markdown-container">
-            <div class="md-loading">Chargement du document...</div>
+            <div class="md-loading">Chargement de la correction...</div>
         </article>
     </main>
 
     <div id="footer-placeholder"></div>
 
     <!-- Marked.js en local (sécurité CSP) -->
-    <script src="/dist/js/libs/marked.min.js"></script>
+    <script src="../../js/libs/marked.min.js"></script>
 
     <script type="module">
-        import { loadComponents } from '/dist/js/components.js';
+        import { loadComponents } from '../../js/components.js';
 
         // Charger header/footer
         loadComponents();
 
         // Configuration de Marked
         marked.setOptions({
-            breaks: true,        // Convertit les sauts de ligne en <br>
-            gfm: true,           // GitHub Flavored Markdown
-            headerIds: true,     // Ajoute des IDs aux titres
-            mangle: false        // Ne pas encoder les emails
+            breaks: true,
+            gfm: true,
+            headerIds: true,
+            mangle: false
         });
 
         /**
@@ -50,7 +50,6 @@
             const parser = new DOMParser();
             const doc = parser.parseFromString(htmlString, 'text/html');
 
-            // Vider le container et ajouter les nouveaux éléments
             container.textContent = '';
             Array.from(doc.body.childNodes).forEach(node => {
                 container.appendChild(node.cloneNode(true));
@@ -75,30 +74,6 @@
             errorDiv.appendChild(text);
 
             return errorDiv;
-        };
-
-        /**
-         * Crée le message par défaut de manière sécurisée
-         * @returns {DocumentFragment} - Le fragment avec le contenu
-         */
-        const createDefaultMessage = () => {
-            const fragment = document.createDocumentFragment();
-
-            const h1 = document.createElement('h1');
-            h1.textContent = 'Correction de la fiche d\'activités Impression 3D';
-
-            const p = document.createElement('p');
-            p.textContent = 'Aucun document spécifié. Utilisez ';
-
-            const code = document.createElement('code');
-            code.textContent = '?doc=chemin/correction-impression3d.md';
-
-            p.appendChild(code);
-
-            fragment.appendChild(h1);
-            fragment.appendChild(p);
-
-            return fragment;
         };
 
         /**
@@ -188,17 +163,16 @@
         };
 
         /**
-         * Charge et affiche un fichier Markdown
-         * @param {string} mdPath - Chemin vers le fichier .md
+         * Charge et affiche le fichier Markdown de correction
          */
-        async function loadMarkdown(mdPath) {
+        async function loadCorrection() {
             const container = document.getElementById('markdown-container');
 
             try {
-                const response = await fetch(mdPath);
+                const response = await fetch('../content/md/corrections/correction-reparabilite.md');
 
                 if (!response.ok) {
-                    throw new Error(`Fichier non trouvé: ${mdPath}`);
+                    throw new Error('Impossible de charger la correction');
                 }
 
                 const mdText = await response.text();
@@ -210,32 +184,21 @@
                 // Générer la Table des Matières
                 generateTOC(container);
 
-                // Met à jour le titre de la page
+                // Met à jour le titre avec le premier H1
                 const firstH1 = container.querySelector('h1');
                 if (firstH1) {
                     document.title = `${firstH1.textContent} | TechnoDocs`;
                 }
 
             } catch (error) {
-                // Affichage sécurisé du message d'erreur (sans innerHTML)
                 container.textContent = '';
                 container.appendChild(createErrorMessage(error.message));
-                console.error('Erreur chargement MD:', error);
+                console.error('Erreur chargement correction:', error);
             }
         }
 
-        // Récupère le fichier MD depuis l'URL (?doc=chemin/fichier.md)
-        const params = new URLSearchParams(window.location.search);
-        const docPath = params.get('doc');
-
-        if (docPath) {
-            loadMarkdown(docPath);
-        } else {
-            // Affiche un message par défaut de manière sécurisée
-            const container = document.getElementById('markdown-container');
-            container.textContent = '';
-            container.appendChild(createDefaultMessage());
-        }
+        // Charger automatiquement la correction
+        loadCorrection();
     </script>
 </body>
 </html>
