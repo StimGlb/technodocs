@@ -47,8 +47,6 @@ dist-ssr/
 # Deployment scripts
 deploy.bat
 deploy.sh
-package.json
-vite.config.js
 CLAUDE.md
 DEPLOYMENT.md
 

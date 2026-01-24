@@ -11,6 +11,17 @@
   # Ne lance le build que si des fichiers dans src ou le package.json ont changé
   ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- dist/ package.json"
 
+# Local development configuration
+[dev]
+  # Command to run for local development
+  command = "npm run dev"
+  # Port for the dev server
+  port = 5173
+  # Publish directory for local dev
+  publish = "."
+  # Auto-open browser
+  autoLaunch = false
+
 # Headers for caching and security
 [[headers]]
   for = "/*"
