@@ -1,7 +1,7 @@
 {
   "name": "technodocs",
   "version": "1.0.0",
-  "description": "Application de flashcards pour l'enseignement de l'Indice de Réparabilité",
+  "description": "Application pour l'enseignement de l'Indice de Réparabilité",
   "type": "module",
   "scripts": {
     "dev": "vite",
