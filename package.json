@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:netlify": "netlify dev",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "bash deploy.sh",
-    "deploy:win": "deploy.bat",
+    "deploy:preview": "netlify deploy",
+    "deploy:prod": "netlify deploy --prod",
     "security-check": "node security-check.js",
-    "security-check:prod": "node security-check.js https://votre-site.netlify.app",
+    "security-check:prod": "node security-check.js https://technodocs.netlify.app",
     "commit": "bash ./scripts/commit.sh",
     "commit:win": "./scripts/commit.bat"
   },

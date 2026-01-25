@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ressources de Technologie pour les collégiens - Cours, outils et exercices interactifs">
+    <title>Techno Docs | Accueil</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <!-- Google Fonts - Police moderne et lisible -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <script type="module" crossorigin src="/assets/index-ClZ_cJxn.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-_GX-eHF0.css">
+</head>
+<body>
+
+    <!-- Header avec navigation -->
+    <div id="header-placeholder"></div>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero__content">
+                <h1 class="hero__title">Bienvenue sur <span class="highlight">TechnoDocs</span></h1>
+                <p class="hero__subtitle">Consulte les ressources, accède aux outils, révise les cours et vérifie les corrections.</p>
+                <div class="hero__actions">
+                    <a href="#cours" class="btn btn--primary">Commencer</a>
+                    <a href="#outils" class="btn btn--secondary">Voir les outils</a>
+                </div>
+            </div>
+            <div class="hero__illustration">
+                <div class="hero__shapes">
+                    <div class="shape shape--1"></div>
+                    <div class="shape shape--2"></div>
+                    <div class="shape shape--3"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section Cours -->
+        <section id="cours" class="section">
+            <div class="section__header">
+                <h2 class="section__title">📚 Cours</h2>
+                <p class="section__description">Accède aux documents et supports visuels</p>
+            </div>
+            
+            <div class="cards-grid" id="flashcard-category-grid">
+                <!-- Les catégories seront chargées ici par JS ou définies statiquement -->
+                <a href="pages/conception-3d.html" class="card card--cours">
+                    <div class="card__icon">🏗️</div>
+                    <h3 class="card__title">Conception 3D</h3>
+                    <p class="card__text">Conception d'un objet utile, modélisation et impression 3D</p>
+                </a>
+
+                <a href="pages/reparabilite.html" class="card card--cours">
+                    <div class="card__icon">🔌</div>
+                    <h3 class="card__title">Réparabilité</h3>
+                    <p class="card__text">Indice de réparabilité, diagnostic de panne et améliorations</p>
+                </a>
+
+                <!-- <a href="pages/programmation.html" class="card card--cours">
+                    <div class="card__icon">💻</div>
+                    <h3 class="card__title">Programmation</h3>
+                    <p class="card__text">Scratch, Python et Arduino</p>
+                </a>
+
+                <a href="pages/reseaux.html" class="card card--cours">
+                    <div class="card__icon">🌐</div>
+                    <h3 class="card__title">Internet & Réseaux</h3>
+                    <p class="card__text">Web, sécurité et communication</p>
+                </a> -->
+            </div>
+        </section>
+       <!-- Section Outils -->
+        <section id="outils" class="section section--alt">
+            <div class="section__header">
+                <h2 class="section__title">🛠️ Outils Numériques</h2>
+                <p class="section__description">Accès direct aux plateformes de création</p>
+            </div>
+            
+            <div class="tools-grid">                
+                <a href="/src/pages/outils/tinkercad-classes.html" target="_blank" rel="noopener" class="tool-card">
+                    <img src="/assets/logo-tinkercad-iuW07WeG.png" alt="Tinkercad" class="selector-icon">
+                    <span class="tool-card__name">Rejoignez votre classe</span>
+                    <span class="tool-card__tag">3D / Circuits</span>
+                </a>
+
+                <a href="https://scratch.mit.edu/" target="_blank" rel="noopener" class="tool-card">
+                    <div class="tool-card__logo">🐱</div>
+                    <span class="tool-card__name">Scratch</span>
+                    <span class="tool-card__tag">Programmation visuelle</span>
+                </a>
+                
+                <a href="https://ide.mblock.cc/" target="_blank" rel="noopener" class="tool-card">
+                    <div class="tool-card__logo">🤖</div>
+                    <span class="tool-card__name">mBlock</span>
+                    <span class="tool-card__tag">Robotique</span>
+                </a>
+
+                <a href="https://fr.vittascience.com/" target="_blank" rel="noopener" class="tool-card">
+                    <div class="tool-card__logo">🔬</div>
+                    <span class="tool-card__name">Vittascience</span>
+                    <span class="tool-card__tag">Arduino / micro:bit</span>
+                </a>
+                
+                <a href="https://trinket.io/" target="_blank" rel="noopener" class="tool-card">
+                    <div class="tool-card__logo">🐍</div>
+                    <span class="tool-card__name">Trinket</span>
+                    <span class="tool-card__tag">Python en ligne</span>
+                </a>
+            </div>
+        </section>
+
+        <!-- Section Révisions -->
+        <section id="revisions" class="section">
+            <div class="section__header">
+                <h2 class="section__title">🧠 Révisions</h2>
+                <p class="section__description">Flashcards et fiches pour mémoriser</p>
+            </div>
+            
+            <div class="revision-grid">
+                <a href="/src/pages/flashcards/flashcards.html" class="revision-card revision-card--flashcards">
+                    <div class="revision-card__icon">🗒️</div>
+                    <h3 class="revision-card__title">Flashcards</h3>
+                    <p class="revision-card__text">Révise en t'amusant avec des cartes interactives</p>
+                </a>
+                
+                <a href="pages/fiches.html" class="revision-card revision-card--fiches">
+                    <div class="revision-card__icon">📝</div>
+                    <h3 class="revision-card__title">Fiches de synthèse</h3>
+                    <p class="revision-card__text">L'essentiel à retenir pour chaque chapitre</p>
+                </a>
+                
+                <a href="pages/quiz.html" class="revision-card revision-card--quiz">
+                    <div class="revision-card__icon">❓</div>
+                    <h3 class="revision-card__title">Évaluations</h3>
+                    <p class="revision-card__text">Teste tes connaissances et tes compétences</p>
+                </a>
+            </div>
+        </section>
+        
+        <!-- Section Corrections -->
+        <section id="corrections" class="section">
+            <div class="section__header">
+                <h2 class="section__title">📝 Corrections</h2>
+                <p class="section__description">Toutes les corrections des activités et évaluations</p>
+            </div>
+
+            <div class="correction-grid">
+                <a href="/src/pages/corrections/fiches_activites.html" class="correction-card correction-card--fiches">
+                    <div class="correction-card__icon">📋</div>
+                    <h3 class="correction-card__title">Fiches d'activités</h3>
+                    <p class="correction-card__text">Corrections des fiches d'activités en classe</p>
+                </a>
+
+                <a href="/src/pages/corrections/quiz.html" class="correction-card correction-card--quiz">
+                    <div class="correction-card__icon">❓</div>
+                    <h3 class="correction-card__title">Quiz</h3>
+                    <p class="correction-card__text">Réponses et explications des quiz</p>
+                </a>
+
+                <a href="/src/pages/corrections/evaluations.html" class="correction-card correction-card--eval">
+                    <div class="correction-card__icon">📊</div>
+                    <h3 class="correction-card__title">Évaluations</h3>
+                    <p class="correction-card__text">Corrigés détaillés des évaluations</p>
+                </a>
+            </div>
+        </section>
+
+        <!-- Section Ressources
+        <section id="ressources" class="section section--alt">
+            <div class="section__header">
+                <h2 class="section__title">📁 Ressources</h2>
+                <p class="section__description">Documents, vidéos et liens utiles</p>
+            </div>
+            
+            <div class="resources-list">
+                <div class="resource-item">
+                    <span class="resource-item__icon">📹</span>
+                    <div class="resource-item__content">
+                        <h4>Tutoriels vidéo</h4>
+                        <p>Guides pas à pas en vidéo</p>
+                    </div>
+                    <a href="pages/videos.html" class="resource-item__link">Voir</a>
+                </div>
+                
+                <div class="resource-item">
+                    <span class="resource-item__icon">📄</span>
+                    <div class="resource-item__content">
+                        <h4>Documents PDF</h4>
+                        <p>Cours et exercices téléchargeables</p>
+                    </div>
+                    <a href="pages/documents.html" class="resource-item__link">Voir</a>
+                </div>
+                
+                <div class="resource-item">
+                    <span class="resource-item__icon">🔗</span>
+                    <div class="resource-item__content">
+                        <h4>Liens utiles</h4>
+                        <p>Sites et ressources externes</p>
+                    </div>
+                    <a href="pages/liens.html" class="resource-item__link">Voir</a>
+                </div>
+            </div>
+        </section> -->
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+</body>
+</html>
