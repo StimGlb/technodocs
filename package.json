@@ -1,7 +1,7 @@
 {
   "name": "technodocs",
   "version": "1.0.0",
-  "description": "Application de flashcards pour l'enseignement de l'Indice de Réparabilité",
+  "description": "Application pour l'enseignement de l'Indice de Réparabilité",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -25,5 +25,8 @@
   "license": "MIT",
   "devDependencies": {
     "vite": "^7.3.1"
+  },
+  "dependencies": {
+    "@netlify/plugin-lighthouse": "^6.0.4"
   }
 }

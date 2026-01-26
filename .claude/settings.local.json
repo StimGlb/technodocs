@@ -17,10 +17,7 @@
       "Bash(npm run preview:*)",
       "Bash(tree:*)",
       "Bash(npx http-server -p 8080 -o)",
-      "Bash(npx http-server -p 3000)",
-      "Bash(npx http-server . -p 3000)",
-      "Bash(netstat:*)",
-      "Bash(findstr:*)"
+      "Bash(sh)"
     ],
     "deny": [],
     "ask": []

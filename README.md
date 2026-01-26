@@ -5,65 +5,144 @@ Ressources pédagogiques incluant cours, outils interactifs, flashcards et suppo
 
 ## 🎯 Vue d'ensemble
 
-**TechnoDocs** est une plateforme web statique sans framework, construite en HTML/CSS/JavaScript pur, destinée aux élèves de collège pour l'apprentissage de la Technologie. Le projet met l'accent sur la simplicité, la performance et l'accessibilité.
+**TechnoDocs** est une plateforme web statique sans framework, construite en HTML/CSS/JavaScript pur (ES6+), destinée aux élèves de collège pour l'apprentissage de la Technologie (Cycle 4). Le projet met l'accent sur la **sécurité**, la **performance**, l'**accessibilité** et la **modularité**.
 
 ### Thématiques couvertes
 - 🏗️ **Conception 3D** - Modélisation et impression 3D
 - 🔌 **Réparabilité** - Indice de réparabilité, diagnostic de pannes
 - 💻 **Programmation** - Scratch, Python, Arduino
 - 🌐 **Internet & Réseaux** - Web, sécurité, communication
+- 🎴 **Révisions interactives** - Flashcards avec animations 3D
 
 ## 🏗️ Architecture
 
 ### Stack technique
 - **HTML5/CSS3** - Structure et design moderne avec CSS Variables
 - **JavaScript ES6+** - Vanilla JS, modules ES6, Intersection Observer API
-- **Fonts** - Google Fonts (Inter, Space Grotesk)
-- **Hébergement** - Netlify avec déploiement automatique
-- **Pas de build** - Site statique pur, pas de framework ni bundler
+- **Fonts** - Google Fonts (Inter, Space Grotesk, Lexend, Fira Code)
+- **Sécurité** - CSP strict, HSTS, headers Netlify renforcés
+- **Hébergement** - Netlify avec déploiement automatique optimisé
+- **Dev Server** - Vite pour le développement local avec hot reload
+- **Pas de framework** - Site statique pur, architecture modulaire
 
 ### Structure du projet
 
 ```
 technodocs/
 ├── index.html                 # Page d'accueil principale
-├── dist/
+├── src/                       # Sources du site (servi par Vite en dev)
 │   ├── css/
-│   │   └── style.css         # Styles globaux avec CSS Variables
+│   │   ├── style.css         # Styles globaux avec CSS Variables
+│   │   └── markdown.css      # Styles pour le rendu Markdown
 │   ├── js/
 │   │   ├── app.js            # Logique principale (navigation, animations)
-│   │   └── components.js     # Chargement dynamique header/footer
+│   │   ├── components.js     # Chargement dynamique header/footer
+│   │   ├── links-loader.js   # Système de liens modulaire
+│   │   └── libs/
+│   │       ├── lucide.min.js # Icônes Lucide (local)
+│   │       └── marked.min.js # Parser Markdown (local)
 │   ├── includes/
 │   │   ├── header.html       # Composant header réutilisable
-│   │   └── footer.html       # Composant footer réutilisable
+│   │   ├── footer.html       # Composant footer réutilisable
+│   │   └── nav.html          # Navigation mobile
+│   ├── assets/
+│   │   └── images/           # Images et logos
+│   ├── data/
+│   │   └── links.json        # Configuration centralisée des liens
 │   └── pages/
-│       └── flashcards/
-│           └── reparabilite.html  # Application flashcards (30 cartes)
-├── netlify.toml              # Configuration Netlify + optimisation builds
-├── .gitignore                # Exclusion fichiers dev/deploy
-└── CLAUDE.md                 # Instructions pour Claude Code (AI)
+│       ├── flashcards/
+│       │   ├── flashcards.html      # Index des flashcards
+│       │   ├── reparabilite.html    # 30 flashcards Réparabilité
+│       │   └── modelisation3d.html  # Flashcards Modélisation 3D
+│       ├── corrections/
+│       │   ├── fiches_activites.html        # Index des corrections
+│       │   ├── correction-impression3d.html # Correction dédiée
+│       │   └── correction-reparabilite.html # Correction dédiée
+│       ├── content/
+│       │   └── md/                  # Fichiers Markdown sources
+│       │       ├── correction-impression3d.md
+│       │       └── correction-reparabilite.md
+│       ├── outils/
+│       │   └── tinkercad-classes.html
+│       └── md-template.html         # Template générique Markdown
+├── dist/                      # Copie de src/ pour compatibilité (legacy)
+├── data/
+│   └── links.json            # Configuration des liens (racine)
+├── docs/                     # Documentation technique
+│   ├── MARKDOWN_SYSTEM.md    # Guide système Markdown
+│   ├── LINKS_SYSTEM.md       # Guide système de liens
+│   ├── SECURITY.md           # Bonnes pratiques sécurité
+│   └── resume.md             # Résumé des améliorations
+├── scripts/                  # Scripts d'automatisation
+│   ├── commit.sh             # Script commit Linux/Mac
+│   ├── commit.bat            # Script commit Windows
+│   └── SCRIPTS.md            # Documentation des scripts
+├── security-check.js         # Script de vérification sécurité
+├── netlify.toml              # Configuration Netlify + headers sécurité
+├── _redirects                # Règles de redirection Netlify
+├── package.json              # Scripts npm et dépendances
+└── .gitignore                # Exclusion fichiers dev/deploy
 ```
 
 ## ✨ Fonctionnalités principales
 
-### 🎴 Application Flashcards (reparabilite.html)
-Application standalone complète pour l'apprentissage de l'Indice de Réparabilité :
+### 🎴 Applications Flashcards interactives
 
-- **30 flashcards** avec questions/réponses sur la réparabilité
-- **Animation flip 3D** - Effet de retournement de carte avec `transform-style: preserve-3d`
-- **Deux modes d'affichage** :
-  - Mode grille : vue d'ensemble de toutes les cartes
-  - Mode carte unique : navigation une par une avec flèches
-- **Recherche en temps réel** - Filtrage instantané sur questions et réponses
-- **Mélange aléatoire** - Algorithme Fisher-Yates pour randomiser l'ordre
-- **Navigation clavier** - Flèches gauche/droite, Espace/Enter pour flip
-- **Statistiques dynamiques** - Compteur cartes totales/affichées
-- **Design intégré** - Header/footer du site + styles cohérents
+Deux applications standalone complètes pour l'apprentissage actif :
+
+#### Réparabilité (30 flashcards)
+- Questions/réponses sur l'Indice de Réparabilité
+- Animation flip 3D avec `transform-style: preserve-3d`
+- Recherche en temps réel sur questions et réponses
+- Mélange aléatoire (algorithme Fisher-Yates)
+- Navigation clavier (flèches, Espace/Enter)
+- Statistiques dynamiques
+
+#### Modélisation 3D
+- Flashcards sur la conception et l'impression 3D
+- Même système d'interaction que Réparabilité
+- Design cohérent avec palette de couleurs dédiée
+
+**Fonctionnalités communes :**
+- **Deux modes d'affichage** : grille complète ou carte unique
+- **Navigation fluide** : Clavier et souris
+- **Design intégré** : Header/footer du site + styles cohérents
+- **Responsive** : Adapté mobile et desktop
+
+### 📝 Système de rendu Markdown
+
+Permet de créer facilement des pages de contenu pédagogique (corrections, cours, fiches) à partir de fichiers `.md` :
+
+- **Table des matières automatique** - Générée depuis les titres H3/H4
+- **Style optimisé éducation** - Police Lexend (dyslexie-friendly), fond papier
+- **Sécurité renforcée** - Zéro `innerHTML`, utilisation de `DOMParser`
+- **Marked.js local** - Pas de dépendance CDN
+- **Encadrés automatiques** - Pour compétences, critères, réponses modèles
+- **Tableaux stylisés** - Avec alternance de couleurs et hover
+- **Blocs de code** - Avec Fira Code et coloration
+
+**Pages disponibles :**
+- Correction Impression 3D
+- Correction Réparabilité
+- Template générique avec paramètre `?doc=`
+
+### 🔗 Système de liens modulaire
+
+Gestion centralisée de tous les liens de l'index via `data/links.json` :
+
+- **Centralisation** - Tous les liens dans un seul fichier JSON
+- **Modularité** - Ajout/suppression sans toucher au HTML
+- **Types supportés** - Outils, Corrections, Cours
+- **Icônes flexibles** - Emoji ou images personnalisées
+- **Génération sécurisée** - Via `createElement` (pas d'`innerHTML`)
+- **Fallback HTML** - Si JSON non chargé, contenu statique affiché
 
 ### 🧩 Système de composants réutilisables
+
 - **Header/Footer dynamiques** - Chargés via `fetch()` et injectés dans les placeholders
 - **Navigation mobile** - Menu hamburger responsive avec animations
 - **Scroll animations** - Intersection Observer pour effets au défilement
+- **Architecture modulaire** - Composants indépendants et réutilisables
 
 ### 🎨 Design System
 Variables CSS centralisées dans `:root` :
@@ -88,32 +167,41 @@ Le fichier `netlify.toml` contient une règle d'optimisation pour **économiser 
 
 ### Gestion des crédits
 - **Plan gratuit** : 300 minutes de build/mois
-- **Utilisation actuelle** : 195/300 (105 minutes restantes)
+- **Utilisation actuelle** : 270/300 (30 minutes restantes)
 - **Stratégie** : Regrouper les modifications et déployer uniquement les changements testés et fonctionnels
 
-### Scripts de déploiement
+### Scripts de déploiement et commit
 
-**Windows** :
+**Commit automatisé (Windows)** :
 ```bash
-deploy.bat
+npm run commit:win
 # OU
-npm run deploy:win
+./scripts/commit.bat
 ```
 
-**Linux/macOS** :
+**Commit automatisé (Linux/macOS)** :
 ```bash
-./deploy.sh
+npm run commit
 # OU
-npm run deploy
+./scripts/commit.sh
 ```
 
 Les scripts automatisent :
-1. Vérification de la branche `main`
+1. Affichage du statut Git
 2. Détection des modifications non committées
 3. Affichage des fichiers modifiés
 4. Prompt pour le message de commit
 5. Add, commit et push vers GitHub
-6. Déploiement automatique Netlify
+6. Déploiement automatique Netlify (si fichiers src/ modifiés)
+
+**Vérification de sécurité** :
+```bash
+# Local
+npm run security-check
+
+# Production
+npm run security-check:prod
+```
 
 ### Déploiement manuel
 ```bash
@@ -145,21 +233,23 @@ npm run dev    # Lance le serveur sur http://localhost:5173
 ## 📂 Gestion Git
 
 ### Branches
-- **`main`** - Branche de production (déploiement automatique)
-- **`dev`** - Branche de développement (synchronisée avec main)
+- **`main`** - Branche de production (déploiement automatique Netlify)
+- **`dev`** - Branche de développement active
+- **`feature/*`** - Branches de fonctionnalités (ex: `feature/md-template`)
 
 ### Workflow recommandé
-1. Développer sur `main` ou créer une feature branch
-2. Tester localement
-3. Commiter les changements
-4. Pusher vers GitHub (Netlify déploie automatiquement si nécessaire)
+1. Développer sur `dev` ou créer une feature branch
+2. Tester localement avec `npm run dev`
+3. Vérifier la sécurité avec `npm run security-check`
+4. Commiter avec `npm run commit` ou `npm run commit:win`
+5. Merger vers `main` pour déploiement en production
 
 ### Fichiers ignorés (.gitignore)
 Les fichiers suivants sont exclus du dépôt :
-- Scripts de déploiement (`deploy.sh`, `deploy.bat`)
-- Fichiers de documentation technique (`CLAUDE.md`, `DEPLOYMENT.md`)
-- Configuration npm (`package.json`, `package-lock.json`)
-- Fichiers système et IDE
+- Dépendances : `node_modules/`, `package-lock.json`
+- Fichiers système et IDE : `.vscode/`, `.idea/`, `.DS_Store`
+- Netlify : `.netlify/`
+- Logs et temporaires : `*.log`, `*.tmp`
 
 ## 🔧 Technologies et patterns
 
@@ -178,69 +268,92 @@ Les fichiers suivants sont exclus du dépôt :
 - **Media Queries** - Design responsive
 
 ### Bonnes pratiques
+- ✅ **Sécurité renforcée** - CSP strict, HSTS, anti-XSS (zéro `innerHTML`)
 - ✅ **Mobile-first** - Design responsive par défaut
-- ✅ **Accessibilité** - Attributs ARIA, focus visible
-- ✅ **Performance** - Pas de framework lourd, lazy loading
-- ✅ **SEO** - Meta tags, semantic HTML
-- ✅ **Sécurité** - Headers Netlify, CSP
+- ✅ **Accessibilité** - Attributs ARIA, police Lexend, navigation clavier
+- ✅ **Performance** - Pas de framework lourd, lazy loading, assets locaux
+- ✅ **SEO** - Meta tags, semantic HTML, URLs propres
+- ✅ **Modularité** - Composants réutilisables, configuration centralisée
+- ✅ **Maintenabilité** - Code documenté, architecture claire
 
 ## 📝 Modifications et ajouts
 
 ### Pour ajouter des flashcards
-1. Éditer `dist/pages/flashcards/reparabilite.html`
-2. Modifier l'array `flashcardsData` (ligne ~435)
+1. Éditer le fichier HTML correspondant dans `src/pages/flashcards/`
+2. Modifier l'array `flashcardsData` dans le `<script>`
 3. Format : `{ q: "Question?", a: "Réponse." }`
-4. Mettre à jour les totaux hardcodés si nécessaire
+4. Mettre à jour le compteur total si nécessaire
+
+### Pour créer une page de correction Markdown
+1. Créer le fichier `.md` dans `src/pages/content/md/`
+2. Suivre la structure : H2 pour titre, H3 pour activités, H4 pour questions
+3. Créer une page HTML dédiée (copier `correction-impression3d.html`)
+4. Adapter le chemin dans `fetch()` vers votre fichier `.md`
+5. Ajouter le lien dans `src/pages/corrections/fiches_activites.html`
+6. **Documentation complète** : Voir `docs/MARKDOWN_SYSTEM.md`
+
+### Pour ajouter un lien (outil, correction, cours)
+1. Éditer `data/links.json`
+2. Ajouter l'objet dans la section appropriée (`outils`, `corrections`, `cours`)
+3. Définir : `name`, `url`, `description`/`tag`, `icon`
+4. Valider la syntaxe JSON
+5. Tester en local avec `npm run dev`
+6. **Documentation complète** : Voir `docs/LINKS_SYSTEM.md`
 
 ### Pour créer une nouvelle page
-1. Créer le fichier HTML dans `dist/pages/`
-2. Lier `../../css/style.css` pour les styles globaux
+1. Créer le fichier HTML dans `src/pages/`
+2. Lier `../css/style.css` pour les styles globaux
 3. Ajouter les placeholders `#header-placeholder` et `#footer-placeholder`
-4. Charger `../../js/components.js` en module
-5. Ajouter le lien dans la navigation (`dist/includes/header.html`)
+4. Charger `../js/components.js` en module
+5. Ajouter le lien dans la navigation (`src/includes/header.html`) ou via `links.json`
 
 ### Pour modifier les styles globaux
-- Éditer `dist/css/style.css`
-- Utiliser les variables CSS existantes
+- Éditer `src/css/style.css`
+- Utiliser les variables CSS existantes (`:root`)
 - Tester sur toutes les pages
+- Pour les pages Markdown : éditer `src/css/markdown.css`
 
-## 🤖 Collaboration avec Claude Code
+## 📚 Documentation
 
-### Fichier d'instructions : CLAUDE.md
-Le fichier `CLAUDE.md` contient des instructions détaillées pour Claude Code :
-- Vue d'ensemble du projet
-- Architecture et structure
-- Stack technique détaillée
-- Fonctionnalités principales
-- Guidelines de modification
-- Configuration Netlify
+Le projet dispose d'une documentation technique complète dans le dossier `docs/` :
 
-### Prompt de relance pour nouvelle session
+### Guides système
+- **`MARKDOWN_SYSTEM.md`** - Système de rendu Markdown complet
+  - Création de pages de corrections
+  - Table des matières automatique
+  - Guide de style et bonnes pratiques
+  - Personnalisation et troubleshooting
 
-Pour relancer efficacement une session avec Claude Code, utilisez ce prompt :
+- **`LINKS_SYSTEM.md`** - Système de liens modulaire
+  - Gestion centralisée via JSON
+  - Ajout d'outils, corrections, cours
+  - Types d'icônes et personnalisation
+  - Exemples et troubleshooting
 
-```
-Contexte du projet TechnoDocs :
-- Site web éducatif statique pour cours de Technologie au collège
-- Stack : HTML/CSS/JS pur (pas de framework), hébergé sur Netlify
-- Architecture : composants réutilisables (header/footer), système de design avec CSS Variables
-- Fonctionnalités clés : application flashcards avec flip 3D, recherche, navigation clavier
-- Déploiement optimisé : règle ignore dans netlify.toml pour économiser les crédits (195/300 utilisés)
-- Branches : main (prod), dev (sync avec main)
-- Fichiers exclus du repo : deploy.sh/.bat, CLAUDE.md, package.json (voir .gitignore)
+- **`SECURITY.md`** - Bonnes pratiques sécurité
+  - Configuration CSP et HSTS
+  - Guide d'utilisation du script `security-check.js`
+  - Recommandations production
+  - Checklist de déploiement
 
-Consulte CLAUDE.md pour les détails techniques complets.
+- **`VITE_SETUP.md`** - Configuration Vite et développement
 
-[Décris ici ta demande spécifique...]
-```
+### Fichiers de référence
+- **`resume.md`** - Résumé des améliorations de sécurité (2026-01-21)
+- **`scripts/SCRIPTS.md`** - Documentation des scripts d'automatisation
 
 ## 📊 Statistiques
 
-- **30 flashcards** sur l'Indice de Réparabilité
-- **Architecture modulaire** avec composants réutilisables
-- **0 framework** - Vanilla JavaScript uniquement
-- **Déploiement optimisé** - Économie de crédits Netlify
+- **2 applications flashcards** - Réparabilité (30 cartes) + Modélisation 3D
+- **Système Markdown** - Rendu automatique avec TOC et styles éducatifs
+- **Système de liens modulaire** - Configuration JSON centralisée
+- **Architecture modulaire** - Composants réutilisables (header, footer, nav)
+- **0 framework** - Vanilla JavaScript ES6+ uniquement
+- **Sécurité renforcée** - CSP strict, HSTS, zéro `innerHTML`
+- **Score sécurité** - 63% local, ~90% production attendu
+- **Déploiement optimisé** - Économie de crédits Netlify (270/300 utilisés)
 - **Mobile-first** - Responsive sur tous les écrans
+- **Accessibilité** - Police Lexend, ARIA labels, navigation clavier
 
 ## 🔗 Liens utiles
 

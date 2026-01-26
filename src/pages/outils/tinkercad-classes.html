@@ -174,7 +174,7 @@
             <div class="tinkercad-container">
                 <div class="class-selector">
                     <div class="selector-header">
-                        <img src="/src/images/logo-tinkercad.png" alt="Tinkercad" class="selector-icon">
+                        <img src="/dist/images/logo-tinkercad.png" alt="Tinkercad" class="selector-icon">
                         <h1 class="selector-title">Rejoindre ma classe</h1>
                         <p class="selector-subtitle">Sélectionne ta classe pour accéder à Tinkercad</p>
                     </div>
@@ -233,34 +233,7 @@
     <!-- Scripts -->
     <script type="module" src="/src/js/components.js"></script>
     <script type="module" src="/src/js/app.js"></script>
-
-    <script>
-        // Configuration des classes
-        const TINKERCAD_BASE_URL = 'https://www.tinkercad.com/joinclass/';
-        
-        // Éléments DOM
-        const classSelect = document.getElementById('class-select');
-        const joinBtn = document.getElementById('join-btn');
-        const classForm = document.getElementById('class-form');
-
-        // Activer/désactiver le bouton selon la sélection
-        classSelect.addEventListener('change', () => {
-            const hasSelection = classSelect.value && classSelect.value !== 'XXXXXX';
-            joinBtn.disabled = !hasSelection;
-        });
-
-        // Gestion de la soumission
-        classForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const classCode = classSelect.value;
-            
-            if (classCode && classCode !== 'XXXXXX') {
-                // Ouvrir Tinkercad dans un nouvel onglet
-                window.open(TINKERCAD_BASE_URL + classCode, '_blank', 'noopener');
-            }
-        });
-    </script>
+    <script src="/src/pages/outils/tinkercad-handler.js"></script>
 
 </body>
 </html>

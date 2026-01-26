@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title data-template="PAGE_TITLE">Fiche d'Activité - Technologie</title>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <!-- Styles du template -->
+    <link rel="stylesheet" href="firebase-form-styles.css">
+
+    <!-- Configuration Firebase (à personnaliser) -->
+    <script src="firebase-config.js"></script>
+</head>
+<body>
+    <div class="container" id="ficheContent">
+        <!-- En-tête avec informations élève -->
+        <div class="header">
+            <div class="header-left">
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label>Prénom <span class="required">*</span></label>
+                        <input type="text" id="prenom" placeholder="Prénom" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nom <span class="required">*</span></label>
+                        <input type="text" id="nom" placeholder="Nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Classe <span class="required">*</span></label>
+                        <select id="classe" required>
+                            <option value="">-- Sélectionnez --</option>
+                            <option value="302">302</option>
+                            <option value="303">303</option>
+                            <option value="304">304</option>
+                            <option value="305">305</option>
+                            <option value="306">306</option>
+                            <option value="401">401</option>
+                            <option value="402">402</option>
+                            <option value="403">403</option>
+                            <option value="404">404</option>
+                            <option value="405">405</option>
+                            <option value="505">505</option>
+                            <option value="506">506</option>
+                            <option value="507">507</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Date <span class="required">*</span></label>
+                        <input type="date" id="date" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Titre principal -->
+        <h1 data-template="FORM_TITLE">Fiche d'Activité - Technologie</h1>
+
+        <!-- Zone de contenu personnalisable -->
+        <div data-template="CUSTOM_CONTENT">
+            <!--
+                INSTRUCTIONS :
+                Remplacez cette section par votre contenu personnalisé.
+                Vous pouvez utiliser :
+                - Des sections avec class="section"
+                - Des champs de formulaire avec class="form-group"
+                - Des contenus en lecture seule avec class="read-only-content"
+                - Des zones de contenu avec class="content-box"
+            -->
+
+            <!-- Exemple de section -->
+            <div class="section">
+                <div class="section-title">
+                    📝 Section d'exemple
+                </div>
+
+                <div class="content-box">
+                    <h3>Titre du contenu</h3>
+                    <p>Contenu de votre activité...</p>
+                </div>
+
+                <div class="form-group">
+                    <label>Question exemple <span class="required">*</span></label>
+                    <textarea id="question_exemple" placeholder="Votre réponse..." required></textarea>
+                    <div class="help-text">Texte d'aide pour l'élève</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Boutons de contrôle -->
+        <div class="controls-container">
+            <button type="button" id="saveBtn" class="btn-action btn-save">
+                💾 Enregistrer vos réponses
+            </button>
+            <button type="button" id="exportJsonBtn" class="btn-action btn-json">
+                📦 Exporter
+            </button>
+            <button type="button" id="resetBtn" class="btn-action btn-reset">
+                🔄 Réinitialiser
+            </button>
+        </div>
+
+        <!-- Messages de feedback -->
+        <div id="successMessage" class="success-message">
+            ✅ <strong>Succès !</strong> Ta fiche a été enregistrée avec succès dans la base de données.
+        </div>
+        <div id="errorMessage" class="error-message">
+            ❌ <strong>Erreur !</strong> <span id="errorText"></span>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #7f8c8d; font-size: 12px;">
+            <span data-template="FOOTER_TEXT">Collège Moulin à vent – Technologie au collège</span><br>
+            <span data-template="FOOTER_COMPETENCES">Compétences travaillées : Analyser des systèmes techniques • Comprendre les flux d'information</span>
+        </div>
+    </div>
+
+    <!-- Script Firebase réutilisable -->
+    <script src="firebase-form-handler.js"></script>
+
+    <!-- Configuration personnalisée du formulaire -->
+    <script>
+        // ============================================
+        // CONFIGURATION DU FORMULAIRE
+        // ============================================
+
+        const formConfig = {
+            // Nom de la collection Firestore
+            collectionName: 'nom_de_votre_collection',
+
+            // Type de fiche (pour identification)
+            ficheType: 'type-de-fiche',
+
+            // Problématique ou titre de l'activité
+            problematique: 'Votre problématique',
+
+            // Liste des champs obligatoires (IDs des éléments)
+            requiredFields: [
+                'prenom',
+                'nom',
+                'classe',
+                'date',
+                'question_exemple'
+                // Ajoutez ici les IDs de vos champs personnalisés
+            ],
+
+            // Fonction pour collecter les données personnalisées
+            collectCustomData: function() {
+                return {
+                    questionExemple: document.getElementById('question_exemple')?.value.trim()
+                    // Ajoutez ici vos champs personnalisés
+                };
+            },
+
+            // Nom du fichier pour l'export JSON
+            exportFileName: function(data) {
+                return `fiche-${formConfig.ficheType}-${data.nom || 'sans-nom'}.json`;
+            }
+        };
+
+        // Initialiser le formulaire avec la configuration
+        initFirebaseForm(formConfig);
+    </script>
+</body>
+</html>
