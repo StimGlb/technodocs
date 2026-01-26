@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Flashcards interactives pour réviser la Technologie au collège - Électronique, Programmation, 3D, Réseaux">
+    <title>Techno Docs | Flashcards</title>
+    <link rel="stylesheet" href="/dist/css/style.css">
+    <!-- Google Fonts - Police moderne et lisible -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header avec navigation -->
+    <div id="header-placeholder"></div>
+
+    <main>
+        <!-- Hero Section pour les Flashcards
+        <section class="hero hero--small">
+            <div class="hero__content">
+                <h1 class="hero__title">Révise avec les <span class="highlight">Flashcards</span></h1>
+                <p class="hero__subtitle">Mémorise les concepts clés de la Technologie de manière ludique.</p>
+            </div>
+        </section> -->
+
+        <!-- Section Catégories de Flashcards -->
+        <section id="flashcard-categories" class="section">
+            <div class="section__header">
+                <h2 class="section__title">🗒️Les flashcards pour réviser</h2>
+                <p class="section__description">Sélectionne un thème pour commencer ta session de révision.</p>
+            </div>
+            
+            <div class="cards-grid" id="flashcard-category-grid">
+                <!-- Les catégories seront chargées ici par JS ou définies statiquement -->
+                <a href="./modelisation3d.html" class="card card--cours">
+                    <div class="card__icon">🏗️</div>
+                    <h3 class="card__title">Conception 3D</h3>
+                    <p class="card__text">Conception d'un objet utile, modélisation et impression 3D</p>
+                </a>
+
+                <a href="./reparabilite.html" class="card card--cours">
+                    <div class="card__icon">🔌</div>
+                    <h3 class="card__title">Réparabilité</h3>
+                    <p class="card__text">Indice de réparabilité, diagnostic de panne et améliorations</p>
+                </a>
+
+                <a href="./programmation.html" class="card card--cours">
+                    <div class="card__icon">💻</div>
+                    <h3 class="card__title">Programmation</h3>
+                    <p class="card__text">Scratch, Python et Arduino</p>
+                </a>
+
+                <a href="./reseaux.html" class="card card--cours">
+                    <div class="card__icon">🌐</div>
+                    <h3 class="card__title">Internet & Réseaux</h3>
+                    <p class="card__text">Web, sécurité et communication</p>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="/dist/js/components.js"></script>
+    <script type="module" src="/dist/js/app.js"></script>
+
+</body>
+</html>

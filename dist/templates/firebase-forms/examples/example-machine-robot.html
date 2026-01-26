@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fiche d'Activité - Machine vs Robot - Exemple</title>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
+
+    <!-- Styles du template -->
+    <link rel="stylesheet" href="../firebase-form-styles.css">
+
+    <!-- Configuration Firebase -->
+    <script src="../firebase-config.js"></script>
+</head>
+<body>
+    <div class="container" id="ficheContent">
+        <!-- En-tête -->
+        <div class="header">
+            <div class="header-left">
+                <div class="info-grid">
+                    <div class="form-group">
+                        <label>Prénom <span class="required">*</span></label>
+                        <input type="text" id="prenom" placeholder="Prénom" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Nom <span class="required">*</span></label>
+                        <input type="text" id="nom" placeholder="Nom" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Classe <span class="required">*</span></label>
+                        <input type="text" id="classe" placeholder="Ex: 5èmeA" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Date <span class="required">*</span></label>
+                        <input type="date" id="date" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <h1>Fiche d'Activité - Machine vs Robot</h1>
+
+        <!-- Objet Système Technique -->
+        <div class="read-only-content">
+            <label style="margin-bottom: 5px;">🔧 Objet Système Technique</label>
+            <p><strong>Machines et Robots</strong> (lave-linge, aspirateur autonome, bras robotique, drone...)</p>
+        </div>
+
+        <!-- Problématique -->
+        <div class="read-only-content" style="background-color: #e8f4f8;">
+            <label style="margin-bottom: 5px;">❓ Problématique</label>
+            <p style="font-size: 18px; font-weight: 600; color: #2c3e50;">
+                Quelles sont les différences entre une machine et un robot ?
+            </p>
+        </div>
+
+        <!-- Activité 1 -->
+        <div class="section">
+            <div class="section-title">
+                📝 Activité 1 : Découverte et observation
+            </div>
+
+            <div class="content-box">
+                <h3>Exemples de machines et de robots</h3>
+                <p><strong>Machines :</strong></p>
+                <ul>
+                    <li>Lave-linge : effectue des cycles programmés de lavage</li>
+                    <li>Perceuse électrique : transforme l'énergie électrique en mouvement de rotation</li>
+                    <li>Four micro-ondes : chauffe les aliments selon un programme</li>
+                    <li>Ventilateur : fait circuler l'air à différentes vitesses</li>
+                </ul>
+
+                <p style="margin-top: 15px;"><strong>Robots :</strong></p>
+                <ul>
+                    <li>Aspirateur autonome : se déplace seul, évite les obstacles, retourne à sa base</li>
+                    <li>Bras robotique industriel : effectue des tâches complexes avec précision</li>
+                    <li>Drone : vole de manière autonome ou pilotée, évite les collisions</li>
+                    <li>Robot tondeuse : tond la pelouse en naviguant de manière autonome</li>
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label>À toi de jouer ! Cite 2 machines et 2 robots que tu connais <span class="required">*</span></label>
+                <textarea id="exemples_machines_robots" placeholder="Exemples :
+Machines : ...
+Robots : ..." required></textarea>
+                <div class="help-text">Donne des exemples concrets que tu utilises ou que tu as déjà vus</div>
+            </div>
+        </div>
+
+        <!-- Activité 2 -->
+        <div class="section">
+            <div class="section-title">
+                🔍 Activité 2 : Comparaison et analyse
+            </div>
+
+            <div class="content-box">
+                <h3>Tableau comparatif</h3>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Critère</th>
+                            <th>Machine</th>
+                            <th>Robot</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Autonomie</strong></td>
+                            <td>Nécessite une action humaine</td>
+                            <td>Peut fonctionner de manière autonome</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Capteurs</strong></td>
+                            <td>Peu ou pas de capteurs</td>
+                            <td>Équipé de nombreux capteurs</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Programmation</strong></td>
+                            <td>Programme fixe et simple</td>
+                            <td>Programme complexe, peut s'adapter</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Interaction</strong></td>
+                            <td>Limitée ou inexistante</td>
+                            <td>Perçoit et réagit à l'environnement</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Prise de décision</strong></td>
+                            <td>Aucune, suit des instructions</td>
+                            <td>Peut prendre des décisions</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="form-group">
+                <label>Question : Selon toi, un lave-vaisselle est-il une machine ou un robot ? Justifie ta réponse <span class="required">*</span></label>
+                <textarea id="question_lave_vaisselle" placeholder="C'est une machine / un robot parce que..." required></textarea>
+                <div class="help-text">Utilise les critères du tableau pour justifier ton choix</div>
+            </div>
+
+            <div class="form-group">
+                <label>Donne un autre exemple d'objet et dis si c'est une machine ou un robot en justifiant <span class="required">*</span></label>
+                <textarea id="exemple_supplementaire" placeholder="Exemple : L'aspirateur Roomba est un robot car..." required></textarea>
+            </div>
+        </div>
+
+        <!-- Conclusion -->
+        <div class="section" style="border-left-color: #27ae60;">
+            <div class="section-title">
+                ✅ Conclusion : Ce qu'il faut retenir
+            </div>
+
+            <div class="content-box" style="background-color: #d4edda; border-left: 5px solid #28a745;">
+                <p><strong>Définition d'une MACHINE :</strong></p>
+                <p>Une machine est un système technique qui transforme une forme d'énergie en une autre pour réaliser une tâche spécifique. Elle nécessite généralement une intervention humaine pour fonctionner et suit un programme fixe.</p>
+
+                <p style="margin-top: 15px;"><strong>Définition d'un ROBOT :</strong></p>
+                <p>Un robot est un système automatique capable de percevoir son environnement grâce à des capteurs, de traiter des informations et de prendre des décisions. Il peut fonctionner de manière autonome et s'adapter à différentes situations.</p>
+
+                <p style="margin-top: 15px;"><strong>Les 3 caractéristiques essentielles d'un robot :</strong></p>
+                <ul>
+                    <li><strong>🔍 PERCEVOIR</strong> : il possède des capteurs pour analyser son environnement</li>
+                    <li><strong>🧠 TRAITER</strong> : il possède un système de traitement qui analyse les données</li>
+                    <li><strong>⚡ AGIR</strong> : il possède des actionneurs qui lui permettent d'agir de manière autonome</li>
+                </ul>
+            </div>
+
+            <div class="form-group">
+                <label>Synthèse personnelle : Explique avec tes propres mots la différence principale entre une machine et un robot <span class="required">*</span></label>
+                <textarea id="synthese_personnelle" placeholder="La différence principale est..." required style="min-height: 120px;"></textarea>
+                <div class="help-text">Exprime ce que tu as compris avec tes propres mots</div>
+            </div>
+        </div>
+
+        <!-- Boutons de contrôle -->
+        <div class="controls-container">
+            <button type="button" id="saveBtn" class="btn-action btn-save">
+                💾 Enregistrer vos réponses
+            </button>
+            <button type="button" id="exportJsonBtn" class="btn-action btn-json">
+                📦 Exporter JSON
+            </button>
+            <button type="button" id="resetBtn" class="btn-action btn-reset">
+                🔄 Réinitialiser
+            </button>
+        </div>
+
+        <!-- Messages de feedback -->
+        <div id="successMessage" class="success-message">
+            ✅ <strong>Succès !</strong> Ta fiche a été enregistrée avec succès dans la base de données.
+        </div>
+        <div id="errorMessage" class="error-message">
+            ❌ <strong>Erreur !</strong> <span id="errorText"></span>
+        </div>
+
+        <div style="text-align: center; margin-top: 30px; color: #7f8c8d; font-size: 12px;">
+            Collège Moulin à vent – Technologie au collège<br>
+            Compétences travaillées : Analyser des systèmes techniques • Comprendre les flux d'information
+        </div>
+    </div>
+
+    <!-- Script Firebase réutilisable -->
+    <script src="../firebase-form-handler.js"></script>
+
+    <!-- Configuration personnalisée du formulaire -->
+    <script>
+        // ============================================
+        // CONFIGURATION DU FORMULAIRE
+        // ============================================
+
+        const formConfig = {
+            // Nom de la collection Firestore
+            collectionName: 'fiches_machine_robot',
+
+            // Type de fiche (pour identification)
+            ficheType: 'machine-robot',
+
+            // Problématique ou titre de l'activité
+            problematique: 'Quelles sont les différences entre une machine et un robot ?',
+
+            // Liste des champs obligatoires (IDs des éléments)
+            requiredFields: [
+                'prenom',
+                'nom',
+                'classe',
+                'date',
+                'exemples_machines_robots',
+                'question_lave_vaisselle',
+                'exemple_supplementaire',
+                'synthese_personnelle'
+            ],
+
+            // Fonction pour collecter les données personnalisées
+            collectCustomData: function() {
+                return {
+                    exemplesMachinesRobots: getFieldValue('exemples_machines_robots'),
+                    questionLaveVaisselle: getFieldValue('question_lave_vaisselle'),
+                    exempleSupplementaire: getFieldValue('exemple_supplementaire'),
+                    synthesePersonnelle: getFieldValue('synthese_personnelle')
+                };
+            },
+
+            // Nom du fichier pour l'export JSON
+            exportFileName: function(data) {
+                return `fiche-machine-robot-${data.nom || 'sans-nom'}.json`;
+            }
+        };
+
+        // Initialiser le formulaire avec la configuration
+        initFirebaseForm(formConfig);
+    </script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<!-- dist/pages/md-template.html -->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document | TechnoDocs</title>
+    <link rel="stylesheet" href="/dist/css/style.css">
+    <link rel="stylesheet" href="/dist/css/markdown.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@400;500&family=Lexend:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div id="header-placeholder"></div>
+
+    <main>
+        <article class="md-content" id="markdown-container">
+            <div class="md-loading">Chargement du document...</div>
+        </article>
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Marked.js en local (sécurité CSP) -->
+    <script src="/dist/js/libs/marked.min.js"></script>
+
+    <script type="module">
+        import { loadComponents } from '/dist/js/components.js';
+
+        // Charger header/footer
+        loadComponents();
+
+        // Configuration de Marked
+        marked.setOptions({
+            breaks: true,        // Convertit les sauts de ligne en <br>
+            gfm: true,           // GitHub Flavored Markdown
+            headerIds: true,     // Ajoute des IDs aux titres
+            mangle: false        // Ne pas encoder les emails
+        });
+
+        /**
+         * Injecte du HTML de manière sécurisée en utilisant DOMParser
+         * @param {HTMLElement} container - L'élément cible
+         * @param {string} htmlString - La chaîne HTML à injecter
+         */
+        const safeInjectHTML = (container, htmlString) => {
+            if (!container) return;
+
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(htmlString, 'text/html');
+
+            // Vider le container et ajouter les nouveaux éléments
+            container.textContent = '';
+            Array.from(doc.body.childNodes).forEach(node => {
+                container.appendChild(node.cloneNode(true));
+            });
+        };
+
+        /**
+         * Crée un message d'erreur de manière sécurisée
+         * @param {string} message - Le message d'erreur
+         * @returns {HTMLElement} - L'élément d'erreur
+         */
+        const createErrorMessage = (message) => {
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'md-error';
+
+            const strong = document.createElement('strong');
+            strong.textContent = 'Erreur : ';
+
+            const text = document.createTextNode(message);
+
+            errorDiv.appendChild(strong);
+            errorDiv.appendChild(text);
+
+            return errorDiv;
+        };
+
+        /**
+         * Crée le message par défaut de manière sécurisée
+         * @returns {DocumentFragment} - Le fragment avec le contenu
+         */
+        const createDefaultMessage = () => {
+            const fragment = document.createDocumentFragment();
+
+            const h1 = document.createElement('h1');
+            h1.textContent = 'Correction de la fiche d\'activités Impression 3D';
+
+            const p = document.createElement('p');
+            p.textContent = 'Aucun document spécifié. Utilisez ';
+
+            const code = document.createElement('code');
+            code.textContent = '?doc=chemin/correction-impression3d.md';
+
+            p.appendChild(code);
+
+            fragment.appendChild(h1);
+            fragment.appendChild(p);
+
+            return fragment;
+        };
+
+        /**
+         * Génère une Table des Matières avec les Activités (h3) et Questions (h4)
+         * @param {HTMLElement} container - Le conteneur avec le contenu Markdown
+         */
+        const generateTOC = (container) => {
+            const h3Elements = container.querySelectorAll('h3');
+
+            if (h3Elements.length === 0) return; // Pas d'activités, pas de TOC
+
+            // Créer le conteneur de la TOC
+            const tocContainer = document.createElement('nav');
+            tocContainer.className = 'md-toc';
+            tocContainer.setAttribute('aria-label', 'Table des matières');
+
+            const tocTitle = document.createElement('div');
+            tocTitle.className = 'md-toc-title';
+            tocTitle.textContent = 'Table des matières';
+
+            const tocList = document.createElement('ul');
+            tocList.className = 'md-toc-list';
+
+            h3Elements.forEach((h3, index) => {
+                // Créer un ID unique pour le h3 s'il n'en a pas
+                if (!h3.id) {
+                    h3.id = `activite-${index + 1}`;
+                }
+
+                // Créer l'élément d'activité
+                const activityItem = document.createElement('li');
+                activityItem.className = 'md-toc-activity';
+
+                const activityLink = document.createElement('a');
+                activityLink.href = `#${h3.id}`;
+                activityLink.textContent = h3.textContent;
+
+                activityItem.appendChild(activityLink);
+
+                // Trouver tous les h4 qui suivent ce h3 jusqu'au prochain h3
+                const questions = [];
+                let nextElement = h3.nextElementSibling;
+
+                while (nextElement && nextElement.tagName !== 'H3') {
+                    if (nextElement.tagName === 'H4') {
+                        questions.push(nextElement);
+                    }
+                    nextElement = nextElement.nextElementSibling;
+                }
+
+                // Si des questions existent, créer une sous-liste
+                if (questions.length > 0) {
+                    const questionsList = document.createElement('ul');
+                    questionsList.className = 'md-toc-questions';
+
+                    questions.forEach((h4, qIndex) => {
+                        // Créer un ID unique pour le h4 s'il n'en a pas
+                        if (!h4.id) {
+                            h4.id = `activite-${index + 1}-question-${qIndex + 1}`;
+                        }
+
+                        const questionItem = document.createElement('li');
+                        const questionLink = document.createElement('a');
+                        questionLink.href = `#${h4.id}`;
+                        questionLink.textContent = h4.textContent;
+
+                        questionItem.appendChild(questionLink);
+                        questionsList.appendChild(questionItem);
+                    });
+
+                    activityItem.appendChild(questionsList);
+                }
+
+                tocList.appendChild(activityItem);
+            });
+
+            tocContainer.appendChild(tocTitle);
+            tocContainer.appendChild(tocList);
+
+            // Insérer la TOC après le premier h1 ou h2
+            const firstHeading = container.querySelector('h1, h2');
+            if (firstHeading && firstHeading.nextElementSibling) {
+                firstHeading.parentNode.insertBefore(tocContainer, firstHeading.nextElementSibling);
+            } else {
+                container.insertBefore(tocContainer, container.firstChild);
+            }
+        };
+
+        /**
+         * Charge et affiche un fichier Markdown
+         * @param {string} mdPath - Chemin vers le fichier .md
+         */
+        async function loadMarkdown(mdPath) {
+            const container = document.getElementById('markdown-container');
+
+            try {
+                const response = await fetch(mdPath);
+
+                if (!response.ok) {
+                    throw new Error(`Fichier non trouvé: ${mdPath}`);
+                }
+
+                const mdText = await response.text();
+                const htmlContent = marked.parse(mdText);
+
+                // Injection sécurisée via DOMParser (Zéro innerHTML)
+                safeInjectHTML(container, htmlContent);
+
+                // Générer la Table des Matières
+                generateTOC(container);
+
+                // Met à jour le titre de la page
+                const firstH1 = container.querySelector('h1');
+                if (firstH1) {
+                    document.title = `${firstH1.textContent} | TechnoDocs`;
+                }
+
+            } catch (error) {
+                // Affichage sécurisé du message d'erreur (sans innerHTML)
+                container.textContent = '';
+                container.appendChild(createErrorMessage(error.message));
+                console.error('Erreur chargement MD:', error);
+            }
+        }
+
+        // Récupère le fichier MD depuis l'URL (?doc=chemin/fichier.md)
+        const params = new URLSearchParams(window.location.search);
+        const docPath = params.get('doc');
+
+        if (docPath) {
+            loadMarkdown(docPath);
+        } else {
+            // Affiche un message par défaut de manière sécurisée
+            const container = document.getElementById('markdown-container');
+            container.textContent = '';
+            container.appendChild(createDefaultMessage());
+        }
+    </script>
+</body>
+</html>
