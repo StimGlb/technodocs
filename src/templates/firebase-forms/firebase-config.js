@@ -31,18 +31,4 @@ try {
 } catch (error) {
     console.error('❌ Erreur lors de l\'initialisation de Firebase:', error);
 }
-
-/* ============================================
-   EXEMPLE DE CONFIGURATION
-   ============================================ */
-
-/*
-const firebaseConfig = {
-    apiKey: "AIzaSyDIvzEk0xKVdRC0r9D_tBGnKPX29Fqkem4",
-    authDomain: "form-results-b285b.firebaseapp.com",
-    projectId: "form-results-b285b",
-    storageBucket: "form-results-b285b.firebasestorage.app",
-    messagingSenderId: "662462446647",
-    appId: "1:662462446647:web:0fe6315cc0c189185513b2"
-};
 */
