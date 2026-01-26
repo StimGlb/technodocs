@@ -38,6 +38,7 @@ dist-ssr/
 /js/
 /pages/
 /public/
+/dist/
 
 # Local environment files
 .env

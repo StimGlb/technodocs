@@ -1,0 +1,433 @@
+/* ============================================
+   FIREBASE FORM TEMPLATE - STYLES RÉUTILISABLES
+   ============================================ */
+
+/* Reset et base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 20px;
+    min-height: 100vh;
+}
+
+/* ============================================
+   CONTENEUR PRINCIPAL
+   ============================================ */
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    background-color: white;
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+}
+
+/* ============================================
+   EN-TÊTE DU FORMULAIRE
+   ============================================ */
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 3px solid #3498db;
+}
+
+.header-left {
+    flex: 1;
+}
+
+.header-right {
+    text-align: center;
+}
+
+.college-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.logo-upload {
+    margin-top: 10px;
+}
+
+.logo-preview {
+    max-width: 150px;
+    max-height: 150px;
+    margin-top: 10px;
+    border: 2px dashed #3498db;
+    padding: 5px;
+    border-radius: 8px;
+}
+
+/* ============================================
+   TITRES
+   ============================================ */
+
+h1 {
+    color: #2c3e50;
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2em;
+}
+
+.section-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* ============================================
+   GRILLE D'INFORMATIONS
+   ============================================ */
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+/* ============================================
+   CHAMPS DE FORMULAIRE
+   ============================================ */
+
+.form-group {
+    margin-bottom: 25px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    color: #34495e;
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+input[type="email"],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #bdc3c7;
+    border-radius: 8px;
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.3s;
+}
+
+input[type="text"]:focus,
+input[type="number"]:focus,
+input[type="date"]:focus,
+input[type="email"]:focus,
+textarea:focus {
+    outline: none;
+    border-color: #3498db;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+.required {
+    color: #e74c3c;
+}
+
+.help-text {
+    font-size: 13px;
+    color: #7f8c8d;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* ============================================
+   SECTIONS ET CONTENUS
+   ============================================ */
+
+.section {
+    background-color: #ecf0f1;
+    padding: 25px;
+    border-radius: 10px;
+    margin-bottom: 25px;
+    border-left: 5px solid #3498db;
+}
+
+.content-box {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.content-box h3 {
+    color: #2c3e50;
+    margin-bottom: 12px;
+    font-size: 16px;
+}
+
+.content-box p,
+.content-box ul {
+    color: #34495e;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+.content-box ul {
+    margin-left: 25px;
+}
+
+.content-box li {
+    margin-bottom: 8px;
+}
+
+.read-only-content {
+    background-color: #e8f4f8;
+    border-left: 5px solid #3498db;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+}
+
+/* ============================================
+   BOUTONS D'ACTION
+   ============================================ */
+
+.controls-container {
+    max-width: 900px;
+    margin: 20px auto;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.btn-action {
+    flex: 1;
+    min-width: 200px;
+    padding: 15px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.btn-action:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.btn-save {
+    background-color: #27ae60;
+    color: white;
+}
+
+.btn-save:hover:not(:disabled) {
+    background-color: #229954;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(39, 174, 96, 0.4);
+}
+
+.btn-pdf {
+    background-color: #e74c3c;
+    color: white;
+}
+
+.btn-pdf:hover:not(:disabled) {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.4);
+}
+
+.btn-json {
+    background-color: #3498db;
+    color: white;
+}
+
+.btn-json:hover:not(:disabled) {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(52, 152, 219, 0.4);
+}
+
+.btn-reset {
+    background-color: #95a5a6;
+    color: white;
+    flex: 0.3;
+}
+
+.btn-reset:hover:not(:disabled) {
+    background-color: #7f8c8d;
+}
+
+/* ============================================
+   MESSAGES DE FEEDBACK
+   ============================================ */
+
+.success-message {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    border-left: 5px solid #28a745;
+    display: none;
+}
+
+.error-message {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 20px;
+    border-left: 5px solid #dc3545;
+    display: none;
+}
+
+/* ============================================
+   UPLOAD DE FICHIERS
+   ============================================ */
+
+.upload-area {
+    border: 3px dashed #3498db;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    background-color: #f8f9fa;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+}
+
+.upload-area:hover {
+    background-color: #e8f4f8;
+    border-color: #2980b9;
+}
+
+.upload-area input[type="file"] {
+    display: none;
+}
+
+.upload-icon {
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.image-preview {
+    max-width: 100%;
+    max-height: 300px;
+    margin-top: 15px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.file-info {
+    margin-top: 10px;
+    font-size: 13px;
+    color: #7f8c8d;
+}
+
+/* ============================================
+   TABLEAUX
+   ============================================ */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+table thead tr {
+    background-color: #3498db;
+    color: white;
+}
+
+table th,
+table td {
+    padding: 12px;
+    text-align: left;
+}
+
+table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+table tbody td {
+    border-bottom: 1px solid #ddd;
+}
+
+/* ============================================
+   RESPONSIVE
+   ============================================ */
+
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .controls-container {
+        flex-direction: column;
+    }
+
+    .btn-action {
+        width: 100%;
+    }
+
+    h1 {
+        font-size: 1.5em;
+    }
+}
+
+/* ============================================
+   IMPRESSION
+   ============================================ */
+
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .controls-container,
+    .btn-action,
+    .upload-area,
+    .help-text {
+        display: none !important;
+    }
+
+    .container {
+        box-shadow: none;
+        max-width: 100%;
+        padding: 20mm;
+    }
+
+    .success-message,
+    .error-message {
+        display: none !important;
+    }
+}
