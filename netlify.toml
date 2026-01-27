@@ -9,7 +9,7 @@
   command = ""
 
   # Ne lance le build que si des fichiers dans src ou le package.json ont changé
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- dist/ package.json"
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- src/ package.json"
 
 # Local development configuration
 [dev]

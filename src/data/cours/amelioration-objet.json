@@ -1,0 +1,43 @@
+{
+    "title": "Améliorer un Objet Technique",
+    "subtitle": "De l'idée à la modélisation 3D",
+    "slides": [
+        {
+            "icon": "🎯",
+            "image": null,
+            "title": "Objectifs du projet",
+            "description": "Apprends la **démarche de conception** :\n- Analyser un besoin\n- Concevoir une solution\n- Modéliser en 3D"
+        },
+        {
+            "icon": "💡",
+            "image": "/src/images/cours/idee-ampoule.png",
+            "title": "Trouver une idée",
+            "description": "Choisis un objet que tu connais bien et identifie ce qui pourrait être **amélioré** ou **ajouté**."
+        },
+        {
+            "icon": "🔍",
+            "image": null,
+            "title": "Analyser le besoin",
+            "description": "Réponds aux questions clés :\n- **Qui** va l'utiliser ?\n- **Quoi** ne fonctionne pas ?\n- **Pourquoi** c'est un problème ?"
+        },
+        {
+            "icon": "✏️",
+            "image": "/src/images/cours/croquis-technique.png",
+            "title": "Concevoir la solution",
+            "description": "Du croquis au schéma technique : dessine ta solution avec les **dimensions** et les **contraintes**."
+        },
+        {
+            "icon": "📐",
+            "image": "/src/images/cours/tinkercad-modelisation.png",
+            "title": "Modéliser en 3D",
+            "description": "Utilise **Tinkercad** pour créer ton modèle à partir des formes de base : cube, cylindre, sphère."
+        },
+        {
+            "icon": "✅",
+            "image": null,
+            "title": "Évaluation",
+            "description": "Ton projet sera noté sur :\n- Analyse du besoin\n- Qualité de la conception\n- Modèle 3D fonctionnel"
+        }
+    ],
+    "markdownPath": "../../content/md/cours/amelioration-objet.md"
+}

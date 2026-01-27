@@ -1,0 +1,371 @@
+/* ========================================
+   TECHNO DOCS - Styles Pages Cours
+   Carousel hero + contenu Markdown
+   ======================================== */
+
+/* ---------- Variables spécifiques cours ---------- */
+:root {
+    --carousel-card-ratio: 56.25%; /* 16:9 */
+    --carousel-card-width: 320px;
+    --carousel-card-width-mobile: 280px;
+    --carousel-gap: var(--space-4);
+    --carousel-transition: 400ms ease;
+}
+
+/* ---------- Hero Section ---------- */
+.cours-hero {
+    padding: var(--space-8) var(--space-4);
+    padding-top: calc(var(--header-height) + var(--space-8));
+    background: linear-gradient(135deg, var(--color-gray-50) 0%, var(--color-white) 100%);
+    min-height: 60vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.cours-hero__header {
+    text-align: center;
+    margin-bottom: var(--space-8);
+    max-width: var(--container-max);
+}
+
+.cours-hero__title {
+    font-family: var(--font-display);
+    font-size: clamp(var(--text-2xl), 6vw, var(--text-4xl));
+    font-weight: 700;
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-2);
+    line-height: 1.2;
+}
+
+.cours-hero__subtitle {
+    font-size: var(--text-lg);
+    color: var(--color-gray-500);
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* ---------- Carousel Container ---------- */
+.carousel {
+    width: 100%;
+    max-width: var(--container-max);
+    position: relative;
+}
+
+.carousel__track {
+    display: flex;
+    gap: var(--carousel-gap);
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    padding: var(--space-4) var(--space-6);
+    margin: 0 calc(-1 * var(--space-4));
+    
+    /* Masquer la scrollbar mais garder la fonctionnalité */
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.carousel__track::-webkit-scrollbar {
+    display: none;
+}
+
+/* Support prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+    .carousel__track {
+        scroll-behavior: auto;
+    }
+}
+
+/* ---------- Slides (Cards) ---------- */
+.carousel__slide {
+    flex: 0 0 var(--carousel-card-width);
+    scroll-snap-align: center;
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    border: 2px solid var(--color-gray-200);
+    overflow: hidden;
+    transition: 
+        transform var(--transition-base),
+        border-color var(--transition-base),
+        box-shadow var(--transition-base);
+    display: flex;
+    flex-direction: column;
+}
+
+.carousel__slide:hover,
+.carousel__slide:focus-within {
+    transform: translateY(-4px);
+    border-color: var(--color-primary-light);
+    box-shadow: var(--shadow-lg);
+}
+
+.carousel__slide.is-active {
+    border-color: var(--color-primary);
+    box-shadow: var(--shadow-xl), 0 0 0 4px var(--color-primary-light);
+}
+
+/* Media container (image ou icône) */
+.slide__media {
+    position: relative;
+    width: 100%;
+    padding-top: var(--carousel-card-ratio); /* Ratio 16:9 */
+    background: linear-gradient(135deg, var(--color-gray-100) 0%, var(--color-gray-50) 100%);
+    overflow: hidden;
+}
+
+.slide__image {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+}
+
+.carousel__slide:hover .slide__image {
+    transform: scale(1.05);
+}
+
+.slide__icon {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 4rem;
+    background: linear-gradient(135deg, var(--color-primary-light) 0%, var(--color-secondary) 100%);
+    opacity: 0.9;
+}
+
+/* Contenu texte */
+.slide__content {
+    padding: var(--space-4);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.slide__title {
+    font-family: var(--font-display);
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--color-gray-900);
+    margin-bottom: var(--space-2);
+    line-height: 1.3;
+}
+
+.slide__description {
+    font-size: var(--text-sm);
+    color: var(--color-gray-600);
+    line-height: 1.6;
+    flex: 1;
+}
+
+.slide__description p {
+    margin-bottom: var(--space-2);
+}
+
+.slide__description p:last-child {
+    margin-bottom: 0;
+}
+
+.slide__description strong {
+    color: var(--color-gray-800);
+    font-weight: 600;
+}
+
+.slide__list {
+    margin: var(--space-2) 0;
+    padding-left: var(--space-4);
+    list-style: disc;
+}
+
+.slide__list li {
+    margin-bottom: var(--space-1);
+}
+
+/* ---------- Navigation Carousel ---------- */
+.carousel__nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-top: var(--space-6);
+    padding: var(--space-2);
+}
+
+.carousel__btn {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    background: var(--color-white);
+    border: 2px solid var(--color-gray-200);
+    color: var(--color-gray-700);
+    font-size: var(--text-xl);
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: var(--transition-fast);
+    cursor: pointer;
+}
+
+.carousel__btn:hover,
+.carousel__btn:focus-visible {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--color-white);
+    transform: scale(1.1);
+}
+
+.carousel__btn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.carousel__btn--edge {
+    opacity: 0.5;
+}
+
+.carousel__btn--edge:hover {
+    opacity: 1;
+}
+
+/* Dots */
+.carousel__dots {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+.carousel__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: var(--radius-full);
+    background: var(--color-gray-300);
+    border: none;
+    cursor: pointer;
+    transition: var(--transition-fast);
+    padding: 0;
+}
+
+.carousel__dot:hover,
+.carousel__dot:focus-visible {
+    background: var(--color-primary-light);
+    transform: scale(1.2);
+}
+
+.carousel__dot.is-active {
+    background: var(--color-primary);
+    transform: scale(1.3);
+}
+
+.carousel__dot:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* ---------- États de chargement et erreur ---------- */
+.cours-error {
+    text-align: center;
+    padding: var(--space-12) var(--space-4);
+    color: var(--color-gray-500);
+}
+
+.cours-error span {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: var(--space-4);
+}
+
+.cours-error p {
+    font-size: var(--text-lg);
+}
+
+/* ---------- Responsive ---------- */
+
+/* Tablette */
+@media (max-width: 1024px) {
+    .carousel__slide {
+        flex: 0 0 var(--carousel-card-width);
+    }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .cours-hero {
+        padding: var(--space-6) var(--space-3);
+        padding-top: calc(var(--header-height) + var(--space-6));
+        min-height: auto;
+    }
+    
+    .cours-hero__header {
+        margin-bottom: var(--space-6);
+    }
+    
+    .carousel__track {
+        padding: var(--space-3) var(--space-4);
+        gap: var(--space-3);
+    }
+    
+    .carousel__slide {
+        flex: 0 0 var(--carousel-card-width-mobile);
+    }
+    
+    .slide__icon {
+        font-size: 3rem;
+    }
+    
+    .slide__content {
+        padding: var(--space-3);
+    }
+    
+    .slide__title {
+        font-size: var(--text-base);
+    }
+    
+    .slide__description {
+        font-size: var(--text-xs);
+    }
+    
+    .carousel__nav {
+        margin-top: var(--space-4);
+        gap: var(--space-3);
+    }
+    
+    .carousel__btn {
+        width: 40px;
+        height: 40px;
+        font-size: var(--text-lg);
+    }
+    
+    .carousel__dot {
+        width: 10px;
+        height: 10px;
+    }
+}
+
+/* Très petit écran */
+@media (max-width: 380px) {
+    .carousel__slide {
+        flex: 0 0 260px;
+    }
+}
+
+/* ---------- Mode sombre (préparation future) ---------- */
+@media (prefers-color-scheme: dark) {
+    /* Les styles dark mode peuvent être ajoutés ici si souhaité */
+}
+
+/* ---------- Print ---------- */
+@media print {
+    .carousel {
+        display: none;
+    }
+    
+    .cours-hero {
+        min-height: auto;
+        padding: var(--space-4);
+    }
+}
