@@ -1,0 +1,43 @@
+{
+    "title": "Conception 3D",
+    "subtitle": "De l'idée à l'objet imprimé",
+    "slides": [
+        {
+            "icon": "💡",
+            "image": null,
+            "title": "Introduction",
+            "description": "Découvre le monde de la **modélisation 3D** et ses nombreuses applications dans l'industrie, la médecine et le quotidien."
+        },
+        {
+            "icon": "📋",
+            "image": "/src/images/cours/cahier-charges.png",
+            "title": "Le cahier des charges",
+            "description": "Avant de modéliser, il faut définir :\n- Les fonctions de l'objet\n- Les contraintes techniques\n- Les matériaux possibles"
+        },
+        {
+            "icon": "✏️",
+            "image": "/src/images/cours/croquis.png",
+            "title": "Du croquis au modèle",
+            "description": "Le passage du dessin 2D à la **modélisation 3D** avec Tinkercad ou FreeCAD."
+        },
+        {
+            "icon": "📐",
+            "image": null,
+            "title": "Les formes de base",
+            "description": "Maîtriser les primitives :\n- Cube et pavé\n- Cylindre et cône\n- Sphère\n- Opérations booléennes"
+        },
+        {
+            "icon": "🖨️",
+            "image": "/src/images/cours/imprimante-3d.png",
+            "title": "L'impression 3D",
+            "description": "Paramètres essentiels : **hauteur de couche**, remplissage, supports et choix du filament (PLA, PETG)."
+        },
+        {
+            "icon": "✅",
+            "image": null,
+            "title": "Contrôle qualité",
+            "description": "Vérifier les dimensions, la solidité et la **conformité** au cahier des charges initial."
+        }
+    ],
+    "markdownPath": "../../content/md/cours/conception-3d.md"
+}
