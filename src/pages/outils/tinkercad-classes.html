@@ -230,48 +230,9 @@
     <!-- Footer dynamique -->
     <div id="footer-placeholder"></div>
 
-    <script>
-    (function() {
-        const initTinkercad = () => {
-            const classSelect = document.getElementById('class-select');
-            const joinBtn = document.getElementById('join-btn');
-            const classForm = document.getElementById('class-form');
-
-            if (!classSelect || !joinBtn) return;
-
-            // Fonction pour mettre à jour l'état du bouton
-            const updateButtonState = () => {
-                // On vérifie si une option valide est sélectionnée
-                joinBtn.disabled = (classSelect.value === "");
-            };
-
-            // Écouter les changements
-            classSelect.addEventListener('change', updateButtonState);
-
-            // Gestion de la soumission
-            classForm.addEventListener('submit', (e) => {
-                e.preventDefault();
-                if (classSelect.value) {
-                    window.open('https://www.tinkercad.com/joinclass/' + classSelect.value, '_blank', 'noopener');
-                }
-            });
-
-            // Forcer une vérification au chargement (au cas où le navigateur garde une sélection en mémoire)
-            updateButtonState();
-            console.log("Système Tinkercad activé !");
-        };
-
-        // On lance l'init dès que le DOM est chargé
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initTinkercad);
-        } else {
-            initTinkercad();
-        }
-    })();
-    </script>
-
     <!-- Scripts -->
     <script type="module" src="/src/js/components.js"></script>
     <script type="module" src="/src/js/app.js"></script>
+    <script src="/src/js/tinkercad-handler.js" defer></script>
 </body>
 </html>

@@ -8,9 +8,6 @@
   # No build command needed for static HTML site
   command = ""
 
-  # Ne lance le build que si des fichiers dans src ou le package.json ont changé
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- src/ package.json"
-
 # Local development configuration
 [dev]
   # Command to run for local development
@@ -35,7 +32,6 @@
     # Content Security Policy (CSP) - Protection contre XSS
     # Note: 'unsafe-inline' temporairement ajouté pour style-src pour permettre les styles inline dynamiques
     # Firebase: scripts et data access from gstatic.com and googleapis.com
-    Content-Security-Policy = "default-src 'self'; script-src 'self' https://www.gstatic.com/firebasejs/ https://apis.google.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://www.googleapis.com https://www.gstatic.com https://firestore.googleapis.com; frame-src 'self' https://app.netlify.com; frame-ancestors 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests"
 
     # HTTP Strict Transport Security (HSTS) - Force HTTPS
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
