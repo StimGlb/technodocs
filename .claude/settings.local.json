@@ -17,7 +17,8 @@
       "Bash(npm run preview:*)",
       "Bash(tree:*)",
       "Bash(npx http-server -p 8080 -o)",
-      "Bash(sh)"
+      "Bash(sh)",
+      "Bash(bash scripts/new-branch.sh:*)"
     ],
     "deny": [],
     "ask": []

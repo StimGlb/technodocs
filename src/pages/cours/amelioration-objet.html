@@ -26,35 +26,41 @@
                 <p class="cours-hero__subtitle" id="cours-subtitle"></p>
             </div>
 
-            <!-- Carousel Container -->
-            <div class="carousel" role="region" aria-label="Slides du cours" aria-roledescription="carousel">
-                <div class="carousel__track" id="carousel-track">
-                    <!-- Les slides seront injectées ici par JS -->
+            <!-- Carousel avec flèches sur les côtés -->
+            <div class="carousel-wrapper">
+                <!-- Flèche gauche -->
+                <button class="carousel__btn carousel__btn--prev" aria-label="Slide précédente" id="carousel-prev">
+                    <span aria-hidden="true">←</span>
+                </button>
+
+                <!-- Carousel Container -->
+                <div class="carousel" role="region" aria-label="Slides du cours" aria-roledescription="carousel">
+                    <div class="carousel__track" id="carousel-track">
+                        <!-- Les slides seront injectées ici par JS -->
+                    </div>
                 </div>
 
-                <!-- Navigation -->
-                <div class="carousel__nav">
-                    <button class="carousel__btn carousel__btn--prev" aria-label="Slide précédente" id="carousel-prev">
-                        <span aria-hidden="true">←</span>
-                    </button>
-                    
-                    <div class="carousel__dots" id="carousel-dots" role="tablist" aria-label="Sélection de slide">
-                        <!-- Les dots seront injectés ici par JS -->
-                    </div>
-                    
-                    <button class="carousel__btn carousel__btn--next" aria-label="Slide suivante" id="carousel-next">
-                        <span aria-hidden="true">→</span>
-                    </button>
-                </div>
+                <!-- Flèche droite -->
+                <button class="carousel__btn carousel__btn--next" aria-label="Slide suivante" id="carousel-next">
+                    <span aria-hidden="true">→</span>
+                </button>
             </div>
+
+            <!-- Dots de navigation (sous le carousel) -->
+            <nav class="carousel__nav" aria-label="Navigation du carousel">
+                <div class="carousel__dots" id="carousel-dots" role="tablist" aria-label="Sélection de slide">
+                    <!-- Les dots seront injectés ici par JS -->
+                </div>
+            </nav>
         </section>
 
-        <!-- Contenu Markdown du cours -->
+        <!-- Contenu Markdown du cours
         <article class="md-content" id="markdown-container">
             <div class="md-loading">Chargement du cours...</div>
-        </article>
+        </article> -->
     </main>
 
+    <div id="footer-placeholder"></div>
     <div id="footer-placeholder"></div>
 
     <!-- Marked.js en local (sécurité CSP) -->

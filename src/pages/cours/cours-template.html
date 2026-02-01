@@ -20,18 +20,7 @@
     <main>
         <!-- Hero Section avec Carousel -->
         <section class="cours-hero" aria-label="Présentation du cours">
-            <div class="cours-hero__header">
-                <h1 class="cours-hero__title" id="cours-title">Chargement...</h1>
-                <p class="cours-hero__subtitle" id="cours-subtitle"></p>
-            </div>
-
-            <!-- Carousel Container -->
-            <div class="carousel" role="region" aria-label="Slides du cours" aria-roledescription="carousel">
-                <div class="carousel__track" id="carousel-track">
-                    <!-- Les slides seront injectées ici par JS -->
-                </div>
-
-                <!-- Navigation -->
+            <!-- Navigation -->
                 <div class="carousel__nav">
                     <button class="carousel__btn carousel__btn--prev" aria-label="Slide précédente" id="carousel-prev">
                         <span aria-hidden="true">←</span>
@@ -44,6 +33,16 @@
                     <button class="carousel__btn carousel__btn--next" aria-label="Slide suivante" id="carousel-next">
                         <span aria-hidden="true">→</span>
                     </button>
+                </div>
+            <div class="cours-hero__header">
+                <h1 class="cours-hero__title" id="cours-title">Chargement...</h1>
+                <p class="cours-hero__subtitle" id="cours-subtitle"></p>
+            </div>
+
+            <!-- Carousel Container -->
+            <div class="carousel" role="region" aria-label="Slides du cours" aria-roledescription="carousel">
+                <div class="carousel__track" id="carousel-track">
+                    <!-- Les slides seront injectées ici par JS -->
                 </div>
             </div>
         </section>
