@@ -14,7 +14,7 @@ usage() {
   echo ""
   echo "Arguments:"
   echo "  branch-name   Nom de la nouvelle branche (requis)"
-  echo "  base-branch   Branche de départ (défaut: master)"
+  echo "  base-branch   Branche de départ (défaut: main)"
   echo ""
   echo "Exemples:"
   echo "  $0 feature/new-component"
@@ -34,7 +34,7 @@ if [ $# -eq 0 ]; then
 fi
 
 BRANCH_NAME=$1
-BASE_BRANCH=${2:-master}
+BASE_BRANCH=${2:-main}
 
 # Vérifier que la branche n'existe pas déjà
 if git show-ref --verify --quiet "refs/heads/$BRANCH_NAME"; then
