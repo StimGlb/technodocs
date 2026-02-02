@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cours de Technologie au Collège - Cycle 4 : Conception 3D, Réparabilité, Programmation et Réseaux">
+    <title>Cours | TechnoDocs</title>
+    
+    <!-- Lien vers le CSS global (chemin absolu) -->
+    <link rel="stylesheet" href="/src/css/style.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header dynamique -->
+    <div id="header-placeholder"></div>
+
+    <main>
+        <!-- En-tête de la page -->
+        <section class="section section--alt">
+            <div class="section__header">
+                <h1 class="section__title">📚 Cours de Technologie</h1>
+                <p class="section__description">Accède aux cours, supports visuels et documents pédagogiques pour chaque thématique du programme.</p>
+            </div>
+        </section>
+
+        <!-- Grille des cours -->
+        <section class="section">
+            <div class="cards-grid">
+                
+                <!-- Carte 1 : Conception 3D -->
+                <a href="/src/pages/cours/conception-3d.html" class="card">
+                    <div class="card__icon">🗂️</div>
+                    <h2 class="card__title">Conception 3D</h2>
+                    <p class="card__text">Conception d'un objet utile, modélisation et impression 3D avec Tinkercad.</p>
+                </a>
+
+                <!-- Carte 2 : Réparabilité -->
+                <a href="/src/pages/cours/reparabilite.html" class="card">
+                    <div class="card__icon">🔌</div>
+                    <h2 class="card__title">Réparabilité</h2>
+                    <p class="card__text">Indice de réparabilité, diagnostic de panne et amélioration d'un objet technique.</p>
+                </a>
+
+                <!-- Carte 3 : Programmation (commentée pour activation future) -->
+                <!--
+                <article class="card">
+                    <div class="card__icon">💻</div>
+                    <h2 class="card__title">Programmation</h2>
+                    <p class="card__text">Découverte de Scratch, initiation à Python et programmation Arduino.</p>
+                    <a href="/src/pages/cours/programmation.html" class="card__link">Accéder au cours →</a>
+                </article>
+                -->
+
+                <!-- Carte 4 : Internet & Réseaux (commentée pour activation future) -->
+                <!--
+                <article class="card">
+                    <div class="card__icon">🌐</div>
+                    <h2 class="card__title">Internet & Réseaux</h2>
+                    <p class="card__text">Fonctionnement du web, sécurité informatique et communication numérique.</p>
+                    <a href="/src/pages/cours/reseaux.html" class="card__link">Accéder au cours →</a>
+                </article>
+                -->
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer dynamique -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts pour charger le Header/Footer et animations -->
+    <script type="module" src="/src/js/components.js"></script>
+    <script type="module" src="/src/js/app.js"></script>
+</body>
+</html>
