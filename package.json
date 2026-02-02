@@ -10,6 +10,7 @@
     "preview": "vite preview",
     "deploy:preview": "netlify deploy",
     "deploy:prod": "netlify deploy --prod",
+    "deploy:dev": "netlify deploy --dir=. --message='Dev preview'",
     "security-check": "node security-check.js",
     "security-check:prod": "node security-check.js https://technodocs.netlify.app",
     "commit": "bash ./scripts/commit.sh",

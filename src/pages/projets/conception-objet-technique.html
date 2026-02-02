@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cahier des Charges Simplifié - Objet Utile Collège</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1; --primary-dark: #4f46e5; --secondary: #06b6d4;
+            --success: #10b981; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+            --gray-700: #374151; --white: #ffffff;
+        }
+        body { font-family: 'Inter', sans-serif; background: #f9fafb; color: var(--gray-700); line-height: 1.6; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; background: var(--white); padding: 30px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+        header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--gray-100); padding-bottom: 20px; }
+        h1 { font-family: 'Space Grotesk', sans-serif; color: #111827; margin: 0; }
+        
+        .progress-container { margin-bottom: 30px; }
+        .progress-bar { height: 10px; background: var(--gray-200); border-radius: 5px; overflow: hidden; }
+        .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0%; transition: width 0.3s; }
+        
+        .phase { display: none; animation: fadeIn 0.4s; }
+        .phase.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        .field-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem; }
+        input, textarea, select { width: 100%; padding: 12px; border: 2px solid var(--gray-200); border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+        input:focus, textarea:focus { outline: none; border-color: var(--primary); }
+
+        .nav-btns { display: flex; justify-content: space-between; margin-top: 30px; }
+        .btn { padding: 12px 24px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; }
+        .btn-prev { background: var(--gray-200); }
+        .btn-next { background: var(--primary); color: white; }
+        .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .info-box { background: #eef2ff; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); margin-bottom: 20px; font-size: 0.9rem; }
+        .prompt-area { background: #f3f4f6; padding: 15px; border-radius: 8px; border: 1px dashed var(--primary); margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>Mon Projet Tinkercad 🚀</h1>
+        <p>Concevoir un objet utile pour le collège</p>
+    </header>
+
+    <div class="progress-container">
+        <div style="display:flex; justify-content: space-between; font-size: 0.8rem; margin-bottom: 5px;">
+            <span id="step-label">Étape 1 sur 3</span>
+            <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" id="progress-fill"></div></div>
+    </div>
+
+    <div class="phase active" id="phase-1">
+        <h2>1. Analyse du besoin</h2>
+        <div class="field-group">
+            <label>Nom de l'objet :</label>
+            <input type="text" data-save="objet_nom" placeholder="Ex: Porte-clé jeton de cantine, Organisateur de bureau...">
+        </div>
+        <div class="field-group">
+            <label>À quel problème répond-il au collège ?</label>
+            <textarea data-save="objet_pb" rows="3" placeholder="Ex: Je perds toujours mon stylo fétiche..."></textarea>
+        </div>
+    </div>
+
+    <div class="phase" id="phase-2">
+        <h2>2. Contraintes de fabrication (PLA)</h2>
+        <div class="info-box">
+            <strong>Rappel technique :</strong> Le volume max est de 10x10x10 cm. Le PLA ramollit à 60°C.
+        </div>
+        <div class="field-group">
+            <label>Dimensions prévues (en mm) :</label>
+            <div style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px;">
+                <input type="number" data-save="dim_l" placeholder="Long.">
+                <input type="number" data-save="dim_w" placeholder="Larg.">
+                <input type="number" data-save="dim_h" placeholder="Haut.">
+            </div>
+        </div>
+        <div class="field-group">
+            <label>Formes de base Tinkercad à utiliser :</label>
+            <select data-save="formes_base" multiple style="height: 80px;">
+                <option>Boîte (Cube)</option>
+                <option>Cylindre</option>
+                <option>Sphère</option>
+                <option>Texte</option>
+                <option>Perçage (Trous)</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="phase" id="phase-3">
+        <h2>3. Synthèse pour la modélisation</h2>
+        <p>Voici le résumé de ton projet pour t'aider dans Tinkercad ou pour demander conseil à une IA :</p>
+        <div class="prompt-area">
+            <textarea id="ai-prompt" readonly style="height: 150px; background: transparent; border: none; resize: none;"></textarea>
+        </div>
+        <button class="btn btn-next" onclick="copyPrompt()" style="margin-top:10px; width:100%;">Copier le résumé</button>
+    </div>
+
+    <div class="nav-btns">
+        <button class="btn btn-prev" id="btn-prev" onclick="changePhase(-1)" disabled>Précédent</button>
+        <button class="btn btn-next" id="btn-next" onclick="changePhase(1)">Suivant</button>
+    </div>
+</div>
+
+<script>
+    let currentPhase = 1;
+    const totalPhases = 3;
+
+    function updateUI() {
+        document.querySelectorAll('.phase').forEach((p, i) => p.classList.toggle('active', i + 1 === currentPhase));
+        document.getElementById('btn-prev').disabled = currentPhase === 1;
+        document.getElementById('btn-next').innerText = currentPhase === totalPhases ? "Terminer" : "Suivant";
+        
+        const percent = Math.round(((currentPhase - 1) / (totalPhases - 1)) * 100);
+        document.getElementById('progress-fill').style.width = percent + "%";
+        document.getElementById('progress-percent').innerText = percent + "%";
+        document.getElementById('step-label').innerText = `Étape ${currentPhase} sur ${totalPhases}`;
+        
+        if(currentPhase === 3) generatePrompt();
+    }
+
+    function changePhase(dir) {
+        currentPhase = Math.max(1, Math.min(totalPhases, currentPhase + dir));
+        updateUI();
+        saveData();
+    }
+
+    function saveData() {
+        const data = {};
+        document.querySelectorAll('[data-save]').forEach(el => {
+            data[el.getAttribute('data-save')] = el.value;
+        });
+        localStorage.setItem('tinkercad_project', JSON.stringify(data));
+    }
+
+    function loadData() {
+        const saved = localStorage.getItem('tinkercad_project');
+        if (saved) {
+            const data = JSON.parse(saved);
+            document.querySelectorAll('[data-save]').forEach(el => {
+                if (data[el.getAttribute('data-save')]) el.value = data[el.getAttribute('data-save')];
+            });
+        }
+    }
+
+    function generatePrompt() {
+        const d = JSON.parse(localStorage.getItem('tinkercad_project') || "{}");
+        const prompt = `Projet : ${d.objet_nom || 'Objet 3D'}\nUsage : ${d.objet_pb || 'Collège'}\nDimensions : ${d.dim_l || 0}x${d.dim_w || 0}x${d.dim_h || 0} mm.\n\nInstructions Tinkercad : Créer cet objet en utilisant principalement des formes de type ${d.formes_base || 'basiques'}. Veiller à ce que les parois fassent au moins 2mm pour la solidité en PLA.`;
+        document.getElementById('ai-prompt').value = prompt;
+    }
+
+    function copyPrompt() {
+        const copyText = document.getElementById("ai-prompt");
+        copyText.select();
+        document.execCommand("copy");
+        alert("Résumé copié !");
+    }
+
+    // Sauvegarde auto à chaque saisie
+    document.addEventListener('input', saveData);
+    window.onload = loadData;
+</script>
+
+</body>
+</html>
