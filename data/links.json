@@ -60,13 +60,7 @@
       "icon": "📋",
       "class": "correction-card--fiches"
     },
-    {
-      "name": "Quiz",
-      "url": "/src/pages/corrections/quiz.html",
-      "description": "Corrections des quiz et évaluations",
-      "icon": "✅",
-      "class": "correction-card--quiz"
-    }
+    
   ],
   "cours": [
     {
