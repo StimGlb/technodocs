@@ -1,5 +1,20 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
+import { cpSync, existsSync, mkdirSync } from 'fs';
+
+// Plugin pour copier src/ vers dist/ après le build
+function copySourcePlugin() {
+  return {
+    name: 'copy-source',
+    closeBundle() {
+      // Copier src/ vers dist/src/
+      if (existsSync('src')) {
+        cpSync('src', 'dist/src', { recursive: true });
+        console.log('Copied src/ to dist/src/');
+      }
+    }
+  };
+}
 
 export default defineConfig({
   // Configuration de base
@@ -15,12 +30,15 @@ export default defineConfig({
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'index.html'),
+        dev: resolve(__dirname, '_dev.html'),
       }
     },
 
     // Copier les assets
     copyPublicDir: true,
   },
+
+  plugins: [copySourcePlugin()],
 
   // Configuration du serveur de dev
   server: {

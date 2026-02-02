@@ -18,7 +18,8 @@
       "Bash(tree:*)",
       "Bash(npx http-server -p 8080 -o)",
       "Bash(sh)",
-      "Bash(bash scripts/new-branch.sh:*)"
+      "Bash(bash scripts/new-branch.sh:*)",
+      "Bash(netlify deploy:*)"
     ],
     "deny": [],
     "ask": []
