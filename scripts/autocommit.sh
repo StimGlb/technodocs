@@ -85,6 +85,11 @@ mapfile -t CHANGED_FILES < <(git status --porcelain -z | awk -v RS='\0' '{print 
 TMP_CHANGED=()
 for f in "${CHANGED_FILES[@]:-}"; do
   if [[ -n "$f" ]]; then
+    # Exclude Windows reserved device names that may appear accidentally (e.g. 'nul')
+    if [[ "$f" =~ ^([Nn][Uu][Ll])$ ]]; then
+      warn "Entrée ignorée: nom de chemin réservé détecté ('$f')"
+      continue
+    fi
     TMP_CHANGED+=("$f")
   fi
 done

@@ -337,22 +337,34 @@ export class WizardFirebase {
     calculateProgress() {
         let filledFields = 0;
         let totalFields = 0;
-        
+        const countedRadios = new Set();
+
         this.fields.forEach(field => {
             // Ignorer les champs dans les infos élève pour le calcul
             if (['studentName', 'studentClass', 'projectDate'].includes(field.dataset.field)) {
                 return;
             }
-            
-            totalFields++;
-            
-            if (field.type === 'checkbox' || field.type === 'radio') {
-                if (field.checked) filledFields++;
-            } else if (field.value && field.value.trim() !== '') {
-                filledFields++;
+
+            if (field.type === 'radio') {
+                // Grouper les radios par name (un seul compte par groupe)
+                if (!countedRadios.has(field.name)) {
+                    countedRadios.add(field.name);
+                    totalFields++;
+                    const checked = document.querySelector(`input[name="${field.name}"]:checked`);
+                    if (checked) filledFields++;
+                }
+            } else if (field.type === 'checkbox') {
+                // Les checkboxes sont optionnelles, on les ignore dans le calcul
+                // (elles ne bloquent pas la progression à 100%)
+                return;
+            } else {
+                totalFields++;
+                if (field.value && field.value.trim() !== '') {
+                    filledFields++;
+                }
             }
         });
-        
+
         return totalFields > 0 ? Math.round((filledFields / totalFields) * 100) : 0;
     }
 
