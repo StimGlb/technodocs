@@ -11,6 +11,7 @@ NC='\033[0m' # No Color
 # Fonction d'aide
 usage() {
   echo -e "${BLUE}Usage:${NC} $0 <branch-name> [base-branch]"
+  echo -e "       $0 <branch-name> [base-branch]  # puis choisissez une branche à puller dans la nouvelle branche"
   echo ""
   echo "Arguments:"
   echo "  branch-name   Nom de la nouvelle branche (requis)"
@@ -36,10 +37,41 @@ fi
 BRANCH_NAME=$1
 BASE_BRANCH=${2:-main}
 
-# Vérifier que la branche n'existe pas déjà
+# Vérifier si la branche existe déjà
 if git show-ref --verify --quiet "refs/heads/$BRANCH_NAME"; then
-  echo -e "${RED}❌ Erreur: La branche '$BRANCH_NAME' existe déjà${NC}"
-  exit 1
+  echo -e "${YELLOW}ℹ️  La branche '$BRANCH_NAME' existe déjà.${NC}"
+  read -p "Voulez-vous basculer sur cette branche et éventuellement fusionner une branche distante dedans ? (y/N) " -n 1 -r
+  echo
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo -e "${BLUE}ℹ️  Opération annulée.${NC}"
+    exit 0
+  fi
+
+  echo -e "${BLUE}🔄 Passage sur la branche existante '$BRANCH_NAME'...${NC}"
+  git checkout "$BRANCH_NAME"
+
+  # Proposer une fusion depuis une branche distante
+  read -p "Souhaitez-vous fusionner une branche distante dans '$BRANCH_NAME' ? (y/N) " -n 1 -r
+  echo
+  if [[ $REPLY =~ ^[Yy]$ ]]; then
+    read -p "Quelle branche distante voulez-vous puller ? [${BASE_BRANCH}] " PULL_SRC
+    PULL_SRC=${PULL_SRC:-$BASE_BRANCH}
+
+    echo -e "${BLUE}⬇️  Récupération des refs distantes...${NC}"
+    git fetch origin
+
+    echo -e "${BLUE}⬇️  Pull origin/${PULL_SRC} dans ${BRANCH_NAME}...${NC}"
+    if git pull origin "$PULL_SRC"; then
+      echo -e "${GREEN}✅ Fusion depuis origin/${PULL_SRC} réussie.${NC}"
+    else
+      echo -e "${RED}❌ Erreur lors du git pull depuis origin/${PULL_SRC}. Résolvez les conflits manuellement.${NC}"
+      exit 1
+    fi
+  fi
+
+  echo -e "${GREEN}✅ Branche '$BRANCH_NAME' prête.${NC}"
+  echo -e "${BLUE}ℹ️  Branche actuelle: $(git branch --show-current)${NC}"
+  exit 0
 fi
 
 # Vérifier s'il y a des modifications non commitées
@@ -61,6 +93,26 @@ git pull origin "$BASE_BRANCH"
 
 echo -e "${BLUE}🌿 Création de la nouvelle branche '$BRANCH_NAME'...${NC}"
 git checkout -b "$BRANCH_NAME"
+
+# Après création, proposer de fusionner une autre branche distante dans la nouvelle branche
+echo
+read -p "Souhaitez-vous fusionner une autre branche distante dans '$BRANCH_NAME' ? (y/N) " -n 1 -r
+echo
+if [[ $REPLY =~ ^[Yy]$ ]]; then
+  read -p "Quelle branche distante voulez-vous puller ? [${BASE_BRANCH}] " PULL_SRC
+  PULL_SRC=${PULL_SRC:-$BASE_BRANCH}
+
+  echo -e "${BLUE}⬇️  Récupération des refs distantes...${NC}"
+  git fetch origin
+
+  echo -e "${BLUE}⬇️  Pull origin/${PULL_SRC} dans ${BRANCH_NAME}...${NC}"
+  if git pull origin "$PULL_SRC"; then
+    echo -e "${GREEN}✅ Fusion depuis origin/${PULL_SRC} réussie.${NC}"
+  else
+    echo -e "${RED}❌ Erreur lors du git pull depuis origin/${PULL_SRC}. Résolvez les conflits manuellement.${NC}"
+    exit 1
+  fi
+fi
 
 echo -e "${GREEN}✅ Branche '$BRANCH_NAME' créée avec succès !${NC}"
 echo -e "${BLUE}ℹ️  Branche actuelle: $(git branch --show-current)${NC}"
