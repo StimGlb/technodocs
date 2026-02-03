@@ -59,8 +59,7 @@
       "description": "Corrections des fiches d'activités en classe",
       "icon": "📋",
       "class": "correction-card--fiches"
-    },
-    
+    }
   ],
   "cours": [
     {

@@ -322,5 +322,20 @@
             }
         });
     </script>
+    <!-- Diagnostic: écrire le statut Firestore dans le DOM pour vérification distante -->
+    <script>
+        // Attendre que les modules aient créé `window.wizardInstance`
+        setTimeout(() => {
+            const status = document.createElement('div');
+            status.id = 'firebase-status';
+            try {
+                status.textContent = (window.wizardInstance && window.wizardInstance.firestoreEnabled) ? 'firestore:enabled' : 'firestore:disabled';
+            } catch (e) {
+                status.textContent = 'firestore:unknown';
+            }
+            status.style.display = 'none';
+            document.body.appendChild(status);
+        }, 500);
+    </script>
 </body>
 </html>

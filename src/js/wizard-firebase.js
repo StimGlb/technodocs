@@ -27,7 +27,7 @@ import {
     query,
     where,
     getDocs
-} from './firebase-config.js';
+} from './services/firebase-config.js';
 
 export class WizardFirebase {
     constructor(options = {}) {
@@ -54,6 +54,8 @@ export class WizardFirebase {
         this.progressFill = document.getElementById('progressFill');
         this.progressPercentage = document.getElementById('progressPercentage');
         this.saveIndicator = document.getElementById('saveIndicator');
+        // Firestore availability flag (services/firebase-config.js exports `db` or null)
+        this.firestoreEnabled = typeof db !== 'undefined' && db !== null;
         
         // Initialisation
         this.init();
@@ -63,8 +65,12 @@ export class WizardFirebase {
         // Générer ou récupérer l'ID unique du document
         this.docId = this.getOrCreateDocId();
         
-        // Charger les données existantes depuis Firestore
-        await this.loadFromFirestore();
+        // Charger les données existantes depuis Firestore (si configuré)
+        if (this.firestoreEnabled) {
+            await this.loadFromFirestore();
+        } else {
+            console.warn('Firestore non configuré — fonctionnement en mode local (pas de sauvegarde distante).');
+        }
         
         // Attacher les événements
         this.attachEvents();
@@ -99,18 +105,20 @@ export class WizardFirebase {
      * Charge les données depuis Firestore
      */
     async loadFromFirestore() {
+        if (!this.firestoreEnabled) return;
+
         try {
             const docRef = doc(db, this.collectionName, this.docId);
             const docSnap = await getDoc(docRef);
-            
+
             if (docSnap.exists()) {
                 const data = docSnap.data();
                 this.formData = data.formData || {};
                 this.completedPhases = data.completedPhases || [];
-                
+
                 // Restaurer les valeurs dans les champs
                 this.restoreFieldValues();
-                
+
                 this.showToast('📂 Données chargées', 'success');
                 console.log('✅ Données chargées depuis Firestore');
             } else {
@@ -126,16 +134,21 @@ export class WizardFirebase {
      * Sauvegarde les données dans Firestore
      */
     async saveToFirestore() {
+        if (!this.firestoreEnabled) {
+            console.warn('saveToFirestore ignoré : Firestore non configuré.');
+            return;
+        }
+
         if (!this.isDirty) return;
-        
+
         this.showSaveIndicator('saving');
-        
+
         try {
             const docRef = doc(db, this.collectionName, this.docId);
-            
+
             // Collecter toutes les données actuelles
             this.collectAllFields();
-            
+
             const saveData = {
                 studentName: this.formData.studentName || '',
                 studentClass: this.formData.studentClass || '',
@@ -146,10 +159,10 @@ export class WizardFirebase {
                 isComplete: this.isFormComplete(),
                 updatedAt: serverTimestamp()
             };
-            
+
             // Vérifier si le document existe
             const docSnap = await getDoc(docRef);
-            
+
             if (docSnap.exists()) {
                 // Mise à jour
                 await updateDoc(docRef, saveData);
@@ -158,13 +171,13 @@ export class WizardFirebase {
                 saveData.createdAt = serverTimestamp();
                 await setDoc(docRef, saveData);
             }
-            
+
             this.isDirty = false;
             this.showSaveIndicator('saved');
             this.onSaveSuccess(saveData);
-            
+
             console.log('✅ Sauvegardé dans Firestore');
-            
+
         } catch (error) {
             console.error('❌ Erreur sauvegarde Firestore:', error);
             this.showSaveIndicator('error');
@@ -250,10 +263,12 @@ export class WizardFirebase {
      * Démarre l'autosave périodique
      */
     startAutosave() {
+        if (!this.firestoreEnabled) return; // pas d'autosave distant si pas de config
+
         if (this.autosaveTimer) {
             clearInterval(this.autosaveTimer);
         }
-        
+
         this.autosaveTimer = setInterval(() => {
             this.saveToFirestore();
         }, this.autosaveInterval);
@@ -459,18 +474,20 @@ export class WizardFirebase {
      */
     async reset() {
         try {
-            // Supprimer le document Firestore
-            const docRef = doc(db, this.collectionName, this.docId);
-            await deleteDoc(docRef);
-            
+            if (this.firestoreEnabled) {
+                // Supprimer le document Firestore
+                const docRef = doc(db, this.collectionName, this.docId);
+                await deleteDoc(docRef);
+            }
+
             // Supprimer l'ID local
             localStorage.removeItem(`wizard_${this.collectionName}_docId`);
-            
+
             // Réinitialiser l'état
             this.formData = {};
             this.completedPhases = [];
             this.isDirty = false;
-            
+
             // Vider les champs
             this.fields.forEach(field => {
                 if (field.type === 'checkbox' || field.type === 'radio') {
@@ -479,18 +496,18 @@ export class WizardFirebase {
                     field.value = '';
                 }
             });
-            
+
             // Générer un nouvel ID
             this.docId = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
             localStorage.setItem(`wizard_${this.collectionName}_docId`, this.docId);
-            
+
             // Retourner à la phase 1
             this.goToPhase(1);
             this.updateProgress();
-            
+
             this.closeModal('resetModal');
             this.showToast('Formulaire réinitialisé', 'success');
-            
+
         } catch (error) {
             console.error('❌ Erreur reset:', error);
             this.showToast('Erreur lors de la réinitialisation', 'error');
