@@ -1,0 +1,23 @@
+Voici les grandes catégories d'améliorations possibles :
+
+1. Productivité générale
+Raccourcis clavier personnalisés
+Multi-curseurs et sélections avancées
+Snippets personnalisés
+Extensions comme Project Manager, Todo Tree
+2. Apparence & confort visuel
+Thèmes (One Dark Pro, Dracula, GitHub Theme...)
+Polices avec ligatures (Fira Code, JetBrains Mono)
+Icons (Material Icon Theme)
+Bracket colorization (natif maintenant)
+3. Git & collaboration
+GitLens pour voir l'historique inline
+Git Graph pour visualiser les branches
+Settings Sync pour partager ta config
+4. Développement web/JS
+Prettier, ESLint en auto-format
+Auto Rename Tag, CSS Peek
+Emmet (déjà intégré, mais sous-utilisé)
+5. Terminal & workflow
+Profils de terminal multiples
+Tasks personnalisées pour automatiser
