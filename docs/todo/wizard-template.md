@@ -1,20 +1,4 @@
 ✅ État actuel fonctionnel
-HTML :
-
-3 phases avec navigation
-Infos élève (nom, classe, date)
-Types de champs variés : texte, textarea, checkbox, radio, number, select, tableau
-Modales (completion, reset)
-Toast notifications
-Script de diagnostic Firestore (lignes 325-339)
-
-JS (wizard-firebase.js) :
-
-Import depuis ./services/firebase-config.js
-Flag firestoreEnabled pour mode dégradé
-Auto-save toutes les 15s
-Gestion complète CRUD Firestore
-Export/Import JSON local
 
 🎯 Quels ajustements souhaites-tu ?
 Quelques pistes possibles :

@@ -45,26 +45,26 @@
                     <select id="studentClass" data-field="studentClass">
                         <option value="">— Sélectionner —</option>
                         <optgroup label="5ème">
-                            <option value="505">505</option>
-                            <option value="506">506</option>
-                            <option value="507">507</option>
+                            <option value="505">5ème5</option>
+                            <option value="506">5ème6</option>
+                            <option value="507">5ème7</option>
                         </optgroup>
                         <optgroup label="4ème">
-                            <option value="401">401</option>
-                            <option value="402">402</option>
-                            <option value="403">403</option>
-                            <option value="404">404</option>
-                            <option value="405">405</option>
-                            <option value="406">406</option>
+                            <option value="401">4ème1</option>
+                            <option value="402">4ème2</option>
+                            <option value="403">4ème3</option>
+                            <option value="404">4ème4</option>
+                            <option value="405">4ème5</option>
+                            <option value="406">4ème6</option>
                         </optgroup>
                         <optgroup label="3ème">
-                            <option value="302">302</option>
-                            <option value="303">303</option>
-                            <option value="304">304</option>
-                            <option value="305">305</option>
-                            <option value="306">306</option>
-                            <option value="305">307</option>
-                            <option value="306">308</option>
+                            <option value="302">3ème2</option>
+                            <option value="303">3ème3</option>
+                            <option value="304">3ème4</option>
+                            <option value="305">3ème5</option>
+                            <option value="306">3ème6</option>
+                            <option value="305">3ème7</option>
+                            <option value="306">3ème8</option>
                         </optgroup>
                     </select>
                 </div>
@@ -269,11 +269,10 @@
 
         <!-- ========== BARRE D'ACTIONS ========== -->
         <div class="wizard__actions">
-            <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter JSON</button>
-            <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer JSON</button>
+            <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter</button>
+            <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer</button>
             <input type="file" id="importInput" accept=".json" style="display:none" onchange="wizardImportJSON(event)">
             <button class="btn btn--secondary btn--small" onclick="wizardShowModal('resetModal')">🗑️ Réinitialiser</button>
-            <button class="btn btn--secondary btn--small" onclick="window.print()">🖨️ Imprimer</button>
         </div>
     </main>
 
@@ -290,7 +289,7 @@
                 <p>Tu as terminé ton travail !</p>
                 <p style="margin-top:1rem">Tes réponses ont été <strong>sauvegardées automatiquement</strong> dans la base de données.</p>
                 <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--color-gray-500)">
-                    Tu peux aussi exporter une copie locale en JSON.
+                    Tu peux aussi exporter une copie locale.
                 </p>
             </div>
             <div class="wizard__modal-actions">

@@ -64,6 +64,7 @@
 }
 
 .wizard {
+    width: 100%;
     max-width: 900px;
     margin: 0 auto;
     padding: var(--space-6) var(--space-4);
@@ -290,6 +291,7 @@
     border: 1px solid var(--color-gray-200);
     box-shadow: var(--shadow-sm);
     overflow: hidden;
+    width: 100%;
 }
 
 /* ---------- Sections de Phase ---------- */
@@ -297,6 +299,8 @@
     display: none;
     padding: var(--space-8);
     animation: wizardFadeIn 0.3s ease;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .wizard__phase.active {

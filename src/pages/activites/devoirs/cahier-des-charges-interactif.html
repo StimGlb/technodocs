@@ -987,11 +987,10 @@
             </section>
         </div>
         <div class="actions-bar">
-            <button class="btn btn--secondary btn--small" onclick="exportJSON()">📤 Exporter JSON</button>
-            <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer JSON</button>
+            <button class="btn btn--secondary btn--small" onclick="exportJSON()">📤 Exporter</button>
+            <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer</button>
             <input type="file" id="importInput" accept=".json" style="display:none" onchange="importJSON(event)">
             <button class="btn btn--secondary btn--small" onclick="showResetModal()">🗑️ Réinitialiser</button>
-            <button class="btn btn--secondary btn--small" onclick="window.print()">🖨️ Imprimer</button>
         </div>
     </main>
     <div class="modal-overlay" id="completionModal">

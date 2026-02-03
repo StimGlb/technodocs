@@ -95,3 +95,5 @@
   }
 
 })();
+
+autofillWizard({ studentName: 'Alice Dupont', studentClass: '4B', autoSave: true });
