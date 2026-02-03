@@ -52,7 +52,7 @@
                 <div class="wizard__progress-fill" id="progressFill" style="width: 0%"></div>
             </div>
 
-            <!-- Navigation par phases (adapter le nombre de boutons) -->
+            <!-- Navigation par phases -->
             <nav class="wizard__nav" id="phaseNav">
                 <button class="wizard__nav-btn active" data-phase="1">
                     <span class="wizard__nav-number">1</span>
@@ -232,7 +232,7 @@
 
         <!-- ========== BARRE D'ACTIONS ========== -->
         <div class="wizard__actions">
-            <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter</button>
+            <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter JSON</button>
             <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer JSON</button>
             <input type="file" id="importInput" accept=".json" style="display:none" onchange="wizardImportJSON(event)">
             <button class="btn btn--secondary btn--small" onclick="wizardShowModal('resetModal')">🗑️ Réinitialiser</button>
@@ -251,11 +251,10 @@
             <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
             <div class="wizard__modal-content">
                 <p>Tu as terminé ton travail !</p>
-                <p style="margin-top:1rem">N'oublie pas de :</p>
-                <ul style="margin:0.75rem 0;padding-left:1.5rem;list-style:disc">
-                    <li>Exporter ton fichier JSON</li>
-                    <li>Vérifier tes réponses</li>
-                </ul>
+                <p style="margin-top:1rem">Tes réponses ont été <strong>sauvegardées automatiquement</strong> dans la base de données.</p>
+                <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--color-gray-500)">
+                    Tu peux aussi exporter une copie locale en JSON.
+                </p>
             </div>
             <div class="wizard__modal-actions">
                 <button class="btn btn--secondary" onclick="wizardCloseModal('completionModal')">Fermer</button>
@@ -269,7 +268,7 @@
         <div class="wizard__modal">
             <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
             <div class="wizard__modal-content">
-                <p>Cette action va <strong>supprimer toutes tes réponses</strong>. Irréversible !</p>
+                <p>Cette action va <strong>supprimer toutes tes réponses</strong> de la base de données. Irréversible !</p>
             </div>
             <div class="wizard__modal-actions">
                 <button class="btn btn--secondary" onclick="wizardCloseModal('resetModal')">Annuler</button>
@@ -287,22 +286,39 @@
     <!-- ========== SCRIPTS ========== -->
     <script type="module" src="/src/js/components.js"></script>
     <script type="module">
-        import { WizardForm } from '/src/js/wizard-form.js';
+        // ============================================
+        // CONFIGURATION FIREBASE - À ADAPTER
+        // ============================================
+        import { WizardFirebase } from '/src/js/wizard-firebase.js';
 
-        // Créer l'instance du wizard
-        // ADAPTER : storageKey unique et requiredFields selon les phases
-        window.wizardInstance = new WizardForm({
-            storageKey: 'template_wizard', // Clé unique pour ce formulaire
-            autosaveInterval: 15000, // 15 secondes
+        // Créer l'instance du wizard avec Firestore
+        window.wizardInstance = new WizardFirebase({
+            // Nom de la collection Firestore (unique par formulaire)
+            collectionName: 'wizard_template',
+            
+            // Intervalle d'autosave (en ms)
+            autosaveInterval: 15000,
+            
+            // Champs obligatoires par phase pour marquer "completed"
             requiredFields: {
-                // Champs obligatoires par phase pour marquer "completed"
                 1: ['champTexte'],
                 2: ['choixUnique'],
                 3: []
             },
+            
+            // Callback à la complétion
             onComplete: (data) => {
-                console.log('Formulaire complété:', data);
-                // Ajouter ici un envoi vers un serveur si nécessaire
+                console.log('🎉 Formulaire complété:', data);
+            },
+            
+            // Callback sauvegarde réussie
+            onSaveSuccess: (data) => {
+                console.log('✅ Sauvegarde Firestore OK');
+            },
+            
+            // Callback erreur de sauvegarde
+            onSaveError: (error) => {
+                console.error('❌ Erreur Firestore:', error);
             }
         });
     </script>
