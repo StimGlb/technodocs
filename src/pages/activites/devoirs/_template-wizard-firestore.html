@@ -20,20 +20,57 @@
     <div id="header-placeholder"></div>
 
     <main class="wizard">
+
+        <!-- ========== BANNIÈRE TITRE ========== -->
+        <div class="wizard__banner">
+            <div class="wizard__banner-icon">🎯</div>
+            <div class="wizard__banner-content">
+                <h1 class="wizard__banner-title">Titre du devoir</h1>
+                <div class="wizard__banner-skills">
+                    <span class="wizard__skill">CT 2.1</span>
+                    <span class="wizard__skill">CT 4.2</span>
+                    <span class="wizard__skill">CS 5.6</span>
+                </div>
+            </div>
+        </div>
         <!-- ========== INFO ÉLÈVE ========== -->
         <div class="wizard__student-info">
             <div class="wizard__student-row">
-                <div class="wizard__student-field">
-                    <label for="studentName">Nom et Prénom</label>
+                <div class="wizard__student-field wizard__student-field--name">
+                    <label for="studentName">Prénom et Nom</label>
                     <input type="text" id="studentName" data-field="studentName" placeholder="Ton nom complet">
                 </div>
-                <div class="wizard__student-field">
+                <div class="wizard__student-field wizard__student-field--class">
                     <label for="studentClass">Classe</label>
-                    <input type="text" id="studentClass" data-field="studentClass" placeholder="Ex: 5A">
+                    <select id="studentClass" data-field="studentClass">
+                        <option value="">— Sélectionner —</option>
+                        <optgroup label="5ème">
+                            <option value="505">505</option>
+                            <option value="506">506</option>
+                            <option value="507">507</option>
+                        </optgroup>
+                        <optgroup label="4ème">
+                            <option value="401">401</option>
+                            <option value="402">402</option>
+                            <option value="403">403</option>
+                            <option value="404">404</option>
+                            <option value="405">405</option>
+                            <option value="406">406</option>
+                        </optgroup>
+                        <optgroup label="3ème">
+                            <option value="302">302</option>
+                            <option value="303">303</option>
+                            <option value="304">304</option>
+                            <option value="305">305</option>
+                            <option value="306">306</option>
+                            <option value="305">307</option>
+                            <option value="306">308</option>
+                        </optgroup>
+                    </select>
                 </div>
-                <div class="wizard__student-field">
-                    <label for="projectDate">Date</label>
-                    <input type="date" id="projectDate" data-field="projectDate">
+                <div class="wizard__student-field wizard__student-field--date">
+                    <label>Date</label>
+                    <span class="wizard__date-display" id="projectDate" data-field="projectDate"></span>
                 </div>
             </div>
         </div>
@@ -41,7 +78,7 @@
         <!-- ========== PROGRESSION ========== -->
         <section class="wizard__progress">
             <div class="wizard__progress-header">
-                <h2 class="wizard__progress-title">🎯 Progression</h2>
+                <h2 class="wizard__progress-title">Progression</h2>
                 <div class="wizard__save-indicator" id="saveIndicator">
                     <span class="wizard__save-dot"></span>
                     <span class="wizard__save-text">Auto-save</span>
@@ -321,21 +358,6 @@
                 console.error('❌ Erreur Firestore:', error);
             }
         });
-    </script>
-    <!-- Diagnostic: écrire le statut Firestore dans le DOM pour vérification distante -->
-    <script>
-        // Attendre que les modules aient créé `window.wizardInstance`
-        setTimeout(() => {
-            const status = document.createElement('div');
-            status.id = 'firebase-status';
-            try {
-                status.textContent = (window.wizardInstance && window.wizardInstance.firestoreEnabled) ? 'firestore:enabled' : 'firestore:disabled';
-            } catch (e) {
-                status.textContent = 'firestore:unknown';
-            }
-            status.style.display = 'none';
-            document.body.appendChild(status);
-        }, 500);
     </script>
 </body>
 </html>

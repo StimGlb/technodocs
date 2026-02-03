@@ -4,10 +4,71 @@
    ======================================== */
 
 /* ---------- Layout Principal ---------- */
+
+/* ---------- Bannière Titre ---------- */
+.wizard__banner {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    background: linear-gradient(135deg, var(--color-primary), var(--color-primary-dark));
+    border-radius: var(--radius-xl);
+    padding: var(--space-6);
+    margin-bottom: var(--space-6);
+    color: var(--color-white);
+    box-shadow: var(--shadow-lg);
+}
+
+.wizard__banner-icon {
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.wizard__banner-content {
+    flex: 1;
+}
+
+.wizard__banner-title {
+    font-family: var(--font-display);
+    font-size: var(--text-2xl);
+    font-weight: 700;
+    margin: 0 0 var(--space-2) 0;
+}
+
+.wizard__banner-skills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+}
+
+.wizard__skill {
+    display: inline-block;
+    padding: var(--space-1) var(--space-3);
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    backdrop-filter: blur(4px);
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+    .wizard__banner {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .wizard__banner-skills {
+        justify-content: center;
+    }
+}
+
 .wizard {
     max-width: 900px;
     margin: 0 auto;
     padding: var(--space-6) var(--space-4);
+    /* Espace pour le header fixe (70px) + marge */
+    padding-top: calc(var(--header-height, 70px) + var(--space-6));
 }
 
 /* ---------- Info Élève ---------- */
@@ -21,8 +82,22 @@
 
 .wizard__student-row {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    grid-template-columns: 2fr 1fr 1fr;
     gap: var(--space-4);
+    align-items: end;
+}
+
+/* Variantes de largeur pour les champs */
+.wizard__student-field--name {
+    min-width: 200px;
+}
+
+.wizard__student-field--class {
+    min-width: 120px;
+}
+
+.wizard__student-field--date {
+    min-width: 140px;
 }
 
 .wizard__student-field label {
@@ -35,19 +110,79 @@
     margin-bottom: var(--space-1);
 }
 
-.wizard__student-field input {
+.wizard__student-field input,
+.wizard__student-field select {
     width: 100%;
     padding: var(--space-2) var(--space-3);
-    border: 1px solid var(--color-gray-200);
+    border: 2px solid var(--color-gray-200);
     border-radius: var(--radius-md);
     font-size: var(--text-sm);
     font-family: var(--font-main);
+    background: var(--color-white);
+    transition: all var(--transition-fast);
 }
 
-.wizard__student-field input:focus {
+.wizard__student-field input:focus,
+.wizard__student-field select:focus {
     outline: none;
     border-color: var(--color-primary);
-    box-shadow: 0 0 0 2px var(--color-primary-light);
+    box-shadow: 0 0 0 3px var(--color-primary-light);
+}
+
+/* Style amélioré pour le select de classe */
+.wizard__student-field select {
+    appearance: none;
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236366f1' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    padding-right: 36px;
+}
+
+.wizard__student-field select:hover {
+    border-color: var(--color-primary-light);
+}
+
+/* Style des optgroups */
+.wizard__student-field select optgroup {
+    font-weight: 600;
+    color: var(--color-gray-700);
+    background: var(--color-gray-50);
+    padding: var(--space-2) 0;
+}
+
+.wizard__student-field select option {
+    font-weight: 400;
+    color: var(--color-gray-800);
+    padding: var(--space-2) var(--space-3);
+}
+
+/* Responsive mobile */
+@media (max-width: 600px) {
+    .wizard__student-row {
+        grid-template-columns: 1fr;
+    }
+    
+    .wizard__student-field--name,
+    .wizard__student-field--class,
+    .wizard__student-field--date {
+        min-width: unset;
+    }
+}
+
+/* Affichage date du jour (lecture seule) */
+.wizard__date-display {
+    display: flex;
+    align-items: center;
+    padding: var(--space-2) var(--space-3);
+    background: var(--color-gray-100);
+    border: 2px solid var(--color-gray-200);
+    border-radius: var(--radius-md);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--color-gray-700);
+    min-height: 38px;
 }
 
 /* ---------- Section Progression ---------- */
@@ -450,6 +585,11 @@
     background: #d1fae5;
 }
 
+.wizard__save-indicator.error {
+    color: var(--color-error);
+    background: #fee2e2;
+}
+
 .wizard__save-dot {
     width: 8px;
     height: 8px;
@@ -477,7 +617,7 @@
     transition: all var(--transition-base);
 }
 
-.wizard__modal-overlay.active {
+.wizard__modal-overlay.show {
     opacity: 1;
     visibility: visible;
 }
@@ -494,7 +634,7 @@
     transition: transform var(--transition-base);
 }
 
-.wizard__modal-overlay.active .wizard__modal {
+.wizard__modal-overlay.show .wizard__modal {
     transform: scale(1);
 }
 
@@ -552,6 +692,7 @@
 @media (max-width: 768px) {
     .wizard {
         padding: var(--space-4) var(--space-3);
+        padding-top: calc(var(--header-height, 70px) + var(--space-4));
     }
 
     .wizard__phase {

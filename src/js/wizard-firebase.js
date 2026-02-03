@@ -65,6 +65,9 @@ export class WizardFirebase {
         // Générer ou récupérer l'ID unique du document
         this.docId = this.getOrCreateDocId();
         
+        // Afficher la date du jour automatiquement
+        this.setTodayDate();
+        
         // Charger les données existantes depuis Firestore (si configuré)
         if (this.firestoreEnabled) {
             await this.loadFromFirestore();
@@ -82,6 +85,24 @@ export class WizardFirebase {
         this.updateProgress();
         
         console.log('🔥 WizardFirebase initialisé - DocID:', this.docId);
+    }
+
+    /**
+     * Affiche la date du jour dans le champ projectDate
+     */
+    setTodayDate() {
+        const dateField = document.getElementById('projectDate');
+        if (dateField) {
+            const today = new Date();
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            const formattedDate = today.toLocaleDateString('fr-FR', options);
+            
+            // Afficher la date formatée (ex: 03/02/2026)
+            dateField.textContent = formattedDate;
+            
+            // Stocker au format ISO pour Firestore (ex: 2026-02-03)
+            this.formData.projectDate = today.toISOString().split('T')[0];
+        }
     }
 
     /**
@@ -193,6 +214,9 @@ export class WizardFirebase {
         this.fields.forEach(field => {
             const fieldName = field.dataset.field;
             
+            // Ignorer le champ date (géré par setTodayDate)
+            if (fieldName === 'projectDate') return;
+            
             if (field.type === 'checkbox') {
                 this.formData[fieldName] = field.checked;
             } else if (field.type === 'radio') {
@@ -215,6 +239,9 @@ export class WizardFirebase {
             
             if (value === undefined) return;
             
+            // Ignorer le champ date (lecture seule)
+            if (fieldName === 'projectDate') return;
+            
             if (field.type === 'checkbox') {
                 field.checked = value === true;
             } else if (field.type === 'radio') {
@@ -231,6 +258,9 @@ export class WizardFirebase {
     attachEvents() {
         // Événements sur les champs
         this.fields.forEach(field => {
+            // Ignorer le champ date (lecture seule)
+            if (field.dataset.field === 'projectDate') return;
+            
             const eventType = (field.type === 'checkbox' || field.type === 'radio') 
                 ? 'change' 
                 : 'input';
@@ -263,12 +293,10 @@ export class WizardFirebase {
      * Démarre l'autosave périodique
      */
     startAutosave() {
-        if (!this.firestoreEnabled) return; // pas d'autosave distant si pas de config
-
         if (this.autosaveTimer) {
             clearInterval(this.autosaveTimer);
         }
-
+        
         this.autosaveTimer = setInterval(() => {
             this.saveToFirestore();
         }, this.autosaveInterval);
@@ -285,7 +313,7 @@ export class WizardFirebase {
         this.phases.forEach(phase => phase.classList.remove('active'));
         
         // Afficher la phase demandée
-        const targetPhase = document.querySelector(`[data-phase="${phaseNumber}"]`);
+        const targetPhase = document.querySelector(`.wizard__phase[data-phase="${phaseNumber}"]`);
         if (targetPhase) {
             targetPhase.classList.add('active');
             this.currentPhase = phaseNumber;
@@ -490,6 +518,9 @@ export class WizardFirebase {
 
             // Vider les champs
             this.fields.forEach(field => {
+                // Ignorer le champ date
+                if (field.dataset.field === 'projectDate') return;
+                
                 if (field.type === 'checkbox' || field.type === 'radio') {
                     field.checked = false;
                 } else {
@@ -500,6 +531,9 @@ export class WizardFirebase {
             // Générer un nouvel ID
             this.docId = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
             localStorage.setItem(`wizard_${this.collectionName}_docId`, this.docId);
+
+            // Réinitialiser la date du jour
+            this.setTodayDate();
 
             // Retourner à la phase 1
             this.goToPhase(1);
