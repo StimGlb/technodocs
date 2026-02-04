@@ -2,6 +2,11 @@
 // Charge dynamiquement les includes HTML
 
 import { initNavigation } from "./app.js";
+// Import static includes and navigation JSON as raw strings so they are
+// bundled by Vite and available in production (no runtime fetch to /src/...)
+import headerHtml from "../includes/header.html?raw";
+import footerHtml from "../includes/footer.html?raw";
+import navigationJsonRaw from "../data/navigation.json?raw";
 
 // ===========================
 // Fonctions pures utilitaires
@@ -152,25 +157,13 @@ async function loadHeader() {
   if (!placeholder) return;
 
   try {
-    const response = await fetch("/src/includes/header.html");
+    // Use bundled header HTML (Vite raw import)
+    safeReplaceElement(placeholder, headerHtml);
 
-    if (!response.ok) {
-      throw new Error("Impossible de charger le header");
-    }
-
-    const html = await response.text();
-    safeReplaceElement(placeholder, html);
-
-    // Charger le JSON de navigation et injecter le menu dynamiquement
+    // Parse bundled navigation JSON and inject menu
     try {
-      const navResp = await fetch("/src/data/navigation.json");
-      if (navResp && navResp.ok) {
-        const navData = await navResp.json();
-        await buildAndInjectNav(navData);
-      } else {
-        // si fetch échoue, tenter d'appeler initNavigation pour maintenir le comportement
-        if (typeof initNavigation === "function") initNavigation();
-      }
+      const navData = JSON.parse(navigationJsonRaw || "{}");
+      await buildAndInjectNav(navData);
     } catch (e) {
       if (typeof initNavigation === "function") initNavigation();
     }
@@ -206,16 +199,9 @@ async function loadFooter() {
   const placeholder = document.getElementById("footer-placeholder");
 
   if (!placeholder) return;
-
   try {
-    const response = await fetch("/src/includes/footer.html");
-
-    if (!response.ok) {
-      throw new Error("Impossible de charger le footer");
-    }
-
-    const html = await response.text();
-    safeReplaceElement(placeholder, html);
+    // Use bundled footer HTML (Vite raw import)
+    safeReplaceElement(placeholder, footerHtml);
   } catch (error) {
     // Fallback en cas d'erreur
     const fallbackFooter = document.createElement("footer");

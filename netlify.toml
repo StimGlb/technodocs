@@ -2,11 +2,11 @@
 # Documentation: https://docs.netlify.com/configure-builds/file-based-configuration/
 
 [build]
-  # Directory to publish (root directory since index.html is at root)
-  publish = "."
+  # Build with Vite and publish the production output
+  publish = "dist"
 
-  # No build command needed for static HTML site
-  command = ""
+  # Run the Vite build so import.meta.env VITE_* vars are embedded
+  command = "npm run build"
 
 # Local development configuration
 [dev]
