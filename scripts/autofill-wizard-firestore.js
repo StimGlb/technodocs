@@ -95,3 +95,11 @@
   }
 
 })();
+
+autofillWizard({
+  studentName: 'Alice Dupont',
+  studentClass: '4B',
+  projectDate: '2026-02-04',
+  prefix: 'Demo',
+  autoSave: false
+});
