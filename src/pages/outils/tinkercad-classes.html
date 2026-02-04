@@ -1,230 +1,266 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Connexion aux classes Tinkercad - TechnoDocs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Connexion aux classes Tinkercad - TechnoDocs"
+    />
     <title>TechnoDocs | Tinkercad Classes</title>
-    <link rel="stylesheet" href="/src/css/style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
     <style>
-        /* Styles spécifiques à la page Tinkercad */
-        .tinkercad-container {
-            max-width: 500px;
-            margin: 0 auto;
-            padding: var(--space-1) var(--space-8);
-        }
+      /* Styles spécifiques à la page Tinkercad */
+      .tinkercad-container {
+        max-width: 500px;
+        margin: 0 auto;
+        padding: var(--space-1) var(--space-8);
+      }
 
-        .class-selector {
-            background: var(--color-white);
-            border-radius: var(--radius-xl);
-            padding: var(--space-8);
-            box-shadow: var(--shadow-lg);
-            border: 1px solid var(--color-gray-200);
-        }
+      .class-selector {
+        background: var(--color-white);
+        border-radius: var(--radius-xl);
+        padding: var(--space-8);
+        box-shadow: var(--shadow-lg);
+        border: 1px solid var(--color-gray-200);
+      }
 
-        .selector-header {
-            text-align: center;
-            margin-bottom: var(--space-6);
-        }
+      .selector-header {
+        text-align: center;
+        margin-bottom: var(--space-6);
+      }
 
-        .selector-icon {
-            max-width: 180px;
-            height: auto;
-            margin: 0 auto var(--space-4);
-            display: block;
-        }
+      .selector-icon {
+        max-width: 180px;
+        height: auto;
+        margin: 0 auto var(--space-4);
+        display: block;
+      }
 
-        .selector-title {
-            font-family: var(--font-display);
-            font-size: var(--text-2xl);
-            font-weight: 700;
-            color: var(--color-gray-900);
-            margin-bottom: var(--space-2);
-        }
+      .selector-title {
+        font-family: var(--font-display);
+        font-size: var(--text-2xl);
+        font-weight: 700;
+        color: var(--color-gray-900);
+        margin-bottom: var(--space-2);
+      }
 
-        .selector-subtitle {
-            color: var(--color-gray-500);
-            font-size: var(--text-sm);
-        }
+      .selector-subtitle {
+        color: var(--color-gray-500);
+        font-size: var(--text-sm);
+      }
 
-        .form-select {
-            width: 100%;
-            padding: var(--space-4);
-            font-size: var(--text-lg);
-            border: 2px solid var(--color-gray-200);
-            border-radius: var(--radius-lg);
-            background: var(--color-white);
-            cursor: pointer;
-            transition: var(--transition-fast);
-            font-family: var(--font-main);
-            color: var(--color-gray-700);
-            appearance: none;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
-            background-repeat: no-repeat;
-            background-position: right var(--space-3) center;
-            background-size: 20px;
-            padding-right: var(--space-12);
-        }
+      .form-select {
+        width: 100%;
+        padding: var(--space-4);
+        font-size: var(--text-lg);
+        border: 2px solid var(--color-gray-200);
+        border-radius: var(--radius-lg);
+        background: var(--color-white);
+        cursor: pointer;
+        transition: var(--transition-fast);
+        font-family: var(--font-main);
+        color: var(--color-gray-700);
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right var(--space-3) center;
+        background-size: 20px;
+        padding-right: var(--space-12);
+      }
 
-        .form-select:hover {
-            border-color: var(--color-primary-light);
-        }
+      .form-select:hover {
+        border-color: var(--color-primary-light);
+      }
 
-        .form-select:focus {
-            outline: none;
-            border-color: var(--color-primary);
-            box-shadow: 0 0 0 3px var(--color-primary-light);
-        }
+      .form-select:focus {
+        outline: none;
+        border-color: var(--color-primary);
+        box-shadow: 0 0 0 3px var(--color-primary-light);
+      }
 
-        .form-select optgroup {
-            font-weight: 600;
-            color: var(--color-gray-900);
-            background: var(--color-gray-50);
-        }
+      .form-select optgroup {
+        font-weight: 600;
+        color: var(--color-gray-900);
+        background: var(--color-gray-50);
+      }
 
-        .form-select option {
-            padding: var(--space-2);
-            font-weight: 400;
-        }
+      .form-select option {
+        padding: var(--space-2);
+        font-weight: 400;
+      }
 
-        .btn-tinkercad {
-            width: 100%;
-            margin-top: var(--space-6);
-            padding: var(--space-4) var(--space-6);
-            font-size: var(--text-lg);
-            background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
-            color: var(--color-white);
-            border: none;
-            border-radius: var(--radius-lg);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition-base);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: var(--space-3);
-        }
+      .btn-tinkercad {
+        width: 100%;
+        margin-top: var(--space-6);
+        padding: var(--space-4) var(--space-6);
+        font-size: var(--text-lg);
+        background: linear-gradient(135deg, #00b4d8 0%, #0077b6 100%);
+        color: var(--color-white);
+        border: none;
+        border-radius: var(--radius-lg);
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition-base);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: var(--space-3);
+      }
 
-        .btn-tinkercad:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-lg);
-            background: linear-gradient(135deg, #0096c7 0%, #005f87 100%);
-        }
+      .btn-tinkercad:hover:not(:disabled) {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-lg);
+        background: linear-gradient(135deg, #0096c7 0%, #005f87 100%);
+      }
 
-        .btn-tinkercad:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
+      .btn-tinkercad:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
 
-        .btn-tinkercad svg {
-            width: 24px;
-            height: 24px;
-        }
+      .btn-tinkercad svg {
+        width: 24px;
+        height: 24px;
+      }
 
-        .help-text {
-            text-align: center;
-            margin-top: var(--space-6);
-            padding-top: var(--space-6);
-            border-top: 1px solid var(--color-gray-200);
-        }
+      .help-text {
+        text-align: center;
+        margin-top: var(--space-6);
+        padding-top: var(--space-6);
+        border-top: 1px solid var(--color-gray-200);
+      }
 
-        .help-text p {
-            font-size: var(--text-sm);
-            color: var(--color-gray-500);
-            margin-bottom: var(--space-2);
-        }
+      .help-text p {
+        font-size: var(--text-sm);
+        color: var(--color-gray-500);
+        margin-bottom: var(--space-2);
+      }
 
-        .help-text a {
-            color: var(--color-primary);
-            font-weight: 500;
-            transition: var(--transition-fast);
-        }
+      .help-text a {
+        color: var(--color-primary);
+        font-weight: 500;
+        transition: var(--transition-fast);
+      }
 
-        .help-text a:hover {
-            color: var(--color-primary-dark);
-            text-decoration: underline;
-        }
+      .help-text a:hover {
+        color: var(--color-primary-dark);
+        text-decoration: underline;
+      }
 
-        /* Animation d'entrée */
-        .class-selector {
-            animation: slideUp 0.4s ease-out;
-        }
+      /* Animation d'entrée */
+      .class-selector {
+        animation: slideUp 0.4s ease-out;
+      }
 
-        @keyframes slideUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+      @keyframes slideUp {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
         }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Header dynamique -->
     <div id="header-placeholder"></div>
 
     <main>
-        <section class="section">
-            <div class="tinkercad-container">
-                <div class="class-selector">
-                    <div class="selector-header">
-                        <img src="/dist/images/logo-tinkercad.png" alt="Tinkercad" class="selector-icon">
-                        <h1 class="selector-title">Rejoindre ma classe</h1>
-                        <p class="selector-subtitle">Sélectionne ta classe pour accéder à Tinkercad</p>
-                    </div>
-
-                    <form id="class-form">
-                        <select id="class-select" class="form-select" required>
-                            <option value="" disabled selected>-- Choisis ta classe --</option>
-                            
-                            <optgroup label="📗 5ème">
-                                <option value="QG2QNFGKT">5ème 5</option>
-                                <option value="B3FUZ4VQU">5ème 6</option>
-                                <option value="JK8RSH4ZC">5ème 7</option>
-                            </optgroup>
-                            
-                            <optgroup label="📙 4ème">
-                                <option value="CIRCCUUSZ">4ème 1</option>
-                                <option value="UTKNNQGEC">4ème 2</option>
-                                <option value="WGJC6FTWG">4ème 3</option>
-                                <option value="PW4CQBRF3">4ème 4</option>
-                                <option value="S4K77NJMJ">4ème 5</option>
-                            </optgroup>
-                            
-                            <optgroup label="📕 3ème">
-                                <option value="J9SWRVBLK">3ème 2</option>
-                                <option value="PGGPZZYWQ">3ème 3</option>
-                                <option value="5JBKRLNYD">3ème 4</option>
-                                <option value="MY4EBJXPG">3ème 5</option>
-                                <option value="T3J9SE2C2">3ème 6</option>
-                            </optgroup>
-                        </select>
-
-                        <button type="submit" id="join-btn" class="btn-tinkercad" disabled>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
-                                <polyline points="15 3 21 3 21 9"/>
-                                <line x1="10" y1="14" x2="21" y2="3"/>
-                            </svg>
-                            Rejoindre la classe
-                        </button>
-                    </form>
-
-                    <div class="help-text">
-                        <p>Tu peux aussi créer un compte avec une adresse email pour tes projets personnels.</p>
-                        <a href="https://www.tinkercad.com" target="_blank" rel="noopener">
-                            Créer un compte sur Tinkercad →
-                        </a>
-                    </div>
-                </div>
+      <section class="section">
+        <div class="tinkercad-container">
+          <div class="class-selector">
+            <div class="selector-header">
+              <img
+                src="/src/images/logo-tinkercad.png"
+                alt="Tinkercad"
+                class="selector-icon"
+              />
+              <h1 class="selector-title">Rejoindre ma classe</h1>
+              <p class="selector-subtitle">
+                Sélectionne ta classe pour accéder à Tinkercad
+              </p>
             </div>
-        </section>
+
+            <form id="class-form">
+              <select id="class-select" class="form-select" required>
+                <option value="" disabled selected>
+                  -- Choisis ta classe --
+                </option>
+
+                <optgroup label="📗 5ème">
+                  <option value="QG2QNFGKT">5ème 5</option>
+                  <option value="B3FUZ4VQU">5ème 6</option>
+                  <option value="JK8RSH4ZC">5ème 7</option>
+                </optgroup>
+
+                <optgroup label="📙 4ème">
+                  <option value="CIRCCUUSZ">4ème 1</option>
+                  <option value="UTKNNQGEC">4ème 2</option>
+                  <option value="WGJC6FTWG">4ème 3</option>
+                  <option value="PW4CQBRF3">4ème 4</option>
+                  <option value="S4K77NJMJ">4ème 5</option>
+                </optgroup>
+
+                <optgroup label="📕 3ème">
+                  <option value="J9SWRVBLK">3ème 2</option>
+                  <option value="PGGPZZYWQ">3ème 3</option>
+                  <option value="5JBKRLNYD">3ème 4</option>
+                  <option value="MY4EBJXPG">3ème 5</option>
+                  <option value="T3J9SE2C2">3ème 6</option>
+                </optgroup>
+              </select>
+
+              <button
+                type="submit"
+                id="join-btn"
+                class="btn-tinkercad"
+                disabled
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path
+                    d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"
+                  />
+                  <polyline points="15 3 21 3 21 9" />
+                  <line x1="10" y1="14" x2="21" y2="3" />
+                </svg>
+                Rejoindre la classe
+              </button>
+            </form>
+
+            <div class="help-text">
+              <p>
+                Tu peux aussi créer un compte avec une adresse email pour tes
+                projets personnels.
+              </p>
+              <a
+                href="https://www.tinkercad.com"
+                target="_blank"
+                rel="noopener"
+              >
+                Créer un compte sur Tinkercad →
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
     </main>
 
     <!-- Footer dynamique -->
@@ -233,6 +269,6 @@
     <!-- Scripts -->
     <script type="module" src="/src/js/components.js"></script>
     <script type="module" src="/src/js/app.js"></script>
-    <script src="/src/js/tinkercad-handler.js" defer></script>
-</body>
+    <script src="/src/pages/outils/tinkercad-handler.js" defer></script>
+  </body>
 </html>
