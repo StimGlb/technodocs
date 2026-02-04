@@ -382,7 +382,7 @@
             <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter JSON</button>
             <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer JSON</button>
             <input type="file" id="importInput" accept=".json" style="display:none" onchange="wizardImportJSON(event)">
-            <button class="btn btn--secondary btn--small" onclick="wizardShowModal('resetModal')">🗑️ Réinitialiser</button>
+            <button class="btn btn--secondary btn--small" onclick="handleSafeReset()">🗑️ Réinitialiser</button>
             <button class="btn btn--secondary btn--small" onclick="window.print()">🖨️ Imprimer</button>
         </div>
     </main>
@@ -415,7 +415,8 @@
         <div class="wizard__modal">
             <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
             <div class="wizard__modal-content">
-                <p>Cette action va <strong>supprimer toutes tes réponses</strong> de la base de données. Irréversible !</p>
+                <p>Une <strong>sauvegarde</strong> a été téléchargée automatiquement.</p>
+                <p>Voulez-vous vraiment <strong>supprimer définitivement</strong> vos réponses de la base de données ?</p>
             </div>
             <div class="wizard__modal-actions">
                 <button class="btn btn--secondary" onclick="wizardCloseModal('resetModal')">Annuler</button>
@@ -486,6 +487,30 @@
                 console.error('❌ Erreur Firestore:', error);
             }
         });
+        /**
+        * Sécurise la réinitialisation en forçant un export JSON 
+        * avant de demander la confirmation de suppression.
+        */
+        window.handleSafeReset = function() {
+            console.log("Préparation de la réinitialisation : Export de secours...");
+            
+            // 1. On déclenche l'export JSON existant
+            // Note : wizardExportJSON est supposé être accessible globalement
+            if (typeof wizardExportJSON === "function") {
+                wizardExportJSON();
+            } else if (window.wizardInstance) {
+                // Si la fonction n'est pas globale, on peut essayer via l'instance
+                window.wizardInstance.exportToJSON(); 
+            }
+
+            // 2. On affiche un petit message dans le toast pour informer l'élève
+            if (window.wizardInstance && window.wizardInstance.showToast) {
+                window.wizardInstance.showToast("Sauvegarde de secours téléchargée !", "success");
+            }
+
+            // 3. On ouvre enfin la modale de confirmation
+            wizardShowModal('resetModal');
+        };
     </script>
 </body>
 </html>
