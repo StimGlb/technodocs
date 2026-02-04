@@ -197,6 +197,43 @@ async function loadHeader() {
     // Use bundled header HTML (Vite raw import)
     safeReplaceElement(placeholder, headerHtml);
 
+    // --- Traitement intelligent des ancres (`data-nav-anchor`) ---
+    try {
+      const prefix = getRelativePrefix();
+      const currentPath = window.location.pathname || "/";
+      const onIndex =
+        currentPath === "/" ||
+        currentPath.endsWith("/index.html") ||
+        currentPath.endsWith("index.html");
+
+      // Sélectionner tous les anchors déclarés pour la nav (possible dans le noscript ou dans l'HTML injecté)
+      const anchors = Array.from(
+        document.querySelectorAll("[data-nav-anchor]"),
+      );
+      anchors.forEach((a) => {
+        // Exécuter la transformation une seule fois
+        if (a.dataset.navAnchorProcessed) return;
+        try {
+          const raw = a.getAttribute("href") || "";
+          // uniquement traiter si c'est une ancre locale (#...)
+          if (raw.startsWith("#")) {
+            if (!onIndex) {
+              // Exemple attendu: ../../index.html#cours
+              const newHref = (prefix || "") + "index.html" + raw;
+              a.setAttribute("href", newHref);
+            }
+            // sinon laisser l'ancre intacte pour un scroll natif
+          }
+        } catch (e) {
+          /* ignore individual anchor errors */
+        }
+        a.dataset.navAnchorProcessed = "1";
+      });
+    } catch (e) {
+      if (window.location.hostname === "localhost")
+        console.warn("nav anchor processing failed", e);
+    }
+
     // Parse bundled navigation JSON and inject menu
     try {
       const navData = JSON.parse(navigationJsonRaw || "{}");

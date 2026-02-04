@@ -2,7 +2,7 @@
   <div class="header__container">
     <a href="/index.html" class="header__logo">
       <span class="logo__icon">⚙️</span>
-      <span class="logo__text">Techno<strong>Docs</strong></span>
+      <span class="logo__text"><strong>TechnoDocs</strong></span>
     </a>
 
     <button class="header__menu-btn" aria-label="Menu" aria-expanded="false">
@@ -11,25 +11,35 @@
       <span></span>
     </button>
 
-- <!-- Navigation container — links injected dynamically by components.js -->
-      <nav class="header__nav header__nav--noscript" aria-label="Navigation">
-        <ul class="nav__list nav__list--static">
-          <li>
-            <a class="nav__link" href="/index.html#cours">📚 Cours</a>
-          </li>
-          <li>
-            <a class="nav__link" href="/src/pages/activites/index.html">🗒️ Activités</a>
-          </li>
-          <li>
-            <a class="nav__link" href="/index.html#revisions">🧠 Révisions</a>
-          </li>
-          <li>
-            <a class="nav__link" href="/index.html#corrections">✅ Corrections</a>
-          </li>
-          <li>
-            <a class="nav__link" href="/index.html#outils">🛠️ Outils</a>
-          </li>
-        </ul>
-      </nav>
+    <!-- Navigation container — links injected dynamically by components.js -->
+    <nav class="header__nav header__nav--noscript" aria-label="Navigation">
+      <ul class="nav__list nav__list--static">
+        <li>
+          <a class="nav__link" href="/index.html#cours" data-nav-anchor
+            >📚 Cours</a
+          >
+        </li>
+        <li>
+          <a class="nav__link" href="/src/pages/activites/index.html"
+            >📋 Activités</a
+          >
+        </li>
+        <li>
+          <a class="nav__link" href="/index.html#corrections" data-nav-anchor
+            >✅ Corrections</a
+          >
+        </li>
+        <li>
+          <a class="nav__link" href="/index.html#revisions" data-nav-anchor
+            >🧠 Révisions</a
+          >
+        </li>
+        <li>
+          <a class="nav__link" href="/index.html#outils" data-nav-anchor
+            >🛠️ Outils</a
+          >
+        </li>
+      </ul>
+    </nav>
   </div>
 </header>
