@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Devoir sur la conception, la modélisation et l'impression 3D - TechnoDocs">
-    <title>Conception & Impression 3D | TechnoDocs</title>
+    <meta name="description" content="Cahier des charges pour un projet d'impression 3D - TechnoDocs">
+    <title>Cahier des Charges Impression 3D | TechnoDocs</title>
 
     <!-- CSS du projet -->
     <link rel="stylesheet" href="/src/css/style.css">
@@ -23,14 +23,9 @@
 
         <!-- ========== BANNIÈRE TITRE ========== -->
         <div class="wizard__banner">
-            <div class="wizard__banner-icon">🖨️</div>
+            <div class="wizard__banner-icon">📋</div>
             <div class="wizard__banner-content">
-                <h1 class="wizard__banner-title">Conception, Modélisation & Impression 3D</h1>
-                <div class="wizard__banner-skills">
-                    <span class="wizard__skill">CT 3.1</span>
-                    <span class="wizard__skill">CT 4.3</span>
-                    <span class="wizard__skill">CS 5.1</span>
-                </div>
+                <h1 class="wizard__banner-title">Conception de votre Objet Technique</h1> Cahier des Charges</h1>
             </div>
         </div>
         <!-- ========== INFO ÉLÈVE ========== -->
@@ -38,33 +33,30 @@
             <div class="wizard__student-row">
                 <div class="wizard__student-field wizard__student-field--name">
                     <label for="studentName">Prénom et Nom</label>
-                    <input type="text" id="studentName" data-field="studentName" placeholder="">
+                    <input type="text" id="studentName" data-field="studentName" placeholder="Ton nom complet">
                 </div>
                 <div class="wizard__student-field wizard__student-field--class">
                     <label for="studentClass">Classe</label>
                     <select id="studentClass" data-field="studentClass">
                         <option value="">— Sélectionner —</option>
                         <optgroup label="5ème">
-                            <option value="505">5ème5</option>
-                            <option value="506">5ème6</option>
-                            <option value="507">5ème7</option>
+                            <option value="505">5ème 5</option>
+                            <option value="506">5ème 6</option>
+                            <option value="507">5ème 7</option>
                         </optgroup>
                         <optgroup label="4ème">
-                            <option value="401">4ème1</option>
-                            <option value="402">4ème2</option>
-                            <option value="403">4ème3</option>
-                            <option value="404">4ème4</option>
-                            <option value="405">4ème5</option>
-                            <option value="406">4ème6</option>
+                            <option value="401">4ème 1</option>
+                            <option value="402">4ème 2</option>
+                            <option value="403">4ème 3</option>
+                            <option value="404">4ème 4</option>
+                            <option value="405">4ème 5</option>
                         </optgroup>
                         <optgroup label="3ème">
-                            <option value="302">3ème2</option>
-                            <option value="303">3ème3</option>
-                            <option value="304">3ème4</option>
-                            <option value="305">3ème5</option>
-                            <option value="306">3ème6</option>
-                            <option value="305">3ème7</option>
-                            <option value="306">3ème8</option>
+                            <option value="302">3ème 2</option>
+                            <option value="303">3ème 3</option>
+                            <option value="304">3ème 4</option>
+                            <option value="305">3ème 5</option>
+                            <option value="306">3ème 6</option>
                         </optgroup>
                     </select>
                 </div>
@@ -93,15 +85,15 @@
             <nav class="wizard__nav" id="phaseNav">
                 <button class="wizard__nav-btn active" data-phase="1">
                     <span class="wizard__nav-number">1</span>
-                    <span>Conception</span>
+                    <span>Identification & Besoin</span>
                 </button>
                 <button class="wizard__nav-btn" data-phase="2">
                     <span class="wizard__nav-number">2</span>
-                    <span>Préparation</span>
+                    <span>Fonctions & Contraintes</span>
                 </button>
                 <button class="wizard__nav-btn" data-phase="3">
                     <span class="wizard__nav-number">3</span>
-                    <span>Impression</span>
+                    <span>Fabrication & Validation</span>
                 </button>
             </nav>
         </section>
@@ -109,31 +101,50 @@
         <!-- ========== CONTENEUR FORMULAIRE ========== -->
         <div class="wizard__container">
 
-            <!-- ========== PHASE 1 : Conception et Modélisation ========== -->
+            <!-- ========== PHASE 1 : Identification du projet et Analyse du besoin ========== -->
             <section class="wizard__phase active" data-phase="1">
                 <div class="wizard__phase-header">
-                    <div class="wizard__phase-icon">📐</div>
-                    <h2 class="wizard__phase-title">Phase 1 : Conception et Modélisation</h2>
-                    <p class="wizard__phase-subtitle">Comprendre les bases de la création numérique pour l'impression 3D.</p>
+                    <div class="wizard__phase-icon">💡</div>
+                    <h2 class="wizard__phase-title">Phase 1 : Identification du projet et Analyse du besoin</h2>
+                    <p class="wizard__phase-subtitle">Définis ton projet et le problème qu'il résout.</p>
                 </div>
 
-                <!-- Champ logiciel de modélisation -->
+                <!-- Question: nom-projet -->
                 <div class="wizard__group">
-                    <label class="wizard__label required">Quel logiciel de modélisation 3D as-tu déjà utilisé ou connais-tu ?</label>
-                    <p class="wizard__hint">Ex: Tinkercad, SketchUp, Fusion 360, Blender...</p>
-                    <input type="text" class="wizard__input" data-field="logicielModelisation" placeholder="Nom du logiciel">
+                    <label class="wizard__label required">Quel est le nom de ton projet ?</label>
+                    <p class="wizard__hint">Choisis un nom court et descriptif</p>
+                    <input type="text" class="wizard__input" data-field="nom-projet" placeholder="Ex: Support de téléphone, Pot à crayons...">
                 </div>
 
-                <!-- Zone de texte étapes de conception -->
+                <!-- Question: probleme -->
                 <div class="wizard__group">
-                    <label class="wizard__label required">Décris brièvement les étapes clés de la conception d'un objet destiné à l'impression 3D.</label>
-                    <textarea class="wizard__textarea" data-field="etapesConception" placeholder="Décris les étapes depuis l'idée jusqu'au modèle 3D final."></textarea>
+                    <label class="wizard__label required">Quel problème ton objet doit-il résoudre ?</label>
+                    <p class="wizard__hint">Décris la situation qui t'a donné l'idée de ce projet</p>
+                    <textarea class="wizard__textarea" data-field="probleme" placeholder="Ex: Mon téléphone tombe souvent de mon bureau..."></textarea>
                 </div>
 
-                <!-- Zone de texte importance échelle -->
+                <!-- Question: utilisateur -->
                 <div class="wizard__group">
-                    <label class="wizard__label">Pourquoi est-il important de vérifier l'échelle de son modèle avant l'impression ?</label>
-                    <textarea class="wizard__textarea" data-field="importanceEchelle" placeholder="Explique les conséquences d'une mauvaise échelle."></textarea>
+                    <label class="wizard__label required">Pour qui est destiné cet objet ?</label>
+                    <input type="text" class="wizard__input" data-field="utilisateur" placeholder="Ex: Pour moi, pour ma famille, pour les élèves...">
+                </div>
+
+                <!-- Question: lieu-utilisation -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Où sera utilisé cet objet ?</label>
+                    <input type="text" class="wizard__input" data-field="lieu-utilisation" placeholder="Ex: Sur un bureau, dans une salle de bain...">
+                </div>
+
+                <!-- Question: frequence -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">À quelle fréquence sera-t-il utilisé ?</label>
+                    <select class="wizard__input" data-field="frequence">
+                        <option value="">— Sélectionner —</option>
+                        <option value="Tous les jours">Tous les jours</option>
+                        <option value="Plusieurs fois par semaine">Plusieurs fois par semaine</option>
+                        <option value="Occasionnellement">Occasionnellement</option>
+                        <option value="Rarement">Rarement</option>
+                    </select>
                 </div>
 
                 <!-- Navigation -->
@@ -143,77 +154,115 @@
                 </div>
             </section>
 
-            <!-- ========== PHASE 2 : Préparation à l'Impression 3D ========== -->
+            <!-- ========== PHASE 2 : Fonctions de l'objet et Contraintes ========== -->
             <section class="wizard__phase" data-phase="2">
                 <div class="wizard__phase-header">
                     <div class="wizard__phase-icon">⚙️</div>
-                    <h2 class="wizard__phase-title">Phase 2 : Préparation à l'Impression 3D</h2>
-                    <p class="wizard__phase-subtitle">Paramétrer et optimiser ton modèle pour l'imprimante.</p>
+                    <h2 class="wizard__phase-title">Phase 2 : Fonctions de l'objet et Contraintes</h2>
+                    <p class="wizard__phase-subtitle">Décris ce que ton objet doit faire et ses limites.</p>
                 </div>
 
-                <!-- Sélection type de filament -->
+                <!-- Question: fonction-principale -->
                 <div class="wizard__group">
-                    <label class="wizard__label required">Quel type de filament est le plus courant pour débuter en impression 3D ?</label>
-                    <select class="wizard__input" data-field="typeFilament">
+                    <label class="wizard__label required">Quelle est la fonction principale de ton objet ?</label>
+                    <p class="wizard__hint">Commence par un verbe d'action : maintenir, ranger, protéger...</p>
+                    <textarea class="wizard__textarea" data-field="fonction-principale" placeholder="Ex: Maintenir mon téléphone en position verticale"></textarea>
+                </div>
+
+                <!-- Question: fonctions-secondaires -->
+                <div class="wizard__group">
+                    <label class="wizard__label">Quelles sont les fonctions secondaires (optionnelles) ?</label>
+                    <p class="wizard__hint">Ce sont les fonctions 'bonus' qui améliorent l'objet</p>
+                    <textarea class="wizard__textarea" data-field="fonctions-secondaires" placeholder="Ex: Permettre de charger le téléphone, avoir un espace pour les câbles..."></textarea>
+                </div>
+
+                <!-- Question: dimensions-max -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Quelles sont les dimensions maximales souhaitées ?</label>
+                    <p class="wizard__hint">Pense à la place disponible et aux limites de l'imprimante 3D (15x15x15 cm max)</p>
+                    <input type="text" class="wizard__input" data-field="dimensions-max" placeholder="Ex: 10 cm x 8 cm x 5 cm">
+                </div>
+
+                <!-- Question: materiau -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Quel matériau sera utilisé ?</label>
+                    <select class="wizard__input" data-field="materiau">
                         <option value="">— Sélectionner —</option>
-                        <option value="PLA">PLA (Acide Polylactique)</option>
-                        <option value="ABS">ABS (Acrylonitrile Butadiène Styrène)</option>
-                        <option value="PETG">PETG (Polyéthylène Téréphtalate Glycolisé)</option>
-                        <option value="Nylon">Nylon</option>
+                        <option value="PLA">PLA (plastique standard)</option>
+                        <option value="PETG">PETG (plus résistant)</option>
+                        <option value="Autre">Autre (à préciser)</option>
                     </select>
                 </div>
 
-                <!-- Zone de texte rôle slicer -->
+                <!-- Question: couleur -->
                 <div class="wizard__group">
-                    <label class="wizard__label required">Qu'est-ce qu'un "slicer" (logiciel de tranchage) et quel est son rôle ?</label>
-                    <p class="wizard__hint">Explique son fonctionnement et son utilité.</p>
-                    <textarea class="wizard__textarea" data-field="roleSlicer" placeholder="Un slicer est un logiciel qui..."></textarea>
+                    <label class="wizard__label">Quelle couleur préfères-tu ?</label>
+                    <select class="wizard__input" data-field="couleur">
+                        <option value="">— Sélectionner —</option>
+                        <option value="Blanc">Blanc</option>
+                        <option value="Noir">Noir</option>
+                        <option value="Bleu">Bleu</option>
+                        <option value="Rouge">Rouge</option>
+                        <option value="Vert">Vert</option>
+                        <option value="Orange">Orange</option>
+                        <option value="Peu importe">Peu importe</option>
+                    </select>
                 </div>
 
-                <!-- Checkboxes paramètres slicer -->
+                <!-- Question: resistance -->
                 <div class="wizard__group">
-                    <label class="wizard__label required">Indique trois paramètres importants à régler dans un slicer.</label>
+                    <label class="wizard__label">Quelles résistances sont nécessaires ?</label>
                     <div class="wizard__checkbox-group">
                         <label class="wizard__checkbox-item">
-                            <input type="checkbox" data-field="parametreSlicer_hauteurCouche">
-                            <span class="wizard__checkbox-label">📏 <strong>Hauteur de couche</strong> (résolution)</span>
+                            <input type="checkbox" data-field="resistance_chocs">
+                            <span class="wizard__checkbox-label">💥 Résistant aux chocs</span>
                         </label>
                         <label class="wizard__checkbox-item">
-                            <input type="checkbox" data-field="parametreSlicer_remplissage">
-                            <span class="wizard__checkbox-label">📦 <strong>Taux de remplissage</strong> (solidité)</span>
+                            <input type="checkbox" data-field="resistance_eau">
+                            <span class="wizard__checkbox-label">💧 Résistant à l'eau</span>
                         </label>
                         <label class="wizard__checkbox-item">
-                            <input type="checkbox" data-field="parametreSlicer_supports">
-                            <span class="wizard__checkbox-label">🏗️ <strong>Génération de supports</strong> (pour les porte-à-faux)</span>
+                            <input type="checkbox" data-field="resistance_chaleur">
+                            <span class="wizard__checkbox-label">🔥 Résistant à la chaleur</span>
                         </label>
                         <label class="wizard__checkbox-item">
-                            <input type="checkbox" data-field="parametreSlicer_vitesse">
-                            <span class="wizard__checkbox-label">⚡ <strong>Vitesse d'impression</strong></span>
+                            <input type="checkbox" data-field="resistance_flexible">
+                            <span class="wizard__checkbox-label">〰️ Flexible</span>
                         </label>
                         <label class="wizard__checkbox-item">
-                            <input type="checkbox" data-field="parametreSlicer_temperature">
-                            <span class="wizard__checkbox-label">🌡️ <strong>Température d'extrusion/plateau</strong></span>
+                            <input type="checkbox" data-field="resistance_rigide">
+                            <span class="wizard__checkbox-label">แข็ง Rigide</span>
                         </label>
                     </div>
                 </div>
 
-                <!-- Radio buttons option porte-à-faux -->
+                <!-- Question: style -->
                 <div class="wizard__group">
-                    <label class="wizard__label required">Si tu devais imprimer une pièce avec des porte-à-faux importants, quelle option activerais-tu dans le slicer ?</label>
+                    <label class="wizard__label required">Quel style souhaites-tu pour ton objet ?</label>
                     <div class="wizard__checkbox-group">
                         <label class="wizard__checkbox-item">
-                            <input type="radio" name="optionPorteAFaux" data-field="optionPorteAFaux" value="Supports">
-                            <span class="wizard__checkbox-label">🏗️ <strong>Supports</strong></span>
+                            <input type="radio" name="style" data-field="style" value="Minimaliste">
+                            <span class="wizard__checkbox-label">✨ Minimaliste (formes simples)</span>
                         </label>
                         <label class="wizard__checkbox-item">
-                            <input type="radio" name="optionPorteAFaux" data-field="optionPorteAFaux" value="Raft">
-                            <span class="wizard__checkbox-label">⚓ <strong>Raft</strong></span>
+                            <input type="radio" name="style" data-field="style" value="Geometrique">
+                            <span class="wizard__checkbox-label">🔺 Géométrique (angles, motifs)</span>
                         </label>
                         <label class="wizard__checkbox-item">
-                            <input type="radio" name="optionPorteAFaux" data-field="optionPorteAFaux" value="Brim">
-                            <span class="wizard__checkbox-label">🎩 <strong>Brim</strong></span>
+                            <input type="radio" name="style" data-field="style" value="Organique">
+                            <span class="wizard__checkbox-label">🌿 Organique (courbes, naturel)</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="style" data-field="style" value="Personnalise">
+                            <span class="wizard__checkbox-label">✍️ Personnalisé (avec texte/logo)</span>
                         </label>
                     </div>
+                </div>
+
+                <!-- Question: personnalisation -->
+                <div class="wizard__group">
+                    <label class="wizard__label">Souhaites-tu ajouter un texte ou un motif ?</label>
+                    <input type="text" class="wizard__input" data-field="personnalisation" placeholder="Ex: Mon prénom, un logo, un emoji...">
                 </div>
 
                 <!-- Navigation -->
@@ -223,61 +272,100 @@
                 </div>
             </section>
 
-            <!-- ========== PHASE 3 : L'Impression et le Post-Traitement ========== -->
+            <!-- ========== PHASE 3 : Contraintes de fabrication et Critères de validation ========== -->
             <section class="wizard__phase" data-phase="3">
                 <div class="wizard__phase-header">
                     <div class="wizard__phase-icon">✅</div>
-                    <h2 class="wizard__phase-title">Phase 3 : L'Impression et le Post-Traitement</h2>
-                    <p class="wizard__phase-subtitle">De l'impression à la finition de ton objet.</p>
+                    <h2 class="wizard__phase-title">Phase 3 : Contraintes de fabrication et Critères de validation</h2>
+                    <p class="wizard__phase-subtitle">Planifie la fabrication et définis la réussite de ton projet.</p>
                 </div>
 
-                <!-- Zone de texte problème et solution -->
+                <!-- Question: temps-impression -->
                 <div class="wizard__group">
-                    <label class="wizard__label required">Décris un problème courant rencontré lors de l'impression 3D et propose une solution.</label>
-                    <p class="wizard__hint">Ex: décollement du plateau, bouchage de buse, spaghetti...</p>
-                    <textarea class="wizard__textarea" data-field="problemeImpression" placeholder="Problème: ... Solution: ..."></textarea>
+                    <label class="wizard__label required">Combien de temps maximum pour l'impression ?</label>
+                    <p class="wizard__hint">Plus l'objet est grand/détaillé, plus c'est long</p>
+                    <select class="wizard__input" data-field="temps-impression">
+                        <option value="">— Sélectionner —</option>
+                        <option value="Moins de 2 heures">Moins de 2 heures</option>
+                        <option value="2 à 4 heures">2 à 4 heures</option>
+                        <option value="4 à 8 heures">4 à 8 heures</option>
+                        <option value="Plus de 8 heures">Plus de 8 heures</option>
+                    </select>
                 </div>
 
-                <!-- Checkboxes post-traitement -->
+                <!-- Question: assemblage -->
                 <div class="wizard__group">
-                    <label class="wizard__label">Quelles sont les étapes de post-traitement que tu pourrais appliquer à un objet imprimé en 3D ? (plusieurs réponses possibles)</label>
+                    <label class="wizard__label required">Ton objet sera-t-il en une seule pièce ?</label>
                     <div class="wizard__checkbox-group">
                         <label class="wizard__checkbox-item">
-                            <input type="checkbox" data-field="postTraitement_poncage">
-                            <span class="wizard__checkbox-label"> sandpaper <strong>Ponçage</strong></span>
+                            <input type="radio" name="assemblage" data-field="assemblage" value="Oui">
+                            <span class="wizard__checkbox-label">✔️ Oui, une seule pièce</span>
                         </label>
                         <label class="wizard__checkbox-item">
-                            <input type="checkbox" data-field="postTraitement_peinture">
-                            <span class="wizard__checkbox-label">🎨 <strong>Peinture</strong></span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="checkbox" data-field="postTraitement_assemblage">
-                            <span class="wizard__checkbox-label">🔗 <strong>Assemblage</strong> de plusieurs pièces</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="checkbox" data-field="postTraitement_nettoyage">
-                            <span class="wizard__checkbox-label">🧼 <strong>Nettoyage</strong> (retrait des supports, bavures)</span>
+                            <input type="radio" name="assemblage" data-field="assemblage" value="Non">
+                            <span class="wizard__checkbox-label">🧩 Non, plusieurs pièces à assembler</span>
                         </label>
                     </div>
                 </div>
 
-                <!-- Zone de texte avantage impression 3D -->
+                <!-- Question: support-impression -->
                 <div class="wizard__group">
-                    <label class="wizard__label required">Selon toi, quel est l'avantage principal de l'impression 3D ?</label>
-                    <textarea class="wizard__textarea" data-field="avantageImpression" placeholder="L'impression 3D permet de..."></textarea>
+                    <label class="wizard__label required">Acceptes-tu d'utiliser des supports d'impression ?</label>
+                    <p class="wizard__hint">Les supports permettent d'imprimer des formes complexes mais demandent plus de travail de finition</p>
+                    <div class="wizard__checkbox-group">
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="support-impression" data-field="support-impression" value="Oui">
+                            <span class="wizard__checkbox-label">👍 Oui</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="support-impression" data-field="support-impression" value="Non">
+                            <span class="wizard__checkbox-label">👎 Non, je préfère éviter</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="support-impression" data-field="support-impression" value="Je ne sais pas">
+                            <span class="wizard__checkbox-label">❓ Je ne sais pas</span>
+                        </label>
+                    </div>
                 </div>
 
-                <!-- Zone de texte expérience personnelle -->
+                <!-- Question: criteres-reussite -->
                 <div class="wizard__group">
-                    <label class="wizard__label">As-tu déjà imprimé un objet en 3D ? Si oui, décris-le.</label>
-                    <textarea class="wizard__textarea" data-field="experienceImpression" placeholder="Oui, j'ai imprimé... / Non, pas encore."></textarea>
+                    <label class="wizard__label required">Comment sauras-tu que ton projet est réussi ?</label>
+                    <div class="wizard__checkbox-group">
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="criteres-reussite_fonction">
+                            <span class="wizard__checkbox-label">🎯 L'objet remplit sa fonction principale</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="criteres-reussite_dimensions">
+                            <span class="wizard__checkbox-label">📏 Les dimensions correspondent au cahier des charges</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="criteres-reussite_esthetique">
+                            <span class="wizard__checkbox-label">✨ L'objet est esthétiquement satisfaisant</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="criteres-reussite_impression">
+                            <span class="wizard__checkbox-label">🖨️ L'impression s'est déroulée sans problème</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="criteres-reussite_solidite">
+                            <span class="wizard__checkbox-label">💪 L'objet est solide et durable</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question: ameliorations -->
+                <div class="wizard__group">
+                    <label class="wizard__label">Quelles améliorations envisages-tu pour une version 2 ?</label>
+                    <textarea class="wizard__textarea" data-field="ameliorations" placeholder="Ex: Ajouter un compartiment, changer les proportions..."></textarea>
                 </div>
 
                 <!-- Boîte IA (optionnel) -->
                 <div class="wizard__ai-box">
                     <p class="wizard__ai-title">🤖 Utilisation de l'IA (optionnel)</p>
-                    <p>Si tu as utilisé une IA pour t'aider (ex: pour des définitions, des idées), note ton prompt :</p>
-                    <textarea data-field="aiPrompt" placeholder="Ex: J'ai demandé à ChatGPT de me lister les étapes de la modélisation 3D."></textarea>
+                    <p>Si tu as utilisé une IA pour t'aider (ex: pour des idées de design, des définitions), note ton prompt :</p>
+                    <textarea data-field="aiPrompt" placeholder="Ex: J'ai demandé à une IA de me suggérer des idées de supports de téléphone."></textarea>
                 </div>
 
                 <!-- Navigation finale -->
@@ -291,10 +379,11 @@
 
         <!-- ========== BARRE D'ACTIONS ========== -->
         <div class="wizard__actions">
-            <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter</button>
-            <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer</button>
+            <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter JSON</button>
+            <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer JSON</button>
             <input type="file" id="importInput" accept=".json" style="display:none" onchange="wizardImportJSON(event)">
             <button class="btn btn--secondary btn--small" onclick="wizardShowModal('resetModal')">🗑️ Réinitialiser</button>
+            <button class="btn btn--secondary btn--small" onclick="window.print()">🖨️ Imprimer</button>
         </div>
     </main>
 
@@ -311,7 +400,7 @@
                 <p>Tu as terminé ton travail !</p>
                 <p style="margin-top:1rem">Tes réponses ont été <strong>sauvegardées automatiquement</strong> dans la base de données.</p>
                 <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--color-gray-500)">
-                    Tu peux aussi exporter une copie locale.
+                    Tu peux aussi exporter une copie locale en JSON.
                 </p>
             </div>
             <div class="wizard__modal-actions">
@@ -352,16 +441,34 @@
         // Créer l'instance du wizard avec Firestore
         window.wizardInstance = new WizardFirebase({
             // Nom de la collection Firestore (unique par formulaire)
-            collectionName: 'devoir_conception_impression_3d',
+            collectionName: 'devoir_cahier_charges_impression3d',
             
             // Intervalle d'autosave (en ms)
             autosaveInterval: 15000,
             
             // Champs obligatoires par phase pour marquer "completed"
             requiredFields: {
-                1: ['studentName', 'logicielModelisation', 'etapesConception', 'formatFichier'],
-                2: ['typeFilament', 'roleSlicer', 'optionPorteAFaux'],
-                3: ['problemeImpression', 'avantageImpression']
+                1: [
+                    'studentName',
+                    'studentClass',
+                    'nom-projet',
+                    'probleme',
+                    'utilisateur',
+                    'lieu-utilisation',
+                    'frequence'
+                ],
+                2: [
+                    'fonction-principale',
+                    'dimensions-max',
+                    'materiau',
+                    'style'
+                ],
+                3: [
+                    'temps-impression',
+                    'assemblage',
+                    'support-impression',
+                    'criteres-reussite_fonction' // Au moins un critère de réussite est requis
+                ]
             },
             
             // Callback à la complétion

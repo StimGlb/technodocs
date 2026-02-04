@@ -21,6 +21,31 @@ function computeRelativePrefix(pathname) {
   return depth === 0 ? "" : "../".repeat(depth);
 }
 
+/**
+ * Calcule le préfixe de chemin relatif selon la profondeur de l'URL actuelle
+ */
+function getRelativePrefix() {
+  // Retourne le préfixe relatif (``, `../`, `../../`, ...) selon la profondeur
+  const path = window.location.pathname || "/";
+
+  // Sur la racine ou index, on n'a pas besoin de ../
+  if (
+    path === "/" ||
+    path.endsWith("/index.html") ||
+    path.endsWith("index.html")
+  )
+    return "";
+
+  // Retirer le slash de tête et éclater
+  const parts = path.replace(/^\/+/, "").split("/").filter(Boolean);
+  // Si la dernière partie ressemble à un fichier HTML, on la retire
+  if (parts.length && parts[parts.length - 1].endsWith(".html")) parts.pop();
+
+  // Le nombre de `../` correspond au nombre de dossiers restants
+  const depth = Math.max(0, parts.length - 0);
+  return depth === 0 ? "" : "../".repeat(depth);
+}
+
 // Normalise un chemin pour comparaison (retire slash de tête)
 function normalizePath(p) {
   return String(p || "").replace(/^\/+/, "");
@@ -40,24 +65,16 @@ async function buildAndInjectNav(navData) {
     const navContainer = document.getElementById("main-nav");
     if (!navContainer) return;
 
-    const prefix = computeRelativePrefix(window.location.pathname || "/");
+    const prefix = getRelativePrefix();
     const currentPath = window.location.pathname || "/";
     const currentHash = window.location.hash || "";
 
-    // --- Liste statique : ancres vers index.html (toujours présentes) ---
+    // --- Liste statique : ancres vers les sections de l'index (utilise '#anchor') ---
     const staticLinks = [
-      { id: "idx-cours", name: "📚 Cours", href: "/index.html#cours" },
-      {
-        id: "idx-revisions",
-        name: "🧠 Révisions",
-        href: "/index.html#revisions",
-      },
-      {
-        id: "idx-corrections",
-        name: "✅ Corrections",
-        href: "/index.html#corrections",
-      },
-      { id: "idx-outils", name: "🛠️ Outils", href: "/index.html#outils" },
+      { id: "idx-cours", name: "📚 Cours", href: "#cours" },
+      { id: "idx-revisions", name: "🧠 Révisions", href: "#revisions" },
+      { id: "idx-corrections", name: "✅ Corrections", href: "#corrections" },
+      { id: "idx-outils", name: "🛠️ Outils", href: "#outils" },
     ];
 
     const ulStatic = document.createElement("ul");
@@ -67,19 +84,34 @@ async function buildAndInjectNav(navData) {
       const li = document.createElement("li");
       const a = document.createElement("a");
       a.className = "nav__link";
-      a.setAttribute("href", s.href);
       a.setAttribute("data-nav-id", s.id);
       a.textContent = s.name;
 
-      // is-active for index anchors: active when on index with matching hash
+      // Déterminer href intelligent :
+      // - si on est sur l'index (/) => laisser l'ancre (#cours)
+      // - sinon => préfixe relatif + 'index.html#anchor' (ex: ../../index.html#cours)
+      const anchor = (s.href || "").startsWith("#")
+        ? s.href
+        : "#" + String(s.href || "").replace(/^#+/, "");
+      let finalHref = anchor;
+      const onIndex =
+        currentPath === "/" ||
+        currentPath.endsWith("/index.html") ||
+        currentPath.endsWith("index.html");
+      if (!onIndex) {
+        // getRelativePrefix() renvoie '' ou '../' répétées
+        const p = prefix || "";
+        finalHref = (p || "") + "index.html" + anchor;
+      }
+
+      a.setAttribute("href", finalHref);
+
+      // is-active: uniquement quand on est sur l'index et le hash correspond
       try {
-        const anchor = s.href.split("#")[1] || "";
         if (
-          (currentPath.endsWith("/index.html") ||
-            currentPath === "/" ||
-            currentPath === "/index") &&
+          onIndex &&
           currentHash &&
-          currentHash.includes(anchor)
+          currentHash.includes(anchor.replace(/^#/, ""))
         ) {
           a.classList.add("is-active");
         }
@@ -103,9 +135,14 @@ async function buildAndInjectNav(navData) {
         const a = document.createElement("a");
         a.className = "nav__link";
 
-        // construire href : si url commence par '/' on l'utilise telle quelle, sinon on applique prefix
-        const raw = normalizePath(item.url || "");
-        const href = raw.startsWith("/") ? raw : prefix ? prefix + raw : raw;
+        // construire href : priorise `item.path` puis `item.url`
+        const rawSource = item.path || item.url || "";
+        const raw = String(rawSource || "");
+        // Si c'est une URL absolue (http) ou un chemin absolu (/...), on l'utilise tel quel
+        let href = raw;
+        if (!href.match(/^https?:\/\//i) && !href.startsWith("/")) {
+          href = prefix + raw;
+        }
         a.setAttribute("href", href);
         a.setAttribute("data-nav-id", item.id || "");
         a.textContent =
@@ -115,10 +152,10 @@ async function buildAndInjectNav(navData) {
         // Détection active : si le chemin courant contient la route de l'item
         try {
           const pagePath = currentPath.replace(/^\/+/, "");
+          const normalizedRaw = normalizePath(raw);
           if (
-            pagePath.endsWith(raw) ||
-            raw.endsWith(pagePath) ||
-            pagePath.includes(raw)
+            (normalizedRaw && pagePath.endsWith(normalizedRaw)) ||
+            (pagePath && normalizedRaw && pagePath.includes(normalizedRaw))
           ) {
             a.classList.add("is-active");
           }
