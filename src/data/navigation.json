@@ -9,7 +9,7 @@
       "name": "Conception 3D",
       "path": "src/pages/cours/conception-3d.html",
       "icon": { "type": "emoji", "value": "🏗️" },
-      "description": "Modélisation et impression 3D"
+      "description": "Conception et cahier des charges"
     },
     {
       "id": "reparabilite",
@@ -17,6 +17,13 @@
       "path": "src/pages/cours/reparabilite.html",
       "icon": { "type": "emoji", "value": "🔌" },
       "description": "Indice de réparabilité et diagnostic"
+    },
+    {
+      "id": "modelisation3d",
+      "name": "Modélisation 3D",
+      "path": "src/pages/cours/modelisation3d.html",
+      "icon": { "type": "emoji", "value": "🛠️" },
+      "description": "Modélisation et impression 3D"
     }
   ],
   "devoirs": [

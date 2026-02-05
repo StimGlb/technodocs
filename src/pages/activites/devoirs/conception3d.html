@@ -33,7 +33,7 @@
             <div class="wizard__student-row">
                 <div class="wizard__student-field wizard__student-field--name">
                     <label for="studentName">Prénom et Nom</label>
-                    <input type="text" id="studentName" data-field="studentName" placeholder="">
+                    <input type="text" id="studentName" data-field="studentName" placeholder="" spellcheck="true" lang="fr">
                 </div>
                 <div class="wizard__student-field wizard__student-field--class">
                     <label for="studentClass">Classe</label>
@@ -113,26 +113,26 @@
                 <div class="wizard__group">
                     <label class="wizard__label required">Quel est le nom de ton projet ?</label>
                     <p class="wizard__hint">Choisis un nom court et descriptif</p>
-                    <input type="text" class="wizard__input" data-field="nom-projet" placeholder="Ex: Support de téléphone, Pot à crayons...">
+                    <input type="text" class="wizard__input" data-field="nom-projet" placeholder="Ex: Support de téléphone, Pot à crayons..." spellcheck="true" lang="fr">
                 </div>
 
                 <!-- Question: probleme -->
                 <div class="wizard__group">
                     <label class="wizard__label required">Quel problème ton objet doit-il résoudre ?</label>
                     <p class="wizard__hint">Décris la situation qui t'a donné l'idée de ce projet</p>
-                    <textarea class="wizard__textarea" data-field="probleme" placeholder="Ex: Mon téléphone tombe souvent de mon bureau..."></textarea>
+                    <textarea class="wizard__textarea" data-field="probleme" placeholder="Ex: Mon téléphone tombe souvent de mon bureau..." spellcheck="true" lang="fr" autocorrect="on" autocapitalize="sentences"></textarea>
                 </div>
 
                 <!-- Question: utilisateur -->
                 <div class="wizard__group">
                     <label class="wizard__label required">Pour qui est destiné cet objet ?</label>
-                    <input type="text" class="wizard__input" data-field="utilisateur" placeholder="Ex: Pour moi, pour ma famille, pour les élèves...">
+                    <input type="text" class="wizard__input" data-field="utilisateur" placeholder="Ex: Pour moi, pour ma famille, pour les élèves..." spellcheck="true" lang="fr">
                 </div>
 
                 <!-- Question: lieu-utilisation -->
                 <div class="wizard__group">
                     <label class="wizard__label required">Où sera utilisé cet objet ?</label>
-                    <input type="text" class="wizard__input" data-field="lieu-utilisation" placeholder="Ex: Sur un bureau, dans une salle de bain...">
+                    <input type="text" class="wizard__input" data-field="lieu-utilisation" placeholder="Ex: Sur un bureau, dans une salle de bain..." spellcheck="true" lang="fr">
                 </div>
 
                 <!-- Question: frequence -->
@@ -166,21 +166,21 @@
                 <div class="wizard__group">
                     <label class="wizard__label required">Quelle est la fonction principale de ton objet ?</label>
                     <p class="wizard__hint">Commence par un verbe d'action : maintenir, ranger, protéger...</p>
-                    <textarea class="wizard__textarea" data-field="fonction-principale" placeholder="Ex: Maintenir mon téléphone en position verticale"></textarea>
+                    <textarea class="wizard__textarea" data-field="fonction-principale" placeholder="Ex: Maintenir mon téléphone en position verticale" spellcheck="true" lang="fr" autocorrect="on" autocapitalize="sentences"></textarea>
                 </div>
 
                 <!-- Question: fonctions-secondaires -->
                 <div class="wizard__group">
                     <label class="wizard__label">Quelles sont les fonctions secondaires (optionnelles) ?</label>
                     <p class="wizard__hint">Ce sont les fonctions 'bonus' qui améliorent l'objet</p>
-                    <textarea class="wizard__textarea" data-field="fonctions-secondaires" placeholder="Ex: Permettre de charger le téléphone, avoir un espace pour les câbles..."></textarea>
+                    <textarea class="wizard__textarea" data-field="fonctions-secondaires" placeholder="Ex: Permettre de charger le téléphone, avoir un espace pour les câbles..." spellcheck="true" lang="fr" autocorrect="on" autocapitalize="sentences"></textarea>
                 </div>
 
                 <!-- Question: dimensions-max -->
                 <div class="wizard__group">
                     <label class="wizard__label required">Quelles sont les dimensions maximales souhaitées ?</label>
                     <p class="wizard__hint">Pense à la place disponible et aux limites de l'imprimante 3D (15x15x15 cm max)</p>
-                    <input type="text" class="wizard__input" data-field="dimensions-max" placeholder="Ex: 10 cm x 8 cm x 5 cm">
+                    <input type="text" class="wizard__input" data-field="dimensions-max" placeholder="Ex: 10 cm x 8 cm x 5 cm" spellcheck="true" lang="fr">
                 </div>
 
                 <!-- Question: materiau -->
@@ -262,7 +262,7 @@
                 <!-- Question: personnalisation -->
                 <div class="wizard__group">
                     <label class="wizard__label">Souhaites-tu ajouter un texte ou un motif ?</label>
-                    <input type="text" class="wizard__input" data-field="personnalisation" placeholder="Ex: Mon prénom, un logo, un emoji...">
+                    <input type="text" class="wizard__input" data-field="personnalisation" placeholder="Ex: Mon prénom, un logo, un emoji..." spellcheck="true" lang="fr">
                 </div>
 
                 <!-- Navigation -->
@@ -286,10 +286,10 @@
                     <p class="wizard__hint">Plus l'objet est grand/détaillé, plus c'est long</p>
                     <select class="wizard__input" data-field="temps-impression">
                         <option value="">— Sélectionner —</option>
-                        <option value="Moins de 2 heures">Moins de 2 heures</option>
+                        <option value="Moins de 1 heure">Moins de 1 heure</option>
+                        <option value="1 à 2 heures">1 à 2 heures</option>
                         <option value="2 à 4 heures">2 à 4 heures</option>
-                        <option value="4 à 8 heures">4 à 8 heures</option>
-                        <option value="Plus de 8 heures">Plus de 8 heures</option>
+                        <option value="Plus de 4 heures">Plus de 4 heures</option>
                     </select>
                 </div>
 
@@ -358,14 +358,7 @@
                 <!-- Question: ameliorations -->
                 <div class="wizard__group">
                     <label class="wizard__label">Quelles améliorations envisages-tu pour une version 2 ?</label>
-                    <textarea class="wizard__textarea" data-field="ameliorations" placeholder="Ex: Ajouter un compartiment, changer les proportions..."></textarea>
-                </div>
-
-                <!-- Boîte IA (optionnel) -->
-                <div class="wizard__ai-box">
-                    <p class="wizard__ai-title">🤖 Utilisation de l'IA (optionnel)</p>
-                    <p>Si tu as utilisé une IA pour t'aider (ex: pour des idées de design, des définitions), note ton prompt :</p>
-                    <textarea data-field="aiPrompt" placeholder="Ex: J'ai demandé à une IA de me suggérer des idées de supports de téléphone."></textarea>
+                        <textarea class="wizard__textarea" data-field="ameliorations" placeholder="Ex: Ajouter un compartiment, changer les proportions..." spellcheck="true" lang="fr" autocorrect="on" autocapitalize="sentences"></textarea>
                 </div>
 
                 <!-- Navigation finale -->
@@ -444,9 +437,6 @@
             // Nom de la collection Firestore (unique par formulaire)
             collectionName: 'devoir_cahier_charges_conception3d',
             
-            // Intervalle d'autosave (en ms)
-            autosaveInterval: 60000,
-            
             // Champs obligatoires par phase pour marquer "completed"
             requiredFields: {
                 1: [
@@ -487,6 +477,21 @@
                 console.error('❌ Erreur Firestore:', error);
             }
         });
+
+        // Initialiser l'éditeur d'article avec ses protections
+        import('/src/js/article-editor.js').then(module => {
+            window.articleEditor = new module.ArticleEditor({
+                protectedFields: [
+                    '[data-field="probleme"]',
+                    '[data-field="fonction-principale"]',
+                    '[data-field="fonctions-secondaires"]',
+                    '[data-field="ameliorations"]'
+                ],
+                allowPasteFields: ['[data-field="aiPrompt"]'],
+                onPasteBlocked: (msg) => window.wizardInstance?.showToast(msg, 'warning')
+            });
+        });
+
         /**
         * Sécurise la réinitialisation en forçant un export JSON 
         * avant de demander la confirmation de suppression.

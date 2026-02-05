@@ -33,7 +33,7 @@ export class WizardFirebase {
   constructor(options = {}) {
     // Configuration
     this.collectionName = options.collectionName || "wizard_submissions";
-    this.autosaveInterval = options.autosaveInterval || 15000;
+    // this.autosaveInterval = options.autosaveInterval || 15000; // Supprimé, remplacé par debounce
     this.requiredFields = options.requiredFields || {};
     this.onComplete = options.onComplete || (() => {});
     this.onSaveSuccess = options.onSaveSuccess || (() => {});
@@ -44,8 +44,9 @@ export class WizardFirebase {
     this.formData = {};
     this.currentPhase = 1;
     this.completedPhases = [];
-    this.autosaveTimer = null;
-    this.isDirty = false;
+    // this.autosaveTimer = null; // Supprimé, remplacé par autosaveTimeout
+    this.autosaveTimeout = null; // Pour le debounce
+    this.isDirty = false; // Indicateur de modification des données
 
     // Éléments DOM
     this.fields = document.querySelectorAll("[data-field]");
@@ -97,8 +98,8 @@ export class WizardFirebase {
     // Attacher les événements
     this.attachEvents();
 
-    // Démarrer l'autosave
-    this.startAutosave();
+    // Démarrer l'autosave (via debounce, plus de timer fixe)
+    // this.startAutosave(); // Supprimé
 
     // Mettre à jour l'affichage
     this.updateProgress();
@@ -179,7 +180,11 @@ export class WizardFirebase {
       return;
     }
 
-    if (!this.isDirty) return;
+    // Vérifier si des modifications ont été apportées
+    if (!this.isDirty) {
+      console.log("Pas de modifications à sauvegarder.");
+      return;
+    }
 
     this.showSaveIndicator("saving");
 
@@ -212,7 +217,7 @@ export class WizardFirebase {
         await setDoc(docRef, saveData);
       }
 
-      this.isDirty = false;
+      this.isDirty = false; // Réinitialiser l'indicateur après une sauvegarde réussie
       this.showSaveIndicator("saved");
       this.onSaveSuccess(saveData);
 
@@ -285,8 +290,9 @@ export class WizardFirebase {
           : "input";
 
       field.addEventListener(eventType, () => {
-        this.isDirty = true;
+        this.isDirty = true; // Marquer les données comme modifiées
         this.updateProgress();
+        this.scheduleAutosave(); // Planifier une sauvegarde après un délai
       });
     });
 
@@ -301,32 +307,46 @@ export class WizardFirebase {
     // Sauvegarde avant fermeture de page
     window.addEventListener("beforeunload", (e) => {
       if (this.isDirty) {
-        this.saveToFirestore();
+        // Effectuer une sauvegarde synchrone ou bloquante si possible,
+        // mais les navigateurs limitent cela. Le debounce aide à minimiser la perte.
+        this.saveToFirestore(); // Appel direct pour tenter une dernière sauvegarde
         e.preventDefault();
-        e.returnValue = "";
+        e.returnValue = ""; // Message standard pour confirmer la fermeture
       }
     });
   }
 
   /**
-   * Démarre l'autosave périodique
+   * Planifie une sauvegarde automatique avec un debounce de 5 secondes.
+   * Annule toute sauvegarde précédemment planifiée.
    */
-  startAutosave() {
-    if (this.autosaveTimer) {
-      clearInterval(this.autosaveTimer);
+  scheduleAutosave() {
+    if (this.autosaveTimeout) {
+      clearTimeout(this.autosaveTimeout);
     }
-
-    this.autosaveTimer = setInterval(() => {
+    this.autosaveTimeout = setTimeout(() => {
       this.saveToFirestore();
-    }, this.autosaveInterval);
+    }, 5000); // Sauvegarde après 5 secondes d'inactivité
   }
+
+  // /**
+  //  * Démarre l'autosave périodique (Supprimé, remplacé par scheduleAutosave)
+  //  */
+  // startAutosave() {
+  //   if (this.autosaveTimer) {
+  //     clearInterval(this.autosaveTimer);
+  //   }
+  //   this.autosaveTimer = setInterval(() => {
+  //     this.saveToFirestore();
+  //   }, this.autosaveInterval);
+  // }
 
   /**
    * Navigation vers une phase
    */
-  goToPhase(phaseNumber) {
-    // Sauvegarder avant de changer
-    this.saveToFirestore();
+  async goToPhase(phaseNumber) {
+    // Sauvegarder immédiatement avant de changer de phase (sauvegarde de sécurité)
+    await this.saveToFirestore();
 
     // Masquer toutes les phases
     this.phases.forEach((phase) => phase.classList.remove("active"));
@@ -457,7 +477,7 @@ export class WizardFirebase {
       }
     });
   }
-
+  
   /**
    * Vérifie si le formulaire est complet
    */
@@ -528,6 +548,7 @@ export class WizardFirebase {
    * Termine le formulaire
    */
   async complete() {
+    // Sauvegarder immédiatement avant de marquer comme complet (sauvegarde de sécurité)
     await this.saveToFirestore();
 
     if (this.isFormComplete()) {
@@ -555,7 +576,11 @@ export class WizardFirebase {
       // Réinitialiser l'état
       this.formData = {};
       this.completedPhases = [];
-      this.isDirty = false;
+      this.isDirty = false; // Réinitialiser l'indicateur dirty
+      if (this.autosaveTimeout) {
+        clearTimeout(this.autosaveTimeout); // Annuler tout debounce en cours
+        this.autosaveTimeout = null;
+      }
 
       // Vider les champs
       this.fields.forEach((field) => {
@@ -638,7 +663,7 @@ export class WizardFirebase {
       if (data.formData) {
         this.formData = data.formData;
         this.restoreFieldValues();
-        this.isDirty = true;
+        this.isDirty = true; // Marquer comme dirty après import pour forcer une sauvegarde
         await this.saveToFirestore();
         this.updateProgress();
         this.showToast("Données importées !", "success");

@@ -140,22 +140,6 @@
             </div>
         </div>
 
-        <!-- ========== PROGRESSION (Simplifiée pour un formulaire non-phasé) ========== -->
-        <section class="wizard__progress">
-            <div class="wizard__progress-header">
-                <h2 class="wizard__progress-title">Progression</h2>
-                <div class="wizard__save-indicator" id="saveIndicator">
-                    <span class="wizard__save-dot"></span>
-                    <span class="wizard__save-text">Auto-save</span>
-                </div>
-                <span class="wizard__progress-percentage" id="progressPercentage">0%</span>
-            </div>
-            <div class="wizard__progress-bar">
-                <div class="wizard__progress-fill" id="progressFill" style="width: 0%"></div>
-            </div>
-            <!-- Pas de navigation par phases pour un formulaire simple -->
-        </section>
-
         <!-- ========== CONTENEUR FORMULAIRE ========== -->
         <div class="wizard__container">
 
@@ -354,6 +338,13 @@
                 passwordInput.value = ''; // Efface le mot de passe incorrect
             }
         };
+
+        // Initialiser l'éditeur d'article avec ses protections
+        import('/src/js/article-editor.js').then(module => {
+            window.articleEditor = new module.ArticleEditor({
+                onPasteBlocked: (msg) => window.wizardInstance?.showToast(msg, 'warning')
+            });
+        }); 
 
         // Permettre l'accès par la touche Entrée
         document.getElementById('passwordInput').addEventListener('keypress', function(event) {
