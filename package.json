@@ -13,7 +13,8 @@
     "security-check": "node security-check.js",
     "security-check:prod": "node security-check.js https://technodocs.netlify.app",
     "commit": "bash ./scripts/commit.sh",
-    "commit:win": "./scripts/commit.bat"
+    "commit:win": "./scripts/commit.bat",
+    "export:firestore": "node scripts/export-firestore.js"
   },
   "keywords": [
     "flashcards",
@@ -28,6 +29,7 @@
   },
   "dependencies": {
     "@netlify/plugin-lighthouse": "^6.0.4",
-    "firebase": "^12.8.0"
+    "firebase": "^12.8.0",
+    "firebase-admin": "^13.6.1"
   }
 }

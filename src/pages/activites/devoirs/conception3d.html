@@ -17,7 +17,7 @@
 </head>
 <body>
     <!-- Header dynamique -->
-    <div id="header-placeholder"></div>
+    <!-- <div id="header-placeholder"></div> -->
 
     <main class="wizard">
 
@@ -442,10 +442,10 @@
         // Créer l'instance du wizard avec Firestore
         window.wizardInstance = new WizardFirebase({
             // Nom de la collection Firestore (unique par formulaire)
-            collectionName: 'devoir_cahier_charges_impression3d',
+            collectionName: 'devoir_cahier_charges_conception3d',
             
             // Intervalle d'autosave (en ms)
-            autosaveInterval: 15000,
+            autosaveInterval: 60000,
             
             // Champs obligatoires par phase pour marquer "completed"
             requiredFields: {

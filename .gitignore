@@ -45,6 +45,13 @@ dist-ssr/
 .env.local
 .env.*.local
 
+# Firebase Admin SDK service account key
+serviceAccountKey.json
+*.serviceAccountKey.json
+
+# Exported student data (sensitive)
+data_eleves_3d.json
+
 # Deployment scripts
 deploy.bat
 deploy.sh

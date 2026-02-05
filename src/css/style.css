@@ -359,7 +359,6 @@ main {
 
 .typing__cursor {
   font-weight: 500;
-  animation: blink 0.8s infinite;
 }
 
 @keyframes blink {

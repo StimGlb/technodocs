@@ -21,7 +21,8 @@
       "Bash(bash scripts/new-branch.sh:*)",
       "Bash(dir /s /b \"e:\\\\Dev\\\\technodocs-vanilla\\\\*wizard*firestore*.html\")",
       "Bash(dir /s /b \"e:\\\\Dev\\\\technodocs-vanilla\\\\*wizard*.html\")",
-      "Bash(findstr:*)"
+      "Bash(findstr:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []
