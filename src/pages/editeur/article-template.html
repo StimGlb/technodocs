@@ -1,207 +1,271 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Éditeur d'article interactif - TechnoDocs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Éditeur d'article interactif - TechnoDocs"
+    />
     <title>Édition d'article | TechnoDocs</title>
 
     <!-- CSS du projet -->
-    <link rel="stylesheet" href="/src/css/style.css">
-    <link rel="stylesheet" href="/src/css/wizard.css">
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
     <style>
-        /* Styles spécifiques pour le mot de passe */
-        .password-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-        }
-        .password-prompt {
-            background-color: var(--color-white);
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-        }
-        .password-prompt h2 {
-            color: var(--color-primary-700);
-            margin-bottom: 1.5rem;
-            font-size: 1.8rem;
-        }
-        .password-prompt input[type="password"] {
-            width: calc(100% - 2rem);
-            padding: 0.75rem 1rem;
-            margin-bottom: 1rem;
-            border: 1px solid var(--color-gray-300);
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        .password-prompt button {
-            background-color: var(--color-primary-500);
-            color: var(--color-white);
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 1rem;
-            transition: background-color 0.2s ease;
-        }
-        .password-prompt button:hover {
-            background-color: var(--color-primary-600);
-        }
-        .password-prompt .error-message {
-            color: var(--color-error);
-            margin-top: 0.5rem;
-            font-size: 0.9rem;
-        }
+      /* Styles spécifiques pour le mot de passe */
+      .password-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      .password-prompt {
+        background-color: var(--color-white);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+      }
+      .password-prompt h2 {
+        color: var(--color-primary-700);
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+      }
+      .password-prompt input[type="password"] {
+        width: calc(100% - 2rem);
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--color-gray-300);
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      .password-prompt button {
+        background-color: var(--color-primary-500);
+        color: var(--color-white);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.2s ease;
+      }
+      .password-prompt button:hover {
+        background-color: var(--color-primary-600);
+      }
+      .password-prompt .error-message {
+        color: var(--color-error);
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+      }
     </style>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Overlay pour le mot de passe -->
     <div id="passwordOverlay" class="password-overlay">
-        <div class="password-prompt">
-            <h2>🔒 Accès sécurisé</h2>
-            <p>Veuillez entrer le mot de passe pour accéder à l'éditeur.</p>
-            <input type="password" id="passwordInput" placeholder="Mot de passe">
-            <button onclick="checkPassword()">Accéder</button>
-            <p id="errorMessage" class="error-message" style="display:none;">Mot de passe incorrect.</p>
-        </div>
+      <div class="password-prompt">
+        <h2>🔒 Accès sécurisé</h2>
+        <p>Veuillez entrer le mot de passe pour accéder à l'éditeur.</p>
+        <input type="password" id="passwordInput" placeholder="Mot de passe" />
+        <button onclick="checkPassword()">Accéder</button>
+        <p id="errorMessage" class="error-message" style="display: none">
+          Mot de passe incorrect.
+        </p>
+      </div>
     </div>
 
     <!-- Header dynamique -->
     <div id="header-placeholder"></div>
 
-    <main class="wizard" style="display:none;"> <!-- Le contenu principal est caché initialement -->
+    <main class="wizard" style="display: none">
+      <!-- Le contenu principal est caché initialement -->
 
-        <!-- ========== BANNIÈRE TITRE ========== -->
-        <div class="wizard__banner">
-            <div class="wizard__banner-icon">✍️</div>
-            <div class="wizard__banner-content">
-                <h1 class="wizard__banner-title">Édition d'article</h1>
-                <div class="wizard__banner-skills">
-                    <span class="wizard__skill">Choisis à un sujet</span>
-                    <span class="wizard__skill">Propose un article</span>
-                </div>
-            </div>
+      <!-- ========== BANNIÈRE TITRE ========== -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">✍️</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">Édition d'article</h1>
+          <div class="wizard__banner-skills">
+            <span class="wizard__skill">Choisis à un sujet</span>
+            <span class="wizard__skill">Propose un article</span>
+          </div>
         </div>
-        <!-- ========== INFO ÉLÈVE ========== -->
-        <div class="wizard__student-info">
-            <div class="wizard__student-row">
-                <div class="wizard__student-field wizard__student-field--name">
-                    <label for="studentName">Prénom et Nom</label>
-                    <input type="text" id="studentName" data-field="studentName" placeholder="">
-                </div>
-                <div class="wizard__student-field wizard__student-field--class">
-                    <label for="studentClass">Classe</label>
-                    <select id="studentClass" data-field="studentClass">
-                        <option value="">— Sélectionner —</option>
-                        <optgroup label="5ème">
-                            <option value="505">5ème 5</option>
-                            <option value="506">5ème 6</option>
-                            <option value="507">5ème 7</option>
-                        </optgroup>
-                        <optgroup label="4ème">
-                            <option value="401">4ème 1</option>
-                            <option value="402">4ème 2</option>
-                            <option value="403">4ème 3</option>
-                            <option value="404">4ème 4</option>
-                            <option value="405">4ème 5</option>
-                        </optgroup>
-                        <optgroup label="3ème">
-                            <option value="302">3ème 2</option>
-                            <option value="303">3ème 3</option>
-                            <option value="304">3ème 4</option>
-                            <option value="305">3ème 5</option>
-                            <option value="306">3ème 6</option>
-                            <option value="307">3ème 7</option>
-                            <option value="308">3ème 8</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="wizard__student-field wizard__student-field--date">
-                    <label>Date</label>
-                    <span class="wizard__date-display" id="projectDate" data-field="projectDate"></span>
-                </div>
-            </div>
+      </div>
+      <!-- ========== INFO ÉLÈVE ========== -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="studentName">Prénom et Nom</label>
+            <input
+              type="text"
+              id="studentName"
+              data-field="studentName"
+              placeholder=""
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="studentClass">Classe</label>
+            <select id="studentClass" data-field="studentClass">
+              <option value="">— Sélectionner —</option>
+              <optgroup label="5ème">
+                <option value="505">5ème 5</option>
+                <option value="506">5ème 6</option>
+                <option value="507">5ème 7</option>
+              </optgroup>
+              <optgroup label="4ème">
+                <option value="401">4ème 1</option>
+                <option value="402">4ème 2</option>
+                <option value="403">4ème 3</option>
+                <option value="404">4ème 4</option>
+                <option value="405">4ème 5</option>
+              </optgroup>
+              <optgroup label="3ème">
+                <option value="302">3ème 2</option>
+                <option value="303">3ème 3</option>
+                <option value="304">3ème 4</option>
+                <option value="305">3ème 5</option>
+                <option value="306">3ème 6</option>
+                <option value="307">3ème 7</option>
+                <option value="308">3ème 8</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="wizard__student-field wizard__student-field--date">
+            <label>Date</label>
+            <span
+              class="wizard__date-display"
+              id="projectDate"
+              data-field="projectDate"
+            ></span>
+          </div>
         </div>
+      </div>
 
-        <!-- ========== CONTENEUR FORMULAIRE ========== -->
-        <div class="wizard__container">
+      <!-- ========== CONTENEUR FORMULAIRE ========== -->
+      <div class="wizard__container">
+        <!-- Section unique pour l'édition d'article -->
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">📝</div>
+            <h2 class="wizard__phase-title">Rédige ton article</h2>
+            <p class="wizard__phase-subtitle">
+              Complète les informations et le contenu de ton article.
+            </p>
+          </div>
 
-            <!-- Section unique pour l'édition d'article -->
-            <section class="wizard__phase active" data-phase="1">
-                <div class="wizard__phase-header">
-                    <div class="wizard__phase-icon">📝</div>
-                    <h2 class="wizard__phase-title">Rédige ton article</h2>
-                    <p class="wizard__phase-subtitle">Complète les informations et le contenu de ton article.</p>
-                </div>
+          <!-- Champ Titre de l'article -->
+          <div class="wizard__group">
+            <label class="wizard__label required">Titre de l'article</label>
+            <p class="wizard__hint">
+              Un titre clair et accrocheur pour ton article.
+            </p>
+            <input
+              type="text"
+              class="wizard__input"
+              data-field="articleTitle"
+              placeholder="Ex: L'impact de l'IA sur l'éducation"
+            />
+          </div>
 
-                <!-- Champ Titre de l'article -->
-                <div class="wizard__group">
-                    <label class="wizard__label required">Titre de l'article</label>
-                    <p class="wizard__hint">Un titre clair et accrocheur pour ton article.</p>
-                    <input type="text" class="wizard__input" data-field="articleTitle" placeholder="Ex: L'impact de l'IA sur l'éducation">
-                </div>
+          <!-- Champ Catégorie -->
+          <div class="wizard__group">
+            <label class="wizard__label required">Catégorie de l'article</label>
+            <select class="wizard__input" data-field="articleCategory">
+              <option value="">— Sélectionner —</option>
+              <option value="Technologie">Technologie</option>
+              <option value="Science">Science</option>
+              <option value="Environnement">Environnement</option>
+              <option value="Société">Société</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
 
-                <!-- Champ Catégorie -->
-                <div class="wizard__group">
-                    <label class="wizard__label required">Catégorie de l'article</label>
-                    <select class="wizard__input" data-field="articleCategory">
-                        <option value="">— Sélectionner —</option>
-                        <option value="Technologie">Technologie</option>
-                        <option value="Science">Science</option>
-                        <option value="Environnement">Environnement</option>
-                        <option value="Société">Société</option>
-                        <option value="Autre">Autre</option>
-                    </select>
-                </div>
+          <!-- Boîte texte long -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >Rédige le texte de ton article</label
+            >
+            <p class="wizard__hint">
+              Développe tes idées ici. N'hésite pas à structurer ton texte.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="articleText"
+              placeholder="Commence à écrire ton article ici..."
+            ></textarea>
+          </div>
 
-                <!-- Boîte texte long -->
-                <div class="wizard__group">
-                    <label class="wizard__label required">Rédige le texte de ton article</label>
-                    <p class="wizard__hint">Développe tes idées ici. N'hésite pas à structurer ton texte.</p>
-                    <textarea class="wizard__textarea" data-field="articleText" placeholder="Commence à écrire ton article ici..."></textarea>
-                </div>
+          <!-- Boîte IA (optionnel) -->
+          <div class="wizard__ai-box">
+            <p class="wizard__ai-title">🤖 Utilisation de l'IA (optionnel)</p>
+            <p>
+              Si tu as utilisé une IA pour t'aider (ex: pour des idées, des
+              reformulations), note ton prompt :
+            </p>
+            <textarea
+              data-field="aiPrompt"
+              placeholder="Ex: J'ai demandé à une IA de me donner des arguments pour mon article sur..."
+            ></textarea>
+          </div>
 
-                <!-- Boîte IA (optionnel) -->
-                <div class="wizard__ai-box">
-                    <p class="wizard__ai-title">🤖 Utilisation de l'IA (optionnel)</p>
-                    <p>Si tu as utilisé une IA pour t'aider (ex: pour des idées, des reformulations), note ton prompt :</p>
-                    <textarea data-field="aiPrompt" placeholder="Ex: J'ai demandé à une IA de me donner des arguments pour mon article sur..."></textarea>
-                </div>
+          <!-- Navigation (bouton Terminer seulement pour un formulaire simple) -->
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="btn btn--success" onclick="wizardComplete()">
+              ✅ Terminer
+            </button>
+          </div>
+        </section>
+      </div>
 
-                <!-- Navigation (bouton Terminer seulement pour un formulaire simple) -->
-                <div class="wizard__phase-nav">
-                    <div></div>
-                    <button class="btn btn--success" onclick="wizardComplete()">✅ Terminer</button>
-                </div>
-            </section>
-
-        </div>
-
-        <!-- ========== BARRE D'ACTIONS ========== -->
-        <div class="wizard__actions">
-            <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter JSON</button>
-            <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer JSON</button>
-            <input type="file" id="importInput" accept=".json" style="display:none" onchange="wizardImportJSON(event)">
-            <button class="btn btn--secondary btn--small" onclick="handleSafeReset()">🗑️ Réinitialiser</button>
-            <button class="btn btn--secondary btn--small" onclick="window.print()">🖨️ Imprimer</button>
-        </div>
+      <!-- ========== BARRE D'ACTIONS ========== -->
+      <div class="wizard__actions">
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="wizardExportJSON()"
+        >
+          📤 Exporter JSON
+        </button>
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="document.getElementById('importInput').click()"
+        >
+          📥 Importer JSON
+        </button>
+        <input
+          type="file"
+          id="importInput"
+          accept=".json"
+          style="display: none"
+          onchange="wizardImportJSON(event)"
+        />
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="handleSafeReset()"
+        >
+          🗑️ Réinitialiser
+        </button>
+        <button class="btn btn--secondary btn--small" onclick="window.print()">
+          🖨️ Imprimer
+        </button>
+      </div>
     </main>
 
     <!-- Footer dynamique -->
@@ -211,155 +275,201 @@
 
     <!-- Modal Complétion -->
     <div class="wizard__modal-overlay" id="completionModal">
-        <div class="wizard__modal">
-            <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
-            <div class="wizard__modal-content">
-                <p>Tu as terminé ton travail !</p>
-                <p style="margin-top:1rem">Ton article a été <strong>sauvegardé automatiquement</strong> dans la base de données.</p>
-                <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--color-gray-500)">
-                    Tu peux aussi exporter une copie locale en JSON.
-                </p>
-            </div>
-            <div class="wizard__modal-actions">
-                <button class="btn btn--secondary" onclick="wizardCloseModal('completionModal')">Fermer</button>
-                <button class="btn btn--primary" onclick="wizardExportJSON();wizardCloseModal('completionModal')">📤 Exporter</button>
-            </div>
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
+        <div class="wizard__modal-content">
+          <p>Tu as terminé ton travail !</p>
+          <p style="margin-top: 1rem">
+            Ton article a été <strong>sauvegardé automatiquement</strong> dans
+            la base de données.
+          </p>
+          <p
+            style="
+              margin-top: 0.75rem;
+              font-size: 0.875rem;
+              color: var(--color-gray-500);
+            "
+          >
+            Tu peux aussi exporter une copie locale en JSON.
+          </p>
         </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('completionModal')"
+          >
+            Fermer
+          </button>
+          <button
+            class="btn btn--primary"
+            onclick="
+              wizardExportJSON();
+              wizardCloseModal('completionModal');
+            "
+          >
+            📤 Exporter
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Modal Reset -->
     <div class="wizard__modal-overlay" id="resetModal">
-        <div class="wizard__modal">
-            <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
-            <div class="wizard__modal-content">
-                <p>Une <strong>sauvegarde</strong> a été téléchargée automatiquement.</p>
-                <p>Voulez-vous vraiment <strong>supprimer définitivement</strong> vos réponses de la base de données ?</p>
-            </div>
-            <div class="wizard__modal-actions">
-                <button class="btn btn--secondary" onclick="wizardCloseModal('resetModal')">Annuler</button>
-                <button class="btn btn--primary" style="background:var(--color-error)" onclick="wizardReset()">🗑️ Réinitialiser</button>
-            </div>
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
+        <div class="wizard__modal-content">
+          <p>
+            Une <strong>sauvegarde</strong> a été téléchargée automatiquement.
+          </p>
+          <p>
+            Voulez-vous vraiment <strong>supprimer définitivement</strong> vos
+            réponses de la base de données ?
+          </p>
         </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('resetModal')"
+          >
+            Annuler
+          </button>
+          <button
+            class="btn btn--primary"
+            style="background: var(--color-error)"
+            onclick="wizardReset()"
+          >
+            🗑️ Réinitialiser
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Toast -->
     <div class="wizard__toast" id="wizardToast">
-        <span class="wizard__toast-icon"></span>
-        <span class="wizard__toast-message"></span>
+      <span class="wizard__toast-icon"></span>
+      <span class="wizard__toast-message"></span>
     </div>
 
     <!-- ========== SCRIPTS ========== -->
     <script type="module" src="/src/js/components.js"></script>
     <script type="module">
-        // ============================================
-        // CONFIGURATION FIREBASE - À ADAPTER
-        // ============================================
-        import { WizardFirebase } from '/src/js/wizard-firebase.js';
+      // ============================================
+      // CONFIGURATION FIREBASE - À ADAPTER
+      // ============================================
+      import { WizardFirebase } from "/src/js/wizard-firebase.js";
 
-        // Créer l'instance du wizard avec Firestore
-        window.wizardInstance = new WizardFirebase({
-            // Nom de la collection Firestore (unique par formulaire)
-            collectionName: 'techno_article_editor', // Nom de collection unique
-            
-            // Intervalle d'autosave (en ms)
-            autosaveInterval: 15000,
-            
-            // Champs obligatoires par phase pour marquer "completed"
-            requiredFields: {
-                1: [
-                    'studentName',
-                    'studentClass',
-                    'articleTitle',
-                    'articleCategory',
-                    'articleText'
-                ]
-            },
-            
-            // Callback à la complétion
-            onComplete: (data) => {
-                console.log('🎉 Formulaire complété:', data);
-            },
-            
-            // Callback sauvegarde réussie
-            onSaveSuccess: (data) => {
-                console.log('✅ Sauvegarde Firestore OK');
-            },
-            
-            // Callback erreur de sauvegarde
-            onSaveError: (error) => {
-                console.error('❌ Erreur Firestore:', error);
-            }
+      // Créer l'instance du wizard avec Firestore
+      window.wizardInstance = new WizardFirebase({
+        // Nom de la collection Firestore (unique par formulaire)
+        collectionName: "techno_article_editor", // Nom de collection unique
+
+        // Intervalle d'autosave (en ms)
+        autosaveInterval: 15000,
+
+        // Champs obligatoires par phase pour marquer "completed"
+        requiredFields: {
+          1: [
+            "studentName",
+            "studentClass",
+            "articleTitle",
+            "articleCategory",
+            "articleText",
+          ],
+        },
+
+        // Callback à la complétion
+        onComplete: (data) => {
+          console.log("🎉 Formulaire complété:", data);
+        },
+
+        // Callback sauvegarde réussie
+        onSaveSuccess: (data) => {
+          console.log("✅ Sauvegarde Firestore OK");
+        },
+
+        // Callback erreur de sauvegarde
+        onSaveError: (error) => {
+          console.error("❌ Erreur Firestore:", error);
+        },
+      });
+
+      /**
+       * Sécurise la réinitialisation en forçant un export JSON
+       * avant de demander la confirmation de suppression.
+       */
+      window.handleSafeReset = function () {
+        console.log(
+          "Préparation de la réinitialisation : Export de secours...",
+        );
+
+        // 1. On déclenche l'export JSON existant
+        if (typeof wizardExportJSON === "function") {
+          wizardExportJSON();
+        } else if (window.wizardInstance) {
+          window.wizardInstance.exportToJSON();
+        }
+
+        // 2. On affiche un petit message dans le toast pour informer l'élève
+        if (window.wizardInstance && window.wizardInstance.showToast) {
+          window.wizardInstance.showToast(
+            "Sauvegarde de secours téléchargée !",
+            "success",
+          );
+        }
+
+        // 3. On ouvre enfin la modale de confirmation
+        wizardShowModal("resetModal");
+      };
+
+      // ============================================
+      // LOGIQUE D'ACCÈS PAR MOT DE PASSE
+      // ============================================
+      import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+
+      window.checkPassword = function () {
+        const passwordInput = document.getElementById("passwordInput");
+        const errorMessage = document.getElementById("errorMessage");
+        const passwordOverlay = document.getElementById("passwordOverlay");
+        const mainContent = document.querySelector("main.wizard");
+
+        if (passwordInput.value === CORRECT_PASSWORD) {
+          passwordOverlay.style.display = "none";
+          mainContent.style.display = "block";
+          errorMessage.style.display = "none";
+          // Initialiser le wizard après l'accès
+          if (window.wizardInstance) {
+            window.wizardInstance.init();
+          }
+        } else {
+          errorMessage.style.display = "block";
+          passwordInput.value = ""; // Efface le mot de passe incorrect
+        }
+      };
+
+      // Initialiser l'éditeur d'article avec ses protections
+      import("/src/js/article-editor.js").then((module) => {
+        window.articleEditor = new module.ArticleEditor({
+          onPasteBlocked: (msg) =>
+            window.wizardInstance?.showToast(msg, "warning"),
+        });
+      });
+
+      // Permettre l'accès par la touche Entrée
+      document
+        .getElementById("passwordInput")
+        .addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            event.preventDefault(); // Empêche le rechargement de la page
+            checkPassword();
+          }
         });
 
-        /**
-         * Sécurise la réinitialisation en forçant un export JSON
-         * avant de demander la confirmation de suppression.
-         */
-        window.handleSafeReset = function() {
-            console.log("Préparation de la réinitialisation : Export de secours...");
-
-            // 1. On déclenche l'export JSON existant
-            if (typeof wizardExportJSON === "function") {
-                wizardExportJSON();
-            } else if (window.wizardInstance) {
-                window.wizardInstance.exportToJSON();
-            }
-
-            // 2. On affiche un petit message dans le toast pour informer l'élève
-            if (window.wizardInstance && window.wizardInstance.showToast) {
-                window.wizardInstance.showToast("Sauvegarde de secours téléchargée !", "success");
-            }
-
-            // 3. On ouvre enfin la modale de confirmation
-            wizardShowModal('resetModal');
-        };
-
-        // ============================================
-        // LOGIQUE D'ACCÈS PAR MOT DE PASSE
-        // ============================================
-        const CORRECT_PASSWORD = "v9ur4b95"; // !!! À MODIFIER POUR UN MOT DE PASSE SÉCURISÉ EN PRODUCTION !!!
-
-        window.checkPassword = function() {
-            const passwordInput = document.getElementById('passwordInput');
-            const errorMessage = document.getElementById('errorMessage');
-            const passwordOverlay = document.getElementById('passwordOverlay');
-            const mainContent = document.querySelector('main.wizard');
-
-            if (passwordInput.value === CORRECT_PASSWORD) {
-                passwordOverlay.style.display = 'none';
-                mainContent.style.display = 'block';
-                errorMessage.style.display = 'none';
-                // Initialiser le wizard après l'accès
-                if (window.wizardInstance) {
-                    window.wizardInstance.init();
-                }
-            } else {
-                errorMessage.style.display = 'block';
-                passwordInput.value = ''; // Efface le mot de passe incorrect
-            }
-        };
-
-        // Initialiser l'éditeur d'article avec ses protections
-        import('/src/js/article-editor.js').then(module => {
-            window.articleEditor = new module.ArticleEditor({
-                onPasteBlocked: (msg) => window.wizardInstance?.showToast(msg, 'warning')
-            });
-        }); 
-
-        // Permettre l'accès par la touche Entrée
-        document.getElementById('passwordInput').addEventListener('keypress', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault(); // Empêche le rechargement de la page
-                checkPassword();
-            }
-        });
-
-        // Initialiser le header/footer dès que le DOM est prêt, même si le wizard est caché
-        document.addEventListener('DOMContentLoaded', () => {
-            // components.js est un module, il s'exécute automatiquement.
-            // S'assurer que le wizard ne s'initialise pas avant le déverrouillage
-            // La ligne `window.wizardInstance.init();` est déplacée dans `checkPassword`
-        });
+      // Initialiser le header/footer dès que le DOM est prêt, même si le wizard est caché
+      document.addEventListener("DOMContentLoaded", () => {
+        // components.js est un module, il s'exécute automatiquement.
+        // S'assurer que le wizard ne s'initialise pas avant le déverrouillage
+        // La ligne `window.wizardInstance.init();` est déplacée dans `checkPassword`
+      });
     </script>
-</body>
+  </body>
 </html>

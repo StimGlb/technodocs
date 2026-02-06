@@ -16,6 +16,72 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <style>
+        /* Styles spécifiques pour le mot de passe */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .password-prompt {
+            background-color: var(--color-white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .password-prompt h2 {
+            color: var(--color-primary-700);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        .password-prompt input[type="password"] {
+            width: calc(100% - 2rem);
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--color-gray-300);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .password-prompt button {
+            background-color: var(--color-primary-500);
+            color: var(--color-white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s ease;
+        }
+        .password-prompt button:hover {
+            background-color: var(--color-primary-600);
+        }
+        .password-prompt .error-message {
+            color: var(--color-error);
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+</style>
+    <!-- Overlay pour le mot de passe -->
+    <div id="passwordOverlay" class="password-overlay">
+        <div class="password-prompt">
+            <h2>🔒 Accès sécurisé</h2>
+            <p>Veuillez entrer le mot de passe pour accéder au formulaire.</p>
+            <input type="password" id="passwordInput" placeholder="Mot de passe">
+            <button onclick="checkPassword()">Accéder</button>
+            <p id="errorMessage" class="error-message" style="display:none;">Mot de passe incorrect.</p>
+        </div>
+    </div>
+
     <!-- Header dynamique -->
     <!-- <div id="header-placeholder"></div> -->
 
@@ -516,6 +582,38 @@
             // 3. On ouvre enfin la modale de confirmation
             wizardShowModal('resetModal');
         };
+
+            // ============================================
+            // LOGIQUE D'ACCÈS PAR MOT DE PASSE
+            // ============================================
+            import { CORRECT_PASSWORD } from '/src/js/wizard-config.js';
+
+            window.checkPassword = function() {
+            const passwordInput = document.getElementById('passwordInput');
+            const errorMessage = document.getElementById('errorMessage');
+            const passwordOverlay = document.getElementById('passwordOverlay');
+            const mainContent = document.querySelector('main.wizard');
+
+            if (passwordInput.value === CORRECT_PASSWORD) {
+                passwordOverlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                errorMessage.style.display = 'none';
+                if (window.wizardInstance) {
+                    window.wizardInstance.init();
+                }
+            } else {
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+            }
+        };
+
+        // Accès par touche Entrée
+        document.getElementById('passwordInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                checkPassword();
+            }
+        });
     </script>
 </body>
 </html>

@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Devoir sur la conception, la modélisation et l'impression 3D - TechnoDocs"
+      content="Prépare ta présentation orale de ton objet technique - TechnoDocs"
     />
-    <title>Conception & Impression 3D | TechnoDocs</title>
+    <title>Présentation Objet Technique | TechnoDocs</title>
 
     <!-- CSS du projet -->
     <link rel="stylesheet" href="/src/css/style.css" />
@@ -20,8 +20,7 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
-  </head>
-  <body>
+
     <style>
       /* Styles spécifiques pour le mot de passe */
       .password-overlay {
@@ -76,7 +75,36 @@
         margin-top: 0.5rem;
         font-size: 0.9rem;
       }
+
+      /* Style pour les conseils encadrés */
+      .wizard__tip {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        border-left: 4px solid var(--color-secondary, #06b6d4);
+        padding: 1rem 1.25rem;
+        border-radius: 0 8px 8px 0;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+      }
+      .wizard__tip-title {
+        font-weight: 600;
+        color: var(--color-secondary-dark, #0891b2);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .wizard__tip ul {
+        margin: 0;
+        padding-left: 1.25rem;
+        list-style: disc;
+      }
+      .wizard__tip li {
+        margin: 0.25rem 0;
+        color: var(--color-gray-700);
+      }
     </style>
+  </head>
+  <body>
     <!-- Overlay pour le mot de passe -->
     <div id="passwordOverlay" class="password-overlay">
       <div class="password-prompt">
@@ -89,16 +117,22 @@
         </p>
       </div>
     </div>
-    <main class="wizard">
+
+    <main class="wizard" style="display: none">
       <!-- ========== BANNIÈRE TITRE ========== -->
       <div class="wizard__banner">
-        <div class="wizard__banner-icon">🖨️</div>
+        <div class="wizard__banner-icon">🎤</div>
         <div class="wizard__banner-content">
           <h1 class="wizard__banner-title">
-            Modélisation et Impression 3D de votre Objet Technique
+            Présentation de mon Objet Technique
           </h1>
+          <div class="wizard__banner-skills">
+            <span class="wizard__skill">Décrire son projet</span>
+            <span class="wizard__skill">Préparer son oral</span>
+          </div>
         </div>
       </div>
+
       <!-- ========== INFO ÉLÈVE ========== -->
       <div class="wizard__student-info">
         <div class="wizard__student-row">
@@ -118,26 +152,25 @@
             <select id="studentClass" data-field="studentClass">
               <option value="">— Sélectionner —</option>
               <optgroup label="5ème">
-                <option value="505">5ème5</option>
-                <option value="506">5ème6</option>
-                <option value="507">5ème7</option>
+                <option value="505">5ème 5</option>
+                <option value="506">5ème 6</option>
+                <option value="507">5ème 7</option>
               </optgroup>
               <optgroup label="4ème">
-                <option value="401">4ème1</option>
-                <option value="402">4ème2</option>
-                <option value="403">4ème3</option>
-                <option value="404">4ème4</option>
-                <option value="405">4ème5</option>
-                <option value="406">4ème6</option>
+                <option value="401">4ème 1</option>
+                <option value="402">4ème 2</option>
+                <option value="403">4ème 3</option>
+                <option value="404">4ème 4</option>
+                <option value="405">4ème 5</option>
               </optgroup>
               <optgroup label="3ème">
-                <option value="302">3ème2</option>
-                <option value="303">3ème3</option>
-                <option value="304">3ème4</option>
-                <option value="305">3ème5</option>
-                <option value="306">3ème6</option>
-                <option value="307">3ème7</option>
-                <option value="308">3ème8</option>
+                <option value="302">3ème 2</option>
+                <option value="303">3ème 3</option>
+                <option value="304">3ème 4</option>
+                <option value="305">3ème 5</option>
+                <option value="306">3ème 6</option>
+                <option value="307">3ème 7</option>
+                <option value="308">3ème 8</option>
               </optgroup>
             </select>
           </div>
@@ -176,63 +209,69 @@
         <nav class="wizard__nav" id="phaseNav">
           <button class="wizard__nav-btn active" data-phase="1">
             <span class="wizard__nav-number">1</span>
-            <span>Conception</span>
+            <span>Mon Objet</span>
           </button>
           <button class="wizard__nav-btn" data-phase="2">
             <span class="wizard__nav-number">2</span>
-            <span>Préparation</span>
-          </button>
-          <button class="wizard__nav-btn" data-phase="3">
-            <span class="wizard__nav-number">3</span>
-            <span>Impression</span>
+            <span>Mon Oral</span>
           </button>
         </nav>
       </section>
 
       <!-- ========== CONTENEUR FORMULAIRE ========== -->
       <div class="wizard__container">
-        <!-- ========== PHASE 1 : Conception et Modélisation ========== -->
+        <!-- ========== PHASE 1 : Présentation de l'objet ========== -->
         <section class="wizard__phase active" data-phase="1">
           <div class="wizard__phase-header">
-            <div class="wizard__phase-icon">📐</div>
-            <h2 class="wizard__phase-title">
-              Phase 1 : Conception et Modélisation
-            </h2>
+            <div class="wizard__phase-icon">🛠️</div>
+            <h2 class="wizard__phase-title">Phase 1 : Mon Objet Technique</h2>
             <p class="wizard__phase-subtitle">
-              Comprendre les bases de la création numérique pour l'impression
-              3D.
+              Décris ton objet et explique pourquoi tu l'as conçu.
             </p>
           </div>
 
-          <!-- Champ logiciel de modélisation -->
+          <!-- Nom de l'objet -->
           <div class="wizard__group">
-            <label class="wizard__label required"
-              >Quel logiciel de modélisation 3D as-tu déjà utilisé ou connais-tu
-              ?</label
-            >
+            <label class="wizard__label required">Nom de ton objet</label>
             <p class="wizard__hint">
-              Ex: Tinkercad, SketchUp, Fusion 360, Blender...
+              Donne un nom clair et parlant à ton objet.
             </p>
             <input
               type="text"
               class="wizard__input"
-              data-field="logicielModelisation"
-              placeholder="Nom du logiciel"
+              data-field="objetNom"
+              placeholder="Ex: Support de téléphone ajustable"
               spellcheck="true"
               lang="fr"
             />
           </div>
 
-          <!-- Zone de texte étapes de conception -->
+          <!-- Type d'objet -->
+          <div class="wizard__group">
+            <label class="wizard__label required">Catégorie de ton objet</label>
+            <select class="wizard__input" data-field="objetCategorie">
+              <option value="">— Sélectionner —</option>
+              <option value="Support / Rangement">Support / Rangement</option>
+              <option value="Outil / Accessoire">Outil / Accessoire</option>
+              <option value="Décoration">Décoration</option>
+              <option value="Jeu / Loisir">Jeu / Loisir</option>
+              <option value="Objet du quotidien">Objet du quotidien</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+
+          <!-- Description de l'objet -->
           <div class="wizard__group">
             <label class="wizard__label required"
-              >Décris brièvement les étapes clés de la conception d'un objet
-              destiné à l'impression 3D.</label
+              >Description de ton objet</label
             >
+            <p class="wizard__hint">
+              Explique à quoi ressemble ton objet et comment il fonctionne.
+            </p>
             <textarea
               class="wizard__textarea"
-              data-field="etapesConception"
-              placeholder="Décris les étapes depuis l'idée jusqu'au modèle 3D final."
+              data-field="objetDescription"
+              placeholder="Mon objet est... Il permet de... Il se compose de..."
               spellcheck="true"
               lang="fr"
               autocorrect="on"
@@ -240,21 +279,41 @@
             ></textarea>
           </div>
 
-          <!-- Zone de texte importance échelle -->
+          <!-- Problème résolu -->
           <div class="wizard__group">
-            <label class="wizard__label"
-              >Pourquoi est-il important de vérifier l'échelle de son modèle
-              avant l'impression ?</label
+            <label class="wizard__label required"
+              >Quel problème ton objet résout-il ?</label
             >
+            <p class="wizard__hint">
+              Décris le besoin ou la situation qui t'a donné cette idée.
+            </p>
             <textarea
               class="wizard__textarea"
-              data-field="importanceEchelle"
-              placeholder="Explique les conséquences d'une mauvaise échelle."
+              data-field="objetProbleme"
+              placeholder="J'ai conçu cet objet parce que... Le problème était que..."
               spellcheck="true"
               lang="fr"
               autocorrect="on"
               autocapitalize="sentences"
             ></textarea>
+          </div>
+
+          <!-- Utilisateur cible -->
+          <div class="wizard__group">
+            <label class="wizard__label"
+              >Pour qui as-tu conçu cet objet ?</label
+            >
+            <p class="wizard__hint">
+              Qui va l'utiliser ? (toi, ta famille, un ami, tout le monde...)
+            </p>
+            <input
+              type="text"
+              class="wizard__input"
+              data-field="objetUtilisateur"
+              placeholder="Ex: Pour moi, pour aider mon petit frère..."
+              spellcheck="true"
+              lang="fr"
+            />
           </div>
 
           <!-- Navigation -->
@@ -266,48 +325,39 @@
           </div>
         </section>
 
-        <!-- ========== PHASE 2 : Préparation à l'Impression 3D ========== -->
+        <!-- ========== PHASE 2 : Préparation de l'oral ========== -->
         <section class="wizard__phase" data-phase="2">
           <div class="wizard__phase-header">
-            <div class="wizard__phase-icon">⚙️</div>
-            <h2 class="wizard__phase-title">
-              Phase 2 : Préparation à l'Impression 3D
-            </h2>
+            <div class="wizard__phase-icon">🎤</div>
+            <h2 class="wizard__phase-title">Phase 2 : Préparation de l'Oral</h2>
             <p class="wizard__phase-subtitle">
-              Paramétrer et optimiser ton modèle pour l'imprimante.
+              Structure ta présentation pour être clair et convaincant.
             </p>
           </div>
 
-          <!-- Sélection type de filament -->
-          <div class="wizard__group">
-            <label class="wizard__label required"
-              >Quel type de filament est le plus courant pour débuter en
-              impression 3D ?</label
-            >
-            <select class="wizard__input" data-field="typeFilament">
-              <option value="">— Sélectionner —</option>
-              <option value="PLA">PLA (Acide Polylactique)</option>
-              <option value="ABS">ABS (Acrylonitrile Butadiène Styrène)</option>
-              <option value="PETG">
-                PETG (Polyéthylène Téréphtalate Glycolisé)
-              </option>
-              <option value="Nylon">Nylon</option>
-            </select>
+          <!-- Conseils pour l'oral -->
+          <div class="wizard__tip">
+            <p class="wizard__tip-title">💡 Conseils pour réussir ton oral</p>
+            <ul>
+              <li>Parle fort et articule bien</li>
+              <li>Regarde ton public, pas tes notes</li>
+              <li>Présente ton objet en le montrant</li>
+              <li>Respecte le temps imparti (2-3 minutes)</li>
+            </ul>
           </div>
 
-          <!-- Zone de texte rôle slicer -->
+          <!-- INTRODUCTION -->
           <div class="wizard__group">
             <label class="wizard__label required"
-              >Qu'est-ce qu'un "slicer" (logiciel de tranchage) et quel est son
-              rôle ?</label
+              >🎬 Introduction (30 secondes)</label
             >
             <p class="wizard__hint">
-              Explique son fonctionnement et son utilité.
+              Accroche ton public : présente-toi et annonce ton objet.
             </p>
             <textarea
               class="wizard__textarea"
-              data-field="roleSlicer"
-              placeholder="Un slicer est un logiciel qui..."
+              data-field="oralIntroduction"
+              placeholder="Bonjour, je m'appelle... Aujourd'hui, je vais vous présenter... C'est un objet qui permet de..."
               spellcheck="true"
               lang="fr"
               autocorrect="on"
@@ -315,135 +365,19 @@
             ></textarea>
           </div>
 
-          <!-- Checkboxes paramètres slicer -->
+          <!-- DÉVELOPPEMENT -->
           <div class="wizard__group">
             <label class="wizard__label required"
-              >Indique trois paramètres importants à régler dans un
-              slicer.</label
-            >
-            <div class="wizard__checkbox-group">
-              <label class="wizard__checkbox-item">
-                <input
-                  type="checkbox"
-                  data-field="parametreSlicer_hauteurCouche"
-                />
-                <span class="wizard__checkbox-label"
-                  >📏 <strong>Hauteur de couche</strong> (résolution)</span
-                >
-              </label>
-              <label class="wizard__checkbox-item">
-                <input
-                  type="checkbox"
-                  data-field="parametreSlicer_remplissage"
-                />
-                <span class="wizard__checkbox-label"
-                  >📦 <strong>Taux de remplissage</strong> (solidité)</span
-                >
-              </label>
-              <label class="wizard__checkbox-item">
-                <input type="checkbox" data-field="parametreSlicer_supports" />
-                <span class="wizard__checkbox-label"
-                  >🏗️ <strong>Génération de supports</strong> (pour les
-                  porte-à-faux)</span
-                >
-              </label>
-              <label class="wizard__checkbox-item">
-                <input type="checkbox" data-field="parametreSlicer_vitesse" />
-                <span class="wizard__checkbox-label"
-                  >⚡ <strong>Vitesse d'impression</strong></span
-                >
-              </label>
-              <label class="wizard__checkbox-item">
-                <input
-                  type="checkbox"
-                  data-field="parametreSlicer_temperature"
-                />
-                <span class="wizard__checkbox-label"
-                  >🌡️ <strong>Température d'extrusion/plateau</strong></span
-                >
-              </label>
-            </div>
-          </div>
-
-          <!-- Radio buttons option porte-à-faux -->
-          <div class="wizard__group">
-            <label class="wizard__label required"
-              >Si tu devais imprimer une pièce avec des porte-à-faux importants,
-              quelle option activerais-tu dans le slicer ?</label
-            >
-            <div class="wizard__checkbox-group">
-              <label class="wizard__checkbox-item">
-                <input
-                  type="radio"
-                  name="optionPorteAFaux"
-                  data-field="optionPorteAFaux"
-                  value="Supports"
-                />
-                <span class="wizard__checkbox-label"
-                  >🏗️ <strong>Supports</strong></span
-                >
-              </label>
-              <label class="wizard__checkbox-item">
-                <input
-                  type="radio"
-                  name="optionPorteAFaux"
-                  data-field="optionPorteAFaux"
-                  value="Raft"
-                />
-                <span class="wizard__checkbox-label"
-                  >⚓ <strong>Raft</strong></span
-                >
-              </label>
-              <label class="wizard__checkbox-item">
-                <input
-                  type="radio"
-                  name="optionPorteAFaux"
-                  data-field="optionPorteAFaux"
-                  value="Brim"
-                />
-                <span class="wizard__checkbox-label"
-                  >🎩 <strong>Brim</strong></span
-                >
-              </label>
-            </div>
-          </div>
-
-          <!-- Navigation -->
-          <div class="wizard__phase-nav">
-            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
-              ← Précédent
-            </button>
-            <button class="btn btn--primary" onclick="wizardGoToPhase(3)">
-              Suivant →
-            </button>
-          </div>
-        </section>
-
-        <!-- ========== PHASE 3 : L'Impression et le Post-Traitement ========== -->
-        <section class="wizard__phase" data-phase="3">
-          <div class="wizard__phase-header">
-            <div class="wizard__phase-icon">✅</div>
-            <h2 class="wizard__phase-title">
-              Phase 3 : L'Impression et le Post-Traitement
-            </h2>
-            <p class="wizard__phase-subtitle">
-              De l'impression à la finition de ton objet.
-            </p>
-          </div>
-
-          <!-- Zone de texte problème et solution -->
-          <div class="wizard__group">
-            <label class="wizard__label required"
-              >Décris un problème courant rencontré lors de l'impression 3D et
-              propose une solution.</label
+              >📖 Développement (1-2 minutes)</label
             >
             <p class="wizard__hint">
-              Ex: décollement du plateau, bouchage de buse, spaghetti...
+              Explique ton objet en détail : le problème, ta solution, comment
+              ça marche.
             </p>
             <textarea
               class="wizard__textarea"
-              data-field="problemeImpression"
-              placeholder="Problème: ... Solution: ..."
+              data-field="oralDeveloppement"
+              placeholder="J'ai eu cette idée parce que... Mon objet fonctionne de la manière suivante... J'ai choisi ce matériau car... La difficulté principale était..."
               spellcheck="true"
               lang="fr"
               autocorrect="on"
@@ -451,52 +385,64 @@
             ></textarea>
           </div>
 
-          <!-- Checkboxes post-traitement -->
+          <!-- Points clés à mentionner -->
           <div class="wizard__group">
             <label class="wizard__label"
-              >Quelles sont les étapes de post-traitement que tu pourrais
-              appliquer à un objet imprimé en 3D ? (plusieurs réponses
-              possibles)</label
+              >Quels points clés veux-tu absolument mentionner ?</label
             >
             <div class="wizard__checkbox-group">
               <label class="wizard__checkbox-item">
-                <input type="checkbox" data-field="postTraitement_poncage" />
+                <input type="checkbox" data-field="pointsCles_probleme" />
                 <span class="wizard__checkbox-label"
-                  >🪵 <strong>Ponçage</strong></span
+                  >❓ Le problème que j'ai identifié</span
                 >
               </label>
               <label class="wizard__checkbox-item">
-                <input type="checkbox" data-field="postTraitement_peinture" />
+                <input type="checkbox" data-field="pointsCles_solution" />
                 <span class="wizard__checkbox-label"
-                  >🎨 <strong>Peinture</strong></span
+                  >💡 Ma solution et pourquoi elle est efficace</span
                 >
               </label>
               <label class="wizard__checkbox-item">
-                <input type="checkbox" data-field="postTraitement_assemblage" />
+                <input type="checkbox" data-field="pointsCles_conception" />
                 <span class="wizard__checkbox-label"
-                  >🔗 <strong>Assemblage</strong> de plusieurs pièces</span
+                  >📐 Les étapes de conception (croquis, modélisation)</span
                 >
               </label>
               <label class="wizard__checkbox-item">
-                <input type="checkbox" data-field="postTraitement_nettoyage" />
+                <input type="checkbox" data-field="pointsCles_materiaux" />
                 <span class="wizard__checkbox-label"
-                  >🧼 <strong>Nettoyage</strong> (retrait des supports,
-                  bavures)</span
+                  >🧱 Le choix des matériaux</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="pointsCles_difficultes" />
+                <span class="wizard__checkbox-label"
+                  >⚠️ Les difficultés rencontrées</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="pointsCles_ameliorations" />
+                <span class="wizard__checkbox-label"
+                  >🔄 Les améliorations possibles</span
                 >
               </label>
             </div>
           </div>
 
-          <!-- Zone de texte avantage impression 3D -->
+          <!-- CONCLUSION -->
           <div class="wizard__group">
             <label class="wizard__label required"
-              >Selon toi, quel est l'avantage principal de l'impression 3D
-              ?</label
+              >🏁 Conclusion (30 secondes)</label
             >
+            <p class="wizard__hint">
+              Résume l'essentiel et ouvre sur une question ou une amélioration
+              possible.
+            </p>
             <textarea
               class="wizard__textarea"
-              data-field="avantageImpression"
-              placeholder="L'impression 3D permet de..."
+              data-field="oralConclusion"
+              placeholder="Pour conclure, mon objet permet de... Si je devais l'améliorer, je... Merci de votre attention, avez-vous des questions ?"
               spellcheck="true"
               lang="fr"
               autocorrect="on"
@@ -504,15 +450,16 @@
             ></textarea>
           </div>
 
-          <!-- Zone de texte expérience personnelle -->
+          <!-- Question anticipée -->
           <div class="wizard__group">
             <label class="wizard__label"
-              >As-tu déjà imprimé un objet en 3D ? Si oui, décris-le.</label
+              >Quelle question pourrait-on te poser ? Prépare ta réponse
+              !</label
             >
             <textarea
               class="wizard__textarea"
-              data-field="experienceImpression"
-              placeholder="Oui, j'ai imprimé... / Non, pas encore."
+              data-field="oralQuestion"
+              placeholder="On pourrait me demander... Je répondrais que..."
               spellcheck="true"
               lang="fr"
               autocorrect="on"
@@ -522,7 +469,7 @@
 
           <!-- Navigation finale -->
           <div class="wizard__phase-nav">
-            <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
               ← Précédent
             </button>
             <button class="btn btn--success" onclick="wizardComplete()">
@@ -559,6 +506,9 @@
         >
           🗑️ Réinitialiser
         </button>
+        <button class="btn btn--secondary btn--small" onclick="window.print()">
+          🖨️ Imprimer
+        </button>
       </div>
     </main>
 
@@ -570,13 +520,11 @@
     <!-- Modal Complétion -->
     <div class="wizard__modal-overlay" id="completionModal">
       <div class="wizard__modal">
-        <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
+        <h3 class="wizard__modal-title">🎉 Bravo !</h3>
         <div class="wizard__modal-content">
-          <p>Tu as terminé ton travail !</p>
+          <p>Ta présentation est prête !</p>
           <p style="margin-top: 1rem">
-            Tes réponses ont été
-            <strong>sauvegardées automatiquement</strong> dans la base de
-            données.
+            Tes réponses ont été <strong>sauvegardées automatiquement</strong>.
           </p>
           <p
             style="
@@ -585,7 +533,7 @@
               color: var(--color-gray-500);
             "
           >
-            Tu peux aussi exporter une copie locale.
+            💡 Entraîne-toi à l'oral devant un miroir ou un proche !
           </p>
         </div>
         <div class="wizard__modal-actions">
@@ -618,7 +566,7 @@
           </p>
           <p>
             Voulez-vous vraiment <strong>supprimer définitivement</strong> vos
-            réponses de la base de données ?
+            réponses ?
           </p>
         </div>
         <div class="wizard__modal-actions">
@@ -649,36 +597,38 @@
     <script type="module" src="/src/js/components.js"></script>
     <script type="module">
       // ============================================
-      // CONFIGURATION FIREBASE - À ADAPTER
+      // CONFIGURATION FIREBASE
       // ============================================
       import { WizardFirebase } from "/src/js/wizard-firebase.js";
 
-      // Créer l'instance du wizard avec Firestore
       window.wizardInstance = new WizardFirebase({
-        // Nom de la collection Firestore (unique par formulaire)
-        collectionName: "devoir_conception_impression_3d",
+        // Collection Firestore unique pour ce formulaire
+        collectionName: "presentation_objet_technique",
 
         // Intervalle d'autosave (en ms)
         autosaveInterval: 60000,
 
-        // Champs obligatoires par phase pour marquer "completed"
+        // Champs obligatoires par phase
         requiredFields: {
-          1: ["studentName", "logicielModelisation", "etapesConception"],
-          2: ["typeFilament", "roleSlicer", "optionPorteAFaux"],
-          3: ["problemeImpression", "avantageImpression"],
+          1: [
+            "studentName",
+            "studentClass",
+            "objetNom",
+            "objetCategorie",
+            "objetDescription",
+            "objetProbleme",
+          ],
+          2: ["oralIntroduction", "oralDeveloppement", "oralConclusion"],
         },
 
-        // Callback à la complétion
         onComplete: (data) => {
-          console.log("🎉 Formulaire complété:", data);
+          console.log("🎉 Présentation complétée:", data);
         },
 
-        // Callback sauvegarde réussie
         onSaveSuccess: (data) => {
           console.log("✅ Sauvegarde Firestore OK");
         },
 
-        // Callback erreur de sauvegarde
         onSaveError: (error) => {
           console.error("❌ Erreur Firestore:", error);
         },
@@ -689,48 +639,36 @@
       // ============================================
       import("/src/js/article-editor.js").then((module) => {
         window.articleEditor = new module.ArticleEditor({
-          // Champs protégés contre le copier-coller
           protectedFields: [
-            '[data-field="etapesConception"]',
-            '[data-field="importanceEchelle"]',
-            '[data-field="roleSlicer"]',
-            '[data-field="problemeImpression"]',
-            '[data-field="avantageImpression"]',
-            '[data-field="experienceImpression"]',
+            '[data-field="objetDescription"]',
+            '[data-field="objetProbleme"]',
+            '[data-field="oralIntroduction"]',
+            '[data-field="oralDeveloppement"]',
+            '[data-field="oralConclusion"]',
+            '[data-field="oralQuestion"]',
           ],
-          // Champ où le paste est autorisé (prompt IA)
-          allowPasteFields: ['[data-field="aiPrompt"]'],
-          // Callback pour afficher le toast
           onPasteBlocked: (msg) =>
             window.wizardInstance?.showToast(msg, "warning"),
         });
       });
 
       /**
-       * Sécurise la réinitialisation en forçant un export JSON
-       * avant de demander la confirmation de suppression.
+       * Sécurise la réinitialisation
        */
       window.handleSafeReset = function () {
-        console.log(
-          "Préparation de la réinitialisation : Export de secours...",
-        );
-
-        // 1. On déclenche l'export JSON existant
         if (typeof wizardExportJSON === "function") {
           wizardExportJSON();
         } else if (window.wizardInstance) {
           window.wizardInstance.exportToJSON();
         }
 
-        // 2. On affiche un petit message dans le toast pour informer l'élève
-        if (window.wizardInstance && window.wizardInstance.showToast) {
+        if (window.wizardInstance?.showToast) {
           window.wizardInstance.showToast(
             "Sauvegarde de secours téléchargée !",
             "success",
           );
         }
 
-        // 3. On ouvre enfin la modale de confirmation
         wizardShowModal("resetModal");
       };
 

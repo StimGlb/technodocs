@@ -17,13 +17,6 @@
       "path": "src/pages/cours/reparabilite.html",
       "icon": { "type": "emoji", "value": "🔌" },
       "description": "Indice de réparabilité et diagnostic"
-    },
-    {
-      "id": "modelisation3d",
-      "name": "Modélisation 3D",
-      "path": "src/pages/cours/modelisation3d.html",
-      "icon": { "type": "emoji", "value": "🛠️" },
-      "description": "Modélisation et impression 3D"
     }
   ],
   "devoirs": [
