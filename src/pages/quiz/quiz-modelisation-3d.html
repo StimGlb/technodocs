@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Quiz interactif sur la modélisation 3D avec Tinkercad - TechnoDocs">
+    <title>Quiz : Modélisation 3D avec Tinkercad | TechnoDocs</title>
+
+    <!-- CSS du projet -->
+    <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="stylesheet" href="/src/css/wizard.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header dynamique -->
+    <div id="header-placeholder"></div>
+
+    <main class="wizard">
+
+        <!-- ========== BANNIÈRE TITRE ========== -->
+        <div class="wizard__banner">
+            <div class="wizard__banner-icon">🎨</div>
+            <div class="wizard__banner-content">
+                <h1 class="wizard__banner-title">Quiz : Modélisation 3D avec Tinkercad</h1>
+                <div class="wizard__banner-meta" style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--color-gray-600);">
+                    📊 Évaluation notée sur 20 points
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== INFO ÉLÈVE ========== -->
+        <div class="wizard__student-info">
+            <div class="wizard__student-row">
+                <div class="wizard__student-field wizard__student-field--name">
+                    <label for="studentName">Prénom et Nom</label>
+                    <input type="text" id="studentName" data-field="studentName" placeholder="Ton nom complet">
+                </div>
+                <div class="wizard__student-field wizard__student-field--class">
+                    <label for="studentClass">Classe</label>
+                    <select id="studentClass" data-field="studentClass">
+                        <option value="">— Sélectionner —</option>
+                        <optgroup label="5ème">
+                            <option value="505">5ème 5</option>
+                            <option value="506">5ème 6</option>
+                            <option value="507">5ème 7</option>
+                        </optgroup>
+                        <optgroup label="4ème">
+                            <option value="401">4ème 1</option>
+                            <option value="402">4ème 2</option>
+                            <option value="403">4ème 3</option>
+                            <option value="404">4ème 4</option>
+                            <option value="405">4ème 5</option>
+                        </optgroup>
+                        <optgroup label="3ème">
+                            <option value="302">3ème 2</option>
+                            <option value="303">3ème 3</option>
+                            <option value="304">3ème 4</option>
+                            <option value="305">3ème 5</option>
+                            <option value="306">3ème 6</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="wizard__student-field wizard__student-field--date">
+                    <label>Date</label>
+                    <span class="wizard__date-display" id="projectDate" data-field="projectDate"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PROGRESSION ========== -->
+        <section class="wizard__progress">
+            <div class="wizard__progress-header">
+                <h2 class="wizard__progress-title">Progression</h2>
+                <div class="wizard__save-indicator" id="saveIndicator">
+                    <span class="wizard__save-dot"></span>
+                    <span class="wizard__save-text">Auto-save</span>
+                </div>
+                <span class="wizard__progress-percentage" id="progressPercentage">0%</span>
+            </div>
+            <div class="wizard__progress-bar">
+                <div class="wizard__progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+
+            <!-- Navigation par phases -->
+            <nav class="wizard__nav" id="phaseNav">
+                <button class="wizard__nav-btn active" data-phase="1">
+                    <span class="wizard__nav-number">1</span>
+                    <span>Interface</span>
+                </button>
+                <button class="wizard__nav-btn" data-phase="2">
+                    <span class="wizard__nav-number">2</span>
+                    <span>Manipulations</span>
+                </button>
+                <button class="wizard__nav-btn" data-phase="3">
+                    <span class="wizard__nav-number">3</span>
+                    <span>Méthodes</span>
+                </button>
+                <button class="wizard__nav-btn" data-phase="4">
+                    <span class="wizard__nav-number">4</span>
+                    <span>Projets</span>
+                </button>
+                <button class="wizard__nav-btn" data-phase="5">
+                    <span class="wizard__nav-number">5</span>
+                    <span>Impression 3D</span>
+                </button>
+            </nav>
+        </section>
+
+        <!-- ========== CONTENEUR FORMULAIRE ========== -->
+        <div class="wizard__container">
+
+            <!-- ========== PHASE 1 : Interface Tinkercad (4 points) ========== -->
+            <section class="wizard__phase active" data-phase="1">
+                <div class="wizard__phase-header">
+                    <div class="wizard__phase-icon">🖥️</div>
+                    <h2 class="wizard__phase-title">Phase 1 : Interface Tinkercad</h2>
+                    <p class="wizard__phase-subtitle">Connais-tu les éléments de l'interface ? (4 points)</p>
+                </div>
+
+                <!-- Question 1.1 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q1 - Quel est le nom de l'interface de travail de Tinkercad ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_1" data-field="q1_1" value="a">
+                            <span>a) L'espace de travail</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_1" data-field="q1_1" value="b">
+                            <span>b) Le Plan de construction</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_1" data-field="q1_1" value="c">
+                            <span>c) La grille de modélisation</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_1" data-field="q1_1" value="d">
+                            <span>d) Le plateau de design</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 1.2 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q2 - À quoi sert le Cube de Vue en haut à gauche ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_2" data-field="q1_2" value="a">
+                            <span>a) Il permet de zoomer sur l'objet</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_2" data-field="q1_2" value="b">
+                            <span>b) Il permet de faire pivoter la caméra pour voir l'objet sous tous les angles</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_2" data-field="q1_2" value="c">
+                            <span>c) Il permet de changer la couleur de l'objet</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_2" data-field="q1_2" value="d">
+                            <span>d) Il affiche les dimensions de l'objet</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 1.3 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q3 - Où trouve-t-on les formes de base comme les cubes ou les sphères ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_3" data-field="q1_3" value="a">
+                            <span>a) Dans le menu Fichier</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_3" data-field="q1_3" value="b">
+                            <span>b) Dans la Bibliothèque de Formes à droite de l'écran</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_3" data-field="q1_3" value="c">
+                            <span>c) Dans la barre d'outils en haut</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_3" data-field="q1_3" value="d">
+                            <span>d) En bas de l'écran</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 1.4 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q4 - Comment peut-on zoomer sur l'interface ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_4" data-field="q1_4" value="a">
+                            <span>a) En appuyant sur la touche Z</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_4" data-field="q1_4" value="b">
+                            <span>b) En double-cliquant sur l'objet</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_4" data-field="q1_4" value="c">
+                            <span>c) En utilisant la molette de la souris</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q1_4" data-field="q1_4" value="d">
+                            <span>d) En maintenant la touche Ctrl enfoncée</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="wizard__phase-nav">
+                    <div></div>
+                    <button class="btn btn--primary" onclick="wizardGoToPhase(2)">Suivant →</button>
+                </div>
+            </section>
+
+            <!-- ========== PHASE 2 : Manipulations de base (5 points) ========== -->
+            <section class="wizard__phase" data-phase="2">
+                <div class="wizard__phase-header">
+                    <div class="wizard__phase-icon">🔧</div>
+                    <h2 class="wizard__phase-title">Phase 2 : Manipulations de base</h2>
+                    <p class="wizard__phase-subtitle">Sais-tu manipuler les objets dans Tinkercad ? (5 points)</p>
+                </div>
+
+                <!-- Question 2.1 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q5 - Comment modifie-t-on la largeur et la longueur d'une forme ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_1" data-field="q2_1" value="a">
+                            <span>a) On utilise les poignées représentées par des carrés noirs ou blancs sur les côtés</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_1" data-field="q2_1" value="b">
+                            <span>b) On tape les dimensions au clavier</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_1" data-field="q2_1" value="c">
+                            <span>c) On utilise la flèche noire au-dessus de l'objet</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_1" data-field="q2_1" value="d">
+                            <span>d) On double-clique sur l'objet</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2.2 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q6 - Quelle est l'utilité de la flèche noire (cône) au-dessus d'un objet ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_2" data-field="q2_2" value="a">
+                            <span>a) Elle sert à supprimer l'objet</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_2" data-field="q2_2" value="b">
+                            <span>b) Elle sert à dupliquer l'objet</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_2" data-field="q2_2" value="c">
+                            <span>c) Elle sert à élever ou abaisser l'objet par rapport au plan de construction</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_2" data-field="q2_2" value="d">
+                            <span>d) Elle sert à changer la couleur</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2.3 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q7 - Comment effectuer une rotation sur les trois axes ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_3" data-field="q2_3" value="a">
+                            <span>a) Il faut utiliser le Cube de Vue</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_3" data-field="q2_3" value="b">
+                            <span>b) Il faut utiliser les arcs de cercle fléchés qui apparaissent sur l'objet</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_3" data-field="q2_3" value="c">
+                            <span>c) Il faut appuyer sur la touche R</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_3" data-field="q2_3" value="d">
+                            <span>d) Il faut maintenir Shift et faire glisser la souris</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2.4 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q8 - Que permet de faire la touche D sur Tinkercad ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_4" data-field="q2_4" value="a">
+                            <span>a) Elle permet de dupliquer l'objet sélectionné</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_4" data-field="q2_4" value="b">
+                            <span>b) Elle permet de supprimer l'objet</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_4" data-field="q2_4" value="c">
+                            <span>c) Elle permet de poser instantanément un objet sur le plan de construction s'il flotte</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_4" data-field="q2_4" value="d">
+                            <span>d) Elle permet de dessiner une nouvelle forme</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 2.5 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q9 - Quelle est la méthode pour pivoter la vue rapidement ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_5" data-field="q2_5" value="a">
+                            <span>a) Il faut maintenir le clic gauche de la souris enfoncé</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_5" data-field="q2_5" value="b">
+                            <span>b) Il faut maintenir le clic droit de la souris enfoncé</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_5" data-field="q2_5" value="c">
+                            <span>c) Il faut maintenir le clic de la molette de la souris enfoncé</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q2_5" data-field="q2_5" value="d">
+                            <span>d) Il faut appuyer sur la barre d'espace</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="wizard__phase-nav">
+                    <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">← Précédent</button>
+                    <button class="btn btn--primary" onclick="wizardGoToPhase(3)">Suivant →</button>
+                </div>
+            </section>
+
+            <!-- ========== PHASE 3 : Méthodes de modélisation (4 points) ========== -->
+            <section class="wizard__phase" data-phase="3">
+                <div class="wizard__phase-header">
+                    <div class="wizard__phase-icon">⚙️</div>
+                    <h2 class="wizard__phase-title">Phase 3 : Méthodes de modélisation</h2>
+                    <p class="wizard__phase-subtitle">Comprends-tu les méthodes de création ? (4 points)</p>
+                </div>
+
+                <!-- Question 3.1 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q10 - Qu'est-ce que la méthode additive dans Tinkercad ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_1" data-field="q3_1" value="a">
+                            <span>a) C'est l'ajout de couleurs sur un objet</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_1" data-field="q3_1" value="b">
+                            <span>b) C'est l'assemblage de deux formes pleines pour créer une forme complexe</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_1" data-field="q3_1" value="c">
+                            <span>c) C'est le fait d'ajouter du texte sur un objet</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_1" data-field="q3_1" value="d">
+                            <span>d) C'est la duplication d'un objet</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3.2 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q11 - En quoi consiste la méthode soustractive ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_2" data-field="q3_2" value="a">
+                            <span>a) On réduit la taille d'un objet</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_2" data-field="q3_2" value="b">
+                            <span>b) On transforme une forme en 'Perçage' translucide pour retirer de la matière à une forme solide</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_2" data-field="q3_2" value="c">
+                            <span>c) On supprime un objet du plan de construction</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_2" data-field="q3_2" value="d">
+                            <span>d) On retire une couleur d'un objet</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3.3 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q12 - Que signifie l'action 'Combiner' dans Tinkercad ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_3" data-field="q3_3" value="a">
+                            <span>a) Cela consiste à sélectionner plusieurs formes et à les grouper pour fusionner ou percer</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_3" data-field="q3_3" value="b">
+                            <span>b) Cela consiste à placer deux objets côte à côte</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_3" data-field="q3_3" value="c">
+                            <span>c) Cela consiste à changer la couleur de plusieurs objets</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_3" data-field="q3_3" value="d">
+                            <span>d) Cela consiste à dupliquer plusieurs objets</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 3.4 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q13 - Quelles sont les trois étapes pour réussir un projet ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_4" data-field="q3_4" value="a">
+                            <span>a) Dessiner, Colorier, Imprimer</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_4" data-field="q3_4" value="b">
+                            <span>b) Placer, Ajuster, Combiner</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_4" data-field="q3_4" value="c">
+                            <span>c) Modéliser, Exporter, Publier</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q3_4" data-field="q3_4" value="d">
+                            <span>d) Créer, Modifier, Sauvegarder</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="wizard__phase-nav">
+                    <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">← Précédent</button>
+                    <button class="btn btn--primary" onclick="wizardGoToPhase(4)">Suivant →</button>
+                </div>
+            </section>
+
+            <!-- ========== PHASE 4 : Projets pratiques (4 points) ========== -->
+            <section class="wizard__phase" data-phase="4">
+                <div class="wizard__phase-header">
+                    <div class="wizard__phase-icon">🏗️</div>
+                    <h2 class="wizard__phase-title">Phase 4 : Projets pratiques</h2>
+                    <p class="wizard__phase-subtitle">Sais-tu réaliser les projets de base ? (4 points)</p>
+                </div>
+
+                <!-- Question 4.1 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q14 - Comment centrer parfaitement un toit sur un cube ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_1" data-field="q4_1" value="a">
+                            <span>a) On déplace manuellement le toit avec la souris</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_1" data-field="q4_1" value="b">
+                            <span>b) On utilise l'outil Aligner (touche L)</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_1" data-field="q4_1" value="c">
+                            <span>c) On utilise la touche C pour centrer</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_1" data-field="q4_1" value="d">
+                            <span>d) On tape les coordonnées au clavier</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4.2 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q15 - Comment crée-t-on les points d'un dé à jouer ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_2" data-field="q4_2" value="a">
+                            <span>a) On utilise l'outil Texte pour ajouter des chiffres</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_2" data-field="q4_2" value="b">
+                            <span>b) On utilise de petites sphères transformées en 'Perçage'</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_2" data-field="q4_2" value="c">
+                            <span>c) On peint les points avec l'outil Pinceau</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_2" data-field="q4_2" value="d">
+                            <span>d) On utilise de petits cubes pleins</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4.3 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q16 - Comment crée-t-on le creux d'une tasse de café ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_3" data-field="q4_3" value="a">
+                            <span>a) On utilise l'outil Creuser automatique</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_3" data-field="q4_3" value="b">
+                            <span>b) On place un cylindre légèrement plus petit en mode 'Perçage' à l'intérieur d'un grand cylindre</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_3" data-field="q4_3" value="c">
+                            <span>c) On réduit l'épaisseur du cylindre dans les paramètres</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_3" data-field="q4_3" value="d">
+                            <span>d) On utilise une sphère en mode Perçage</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 4.4 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q17 - Quel outil utilise-t-on pour ajouter un prénom sur un porte-clés ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_4" data-field="q4_4" value="a">
+                            <span>a) L'outil Dessin</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_4" data-field="q4_4" value="b">
+                            <span>b) L'outil Gravure</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_4" data-field="q4_4" value="c">
+                            <span>c) L'outil Texte disponible dans la bibliothèque</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q4_4" data-field="q4_4" value="d">
+                            <span>d) L'outil Personnalisation</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Navigation -->
+                <div class="wizard__phase-nav">
+                    <button class="btn btn--secondary" onclick="wizardGoToPhase(3)">← Précédent</button>
+                    <button class="btn btn--primary" onclick="wizardGoToPhase(5)">Suivant →</button>
+                </div>
+            </section>
+
+            <!-- ========== PHASE 5 : Impression 3D et Cahier des Charges (3 points) ========== -->
+            <section class="wizard__phase" data-phase="5">
+                <div class="wizard__phase-header">
+                    <div class="wizard__phase-icon">🖨️</div>
+                    <h2 class="wizard__phase-title">Phase 5 : Impression 3D et Cahier des Charges</h2>
+                    <p class="wizard__phase-subtitle">Connais-tu les contraintes de l'impression 3D ? (3 points)</p>
+                </div>
+
+                <!-- Question 5.1 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q18 - Quel matériau est généralement utilisé pour l'impression au collège ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q5_1" data-field="q5_1" value="a">
+                            <span>a) Le plastique ABS</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q5_1" data-field="q5_1" value="b">
+                            <span>b) Le plastique PLA</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q5_1" data-field="q5_1" value="c">
+                            <span>c) La résine époxy</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q5_1" data-field="q5_1" value="d">
+                            <span>d) Le métal</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 5.2 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q19 - Pourquoi faut-il vérifier le contact avec le plateau avant l'impression ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q5_2" data-field="q5_2" value="a">
+                            <span>a) Pour que l'objet soit plus beau</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q5_2" data-field="q5_2" value="b">
+                            <span>b) Pour s'assurer que l'objet ne flotte pas dans l'air, ce qui ferait échouer l'impression</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q5_2" data-field="q5_2" value="c">
+                            <span>c) Pour économiser du plastique</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q5_2" data-field="q5_2" value="d">
+                            <span>d) Pour imprimer plus rapidement</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question 5.3 (1 pt) -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">💡 Q20 - Quelle est la dimension maximale recommandée pour un projet élève ?</label>
+                    <p class="wizard__hint">1 point</p>
+                    <div class="wizard__radio-group">
+                        <label class="wizard__radio">
+                            <input type="radio" name="q5_3" data-field="q5_3" value="a">
+                            <span>a) L'objet ne doit pas dépasser 5 cm en longueur, largeur ou hauteur</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q5_3" data-field="q5_3" value="b">
+                            <span>b) L'objet ne doit pas dépasser 10 cm en longueur, largeur ou hauteur</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q5_3" data-field="q5_3" value="c">
+                            <span>c) L'objet ne doit pas dépasser 20 cm en longueur, largeur ou hauteur</span>
+                        </label>
+                        <label class="wizard__radio">
+                            <input type="radio" name="q5_3" data-field="q5_3" value="d">
+                            <span>d) Il n'y a pas de limite de dimension</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Navigation finale -->
+                <div class="wizard__phase-nav">
+                    <button class="btn btn--secondary" onclick="wizardGoToPhase(4)">← Précédent</button>
+                    <button class="btn btn--success" onclick="wizardComplete()">✅ Terminer</button>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ========== BARRE D'ACTIONS ========== -->
+        <div class="wizard__actions">
+            <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter JSON</button>
+            <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer JSON</button>
+            <input type="file" id="importInput" accept=".json" style="display:none" onchange="wizardImportJSON(event)">
+            <button class="btn btn--secondary btn--small" onclick="handleSafeReset()">🗑️ Réinitialiser</button>
+            <button class="btn btn--secondary btn--small" onclick="window.print()">🖨️ Imprimer</button>
+        </div>
+    </main>
+
+    <!-- Footer dynamique -->
+    <div id="footer-placeholder"></div>
+
+    <!-- ========== MODALES ========== -->
+
+    <!-- Modal Complétion -->
+    <div class="wizard__modal-overlay" id="completionModal">
+        <div class="wizard__modal">
+            <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
+            <div class="wizard__modal-content">
+                <p>Tu as terminé le quiz de modélisation 3D !</p>
+                <p style="margin-top:1rem">Tes réponses ont été <strong>sauvegardées automatiquement</strong> dans la base de données.</p>
+                <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--color-gray-500)">
+                    Tu peux aussi exporter une copie locale en JSON.
+                </p>
+            </div>
+            <div class="wizard__modal-actions">
+                <button class="btn btn--secondary" onclick="wizardCloseModal('completionModal')">Fermer</button>
+                <button class="btn btn--primary" onclick="wizardExportJSON();wizardCloseModal('completionModal')">📤 Exporter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Reset -->
+    <div class="wizard__modal-overlay" id="resetModal">
+        <div class="wizard__modal">
+            <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
+            <div class="wizard__modal-content">
+                <p>Une <strong>sauvegarde</strong> a été téléchargée automatiquement.</p>
+                <p>Voulez-vous vraiment <strong>supprimer définitivement</strong> vos réponses de la base de données ?</p>
+            </div>
+            <div class="wizard__modal-actions">
+                <button class="btn btn--secondary" onclick="wizardCloseModal('resetModal')">Annuler</button>
+                <button class="btn btn--primary" style="background:var(--color-error)" onclick="wizardReset()">🗑️ Réinitialiser</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="wizard__toast" id="wizardToast">
+        <span class="wizard__toast-icon"></span>
+        <span class="wizard__toast-message"></span>
+    </div>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script type="module" src="/src/js/components.js"></script>
+    <script type="module">
+        // ============================================
+        // CONFIGURATION FIREBASE - À ADAPTER
+        // ============================================
+        import { WizardFirebase } from '/src/js/wizard-firebase.js';
+
+        // Créer l'instance du wizard avec Firestore
+        window.wizardInstance = new WizardFirebase({
+            // Nom de la collection Firestore (unique par formulaire)
+            collectionName: 'quiz_modelisation_tinkercad_v1',
+            
+            // Champs obligatoires par phase pour marquer "completed"
+            requiredFields: {
+                1: [
+                    'studentName',
+                    'studentClass',
+                    'q1_1',
+                    'q1_2',
+                    'q1_3',
+                    'q1_4'
+                ],
+                2: [
+                    'q2_1',
+                    'q2_2',
+                    'q2_3',
+                    'q2_4',
+                    'q2_5'
+                ],
+                3: [
+                    'q3_1',
+                    'q3_2',
+                    'q3_3',
+                    'q3_4'
+                ],
+                4: [
+                    'q4_1',
+                    'q4_2',
+                    'q4_3',
+                    'q4_4'
+                ],
+                5: [
+                    'q5_1',
+                    'q5_2',
+                    'q5_3'
+                ]
+            },
+            
+            // Callback à la complétion
+            onComplete: (data) => {
+                console.log('🎉 Quiz complété:', data);
+            },
+            
+            // Callback sauvegarde réussie
+            onSaveSuccess: (data) => {
+                console.log('✅ Sauvegarde Firestore OK');
+            },
+            
+            // Callback erreur de sauvegarde
+            onSaveError: (error) => {
+                console.error('❌ Erreur Firestore:', error);
+            }
+        });
+
+        /**
+        * Sécurise la réinitialisation en forçant un export JSON 
+        * avant de demander la confirmation de suppression.
+        */
+        window.handleSafeReset = function() {
+            console.log("Préparation de la réinitialisation : Export de secours...");
+            
+            // 1. On déclenche l'export JSON existant
+            if (typeof wizardExportJSON === "function") {
+                wizardExportJSON();
+            } else if (window.wizardInstance) {
+                window.wizardInstance.exportToJSON(); 
+            }
+
+            // 2. On affiche un petit message dans le toast pour informer l'élève
+            if (window.wizardInstance && window.wizardInstance.showToast) {
+                window.wizardInstance.showToast("Sauvegarde de secours téléchargée !", "success");
+            }
+
+            // 3. On ouvre enfin la modale de confirmation
+            wizardShowModal('resetModal');
+        };
+    </script>
+</body>
+</html>

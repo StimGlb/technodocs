@@ -394,13 +394,15 @@
 }
 
 /* ---------- Checkboxes / Radios ---------- */
-.wizard__checkbox-group {
+.wizard__checkbox-group,
+.wizard__radio-group {
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
 }
 
-.wizard__checkbox-item {
+.wizard__checkbox-item,
+.wizard__radio {
     display: flex;
     align-items: flex-start;
     gap: var(--space-3);
@@ -412,17 +414,20 @@
     transition: all var(--transition-fast);
 }
 
-.wizard__checkbox-item:hover {
+.wizard__checkbox-item:hover,
+.wizard__radio:hover {
     background: var(--color-gray-100);
 }
 
-.wizard__checkbox-item.checked {
+.wizard__checkbox-item.checked,
+.wizard__radio.checked {
     background: #eef2ff;
     border-color: var(--color-primary-light);
 }
 
 .wizard__checkbox-item input[type="checkbox"],
-.wizard__checkbox-item input[type="radio"] {
+.wizard__checkbox-item input[type="radio"],
+.wizard__radio input[type="radio"] {
     width: 20px;
     height: 20px;
     margin-top: 2px;
