@@ -22,7 +22,6 @@ import {
   setDoc,
   getDoc,
   updateDoc,
-  deleteDoc,
   serverTimestamp,
   query,
   where,
@@ -127,19 +126,52 @@ export class WizardFirebase {
 
   /**
    * Génère ou récupère un ID unique pour ce formulaire
-   * Stocké en localStorage pour permettre la reprise
+   * Inclut une expiration après 1 heure d'inactivité
    */
   getOrCreateDocId() {
-    const storageKey = `wizard_${this.collectionName}_docId`;
-    let docId = localStorage.getItem(storageKey);
+    const storageKey = `wizard_${this.collectionName}_session`;
+    const sessionData = localStorage.getItem(storageKey);
+    const ONE_HOUR = 60 * 60 * 1000;
+    const now = Date.now();
 
-    if (!docId) {
-      // Générer un ID unique : timestamp + random
-      docId = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      localStorage.setItem(storageKey, docId);
+    // Tenter de récupérer l'ancienne clé simple (migration/compatibilité)
+    const oldDocId = localStorage.getItem(
+      `wizard_${this.collectionName}_docId`,
+    );
+
+    if (sessionData) {
+      try {
+        const { docId, timestamp } = JSON.parse(sessionData);
+        // Si la session date de moins d'une heure, on la conserve
+        if (now - timestamp < ONE_HOUR) {
+          return docId;
+        }
+      } catch (e) {
+        console.error("Erreur session localStorage:", e);
+      }
+    } else if (oldDocId) {
+      // Si on a l'ancien format, on le convertit et on l'utilise
+      this.updateSessionTimestamp(oldDocId);
+      localStorage.removeItem(`wizard_${this.collectionName}_docId`);
+      return oldDocId;
     }
 
-    return docId;
+    // Sinon, on crée une nouvelle session
+    const newDocId = `${now}_${Math.random().toString(36).substr(2, 9)}`;
+    this.updateSessionTimestamp(newDocId);
+    return newDocId;
+  }
+
+  /**
+   * Met à jour le timestamp de la session dans localStorage
+   */
+  updateSessionTimestamp(docId) {
+    const storageKey = `wizard_${this.collectionName}_session`;
+    const session = {
+      docId: docId || this.docId,
+      timestamp: Date.now(),
+    };
+    localStorage.setItem(storageKey, JSON.stringify(session));
   }
 
   /**
@@ -218,6 +250,7 @@ export class WizardFirebase {
       }
 
       this.isDirty = false; // Réinitialiser l'indicateur après une sauvegarde réussie
+      this.updateSessionTimestamp(); // Prolonger la session locale
       this.showSaveIndicator("saved");
       this.onSaveSuccess(saveData);
 
@@ -477,7 +510,7 @@ export class WizardFirebase {
       }
     });
   }
-  
+
   /**
    * Vérifie si le formulaire est complet
    */
@@ -564,13 +597,11 @@ export class WizardFirebase {
    */
   async reset() {
     try {
-      if (this.firestoreEnabled) {
-        // Supprimer le document Firestore
-        const docRef = doc(db, this.collectionName, this.docId);
-        await deleteDoc(docRef);
-      }
+      // On conserve les données existantes dans Firestore par sécurité.
+      // On supprime uniquement l'ID local pour repartir sur un nouveau document.
 
-      // Supprimer l'ID local
+      // Supprimer l'ancienne session
+      localStorage.removeItem(`wizard_${this.collectionName}_session`);
       localStorage.removeItem(`wizard_${this.collectionName}_docId`);
 
       // Réinitialiser l'état
@@ -594,9 +625,9 @@ export class WizardFirebase {
         }
       });
 
-      // Générer un nouvel ID
+      // Générer un nouvel ID et créer une nouvelle session
       this.docId = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
-      localStorage.setItem(`wizard_${this.collectionName}_docId`, this.docId);
+      this.updateSessionTimestamp(this.docId);
 
       // Réinitialiser la date du jour
       this.setTodayDate();
