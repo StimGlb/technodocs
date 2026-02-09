@@ -110,7 +110,57 @@ const initHeaderScroll = () => {
 };
 
 // ===========================
-// 4. Initialisation principale
+// 4. Effet Typing (machine à écrire)
+// ===========================
+const initTypingEffect = () => {
+    const el = document.getElementById('typingText');
+    if (!el) return;
+
+    const phrases = [
+           'Explorez les différents domaines de la technologie',
+           'Accédez aux contenus de cours, aux activités et aux outils',
+           'Révisez et validez vos compétences'
+    ];
+
+    let phraseIndex = 0;
+    let charIndex = 0;
+    let isDeleting = false;
+    const typeSpeed = 100;
+    const deleteSpeed = 100;
+    const pauseEnd = 1500;
+    const pauseStart = 200;
+
+    const type = () => {
+        const current = phrases[phraseIndex];
+
+        if (isDeleting) {
+            el.textContent = current.substring(0, charIndex - 1);
+            charIndex--;
+        } else {
+            el.textContent = current.substring(0, charIndex + 1);
+            charIndex++;
+        }
+
+        let delay = isDeleting ? deleteSpeed : typeSpeed;
+
+        if (!isDeleting && charIndex === current.length) {
+            delay = pauseEnd;
+            isDeleting = true;
+        } else if (isDeleting && charIndex === 0) {
+            isDeleting = false;
+            phraseIndex = (phraseIndex + 1) % phrases.length;
+            delay = pauseStart;
+        }
+
+        setTimeout(type, delay);
+    };
+
+    // Démarrer après un court délai
+    setTimeout(type, 1000);
+};
+
+// ===========================
+// 5. Initialisation principale
 // ===========================
 document.addEventListener('DOMContentLoaded', async () => {
     try {
@@ -119,6 +169,9 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Initialiser les animations au scroll
         initScrollAnimations();
+
+        // Initialiser l'effet typing
+        initTypingEffect();
 
         // Initialiser l'effet de scroll sur le header
         // On réessaie après un court délai pour s'assurer que le header est chargé
@@ -142,4 +195,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 });
 
 // Exporter les fonctions pour utilisation modulaire
-export { initNavigation, initScrollAnimations, initHeaderScroll };
+export { initNavigation, initScrollAnimations, initHeaderScroll, initTypingEffect };

@@ -1,0 +1,32 @@
+{
+    "title": "Réparabilité",
+    "subtitle": "Comprendre et améliorer la durabilité des objets",
+    "markdownPath": "../../content/md/cours/reparabilite.md",
+    "slides": [
+        {
+            "icon": "🎯",
+            "title": "Objectifs du cours",
+            "description": "- Comprendre l'indice de réparabilité\n- Diagnostiquer une panne sur un objet technique\n- Proposer des améliorations pour augmenter la durabilité"
+        },
+        {
+            "icon": "♻️",
+            "title": "L'indice de réparabilité",
+            "description": "Note de **1 à 10** obligatoire depuis 2021 sur certains produits électroniques. Plus la note est haute, plus l'objet est facile à réparer."
+        },
+        {
+            "icon": "🔍",
+            "title": "Les 5 critères",
+            "description": "- Documentation technique\n- Démontabilité et outils nécessaires\n- Disponibilité des pièces détachées\n- Prix des pièces détachées\n- Critère spécifique au produit"
+        },
+        {
+            "icon": "🛠️",
+            "title": "Diagnostic de panne",
+            "description": "Méthode pour identifier l'origine d'un dysfonctionnement :\n- Observer les symptômes\n- Émettre des hypothèses\n- Tester et vérifier"
+        },
+        {
+            "icon": "✅",
+            "title": "Compétences visées",
+            "description": "- CT 1.1 : Imaginer des solutions\n- CT 2.3 : Identifier les conditions d'utilisation\n- CT 6.1 : Développer les bonnes pratiques"
+        }
+    ]
+}

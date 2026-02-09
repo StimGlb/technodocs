@@ -1,44 +1,67 @@
-import { defineConfig } from 'vite';
-import { resolve } from 'path';
-import { cpSync, existsSync, mkdirSync } from 'fs';
-
-// Plugin pour copier src/ vers dist/ après le build
-function copySourcePlugin() {
-  return {
-    name: 'copy-source',
-    closeBundle() {
-      // Copier src/ vers dist/src/
-      if (existsSync('src')) {
-        cpSync('src', 'dist/src', { recursive: true });
-        console.log('Copied src/ to dist/src/');
-      }
-    }
-  };
-}
+import { defineConfig } from "vite";
+import { resolve, relative } from "path";
+import { readdirSync, existsSync } from "fs";
 
 export default defineConfig({
   // Configuration de base
-  root: '.',
-  base: '/',
+  root: ".",
+  base: "/",
 
   // Dossier de build
   build: {
-    outDir: 'dist',
+    outDir: "dist",
     emptyOutDir: false,
 
     // Configuration du rollup
     rollupOptions: {
-      input: {
-        main: resolve(__dirname, 'index.html'),
-        dev: resolve(__dirname, '_dev.html'),
-      }
+      input: (function collectHtmlInputs() {
+        const inputs = {};
+        const root = resolve(__dirname);
+        const ignore = new Set([
+          "node_modules",
+          "dist",
+          ".git",
+          "public",
+          "backups",
+        ]);
+
+        function walk(dir) {
+          for (const entry of readdirSync(dir, { withFileTypes: true })) {
+            const name = entry.name;
+            if (ignore.has(name)) continue;
+            const full = resolve(dir, name);
+            if (entry.isDirectory()) {
+              walk(full);
+            } else if (entry.isFile() && name.endsWith(".html")) {
+              let rel = relative(root, full);
+              const key = rel.replace(/\.html$/i, "").replace(/[\\/]/g, "-");
+              inputs[key || "index"] = full;
+            }
+          }
+        }
+
+        try {
+          walk(root);
+        } catch (e) {
+          /* ignore read errors */
+        }
+
+        if (!inputs.main && existsSync(resolve(root, "index.html"))) {
+          inputs.main = resolve(root, "index.html");
+        }
+        if (!inputs.dev && existsSync(resolve(root, "_dev.html"))) {
+          inputs.dev = resolve(root, "_dev.html");
+        }
+
+        return inputs;
+      })(),
     },
 
     // Copier les assets
     copyPublicDir: true,
   },
 
-  plugins: [copySourcePlugin()],
+  plugins: [],
 
   // Configuration du serveur de dev
   server: {
@@ -54,13 +77,13 @@ export default defineConfig({
   // Résolution des modules
   resolve: {
     alias: {
-      '@': resolve(__dirname, 'src'),
-      '@css': resolve(__dirname, 'src/css'),
-      '@js': resolve(__dirname, 'src/js'),
-      '@images': resolve(__dirname, 'src/images'),
-    }
+      "@": resolve(__dirname, "src"),
+      "@css": resolve(__dirname, "src/css"),
+      "@js": resolve(__dirname, "src/js"),
+      "@images": resolve(__dirname, "src/images"),
+    },
   },
 
   // Public directory
-  publicDir: 'public',
+  publicDir: "public",
 });

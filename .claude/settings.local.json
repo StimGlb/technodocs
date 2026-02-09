@@ -19,7 +19,10 @@
       "Bash(npx http-server -p 8080 -o)",
       "Bash(sh)",
       "Bash(bash scripts/new-branch.sh:*)",
-      "Bash(netlify deploy:*)"
+      "Bash(dir /s /b \"e:\\\\Dev\\\\technodocs-vanilla\\\\*wizard*firestore*.html\")",
+      "Bash(dir /s /b \"e:\\\\Dev\\\\technodocs-vanilla\\\\*wizard*.html\")",
+      "Bash(findstr:*)",
+      "Bash(npm install:*)"
     ],
     "deny": [],
     "ask": []

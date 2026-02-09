@@ -1,0 +1,709 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Prépare ta présentation orale de ton objet technique - TechnoDocs"
+    />
+    <title>Présentation Objet Technique | TechnoDocs</title>
+
+    <!-- CSS du projet -->
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <style>
+      /* Styles spécifiques pour le mot de passe */
+      .password-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      .password-prompt {
+        background-color: var(--color-white);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+      }
+      .password-prompt h2 {
+        color: var(--color-primary-700);
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+      }
+      .password-prompt input[type="password"] {
+        width: calc(100% - 2rem);
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--color-gray-300);
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      .password-prompt button {
+        background-color: var(--color-primary-500);
+        color: var(--color-white);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.2s ease;
+      }
+      .password-prompt button:hover {
+        background-color: var(--color-primary-600);
+      }
+      .password-prompt .error-message {
+        color: var(--color-error);
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+      }
+
+      /* Style pour les conseils encadrés */
+      .wizard__tip {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        border-left: 4px solid var(--color-secondary, #06b6d4);
+        padding: 1rem 1.25rem;
+        border-radius: 0 8px 8px 0;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+      }
+      .wizard__tip-title {
+        font-weight: 600;
+        color: var(--color-secondary-dark, #0891b2);
+        margin-bottom: 0.5rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      .wizard__tip ul {
+        margin: 0;
+        padding-left: 1.25rem;
+        list-style: disc;
+      }
+      .wizard__tip li {
+        margin: 0.25rem 0;
+        color: var(--color-gray-700);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Overlay pour le mot de passe -->
+    <div id="passwordOverlay" class="password-overlay">
+      <div class="password-prompt">
+        <h2>🔒 Accès sécurisé</h2>
+        <p>Veuillez entrer le mot de passe pour accéder au formulaire.</p>
+        <input type="password" id="passwordInput" placeholder="Mot de passe" />
+        <button onclick="checkPassword()">Accéder</button>
+        <p id="errorMessage" class="error-message" style="display: none">
+          Mot de passe incorrect.
+        </p>
+      </div>
+    </div>
+
+    <main class="wizard" style="display: none">
+      <!-- ========== BANNIÈRE TITRE ========== -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">🎤</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">
+            Présentation de mon Objet Technique
+          </h1>
+          <div class="wizard__banner-skills">
+            <span class="wizard__skill">Décrire son projet</span>
+            <span class="wizard__skill">Préparer son oral</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== INFO ÉLÈVE ========== -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="studentName">Prénom et Nom</label>
+            <input
+              type="text"
+              id="studentName"
+              data-field="studentName"
+              placeholder=""
+              spellcheck="true"
+              lang="fr"
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="studentClass">Classe</label>
+            <select id="studentClass" data-field="studentClass">
+              <option value="">— Sélectionner —</option>
+              <optgroup label="5ème">
+                <option value="505">5ème 5</option>
+                <option value="506">5ème 6</option>
+                <option value="507">5ème 7</option>
+              </optgroup>
+              <optgroup label="4ème">
+                <option value="401">4ème 1</option>
+                <option value="402">4ème 2</option>
+                <option value="403">4ème 3</option>
+                <option value="404">4ème 4</option>
+                <option value="405">4ème 5</option>
+              </optgroup>
+              <optgroup label="3ème">
+                <option value="302">3ème 2</option>
+                <option value="303">3ème 3</option>
+                <option value="304">3ème 4</option>
+                <option value="305">3ème 5</option>
+                <option value="306">3ème 6</option>
+                <option value="307">3ème 7</option>
+                <option value="308">3ème 8</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="wizard__student-field wizard__student-field--date">
+            <label>Date</label>
+            <span
+              class="wizard__date-display"
+              id="projectDate"
+              data-field="projectDate"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== PROGRESSION ========== -->
+      <section class="wizard__progress">
+        <div class="wizard__progress-header">
+          <h2 class="wizard__progress-title">Progression</h2>
+          <div class="wizard__save-indicator" id="saveIndicator">
+            <span class="wizard__save-dot"></span>
+            <span class="wizard__save-text">Auto-save</span>
+          </div>
+          <span class="wizard__progress-percentage" id="progressPercentage"
+            >0%</span
+          >
+        </div>
+        <div class="wizard__progress-bar">
+          <div
+            class="wizard__progress-fill"
+            id="progressFill"
+            style="width: 0%"
+          ></div>
+        </div>
+
+        <!-- Navigation par phases -->
+        <nav class="wizard__nav" id="phaseNav">
+          <button class="wizard__nav-btn active" data-phase="1">
+            <span class="wizard__nav-number">1</span>
+            <span>Mon Objet</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="2">
+            <span class="wizard__nav-number">2</span>
+            <span>Mon Oral</span>
+          </button>
+        </nav>
+      </section>
+
+      <!-- ========== CONTENEUR FORMULAIRE ========== -->
+      <div class="wizard__container">
+        <!-- ========== PHASE 1 : Présentation de l'objet ========== -->
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🛠️</div>
+            <h2 class="wizard__phase-title">Phase 1 : Mon Objet Technique</h2>
+            <p class="wizard__phase-subtitle">
+              Décris ton objet et explique pourquoi tu l'as conçu.
+            </p>
+          </div>
+
+          <!-- Nom de l'objet -->
+          <div class="wizard__group">
+            <label class="wizard__label required">Nom de ton objet</label>
+            <p class="wizard__hint">
+              Donne un nom clair et parlant à ton objet.
+            </p>
+            <input
+              type="text"
+              class="wizard__input"
+              data-field="objetNom"
+              placeholder="Ex: Support de téléphone ajustable"
+              spellcheck="true"
+              lang="fr"
+            />
+          </div>
+
+          <!-- Type d'objet -->
+          <div class="wizard__group">
+            <label class="wizard__label required">Catégorie de ton objet</label>
+            <select class="wizard__input" data-field="objetCategorie">
+              <option value="">— Sélectionner —</option>
+              <option value="Support / Rangement">Support / Rangement</option>
+              <option value="Outil / Accessoire">Outil / Accessoire</option>
+              <option value="Décoration">Décoration</option>
+              <option value="Jeu / Loisir">Jeu / Loisir</option>
+              <option value="Objet du quotidien">Objet du quotidien</option>
+              <option value="Autre">Autre</option>
+            </select>
+          </div>
+
+          <!-- Description de l'objet -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >Description de ton objet</label
+            >
+            <p class="wizard__hint">
+              Explique à quoi ressemble ton objet et comment il fonctionne.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="objetDescription"
+              placeholder="Mon objet est... Il permet de... Il se compose de..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
+
+          <!-- Problème résolu -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >Quel problème ton objet résout-il ?</label
+            >
+            <p class="wizard__hint">
+              Décris le besoin ou la situation qui t'a donné cette idée.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="objetProbleme"
+              placeholder="J'ai conçu cet objet parce que... Le problème était que..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
+
+          <!-- Utilisateur cible -->
+          <div class="wizard__group">
+            <label class="wizard__label"
+              >Pour qui as-tu conçu cet objet ?</label
+            >
+            <p class="wizard__hint">
+              Qui va l'utiliser ? (toi, ta famille, un ami, tout le monde...)
+            </p>
+            <input
+              type="text"
+              class="wizard__input"
+              data-field="objetUtilisateur"
+              placeholder="Ex: Pour moi, pour aider mon petit frère..."
+              spellcheck="true"
+              lang="fr"
+            />
+          </div>
+
+          <!-- Navigation -->
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- ========== PHASE 2 : Préparation de l'oral ========== -->
+        <section class="wizard__phase" data-phase="2">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🎤</div>
+            <h2 class="wizard__phase-title">Phase 2 : Préparation de l'Oral</h2>
+            <p class="wizard__phase-subtitle">
+              Structure ta présentation pour être clair et convaincant.
+            </p>
+          </div>
+
+          <!-- Conseils pour l'oral -->
+          <div class="wizard__tip">
+            <p class="wizard__tip-title">💡 Conseils pour réussir ton oral</p>
+            <ul>
+              <li>Parle fort et articule bien</li>
+              <li>Regarde ton public, pas tes notes</li>
+              <li>Présente ton objet en le montrant</li>
+              <li>Respecte le temps imparti (2-3 minutes)</li>
+            </ul>
+          </div>
+
+          <!-- INTRODUCTION -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >🎬 Introduction (30 secondes)</label
+            >
+            <p class="wizard__hint">
+              Accroche ton public : présente-toi et annonce ton objet.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="oralIntroduction"
+              placeholder="Bonjour, je m'appelle... Aujourd'hui, je vais vous présenter... C'est un objet qui permet de..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
+
+          <!-- DÉVELOPPEMENT -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >📖 Développement (1-2 minutes)</label
+            >
+            <p class="wizard__hint">
+              Explique ton objet en détail : le problème, ta solution, comment
+              ça marche.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="oralDeveloppement"
+              placeholder="J'ai eu cette idée parce que... Mon objet fonctionne de la manière suivante... J'ai choisi ce matériau car... La difficulté principale était..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
+
+          <!-- Points clés à mentionner -->
+          <div class="wizard__group">
+            <label class="wizard__label"
+              >Quels points clés veux-tu absolument mentionner ?</label
+            >
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="pointsCles_probleme" />
+                <span class="wizard__checkbox-label"
+                  >❓ Le problème que j'ai identifié</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="pointsCles_solution" />
+                <span class="wizard__checkbox-label"
+                  >💡 Ma solution et pourquoi elle est efficace</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="pointsCles_conception" />
+                <span class="wizard__checkbox-label"
+                  >📐 Les étapes de conception (croquis, modélisation)</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="pointsCles_materiaux" />
+                <span class="wizard__checkbox-label"
+                  >🧱 Le choix des matériaux</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="pointsCles_difficultes" />
+                <span class="wizard__checkbox-label"
+                  >⚠️ Les difficultés rencontrées</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="pointsCles_ameliorations" />
+                <span class="wizard__checkbox-label"
+                  >🔄 Les améliorations possibles</span
+                >
+              </label>
+            </div>
+          </div>
+
+          <!-- CONCLUSION -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >🏁 Conclusion (30 secondes)</label
+            >
+            <p class="wizard__hint">
+              Résume l'essentiel et ouvre sur une question ou une amélioration
+              possible.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="oralConclusion"
+              placeholder="Pour conclure, mon objet permet de... Si je devais l'améliorer, je... Merci de votre attention, avez-vous des questions ?"
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
+
+          <!-- Question anticipée -->
+          <div class="wizard__group">
+            <label class="wizard__label"
+              >Quelle question pourrait-on te poser ? Prépare ta réponse
+              !</label
+            >
+            <textarea
+              class="wizard__textarea"
+              data-field="oralQuestion"
+              placeholder="On pourrait me demander... Je répondrais que..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
+
+          <!-- Navigation finale -->
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
+              ← Précédent
+            </button>
+            <button class="btn btn--success" onclick="wizardComplete()">
+              ✅ Terminer
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <!-- ========== BARRE D'ACTIONS ========== -->
+      <div class="wizard__actions">
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="wizardExportJSON()"
+        >
+          📤 Exporter
+        </button>
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="document.getElementById('importInput').click()"
+        >
+          📥 Importer
+        </button>
+        <input
+          type="file"
+          id="importInput"
+          accept=".json"
+          style="display: none"
+          onchange="wizardImportJSON(event)"
+        />
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="handleSafeReset()"
+        >
+          🗑️ Réinitialiser
+        </button>
+        <button class="btn btn--secondary btn--small" onclick="window.print()">
+          🖨️ Imprimer
+        </button>
+      </div>
+    </main>
+
+    <!-- Footer dynamique -->
+    <div id="footer-placeholder"></div>
+
+    <!-- ========== MODALES ========== -->
+
+    <!-- Modal Complétion -->
+    <div class="wizard__modal-overlay" id="completionModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">🎉 Bravo !</h3>
+        <div class="wizard__modal-content">
+          <p>Ta présentation est prête !</p>
+          <p style="margin-top: 1rem">
+            Tes réponses ont été <strong>sauvegardées automatiquement</strong>.
+          </p>
+          <p
+            style="
+              margin-top: 0.75rem;
+              font-size: 0.875rem;
+              color: var(--color-gray-500);
+            "
+          >
+            💡 Entraîne-toi à l'oral devant un miroir ou un proche !
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('completionModal')"
+          >
+            Fermer
+          </button>
+          <button
+            class="btn btn--primary"
+            onclick="
+              wizardExportJSON();
+              wizardCloseModal('completionModal');
+            "
+          >
+            📤 Exporter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Reset -->
+    <div class="wizard__modal-overlay" id="resetModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
+        <div class="wizard__modal-content">
+          <p>
+            Une <strong>sauvegarde</strong> a été téléchargée automatiquement.
+          </p>
+          <p>
+            Voulez-vous <strong>recommencer</strong> avec un formulaire vide ?
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('resetModal')"
+          >
+            Annuler
+          </button>
+          <button
+            class="btn btn--primary"
+            style="background: var(--color-error)"
+            onclick="wizardReset()"
+          >
+            🗑️ Réinitialiser
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="wizard__toast" id="wizardToast">
+      <span class="wizard__toast-icon"></span>
+      <span class="wizard__toast-message"></span>
+    </div>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script type="module" src="/src/js/components.js"></script>
+    <script type="module">
+      // ============================================
+      // CONFIGURATION FIREBASE
+      // ============================================
+      import { WizardFirebase } from "/src/js/wizard-firebase.js";
+
+      window.wizardInstance = new WizardFirebase({
+        // Collection Firestore unique pour ce formulaire
+        collectionName: "presentation_objet_technique",
+
+        // Intervalle d'autosave (en ms)
+        autosaveInterval: 60000,
+
+        // Champs obligatoires par phase
+        requiredFields: {
+          1: [
+            "studentName",
+            "studentClass",
+            "objetNom",
+            "objetCategorie",
+            "objetDescription",
+            "objetProbleme",
+          ],
+          2: ["oralIntroduction", "oralDeveloppement", "oralConclusion"],
+        },
+
+        onComplete: (data) => {
+          console.log("🎉 Présentation complétée:", data);
+        },
+
+        onSaveSuccess: (data) => {
+          console.log("✅ Sauvegarde Firestore OK");
+        },
+
+        onSaveError: (error) => {
+          console.error("❌ Erreur Firestore:", error);
+        },
+      });
+
+      // ============================================
+      // ARTICLE EDITOR - Anti-paste + Spellcheck
+      // ============================================
+      import("/src/js/article-editor.js").then((module) => {
+        window.articleEditor = new module.ArticleEditor({
+          protectedFields: [
+            '[data-field="objetDescription"]',
+            '[data-field="objetProbleme"]',
+            '[data-field="oralIntroduction"]',
+            '[data-field="oralDeveloppement"]',
+            '[data-field="oralConclusion"]',
+            '[data-field="oralQuestion"]',
+          ],
+          onPasteBlocked: (msg) =>
+            window.wizardInstance?.showToast(msg, "warning"),
+        });
+      });
+
+      /**
+       * Sécurise la réinitialisation
+       */
+      window.handleSafeReset = function () {
+        if (typeof wizardExportJSON === "function") {
+          wizardExportJSON();
+        } else if (window.wizardInstance) {
+          window.wizardInstance.exportToJSON();
+        }
+
+        if (window.wizardInstance?.showToast) {
+          window.wizardInstance.showToast(
+            "Sauvegarde de secours téléchargée !",
+            "success",
+          );
+        }
+
+        wizardShowModal("resetModal");
+      };
+
+      // ============================================
+      // LOGIQUE D'ACCÈS PAR MOT DE PASSE
+      // ============================================
+      import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+
+      window.checkPassword = function () {
+        const passwordInput = document.getElementById("passwordInput");
+        const errorMessage = document.getElementById("errorMessage");
+        const passwordOverlay = document.getElementById("passwordOverlay");
+        const mainContent = document.querySelector("main.wizard");
+
+        if (passwordInput.value === CORRECT_PASSWORD) {
+          passwordOverlay.style.display = "none";
+          mainContent.style.display = "block";
+          errorMessage.style.display = "none";
+          if (window.wizardInstance) {
+            window.wizardInstance.init();
+          }
+        } else {
+          errorMessage.style.display = "block";
+          passwordInput.value = "";
+        }
+      };
+
+      // Accès par touche Entrée
+      document
+        .getElementById("passwordInput")
+        .addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            checkPassword();
+          }
+        });
+    </script>
+  </body>
+</html>

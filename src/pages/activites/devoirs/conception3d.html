@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cahier des charges pour un projet d'impression 3D - TechnoDocs">
+    <title>Cahier des Charges Impression 3D | TechnoDocs</title>
+
+    <!-- CSS du projet -->
+    <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="stylesheet" href="/src/css/wizard.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <style>
+        /* Styles spécifiques pour le mot de passe */
+        .password-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        .password-prompt {
+            background-color: var(--color-white);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        .password-prompt h2 {
+            color: var(--color-primary-700);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+        }
+        .password-prompt input[type="password"] {
+            width: calc(100% - 2rem);
+            padding: 0.75rem 1rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--color-gray-300);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        .password-prompt button {
+            background-color: var(--color-primary-500);
+            color: var(--color-white);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.2s ease;
+        }
+        .password-prompt button:hover {
+            background-color: var(--color-primary-600);
+        }
+        .password-prompt .error-message {
+            color: var(--color-error);
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+        }
+</style>
+    <!-- Overlay pour le mot de passe -->
+    <div id="passwordOverlay" class="password-overlay">
+        <div class="password-prompt">
+            <h2>🔒 Accès sécurisé</h2>
+            <p>Veuillez entrer le mot de passe pour accéder au formulaire.</p>
+            <input type="password" id="passwordInput" placeholder="Mot de passe">
+            <button onclick="checkPassword()">Accéder</button>
+            <p id="errorMessage" class="error-message" style="display:none;">Mot de passe incorrect.</p>
+        </div>
+    </div>
+
+    <!-- Header dynamique -->
+    <!-- <div id="header-placeholder"></div> -->
+
+    <main class="wizard">
+
+        <!-- ========== BANNIÈRE TITRE ========== -->
+        <div class="wizard__banner">
+            <div class="wizard__banner-icon">📋</div>
+            <div class="wizard__banner-content">
+                <h1 class="wizard__banner-title">Conception de votre Objet Technique</h1> Cahier des Charges</h1>
+            </div>
+        </div>
+        <!-- ========== INFO ÉLÈVE ========== -->
+        <div class="wizard__student-info">
+            <div class="wizard__student-row">
+                <div class="wizard__student-field wizard__student-field--name">
+                    <label for="studentName">Prénom et Nom</label>
+                    <input type="text" id="studentName" data-field="studentName" placeholder="" spellcheck="true" lang="fr">
+                </div>
+                <div class="wizard__student-field wizard__student-field--class">
+                    <label for="studentClass">Classe</label>
+                    <select id="studentClass" data-field="studentClass">
+                        <option value="">— Sélectionner —</option>
+                        <optgroup label="5ème">
+                            <option value="505">5ème 5</option>
+                            <option value="506">5ème 6</option>
+                            <option value="507">5ème 7</option>
+                        </optgroup>
+                        <optgroup label="4ème">
+                            <option value="401">4ème 1</option>
+                            <option value="402">4ème 2</option>
+                            <option value="403">4ème 3</option>
+                            <option value="404">4ème 4</option>
+                            <option value="405">4ème 5</option>
+                        </optgroup>
+                        <optgroup label="3ème">
+                            <option value="302">3ème 2</option>
+                            <option value="303">3ème 3</option>
+                            <option value="304">3ème 4</option>
+                            <option value="305">3ème 5</option>
+                            <option value="306">3ème 6</option>
+                        </optgroup>
+                    </select>
+                </div>
+                <div class="wizard__student-field wizard__student-field--date">
+                    <label>Date</label>
+                    <span class="wizard__date-display" id="projectDate" data-field="projectDate"></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== PROGRESSION ========== -->
+        <section class="wizard__progress">
+            <div class="wizard__progress-header">
+                <h2 class="wizard__progress-title">Progression</h2>
+                <div class="wizard__save-indicator" id="saveIndicator">
+                    <span class="wizard__save-dot"></span>
+                    <span class="wizard__save-text">Auto-save</span>
+                </div>
+                <span class="wizard__progress-percentage" id="progressPercentage">0%</span>
+            </div>
+            <div class="wizard__progress-bar">
+                <div class="wizard__progress-fill" id="progressFill" style="width: 0%"></div>
+            </div>
+
+            <!-- Navigation par phases -->
+            <nav class="wizard__nav" id="phaseNav">
+                <button class="wizard__nav-btn active" data-phase="1">
+                    <span class="wizard__nav-number">1</span>
+                    <span>Identification & Besoin</span>
+                </button>
+                <button class="wizard__nav-btn" data-phase="2">
+                    <span class="wizard__nav-number">2</span>
+                    <span>Fonctions & Contraintes</span>
+                </button>
+                <button class="wizard__nav-btn" data-phase="3">
+                    <span class="wizard__nav-number">3</span>
+                    <span>Fabrication & Validation</span>
+                </button>
+            </nav>
+        </section>
+
+        <!-- ========== CONTENEUR FORMULAIRE ========== -->
+        <div class="wizard__container">
+
+            <!-- ========== PHASE 1 : Identification du projet et Analyse du besoin ========== -->
+            <section class="wizard__phase active" data-phase="1">
+                <div class="wizard__phase-header">
+                    <div class="wizard__phase-icon">💡</div>
+                    <h2 class="wizard__phase-title">Phase 1 : Identification du projet et Analyse du besoin</h2>
+                    <p class="wizard__phase-subtitle">Définis ton projet et le problème qu'il résout.</p>
+                </div>
+
+                <!-- Question: nom-projet -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Quel est le nom de ton projet ?</label>
+                    <p class="wizard__hint">Choisis un nom court et descriptif</p>
+                    <input type="text" class="wizard__input" data-field="nom-projet" placeholder="Ex: Support de téléphone, Pot à crayons..." spellcheck="true" lang="fr">
+                </div>
+
+                <!-- Question: probleme -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Quel problème ton objet doit-il résoudre ?</label>
+                    <p class="wizard__hint">Décris la situation qui t'a donné l'idée de ce projet</p>
+                    <textarea class="wizard__textarea" data-field="probleme" placeholder="Ex: Mon téléphone tombe souvent de mon bureau..." spellcheck="true" lang="fr" autocorrect="on" autocapitalize="sentences"></textarea>
+                </div>
+
+                <!-- Question: utilisateur -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Pour qui est destiné cet objet ?</label>
+                    <input type="text" class="wizard__input" data-field="utilisateur" placeholder="Ex: Pour moi, pour ma famille, pour les élèves..." spellcheck="true" lang="fr">
+                </div>
+
+                <!-- Question: lieu-utilisation -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Où sera utilisé cet objet ?</label>
+                    <input type="text" class="wizard__input" data-field="lieu-utilisation" placeholder="Ex: Sur un bureau, dans une salle de bain..." spellcheck="true" lang="fr">
+                </div>
+
+                <!-- Question: frequence -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">À quelle fréquence sera-t-il utilisé ?</label>
+                    <select class="wizard__input" data-field="frequence">
+                        <option value="">— Sélectionner —</option>
+                        <option value="Tous les jours">Tous les jours</option>
+                        <option value="Plusieurs fois par semaine">Plusieurs fois par semaine</option>
+                        <option value="Occasionnellement">Occasionnellement</option>
+                        <option value="Rarement">Rarement</option>
+                    </select>
+                </div>
+
+                <!-- Navigation -->
+                <div class="wizard__phase-nav">
+                    <div></div>
+                    <button class="btn btn--primary" onclick="wizardGoToPhase(2)">Suivant →</button>
+                </div>
+            </section>
+
+            <!-- ========== PHASE 2 : Fonctions de l'objet et Contraintes ========== -->
+            <section class="wizard__phase" data-phase="2">
+                <div class="wizard__phase-header">
+                    <div class="wizard__phase-icon">⚙️</div>
+                    <h2 class="wizard__phase-title">Phase 2 : Fonctions de l'objet et Contraintes</h2>
+                    <p class="wizard__phase-subtitle">Décris ce que ton objet doit faire et ses limites.</p>
+                </div>
+
+                <!-- Question: fonction-principale -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Quelle est la fonction principale de ton objet ?</label>
+                    <p class="wizard__hint">Commence par un verbe d'action : maintenir, ranger, protéger...</p>
+                    <textarea class="wizard__textarea" data-field="fonction-principale" placeholder="Ex: Maintenir mon téléphone en position verticale" spellcheck="true" lang="fr" autocorrect="on" autocapitalize="sentences"></textarea>
+                </div>
+
+                <!-- Question: fonctions-secondaires -->
+                <div class="wizard__group">
+                    <label class="wizard__label">Quelles sont les fonctions secondaires (optionnelles) ?</label>
+                    <p class="wizard__hint">Ce sont les fonctions 'bonus' qui améliorent l'objet</p>
+                    <textarea class="wizard__textarea" data-field="fonctions-secondaires" placeholder="Ex: Permettre de charger le téléphone, avoir un espace pour les câbles..." spellcheck="true" lang="fr" autocorrect="on" autocapitalize="sentences"></textarea>
+                </div>
+
+                <!-- Question: dimensions-max -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Quelles sont les dimensions maximales souhaitées ?</label>
+                    <p class="wizard__hint">Pense à la place disponible et aux limites de l'imprimante 3D (15x15x15 cm max)</p>
+                    <input type="text" class="wizard__input" data-field="dimensions-max" placeholder="Ex: 10 cm x 8 cm x 5 cm" spellcheck="true" lang="fr">
+                </div>
+
+                <!-- Question: materiau -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Quel matériau sera utilisé ?</label>
+                    <select class="wizard__input" data-field="materiau">
+                        <option value="">— Sélectionner —</option>
+                        <option value="PLA">PLA (plastique standard)</option>
+                        <option value="PETG">PETG (plus résistant)</option>
+                        <option value="Autre">Autre (à préciser)</option>
+                    </select>
+                </div>
+
+                <!-- Question: couleur -->
+                <div class="wizard__group">
+                    <label class="wizard__label">Quelle couleur préfères-tu ?</label>
+                    <select class="wizard__input" data-field="couleur">
+                        <option value="">— Sélectionner —</option>
+                        <option value="Blanc">Blanc</option>
+                        <option value="Noir">Noir</option>
+                        <option value="Bleu">Bleu</option>
+                        <option value="Rouge">Rouge</option>
+                        <option value="Vert">Vert</option>
+                        <option value="Orange">Orange</option>
+                        <option value="Peu importe">Peu importe</option>
+                    </select>
+                </div>
+
+                <!-- Question: resistance -->
+                <div class="wizard__group">
+                    <label class="wizard__label">Quelles résistances sont nécessaires ?</label>
+                    <div class="wizard__checkbox-group">
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="resistance_chocs">
+                            <span class="wizard__checkbox-label">💥 Résistant aux chocs</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="resistance_eau">
+                            <span class="wizard__checkbox-label">💧 Résistant à l'eau</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="resistance_chaleur">
+                            <span class="wizard__checkbox-label">🔥 Résistant à la chaleur</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="resistance_flexible">
+                            <span class="wizard__checkbox-label">〰️ Flexible</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="resistance_rigide">
+                            <span class="wizard__checkbox-label">แข็ง Rigide</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question: style -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Quel style souhaites-tu pour ton objet ?</label>
+                    <div class="wizard__checkbox-group">
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="style" data-field="style" value="Minimaliste">
+                            <span class="wizard__checkbox-label">✨ Minimaliste (formes simples)</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="style" data-field="style" value="Geometrique">
+                            <span class="wizard__checkbox-label">🔺 Géométrique (angles, motifs)</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="style" data-field="style" value="Organique">
+                            <span class="wizard__checkbox-label">🌿 Organique (courbes, naturel)</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="style" data-field="style" value="Personnalise">
+                            <span class="wizard__checkbox-label">✍️ Personnalisé (avec texte/logo)</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question: personnalisation -->
+                <div class="wizard__group">
+                    <label class="wizard__label">Souhaites-tu ajouter un texte ou un motif ?</label>
+                    <input type="text" class="wizard__input" data-field="personnalisation" placeholder="Ex: Mon prénom, un logo, un emoji..." spellcheck="true" lang="fr">
+                </div>
+
+                <!-- Navigation -->
+                <div class="wizard__phase-nav">
+                    <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">← Précédent</button>
+                    <button class="btn btn--primary" onclick="wizardGoToPhase(3)">Suivant →</button>
+                </div>
+            </section>
+
+            <!-- ========== PHASE 3 : Contraintes de fabrication et Critères de validation ========== -->
+            <section class="wizard__phase" data-phase="3">
+                <div class="wizard__phase-header">
+                    <div class="wizard__phase-icon">✅</div>
+                    <h2 class="wizard__phase-title">Phase 3 : Contraintes de fabrication et Critères de validation</h2>
+                    <p class="wizard__phase-subtitle">Planifie la fabrication et définis la réussite de ton projet.</p>
+                </div>
+
+                <!-- Question: temps-impression -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Combien de temps maximum pour l'impression ?</label>
+                    <p class="wizard__hint">Plus l'objet est grand/détaillé, plus c'est long</p>
+                    <select class="wizard__input" data-field="temps-impression">
+                        <option value="">— Sélectionner —</option>
+                        <option value="Moins de 1 heure">Moins de 1 heure</option>
+                        <option value="1 à 2 heures">1 à 2 heures</option>
+                        <option value="2 à 4 heures">2 à 4 heures</option>
+                        <option value="Plus de 4 heures">Plus de 4 heures</option>
+                    </select>
+                </div>
+
+                <!-- Question: assemblage -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Ton objet sera-t-il en une seule pièce ?</label>
+                    <div class="wizard__checkbox-group">
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="assemblage" data-field="assemblage" value="Oui">
+                            <span class="wizard__checkbox-label">✔️ Oui, une seule pièce</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="assemblage" data-field="assemblage" value="Non">
+                            <span class="wizard__checkbox-label">🧩 Non, plusieurs pièces à assembler</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question: support-impression -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Acceptes-tu d'utiliser des supports d'impression ?</label>
+                    <p class="wizard__hint">Les supports permettent d'imprimer des formes complexes mais demandent plus de travail de finition</p>
+                    <div class="wizard__checkbox-group">
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="support-impression" data-field="support-impression" value="Oui">
+                            <span class="wizard__checkbox-label">👍 Oui</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="support-impression" data-field="support-impression" value="Non">
+                            <span class="wizard__checkbox-label">👎 Non, je préfère éviter</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="radio" name="support-impression" data-field="support-impression" value="Je ne sais pas">
+                            <span class="wizard__checkbox-label">❓ Je ne sais pas</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question: criteres-reussite -->
+                <div class="wizard__group">
+                    <label class="wizard__label required">Comment sauras-tu que ton projet est réussi ?</label>
+                    <div class="wizard__checkbox-group">
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="criteres-reussite_fonction">
+                            <span class="wizard__checkbox-label">🎯 L'objet remplit sa fonction principale</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="criteres-reussite_dimensions">
+                            <span class="wizard__checkbox-label">📏 Les dimensions correspondent au cahier des charges</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="criteres-reussite_esthetique">
+                            <span class="wizard__checkbox-label">✨ L'objet est esthétiquement satisfaisant</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="criteres-reussite_impression">
+                            <span class="wizard__checkbox-label">🖨️ L'impression s'est déroulée sans problème</span>
+                        </label>
+                        <label class="wizard__checkbox-item">
+                            <input type="checkbox" data-field="criteres-reussite_solidite">
+                            <span class="wizard__checkbox-label">💪 L'objet est solide et durable</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Question: ameliorations -->
+                <div class="wizard__group">
+                    <label class="wizard__label">Quelles améliorations envisages-tu pour une version 2 ?</label>
+                        <textarea class="wizard__textarea" data-field="ameliorations" placeholder="Ex: Ajouter un compartiment, changer les proportions..." spellcheck="true" lang="fr" autocorrect="on" autocapitalize="sentences"></textarea>
+                </div>
+
+                <!-- Navigation finale -->
+                <div class="wizard__phase-nav">
+                    <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">← Précédent</button>
+                    <button class="btn btn--success" onclick="wizardComplete()">✅ Terminer</button>
+                </div>
+            </section>
+
+        </div>
+
+        <!-- ========== BARRE D'ACTIONS ========== -->
+        <div class="wizard__actions">
+            <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter JSON</button>
+            <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer JSON</button>
+            <input type="file" id="importInput" accept=".json" style="display:none" onchange="wizardImportJSON(event)">
+            <button class="btn btn--secondary btn--small" onclick="handleSafeReset()">🗑️ Réinitialiser</button>
+            <button class="btn btn--secondary btn--small" onclick="window.print()">🖨️ Imprimer</button>
+        </div>
+    </main>
+
+    <!-- Footer dynamique -->
+    <div id="footer-placeholder"></div>
+
+    <!-- ========== MODALES ========== -->
+
+    <!-- Modal Complétion -->
+    <div class="wizard__modal-overlay" id="completionModal">
+        <div class="wizard__modal">
+            <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
+            <div class="wizard__modal-content">
+                <p>Tu as terminé ton travail !</p>
+                <p style="margin-top:1rem">Tes réponses ont été <strong>sauvegardées automatiquement</strong> dans la base de données.</p>
+                <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--color-gray-500)">
+                    Tu peux aussi exporter une copie locale en JSON.
+                </p>
+            </div>
+            <div class="wizard__modal-actions">
+                <button class="btn btn--secondary" onclick="wizardCloseModal('completionModal')">Fermer</button>
+                <button class="btn btn--primary" onclick="wizardExportJSON();wizardCloseModal('completionModal')">📤 Exporter</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Reset -->
+    <div class="wizard__modal-overlay" id="resetModal">
+        <div class="wizard__modal">
+            <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
+            <div class="wizard__modal-content">
+                <p>Une <strong>sauvegarde</strong> a été téléchargée automatiquement.</p>
+                <p>Voulez-vous <strong>recommencer</strong> avec un formulaire vide ?</p>
+            </div>
+            <div class="wizard__modal-actions">
+                <button class="btn btn--secondary" onclick="wizardCloseModal('resetModal')">Annuler</button>
+                <button class="btn btn--primary" style="background:var(--color-error)" onclick="wizardReset()">🗑️ Réinitialiser</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="wizard__toast" id="wizardToast">
+        <span class="wizard__toast-icon"></span>
+        <span class="wizard__toast-message"></span>
+    </div>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script type="module" src="/src/js/components.js"></script>
+    <script type="module">
+        // ============================================
+        // CONFIGURATION FIREBASE - À ADAPTER
+        // ============================================
+        import { WizardFirebase } from '/src/js/wizard-firebase.js';
+
+        // Créer l'instance du wizard avec Firestore
+        window.wizardInstance = new WizardFirebase({
+            // Nom de la collection Firestore (unique par formulaire)
+            collectionName: 'devoir_cahier_charges_conception3d',
+            
+            // Champs obligatoires par phase pour marquer "completed"
+            requiredFields: {
+                1: [
+                    'studentName',
+                    'studentClass',
+                    'nom-projet',
+                    'probleme',
+                    'utilisateur',
+                    'lieu-utilisation',
+                    'frequence'
+                ],
+                2: [
+                    'fonction-principale',
+                    'dimensions-max',
+                    'materiau',
+                    'style'
+                ],
+                3: [
+                    'temps-impression',
+                    'assemblage',
+                    'support-impression',
+                    'criteres-reussite_fonction' // Au moins un critère de réussite est requis
+                ]
+            },
+            
+            // Callback à la complétion
+            onComplete: (data) => {
+                console.log('🎉 Formulaire complété:', data);
+            },
+            
+            // Callback sauvegarde réussie
+            onSaveSuccess: (data) => {
+                console.log('✅ Sauvegarde Firestore OK');
+            },
+            
+            // Callback erreur de sauvegarde
+            onSaveError: (error) => {
+                console.error('❌ Erreur Firestore:', error);
+            }
+        });
+
+        // Initialiser l'éditeur d'article avec ses protections
+        import('/src/js/article-editor.js').then(module => {
+            window.articleEditor = new module.ArticleEditor({
+                protectedFields: [
+                    '[data-field="probleme"]',
+                    '[data-field="fonction-principale"]',
+                    '[data-field="fonctions-secondaires"]',
+                    '[data-field="ameliorations"]'
+                ],
+                allowPasteFields: ['[data-field="aiPrompt"]'],
+                onPasteBlocked: (msg) => window.wizardInstance?.showToast(msg, 'warning')
+            });
+        });
+
+        /**
+        * Sécurise la réinitialisation en forçant un export JSON 
+        * avant de demander la confirmation de suppression.
+        */
+        window.handleSafeReset = function() {
+            console.log("Préparation de la réinitialisation : Export de secours...");
+            
+            // 1. On déclenche l'export JSON existant
+            // Note : wizardExportJSON est supposé être accessible globalement
+            if (typeof wizardExportJSON === "function") {
+                wizardExportJSON();
+            } else if (window.wizardInstance) {
+                // Si la fonction n'est pas globale, on peut essayer via l'instance
+                window.wizardInstance.exportToJSON(); 
+            }
+
+            // 2. On affiche un petit message dans le toast pour informer l'élève
+            if (window.wizardInstance && window.wizardInstance.showToast) {
+                window.wizardInstance.showToast("Sauvegarde de secours téléchargée !", "success");
+            }
+
+            // 3. On ouvre enfin la modale de confirmation
+            wizardShowModal('resetModal');
+        };
+
+            // ============================================
+            // LOGIQUE D'ACCÈS PAR MOT DE PASSE
+            // ============================================
+            import { CORRECT_PASSWORD } from '/src/js/wizard-config.js';
+
+            window.checkPassword = function() {
+            const passwordInput = document.getElementById('passwordInput');
+            const errorMessage = document.getElementById('errorMessage');
+            const passwordOverlay = document.getElementById('passwordOverlay');
+            const mainContent = document.querySelector('main.wizard');
+
+            if (passwordInput.value === CORRECT_PASSWORD) {
+                passwordOverlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                errorMessage.style.display = 'none';
+                if (window.wizardInstance) {
+                    window.wizardInstance.init();
+                }
+            } else {
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+            }
+        };
+
+        // Accès par touche Entrée
+        document.getElementById('passwordInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                checkPassword();
+            }
+        });
+    </script>
+</body>
+</html>
