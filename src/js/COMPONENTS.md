@@ -1,46 +1,51 @@
-# Système de Composants Réutilisables
+# Systeme de Composants Reutilisables
 
 ## Vue d'ensemble
 
-Le footer a été compacté et un système de composants réutilisables a été mis en place pour faciliter la création de nouvelles pages avec un header et footer cohérents.
+Header et footer sont charges dynamiquement via `components.js` en utilisant des imports Vite `?raw` (inclus dans le bundle, pas de fetch runtime). La navigation est construite dynamiquement a partir de `navigation.json`.
 
-## Changements effectués
+## Architecture
 
-### 1. Footer compacté (dist/css/style.css)
+### Imports (build-time, bundles par Vite)
 
-Le footer a été réduit visuellement :
-- **Padding** : `var(--space-12)` → `var(--space-6)` (de 3rem à 1.5rem)
-- **Taille de la marque** : `var(--text-xl)` → `var(--text-lg)` (de 1.25rem à 1.125rem)
-- **Espacement marque** : `var(--space-4)` → `var(--space-2)` (de 1rem à 0.5rem)
-- **Espacement texte** : `var(--space-2)` → `var(--space-3)` (de 0.5rem à 0.75rem)
-- **Taille liens** : `var(--text-sm)` → `var(--text-xs)` (de 0.875rem à 0.75rem)
+```js
+import headerHtml from "../includes/header.html?raw";
+import footerHtml from "../includes/footer.html?raw";
+import navigationJsonRaw from "../data/navigation.json?raw";
+```
 
-### 2. Composants créés
+Les fichiers HTML et JSON sont inlines dans le bundle JS a la compilation. Aucun fetch runtime n'est necessaire pour les composants.
 
-#### dist/includes/header.html
-Header réutilisable avec :
+### Chargement
+
+`components.js` s'auto-initialise au `DOMContentLoaded` :
+
+1. **Header** : injecte `header.html` dans `#header-placeholder` via `DOMParser` (pas de `innerHTML`)
+2. **Navigation** : construit le menu dynamiquement depuis `navigation.json`
+   - **Liens statiques** : ancres vers les sections de l'index (`#cours`, `#revisions`, `#corrections`, `#outils`)
+   - **Liens dynamiques** : sous-pages (cours, devoirs, outils) depuis `navigation.json`
+   - Gestion intelligente des chemins relatifs selon la profondeur de la page courante
+   - Detection automatique du lien actif (`is-active`)
+3. **Footer** : injecte `footer.html` dans `#footer-placeholder`
+4. **Navigation mobile** : initialise le menu hamburger via `initNavigation()` (depuis `app.js`)
+
+### Composants
+
+#### src/includes/header.html
 - Logo TechnoDocs
-- Navigation (Cours, Révisions, Outils)
+- Navigation noscript (liens statiques en fallback)
+- Container `#main-nav` pour la navigation dynamique
 - Menu hamburger pour mobile
-- Chemins absolus (commençant par `/`)
 
-#### dist/includes/footer.html
-Footer réutilisable avec :
+#### src/includes/footer.html
 - Logo TechnoDocs
 - Texte descriptif
-- Liens légaux (Mentions légales, Accessibilité)
-- Chemins absolus
+- Liens legaux (commentes pour l'instant)
 
-#### dist/js/components.js
-Script de chargement dynamique qui :
-- Charge le header via fetch
-- Charge le footer via fetch
-- Initialise la navigation mobile après l'injection du header
-- Gère les erreurs de chargement
+### Donnees
 
-### 3. Page template
-
-**dist/pages/template.html** : Page d'exemple montrant comment utiliser les composants.
+#### src/data/navigation.json
+Structure de navigation avec categories : `cours`, `devoirs`, `outils`, `corrections`, `flashcards`. Chaque item contient `id`, `name`, `path`, `icon`, et un flag `visible` optionnel.
 
 ## Utilisation dans une nouvelle page
 
@@ -51,7 +56,7 @@ Script de chargement dynamique qui :
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>TechnoDocs | Titre</title>
-    <link rel="stylesheet" href="/dist/css/style.css">
+    <link rel="stylesheet" href="/src/css/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
@@ -68,51 +73,32 @@ Script de chargement dynamique qui :
     <div id="footer-placeholder"></div>
 
     <!-- Scripts (dans cet ordre) -->
-    <script type="module" src="/dist/js/components.js"></script>
-    <script type="module" src="/dist/js/app.js"></script>
+    <script type="module" src="/src/js/components.js"></script>
+    <script type="module" src="/src/js/app.js"></script>
 </body>
 </html>
 ```
 
 ## Points importants
 
-1. **Ordre des scripts** : `components.js` DOIT être chargé AVANT `app.js`
-2. **Chemins absolus** : Tous les chemins dans les includes commencent par `/` pour fonctionner depuis n'importe quel niveau de dossier
-3. **IDs requis** :
+1. **Ordre des scripts** : `components.js` DOIT etre charge AVANT `app.js`
+2. **IDs requis** :
    - `header-placeholder` pour le header
    - `footer-placeholder` pour le footer
-4. **Google Fonts** : N'oubliez pas d'inclure les liens vers Google Fonts dans le `<head>`
+3. **Chemins relatifs automatiques** : `components.js` calcule le prefixe relatif (`../`, `../../`, etc.) selon la profondeur de la page. Les ancres vers l'index sont transformees en `../../index.html#cours` si necessaire.
+4. **Pas de fetch runtime** : les includes sont bundles par Vite via `?raw`, donc disponibles meme offline apres le chargement initial.
+5. **Securite** : injection DOM via `DOMParser` + `replaceWith` (pas de `innerHTML` sur les placeholders).
 
-## Avantages
-
-- ✅ **Cohérence** : Header et footer identiques sur toutes les pages
-- ✅ **Maintenance** : Modification centralisée dans `header.html` et `footer.html`
-- ✅ **Simplicité** : Créer une nouvelle page en quelques lignes
-- ✅ **Footer compact** : Moins d'espace vertical utilisé
-- ✅ **Mobile-ready** : Navigation mobile fonctionnelle automatiquement
-
-## Migration des pages existantes
-
-Pour migrer une page existante vers ce système :
-
-1. Remplacer le `<header>` par `<div id="header-placeholder"></div>`
-2. Remplacer le `<footer>` par `<div id="footer-placeholder"></div>`
-3. Ajouter `<script type="module" src="/dist/js/components.js"></script>` avant `app.js`
-4. Vérifier que tous les liens utilisent des chemins absolus (`/dist/...` ou `/pages/...`)
-
-## Fichiers du système
+## Fichiers du systeme
 
 ```
-dist/
+src/
 ├── includes/
-│   ├── header.html       # Composant header
-│   ├── footer.html       # Composant footer
-│   └── README.md         # Documentation
-├── js/
-│   ├── app.js            # Logique principale (navigation, animations)
-│   └── components.js     # Chargement des composants
-├── css/
-│   └── style.css         # Styles (footer compacté)
-└── pages/
-    └── template.html     # Template de page
+│   ├── header.html          # Composant header (noscript nav incluse)
+│   └── footer.html          # Composant footer
+├── data/
+│   └── navigation.json      # Structure de navigation (import ?raw)
+└── js/
+    ├── components.js         # Chargement composants + construction nav
+    └── app.js                # Navigation mobile (initNavigation)
 ```

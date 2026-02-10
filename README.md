@@ -26,7 +26,8 @@ Ressources pédagogiques incluant cours, outils interactifs, flashcards et suppo
 | Google Fonts | Inter, Space Grotesk, Lexend, Fira Code |
 | Sécurité | CSP strict, HSTS, headers Netlify renforcés |
 | Hébergement | Netlify avec déploiement automatique |
-| Dev Server | Vite pour le développement local (hot reload) |
+| Build & Dev | Vite (build production + dev server avec hot reload) |
+| Backend | Firebase/Firestore (wizard devoirs) |
 
 > **Note** : Aucun framework JavaScript — site 100% statique et modulaire.
 
@@ -35,48 +36,98 @@ Ressources pédagogiques incluant cours, outils interactifs, flashcards et suppo
 ```
 technodocs/
 ├── index.html                 # Page d'accueil principale
-├── src/                       # Sources du site (servi par Netlify)
+├── _dev.html                  # Page d'accueil dev/test
+├── public/                    # Assets statiques copiés tels quels dans dist/
+│   └── data/
+│       ├── links.json         # Liens outils/corrections/cours (fetch runtime)
+│       └── navigation.json    # Navigation globale (fetch runtime)
+├── src/                       # Sources du site
 │   ├── css/
 │   │   ├── style.css          # Styles globaux avec CSS Variables
-│   │   └── markdown.css       # Styles pour le rendu Markdown
+│   │   ├── markdown.css       # Styles pour le rendu Markdown
+│   │   ├── cours.css          # Styles pages de cours
+│   │   ├── forms.css          # Styles formulaires
+│   │   └── wizard.css         # Styles wizard devoirs
 │   ├── js/
 │   │   ├── app.js             # Logique principale (navigation, animations)
-│   │   ├── components.js      # Chargement dynamique header/footer
+│   │   ├── components.js      # Chargement dynamique header/footer + nav
 │   │   ├── links-loader.js    # Système de liens modulaire
-│   │   └── libs/
-│   │       ├── lucide.min.js  # Icônes Lucide (local)
-│   │       └── marked.min.js  # Parser Markdown (local)
+│   │   ├── main.js            # Point d'entrée JS
+│   │   ├── cours-loader.js    # Chargement des pages de cours
+│   │   ├── md-loader.js       # Chargement et rendu Markdown
+│   │   ├── article-editor.js  # Éditeur d'articles
+│   │   ├── form-handler.js    # Gestion des formulaires
+│   │   ├── wizard-config.js   # Configuration wizard devoirs
+│   │   ├── wizard-firebase.js # Wizard devoirs + Firebase
+│   │   ├── libs/
+│   │   │   └── marked.min.js  # Parser Markdown (local)
+│   │   └── services/
+│   │       └── firebase-config.js  # Configuration Firebase/Firestore
 │   ├── includes/
 │   │   ├── header.html        # Composant header réutilisable
-│   │   ├── footer.html        # Composant footer réutilisable
-│   │   └── nav.html           # Navigation mobile
+│   │   └── footer.html        # Composant footer réutilisable
 │   ├── images/                # Images et logos
 │   ├── data/
-│   │   └── links.json         # Configuration centralisée des liens
+│   │   ├── links.json         # Source des liens (import ?raw)
+│   │   ├── navigation.json    # Source navigation (import ?raw)
+│   │   └── cours/             # Données JSON par cours
+│   │       ├── conception-3d.json
+│   │       ├── amelioration-objet.json
+│   │       └── reparabilite.json
+│   ├── content/
+│   │   └── md/
+│   │       └── cours/         # Fichiers Markdown des cours
 │   └── pages/
-│       ├── flashcards/
-│       │   ├── flashcards.html              # Index des flashcards
-│       │   ├── reparabilite.html           # 30 flashcards Réparabilité
-│       │   ├── reparabilite.js            # Données + logique Réparabilité
-│       │   ├── modelisation3d.html        # Flashcards Modélisation 3D
-│       │   └── modelisation3d.js          # Données + logique Modélisation 3D
+│       ├── activites/
+│       │   ├── devoirs.html                    # Index devoirs
+│       │   ├── presentation-objet-technique.html
+│       │   └── devoirs/                        # Pages devoirs détaillées
 │       ├── corrections/
-│       │   ├── fiches_activites.html # Index des corrections
-│       │   └── *.html                # Pages de correction dédiées
-│       ├── content/
-│       │   └── md/                   # Fichiers Markdown sources
+│       │   ├── index-corrections-fa.html       # Index des corrections
+│       │   ├── correction-impression3d.html
+│       │   └── correction-reparabilite.html
+│       ├── cours/
+│       │   ├── index-cours.html                # Index des cours
+│       │   ├── conception-3d.html
+│       │   ├── modelisation3d.html
+│       │   └── reparabilite.html
+│       ├── editeur/
+│       │   └── article-template.html           # Template éditeur d'articles
+│       ├── flashcards/
+│       │   ├── flashcards.html                 # Index des flashcards
+│       │   ├── reparabilite.html / .js         # Flashcards Réparabilité
+│       │   └── modelisation3d.html / .js       # Flashcards Modélisation 3D
 │       ├── outils/
-│       │   └── tinkercad-classes.html
-│       └── md-template.html          # Template générique Markdown
+│       │   ├── tinkercad-classes.html
+│       │   └── tinkercad-handler.js
+│       ├── projets/
+│       │   ├── cahier-des-charges-interactif.html
+│       │   └── conception-objet-technique.html
+│       ├── quiz/
+│       │   ├── quiz-modelisation-3d.html
+│       │   └── quiz-reparabilite.html
+│       └── ressources/
+│           └── ressources.html
 ├── docs/                      # Documentation technique
-│   ├── MARKDOWN_SYSTEM.md     # Guide système Markdown
 │   ├── LINKS_SYSTEM.md        # Guide système de liens
-│   └── SECURITY.md            # Bonnes pratiques sécurité
+│   ├── MARKDOWN_SYSTEM.md     # Guide système Markdown
+│   ├── SECURITY.md            # Bonnes pratiques sécurité
+│   ├── VITE_SETUP.md          # Configuration Vite
+│   └── QUICK_START_LINKS.md   # Guide rapide liens
 ├── scripts/                   # Scripts d'automatisation
-│   ├── commit.sh              # Script commit Linux/Mac
-│   └── commit.bat             # Script commit Windows
+│   ├── autocommit.sh          # Auto-commit
+│   ├── new-branch.sh          # Création de branches
+│   ├── release.sh             # Déploiement release
+│   ├── prepush.sh             # Vérifications pre-push
+│   ├── backup-repo.sh         # Backup du repo
+│   ├── deps-update.sh         # Mise à jour dépendances
+│   ├── dev-prepare.sh         # Préparation env dev
+│   ├── export-firestore.js    # Export données Firestore
+│   └── autofill-wizard-firestore.js  # Remplissage auto wizard
+├── vite.config.js             # Configuration Vite (build, aliases, dev server)
 ├── security-check.js          # Script de vérification sécurité
 ├── netlify.toml               # Configuration Netlify + headers sécurité
+├── .env.example               # Template variables d'environnement
 ├── package.json               # Scripts npm et dépendances
 └── .gitignore                 # Exclusion fichiers dev/deploy
 ```
@@ -122,7 +173,8 @@ Gestion centralisée de tous les liens via `src/data/links.json` :
 
 ### 🧩 Composants réutilisables
 
-- Header/Footer dynamiques chargés via `fetch()`
+- Header/Footer bundlés via imports Vite `?raw` (pas de fetch runtime)
+- Navigation dynamique construite depuis `navigation.json`
 - Navigation mobile avec menu hamburger animé
 - Scroll animations avec Intersection Observer
 
@@ -149,64 +201,41 @@ Variables CSS centralisées dans `:root` :
 
 Le site est déployé automatiquement sur Netlify à chaque push sur `main`.
 
-**Optimisation des builds** : Le fichier `netlify.toml` contient une règle pour économiser les crédits :
-
-```toml
-[build]
-  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- src/ package.json"
-```
-
-Seuls les changements dans `src/` ou `package.json` déclenchent un build.
-
 ### Scripts disponibles
 
 ```bash
-# Développement local avec hot reload
-npm run dev
+# Développement
+npm run dev              # Serveur Vite (http://localhost:3000)
+npm run dev:netlify      # Serveur Netlify CLI + Vite (http://localhost:8888)
+npm run build            # Build de production dans dist/
+npm run preview          # Preview du build local
 
-# Vérification de sécurité (local)
-npm run security-check
+# Déploiement Netlify
+npm run deploy:preview   # Deploy preview (brouillon)
+npm run deploy:prod      # Deploy en production
 
-# Vérification de sécurité (production)
-npm run security-check:prod
-
-# Commit automatisé
-npm run commit        # Linux/macOS
-npm run commit:win    # Windows
+# Sécurité
+npm run security-check        # Vérification locale
+npm run security-check:prod   # Vérification production
 ```
 
-### Déploiement manuel
+### Déploiement
+
+Le site est déployé automatiquement sur Netlify à chaque push sur `main`. Pour un déploiement manuel :
 
 ```bash
-git add .
-git commit -m "Description des changements"
-git push origin main
-# → Déploiement automatique Netlify
+npm run deploy:preview   # Tester d'abord en preview
+npm run deploy:prod      # Puis déployer en production
 ```
 
 ## 💻 Développement local
 
-### Option 1 : Serveur Vite (recommandé)
-
 ```bash
 npm install    # Première fois uniquement
-npm run dev    # Lance le serveur sur http://localhost:3000 (avec hot reload)
+npm run dev    # Lance le serveur Vite sur http://localhost:3000 (hot reload)
 ```
 
-### Option 2 : Ouverture directe
-
-```bash
-# Windows
-start index.html
-
-# macOS
-open index.html
-
-# Linux
-xdg-open index.html
-```
-
-> ⚠️ Certaines fonctionnalités (fetch, modules ES6) nécessitent un serveur local.
+> ⚠️ Un serveur local est requis (modules ES6, fetch). L'ouverture directe du HTML ne fonctionne pas.
 
 ## 📂 Gestion Git
 
@@ -298,7 +327,9 @@ Les flashcards utilisent des scripts externalisés (`.js`) pour respecter la CSP
 |---------|---------|
 | `docs/MARKDOWN_SYSTEM.md` | Système de rendu Markdown, TOC automatique, guide de style |
 | `docs/LINKS_SYSTEM.md` | Gestion centralisée des liens via JSON |
+| `docs/QUICK_START_LINKS.md` | Guide rapide pour ajouter/modifier des liens |
 | `docs/SECURITY.md` | Configuration CSP/HSTS, script de vérification |
+| `docs/VITE_SETUP.md` | Configuration Vite, build, aliases |
 
 ## 📊 Statistiques
 
@@ -320,4 +351,4 @@ Usage éducatif — Ressources destinées à l'enseignement de la Technologie au
 
 ---
 
-**Créé par StimGLB** | Dernière mise à jour : Janvier 2026
+**Créé par StimGLB** | Dernière mise à jour : Février 2026

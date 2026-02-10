@@ -53,10 +53,10 @@
                         
                     </div>
                 </div>
-                <!-- Image décorative -->
-                <div class="hero__visual">
+                <!-- Image décorative (désactivée : hero-illustration.png manquant) -->
+                <!-- <div class="hero__visual">
                     <img src="/src/assets/images/hero-illustration.png" alt="" class="hero__image" aria-hidden="true">
-                </div>
+                </div> -->
             </div>
         </section>
 
@@ -175,7 +175,7 @@
         // Génération dynamique des cartes "Cours" depuis src/data/navigation.json
         (async function(){
             try{
-                const res = await fetch('/src/data/navigation.json');
+                const res = await fetch('/data/navigation.json');
                 if(!res.ok) return;
                 const nav = await res.json();
                 const courses = nav.cours || [];

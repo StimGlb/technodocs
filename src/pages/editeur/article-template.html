@@ -212,19 +212,6 @@
             ></textarea>
           </div>
 
-          <!-- Boîte IA (optionnel) -->
-          <div class="wizard__ai-box">
-            <p class="wizard__ai-title">🤖 Utilisation de l'IA (optionnel)</p>
-            <p>
-              Si tu as utilisé une IA pour t'aider (ex: pour des idées, des
-              reformulations), note ton prompt :
-            </p>
-            <textarea
-              data-field="aiPrompt"
-              placeholder="Ex: J'ai demandé à une IA de me donner des arguments pour mon article sur..."
-            ></textarea>
-          </div>
-
           <!-- Navigation (bouton Terminer seulement pour un formulaire simple) -->
           <div class="wizard__phase-nav">
             <div></div>
@@ -241,13 +228,13 @@
           class="btn btn--secondary btn--small"
           onclick="wizardExportJSON()"
         >
-          📤 Exporter JSON
+          📤 Exporter
         </button>
         <button
           class="btn btn--secondary btn--small"
           onclick="document.getElementById('importInput').click()"
         >
-          📥 Importer JSON
+          📥 Importer
         </button>
         <input
           type="file"

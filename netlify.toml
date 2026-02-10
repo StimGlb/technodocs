@@ -12,8 +12,10 @@
 [dev]
   # Command to run for local development
   command = "npm run dev"
-  # Port for the dev server
-  port = 5173
+  # Port for the Netlify CLI proxy
+  port = 8888
+  # Port where Vite dev server runs (see vite.config.js server.port)
+  targetPort = 3000
   # Publish directory for local dev
   publish = "."
   # Auto-open browser
