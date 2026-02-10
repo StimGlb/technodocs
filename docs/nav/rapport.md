@@ -1,5 +1,3 @@
-Progress: j'ai lu les fichiers demandés et vérifié la présence du placeholder sur les pages. Voici le rapport technique court.
-
 Contexte lu
 
 Vite indexe automatiquement tous les fichiers .html du repo via la fonction collectHtmlInputs dans vite.config.js.

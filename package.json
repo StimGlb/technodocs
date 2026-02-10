@@ -14,7 +14,6 @@
     "security-check": "node security-check.js",
     "security-check:prod": "node security-check.js https://technodocs.netlify.app",
     "commit": "bash ./scripts/autocommit.sh",
-    "commit:win": "./scripts/commit.bat",
     "export:firestore": "node scripts/export-firestore.js"
   },
   "keywords": [

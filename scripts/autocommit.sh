@@ -144,7 +144,11 @@ if [[ $DRY_RUN -eq 1 ]]; then
 fi
 
 # Stage files safely
-if ! git add -- "${FILTERED[@]}"; then
+# On utilise -f (force) pour s'assurer que les fichiers déjà suivis qui seraient 
+# ignorés par une règle .gitignore récente soient quand même ajoutés.
+# C'est sans danger ici car FILTERED provient de 'git status' qui respecte
+# déjà le .gitignore pour les nouveaux fichiers (untracked).
+if ! git add -f -- "${FILTERED[@]}"; then
   err "Échec lors du 'git add'"
   exit 3
 fi

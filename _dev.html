@@ -1,79 +1,314 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TechnoDocs - Index Dev</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: system-ui, sans-serif; background: #0f172a; color: #e2e8f0; padding: 2rem; min-height: 100vh; }
-    h1 { color: #6366f1; margin-bottom: 0.5rem; }
-    .subtitle { color: #94a3b8; margin-bottom: 2rem; font-size: 0.875rem; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem; }
-    .section { background: #1e293b; border-radius: 0.5rem; padding: 1rem; }
-    .section h2 { color: #38bdf8; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.75rem; border-bottom: 1px solid #334155; padding-bottom: 0.5rem; }
-    .section ul { list-style: none; }
-    .section li { margin: 0.5rem 0; }
-    .section a { color: #a5b4fc; text-decoration: none; display: block; padding: 0.375rem 0.5rem; border-radius: 0.25rem; transition: background 0.15s; }
-    .section a:hover { background: #334155; color: #e0e7ff; }
-    .tag { font-size: 0.625rem; background: #475569; color: #cbd5e1; padding: 0.125rem 0.375rem; border-radius: 9999px; margin-left: 0.5rem; vertical-align: middle; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>⚙ TechnoDocs — Dev Index</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --bg:#0c0c0f;--surface:#16161a;--border:#2a2a32;
+            --text:#e2e2e8;--muted:#6e6e80;--accent:#6366f1;
+            --accent-dim:#6366f133;--green:#22c55e;--green-dim:#22c55e20;
+            --orange:#f59e0b;--orange-dim:#f59e0b20;--red:#ef4444;
+            --mono:'JetBrains Mono','Fira Code','SF Mono',monospace;
+            --sans:'Inter',system-ui,sans-serif;
+        }
+        body{background:var(--bg);color:var(--text);font-family:var(--sans);min-height:100vh;padding:2rem}
+
+        /* Header */
+        .dev-header{
+            display:flex;align-items:center;gap:.75rem;
+            padding-bottom:1.5rem;border-bottom:1px solid var(--border);margin-bottom:2rem;
+        }
+        .dev-header__badge{
+            background:var(--accent-dim);color:var(--accent);
+            font-family:var(--mono);font-size:.7rem;font-weight:600;
+            padding:.25rem .6rem;border-radius:4px;letter-spacing:.05em;text-transform:uppercase;
+        }
+        .dev-header h1{font-size:1.1rem;font-weight:500;color:var(--muted)}
+        .dev-header h1 span{color:var(--text);font-weight:600}
+
+        /* Stats bar */
+        .dev-stats{
+            display:flex;gap:1.5rem;margin-bottom:2rem;font-family:var(--mono);font-size:.75rem;
+        }
+        .dev-stats__item{color:var(--muted)}
+        .dev-stats__item strong{color:var(--text)}
+
+        /* Filter */
+        .dev-filter{
+            display:flex;gap:.5rem;align-items:center;margin-bottom:1.5rem;
+        }
+        .dev-filter input{
+            background:var(--surface);border:1px solid var(--border);border-radius:6px;
+            color:var(--text);font-family:var(--mono);font-size:.8rem;
+            padding:.5rem .75rem;width:100%;max-width:360px;outline:none;
+            transition:border-color .2s;
+        }
+        .dev-filter input:focus{border-color:var(--accent)}
+        .dev-filter input::placeholder{color:var(--muted)}
+        .dev-filter__hint{font-size:.7rem;color:var(--muted);font-family:var(--mono)}
+
+        /* Links list */
+        .dev-section{margin-bottom:2.5rem}
+        .dev-section__title{
+            font-family:var(--mono);font-size:.7rem;font-weight:600;
+            color:var(--muted);text-transform:uppercase;letter-spacing:.08em;
+            margin-bottom:.75rem;padding-left:.25rem;
+        }
+        .dev-list{list-style:none;display:flex;flex-direction:column;gap:2px}
+        .dev-link{
+            display:flex;align-items:center;gap:.75rem;
+            padding:.6rem .75rem;border-radius:6px;
+            text-decoration:none;color:var(--text);
+            font-family:var(--mono);font-size:.8rem;
+            transition:background .15s,transform .1s;
+        }
+        .dev-link:hover{background:var(--surface);transform:translateX(4px)}
+        .dev-link__status{
+            width:8px;height:8px;border-radius:50%;flex-shrink:0;
+        }
+        .dev-link__status--wip{background:var(--orange)}
+        .dev-link__status--ready{background:var(--green)}
+        .dev-link__status--broken{background:var(--red)}
+        .dev-link__path{color:var(--muted);margin-left:auto;font-size:.7rem}
+        .dev-link__tag{
+            font-size:.6rem;padding:.15rem .4rem;border-radius:3px;
+            text-transform:uppercase;letter-spacing:.04em;font-weight:600;
+        }
+        .dev-link__tag--wip{background:var(--orange-dim);color:var(--orange)}
+        .dev-link__tag--new{background:var(--green-dim);color:var(--green)}
+
+        /* Hidden by filter */
+        .dev-link.hidden{display:none}
+        .dev-section.hidden{display:none}
+
+        /* Footer */
+        .dev-footer{
+            margin-top:3rem;padding-top:1.5rem;border-top:1px solid var(--border);
+            font-family:var(--mono);font-size:.65rem;color:var(--muted);
+            display:flex;justify-content:space-between;
+        }
+        .dev-footer a{color:var(--accent);text-decoration:none}
+        .dev-footer a:hover{text-decoration:underline}
+
+        /* Responsive */
+        @media(max-width:640px){
+            body{padding:1rem}
+            .dev-link__path{display:none}
+            .dev-stats{flex-wrap:wrap;gap:.75rem}
+        }
+    </style>
 </head>
 <body>
-  <h1>TechnoDocs Dev Index</h1>
-  <p class="subtitle">Accès rapide aux pages non connectées</p>
 
-  <div class="grid">
-    <div class="section">
-      <h2>Cours</h2>
-      <ul>
-        <li><a href="/src/pages/cours/amelioration-objet.html">Amelioration Objet</a></li>
-        <li><a href="/src/pages/cours/cours-template.html">Template Cours <span class="tag">template</span></a></li>
-      </ul>
-    </div>
+<header class="dev-header">
+    <span class="dev-header__badge">dev</span>
+    <h1><span>TechnoDocs</span> — Pages Index</h1>
+</header>
 
-    <div class="section">
-      <h2>Corrections</h2>
-      <ul>
-        <li><a href="/src/pages/corrections/fiches_activites.html">Fiches Activites</a></li>
-        <li><a href="/src/pages/corrections/correction-impression3d.html">Correction Impression 3D</a></li>
-        <li><a href="/src/pages/corrections/correction-reparabilite.html">Correction Reparabilite</a></li>
-      </ul>
-    </div>
+<div class="dev-stats" id="devStats"></div>
 
-    <div class="section">
-      <h2>Flashcards</h2>
-      <ul>
-        <li><a href="/src/pages/flashcards/flashcards.html">Index Flashcards</a></li>
-        <li><a href="/src/pages/flashcards/modelisation3d.html">Modelisation 3D</a></li>
-        <li><a href="/src/pages/flashcards/reparabilite.html">Reparabilite</a></li>
-      </ul>
-    </div>
+<div class="dev-filter">
+    <input type="text" id="filterInput" placeholder="Filtrer les pages…" autofocus>
+    <span class="dev-filter__hint">↑↓ naviguer · Enter ouvrir</span>
+</div>
 
-    <div class="section">
-      <h2>Outils</h2>
-      <ul>
-        <li><a href="/src/pages/outils/tinkercad-classes.html">Tinkercad Classes</a></li>
-      </ul>
-    </div>
+<div id="devContent"></div>
 
-    <div class="section">
-      <h2>Projets</h2>
-      <ul>
-        <li><a href="/src/pages/projets/amelioration-objet-technique.html">Amelioration Objet Technique</a></li>
-      </ul>
-    </div>
+<footer class="dev-footer">
+    <span>Fichier local uniquement — <code>noindex</code></span>
+    <a href="/">← Retour au site</a>
+</footer>
 
-    <div class="section">
-      <h2>Templates</h2>
-      <ul>
-        <li><a href="/src/pages/md-template.html">MD Template <span class="tag">template</span></a></li>
-      </ul>
-    </div>
-  </div>
+<script>
+/**
+ * ═══════════════════════════════════════════════════════════════
+ *  DEV PAGES REGISTRY
+ *  Ajoute tes pages ici. 
+ *  status: "wip" | "ready" | "broken"
+ *  tag: "new" | "wip" | null
+ * ═══════════════════════════════════════════════════════════════
+ */
+const PAGES = [
+    // ── Cours ──────────────────────────────────────────────
+    { section: "Cours", name: "Conception 3D", path: "/src/pages/cours/conception-3d.html", status: "ready" },
+    { section: "Cours", name: "Modélisation 3D", path: "/src/pages/cours/modelisation3d.html", status: "ready" },
+    { section: "Cours", name: "Réparabilité", path: "/src/pages/cours/reparabilite.html", status: "ready" },
 
-  <p style="margin-top: 2rem; color: #64748b; font-size: 0.75rem;">
-    <a href="/index.html" style="color: #6366f1;">Retour accueil</a>
-  </p>
+    // ── Activités ──────────────────────────────────────────
+    { section: "Activités", name: "Devoirs (index)", path: "/src/pages/activites/devoirs.html", status: "ready" },
+    { section: "Activités", name: "Présentation objet technique", path: "/src/pages/activites/presentation-objet-technique.html", status: "ready" },
+
+    // ── Corrections ────────────────────────────────────────
+    { section: "Corrections", name: "Index corrections FA", path: "/src/pages/corrections/index-corrections-fa.html", status: "ready" },
+    { section: "Corrections", name: "Correction Impression 3D", path: "/src/pages/corrections/correction-impression3d.html", status: "ready" },
+    { section: "Corrections", name: "Correction Réparabilité", path: "/src/pages/corrections/correction-reparabilite.html", status: "ready" },
+
+    // ── Flashcards ─────────────────────────────────────────
+    { section: "Flashcards", name: "Index Flashcards", path: "/src/pages/flashcards/flashcards.html", status: "ready" },
+    { section: "Flashcards", name: "Réparabilité", path: "/src/pages/flashcards/reparabilite.html", status: "ready" },
+    { section: "Flashcards", name: "Modélisation 3D", path: "/src/pages/flashcards/modelisation3d.html", status: "ready" },
+
+    // ── Projets ────────────────────────────────────────────
+    { section: "Projets", name: "Cahier des charges interactif", path: "/src/pages/projets/cahier-des-charges-interactif.html", status: "ready" },
+    { section: "Projets", name: "Conception objet technique", path: "/src/pages/projets/conception-objet-technique.html", status: "ready" },
+
+    // ── Quiz ───────────────────────────────────────────────
+    { section: "Quiz", name: "Quiz Modélisation 3D", path: "/src/pages/quiz/quiz-modelisation-3d.html", status: "ready" },
+    { section: "Quiz", name: "Quiz Réparabilité", path: "/src/pages/quiz/quiz-reparabilite.html", status: "ready" },
+
+    // ── Outils ─────────────────────────────────────────────
+    { section: "Outils", name: "Tinkercad Classes", path: "/src/pages/outils/tinkercad-classes.html", status: "ready" },
+
+    // ── Ressources ─────────────────────────────────────────
+    { section: "Ressources", name: "Ressources", path: "/src/pages/ressources/ressources.html", status: "ready" },
+
+    // ══════════════════════════════════════════════════════════
+    //  NOUVELLES PAGES (ajouter ici ↓)
+    { section: "Ressources", name: "Fiche Outil — Plume & Toupie", path: "/src/pages/ressources/outil-plume-et-toupie.html", status: "ready" },
+    { section: "Ressources", name: "Guide Ultra-Simplifié Tinkercad", path: "/src/pages/ressources/guide-tinkercad-simplifie.html", status: "ready" },
+    // ══════════════════════════════════════════════════════════
+
+    // { section: "Cours", name: "Internet & Réseaux", path: "/src/pages/cours/internet-reseaux.html", status: "wip", tag: "new" },
+
+];
+
+// ── Render ─────────────────────────────────────────────────
+
+function render(filter = "") {
+    const container = document.getElementById("devContent");
+    const lowerFilter = filter.toLowerCase();
+
+    // Group by section
+    const sections = {};
+    PAGES.forEach(p => {
+        if (!sections[p.section]) sections[p.section] = [];
+        sections[p.section].push(p);
+    });
+
+    container.innerHTML = "";
+
+    let totalVisible = 0;
+
+    Object.entries(sections).forEach(([sectionName, pages]) => {
+        const filtered = pages.filter(p =>
+            p.name.toLowerCase().includes(lowerFilter) ||
+            p.path.toLowerCase().includes(lowerFilter) ||
+            sectionName.toLowerCase().includes(lowerFilter)
+        );
+
+        const sec = document.createElement("div");
+        sec.className = "dev-section" + (filtered.length === 0 ? " hidden" : "");
+
+        const title = document.createElement("div");
+        title.className = "dev-section__title";
+        title.textContent = `${sectionName} (${filtered.length})`;
+        sec.appendChild(title);
+
+        const list = document.createElement("ul");
+        list.className = "dev-list";
+
+        filtered.forEach(p => {
+            const li = document.createElement("li");
+            const a = document.createElement("a");
+            a.className = "dev-link";
+            a.href = p.path;
+
+            // Status dot
+            const dot = document.createElement("span");
+            dot.className = `dev-link__status dev-link__status--${p.status || "ready"}`;
+            a.appendChild(dot);
+
+            // Name
+            const name = document.createElement("span");
+            name.textContent = p.name;
+            a.appendChild(name);
+
+            // Tag
+            if (p.tag) {
+                const tag = document.createElement("span");
+                tag.className = `dev-link__tag dev-link__tag--${p.tag}`;
+                tag.textContent = p.tag;
+                a.appendChild(tag);
+            }
+
+            // Path
+            const path = document.createElement("span");
+            path.className = "dev-link__path";
+            path.textContent = p.path;
+            a.appendChild(path);
+
+            li.appendChild(a);
+            list.appendChild(li);
+        });
+
+        totalVisible += filtered.length;
+        sec.appendChild(list);
+        container.appendChild(sec);
+    });
+
+    // Stats
+    const stats = document.getElementById("devStats");
+    const wip = PAGES.filter(p => p.status === "wip").length;
+    const broken = PAGES.filter(p => p.status === "broken").length;
+    stats.innerHTML = "";
+
+    const items = [
+        { label: "Pages", value: PAGES.length },
+        { label: "Sections", value: Object.keys(sections).length },
+    ];
+    if (wip) items.push({ label: "WIP", value: wip });
+    if (broken) items.push({ label: "Broken", value: broken });
+    if (filter) items.push({ label: "Filtrées", value: totalVisible });
+
+    items.forEach(item => {
+        const span = document.createElement("span");
+        span.className = "dev-stats__item";
+        const strong = document.createElement("strong");
+        strong.textContent = item.value;
+        span.appendChild(strong);
+        span.append(` ${item.label}`);
+        stats.appendChild(span);
+    });
+}
+
+// ── Filter & Keyboard ──────────────────────────────────────
+
+const filterInput = document.getElementById("filterInput");
+filterInput.addEventListener("input", () => render(filterInput.value));
+
+// Keyboard nav: ↑↓ to highlight, Enter to open
+let focusIdx = -1;
+
+document.addEventListener("keydown", (e) => {
+    const links = [...document.querySelectorAll(".dev-link:not(.hidden)")];
+    if (!links.length) return;
+
+    if (e.key === "ArrowDown") {
+        e.preventDefault();
+        focusIdx = Math.min(focusIdx + 1, links.length - 1);
+        links[focusIdx]?.focus();
+    } else if (e.key === "ArrowUp") {
+        e.preventDefault();
+        focusIdx = Math.max(focusIdx - 1, 0);
+        links[focusIdx]?.focus();
+    } else if (e.key === "Enter" && document.activeElement.classList.contains("dev-link")) {
+        // Let the browser follow the link naturally
+    } else if (e.key === "Escape") {
+        filterInput.value = "";
+        filterInput.focus();
+        focusIdx = -1;
+        render();
+    }
+});
+
+// ── Init ───────────────────────────────────────────────────
+render();
+</script>
+
 </body>
 </html>
