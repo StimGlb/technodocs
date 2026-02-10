@@ -432,15 +432,7 @@
         }
       };
 
-      // Initialiser l'éditeur d'article avec ses protections
-      import("/src/js/article-editor.js").then((module) => {
-        window.articleEditor = new module.ArticleEditor({
-          onPasteBlocked: (msg) =>
-            window.wizardInstance?.showToast(msg, "warning"),
-        });
-      });
-
-      // Permettre l'accès par la touche Entrée
+      // Permettre l'accès par la touche Entrée (défini après checkPassword)
       document
         .getElementById("passwordInput")
         .addEventListener("keypress", function (event) {
@@ -449,6 +441,22 @@
             checkPassword();
           }
         });
+
+      // Initialiser l'éditeur d'article avec ses protections
+      import("/src/js/article-editor.js").then((module) => {
+        window.articleEditor = new module.ArticleEditor({
+          onPasteBlocked: (msg) =>
+            window.wizardInstance?.showToast(msg, "warning"),
+        });
+      });
+
+      // Initialiser l'éditeur d'article avec ses protections
+      import("/src/js/article-editor.js").then((module) => {
+        window.articleEditor = new module.ArticleEditor({
+          onPasteBlocked: (msg) =>
+            window.wizardInstance?.showToast(msg, "warning"),
+        });
+      });
 
       // Initialiser le header/footer dès que le DOM est prêt, même si le wizard est caché
       document.addEventListener("DOMContentLoaded", () => {

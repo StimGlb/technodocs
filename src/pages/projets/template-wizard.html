@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{{PROJECT_TITLE}} - {{SUBJECT_NAME}}</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+          --primary: {{PRIMARY_COLOR}}; --primary-dark: {{PRIMARY_DARK}}; --secondary: {{SECONDARY_COLOR}};
+          --success: #10b981; --gray-100: #f3f4f6; --gray-200: #e5e7eb;
+          --gray-700: #374151; --white: #ffffff;
+      }
+      body { font-family: 'Inter', sans-serif; background: #f9fafb; color: var(--gray-700); line-height: 1.6; margin: 0; padding: 20px; }
+      .container { max-width: 800px; margin: 0 auto; background: var(--white); padding: 30px; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
+      header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid var(--gray-100); padding-bottom: 20px; }
+      h1 { font-family: 'Space Grotesk', sans-serif; color: #111827; margin: 0; }
+
+      .progress-container { margin-bottom: 30px; }
+      .progress-bar { height: 10px; background: var(--gray-200); border-radius: 5px; overflow: hidden; }
+      .progress-fill { height: 100%; background: linear-gradient(90deg, var(--primary), var(--secondary)); width: 0%; transition: width 0.3s; }
+
+      .phase { display: none; animation: fadeIn 0.4s; }
+      .phase.active { display: block; }
+      @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+      .field-group { margin-bottom: 20px; }
+      label { display: block; font-weight: 600; margin-bottom: 8px; font-size: 0.95rem; }
+      input, textarea, select { width: 100%; padding: 12px; border: 2px solid var(--gray-200); border-radius: 8px; box-sizing: border-box; font-size: 1rem; }
+      input:focus, textarea:focus { outline: none; border-color: var(--primary); }
+
+      .nav-btns { display: flex; justify-content: space-between; margin-top: 30px; }
+      .btn { padding: 12px 24px; border-radius: 8px; border: none; font-weight: 600; cursor: pointer; transition: 0.2s; }
+      .btn-prev { background: var(--gray-200); }
+      .btn-next { background: var(--primary); color: white; }
+      .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+      .info-box { background: #eef2ff; padding: 15px; border-radius: 8px; border-left: 4px solid var(--primary); margin-bottom: 20px; font-size: 0.9rem; }
+      .prompt-area { background: #f3f4f6; padding: 15px; border-radius: 8px; border: 1px dashed var(--primary); margin-top: 20px; }
+
+      /* Grid layout pour les champs multiples */
+      .field-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+      .field-row { display: flex; gap: 10px; align-items: center; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>{{PROJECT_ICON}} {{PROJECT_TITLE}}</h1>
+        <p>{{PROJECT_DESCRIPTION}}</p>
+      </header>
+
+      <div class="progress-container">
+        <div
+          style="
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            margin-bottom: 5px;
+          "
+        >
+          <span id="step-label">Étape 1 sur {{TOTAL_PHASES}}</span>
+          <span id="progress-percent">0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" id="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- ====== PHASE 1 ====== -->
+      <div class="phase active" id="phase-1">
+        <h2>{{PHASE_1_TITLE}}</h2>
+        {{PHASE_1_INFO_BOX}} {{PHASE_1_FIELDS}}
+
+        <!-- Exemple de champs :
+        <div class="field-group">
+            <label>{{FIELD_LABEL}} :</label>
+            <input type="{{FIELD_TYPE}}" data-save="{{FIELD_KEY}}" placeholder="{{FIELD_PLACEHOLDER}}">
+        </div>
+        
+        <div class="field-group">
+            <label>{{TEXTAREA_LABEL}} :</label>
+            <textarea data-save="{{TEXTAREA_KEY}}" rows="3" placeholder="{{TEXTAREA_PLACEHOLDER}}"></textarea>
+        </div>
+        
+        <div class="field-group">
+            <label>{{SELECT_LABEL}} :</label>
+            <select data-save="{{SELECT_KEY}}">
+                <option value="">— Sélectionner —</option>
+                <option value="option1">{{OPTION_1}}</option>
+                <option value="option2">{{OPTION_2}}</option>
+            </select>
+        </div>
+        -->
+      </div>
+
+      <!-- ====== PHASE 2 ====== -->
+      <div class="phase" id="phase-2">
+        <h2>{{PHASE_2_TITLE}}</h2>
+        {{PHASE_2_INFO_BOX}} {{PHASE_2_FIELDS}}
+
+        <!-- Exemple de champs multiples :
+        <div class="field-group">
+            <label>{{MULTI_FIELD_LABEL}} :</label>
+            <div class="field-grid">
+                <input type="number" data-save="field_1" placeholder="{{PLACEHOLDER_1}}">
+                <input type="number" data-save="field_2" placeholder="{{PLACEHOLDER_2}}">
+                <input type="number" data-save="field_3" placeholder="{{PLACEHOLDER_3}}">
+            </div>
+        </div>
+        
+        <div class="field-group">
+            <label>{{MULTI_SELECT_LABEL}} :</label>
+            <select data-save="multi_choices" multiple style="height: 80px;">
+                <option>{{CHOICE_1}}</option>
+                <option>{{CHOICE_2}}</option>
+                <option>{{CHOICE_3}}</option>
+            </select>
+        </div>
+        -->
+      </div>
+
+      <!-- ====== PHASE N (finale) ====== -->
+      <div class="phase" id="phase-{{TOTAL_PHASES}}">
+        <h2>{{FINAL_PHASE_TITLE}}</h2>
+        <p>{{FINAL_PHASE_DESCRIPTION}}</p>
+
+        <div class="prompt-area">
+          <textarea
+            id="summary-output"
+            readonly
+            style="
+              height: 150px;
+              background: transparent;
+              border: none;
+              resize: none;
+            "
+            placeholder="Le résumé apparaîtra ici automatiquement..."
+          ></textarea>
+        </div>
+        <button
+          class="btn btn-next"
+          onclick="copySummary()"
+          style="margin-top: 10px; width: 100%"
+        >
+          {{COPY_BUTTON_TEXT}}
+        </button>
+
+        {{FINAL_PHASE_ADDITIONAL_CONTENT}}
+      </div>
+
+      <div class="nav-btns">
+        <button
+          class="btn btn-prev"
+          id="btn-prev"
+          onclick="changePhase(-1)"
+          disabled
+        >
+          Précédent
+        </button>
+        <button class="btn btn-next" id="btn-next" onclick="changePhase(1)">
+          Suivant
+        </button>
+      </div>
+    </div>
+
+    <script>
+      // ============================================
+      // CONFIGURATION DU WIZARD - À PERSONNALISER
+      // ============================================
+      const WIZARD_CONFIG = {
+          totalPhases: {{TOTAL_PHASES}},
+          storageKey: '{{STORAGE_KEY}}',
+          summaryTemplate: `{{SUMMARY_TEMPLATE}}`,
+          summaryFields: [{{SUMMARY_FIELDS}}], // ['field1', 'field2', ...]
+          copySuccessMessage: '{{COPY_SUCCESS_MESSAGE}}',
+          validationRules: {
+              // phase_number: ['required_field1', 'required_field2']
+              {{VALIDATION_RULES}}
+          }
+      };
+
+      // ============================================
+      // LOGIQUE WIZARD (NE PAS MODIFIER)
+      // ============================================
+      let currentPhase = 1;
+
+      function updateUI() {
+          // Mise à jour des phases actives
+          document.querySelectorAll('.phase').forEach((p, i) => {
+              p.classList.toggle('active', i + 1 === currentPhase);
+          });
+
+          // Mise à jour des boutons
+          document.getElementById('btn-prev').disabled = currentPhase === 1;
+          const nextBtn = document.getElementById('btn-next');
+          nextBtn.innerText = currentPhase === WIZARD_CONFIG.totalPhases ? "Terminer" : "Suivant";
+
+          // Mise à jour de la barre de progression
+          const percent = Math.round(((currentPhase - 1) / (WIZARD_CONFIG.totalPhases - 1)) * 100);
+          document.getElementById('progress-fill').style.width = percent + "%";
+          document.getElementById('progress-percent').innerText = percent + "%";
+          document.getElementById('step-label').innerText = `Étape ${currentPhase} sur ${WIZARD_CONFIG.totalPhases}`;
+
+          // Génération du résumé en phase finale
+          if (currentPhase === WIZARD_CONFIG.totalPhases) {
+              generateSummary();
+          }
+      }
+
+      function changePhase(direction) {
+          // Validation avant passage à la phase suivante
+          if (direction > 0 && !validateCurrentPhase()) {
+              return; // Bloquer si validation échoue
+          }
+
+          currentPhase = Math.max(1, Math.min(WIZARD_CONFIG.totalPhases, currentPhase + direction));
+          updateUI();
+          saveData();
+      }
+
+      function validateCurrentPhase() {
+          const requiredFields = WIZARD_CONFIG.validationRules[currentPhase] || [];
+          const missingFields = [];
+
+          requiredFields.forEach(fieldKey => {
+              const element = document.querySelector(`[data-save="${fieldKey}"]`);
+              if (!element || !element.value.trim()) {
+                  missingFields.push(element ? element.previousElementSibling.textContent : fieldKey);
+              }
+          });
+
+          if (missingFields.length > 0) {
+              alert(`Veuillez remplir les champs obligatoires :\n- ${missingFields.join('\n- ')}`);
+              return false;
+          }
+          return true;
+      }
+
+      function saveData() {
+          const data = {};
+          document.querySelectorAll('[data-save]').forEach(el => {
+              if (el.type === 'checkbox') {
+                  data[el.getAttribute('data-save')] = el.checked;
+              } else if (el.multiple) {
+                  const selected = Array.from(el.selectedOptions).map(opt => opt.value);
+                  data[el.getAttribute('data-save')] = selected.join(', ');
+              } else {
+                  data[el.getAttribute('data-save')] = el.value;
+              }
+          });
+          localStorage.setItem(WIZARD_CONFIG.storageKey, JSON.stringify(data));
+      }
+
+      function loadData() {
+          const saved = localStorage.getItem(WIZARD_CONFIG.storageKey);
+          if (saved) {
+              const data = JSON.parse(saved);
+              document.querySelectorAll('[data-save]').forEach(el => {
+                  const value = data[el.getAttribute('data-save')];
+                  if (value !== undefined) {
+                      if (el.type === 'checkbox') {
+                          el.checked = value;
+                      } else {
+                          el.value = value;
+                      }
+                  }
+              });
+          }
+      }
+
+      function generateSummary() {
+          const data = JSON.parse(localStorage.getItem(WIZARD_CONFIG.storageKey) || "{}");
+          let summary = WIZARD_CONFIG.summaryTemplate;
+
+          // Remplacer les placeholders {{field_key}} par les valeurs
+          Object.keys(data).forEach(key => {
+              const placeholder = new RegExp(`{{${key}}}`, 'g');
+              summary = summary.replace(placeholder, data[key] || '(non renseigné)');
+          });
+
+          // Nettoyer les placeholders non remplacés
+          summary = summary.replace(/{{[^}]+}}/g, '(non défini)');
+
+          document.getElementById('summary-output').value = summary;
+      }
+
+      function copySummary() {
+          const summaryText = document.getElementById("summary-output");
+          summaryText.select();
+          summaryText.setSelectionRange(0, 99999); // Pour mobile
+
+          try {
+              document.execCommand("copy");
+              alert(WIZARD_CONFIG.copySuccessMessage);
+          } catch (err) {
+              alert("Erreur lors de la copie. Sélectionnez le texte manuellement.");
+          }
+      }
+
+      // Fonction d'export JSON (bonus)
+      function exportData() {
+          const data = {
+              projectName: '{{PROJECT_TITLE}}',
+              exportDate: new Date().toISOString(),
+              formData: JSON.parse(localStorage.getItem(WIZARD_CONFIG.storageKey) || "{}")
+          };
+
+          const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = `${WIZARD_CONFIG.storageKey}_export.json`;
+          a.click();
+          URL.revokeObjectURL(url);
+      }
+
+      // Sauvegarde automatique à chaque saisie
+      document.addEventListener('input', saveData);
+
+      // Initialisation au chargement
+      window.onload = () => {
+          loadData();
+          updateUI();
+      };
+
+      // Raccourcis clavier (bonus)
+      document.addEventListener('keydown', (e) => {
+          if (e.ctrlKey && e.key === 'ArrowRight' && currentPhase < WIZARD_CONFIG.totalPhases) {
+              changePhase(1);
+          } else if (e.ctrlKey && e.key === 'ArrowLeft' && currentPhase > 1) {
+              changePhase(-1);
+          } else if (e.ctrlKey && e.key === 's') {
+              e.preventDefault();
+              saveData();
+              alert('Données sauvegardées !');
+          }
+      });
+    </script>
+  </body>
+</html>
