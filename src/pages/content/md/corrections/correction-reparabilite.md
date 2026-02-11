@@ -386,30 +386,7 @@
 
 "Un PC Gamer ne démarre plus : 3 bips courts répétés, écran noir, ventilateurs qui tournent. Nous avons testé l'écran et le câble → OK. Nous avons ouvert le PC et réinséré la RAM mais ça ne change rien. Selon la notice, 3 bips \= problème RAM. Comment tester si c'est une barrette défaillante ou un slot défectueux ? Quelles précautions pour manipuler la RAM ? Nous sommes au collège dans un atelier de réparation, niveau débutant."
 
-**✅ Acceptable mais moins complet** (critères de base présents)
-
----
-
-#### **Phase 3 : Questions d'analyse (12-13-14)**
-
-**Question 12 : Validation par le professeur**
-
-**Grille de validation du prompt (à utiliser en direct) :**
-
-| Critère | ✅ Présent | ⚠️ À améliorer | ❌ Absent |
-| ----- | ----- | ----- | ----- |
-| Contexte de l'objet (type, configuration) |  |  |  |
-| Symptômes précis et détaillés |  |  |  |
-| Tests déjà réalisés |  |  |  |
-| Observations après démontage |  |  |  |
-| Hypothèse de diagnostic du groupe |  |  |  |
-| Demande claire et structurée |  |  |  |
-| Niveau de compétence indiqué |  |  |  |
-| Mention de la sécurité |  |  |  |
-
----
-
-**Question 13 : Utilisation de l'IA \- Réponses attendues**
+**Question 12 : Utilisation de l'IA \- Réponses attendues**
 
 **⚠️ Note professeur :** Cette étape nécessite un accès réel à une IA (ChatGPT, Claude, Perplexity, etc.) depuis un ordinateur de la classe.
 

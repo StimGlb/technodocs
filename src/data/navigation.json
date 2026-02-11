@@ -37,11 +37,25 @@
   ],
   "corrections": [
     {
+      "id": "index-corrections-fa",
+      "name": "Index Corrections (FA)",
+      "path": "src/pages/corrections/corrections-activites.html",
+      "icon": { "type": "emoji", "value": "🗂️" },
+      "description": "Index des corrections et ressources de type 'Fiches d'activité'"
+    },
+    {
       "id": "correction-reparabilite",
       "name": "Correction Réparabilité",
       "path": "src/pages/corrections/correction-reparabilite.html",
       "icon": { "type": "emoji", "value": "♻️" },
       "description": "Correction détaillée de l'activité Réparabilité"
+    },
+    {
+      "id": "corrections-activites",
+      "name": "Fiches d'activités",
+      "path": "src/pages/corrections/corrections-activites.html",
+      "icon": { "type": "emoji", "value": "📋" },
+      "description": "Fiches de corrections des évaluations et TP"
     },
     {
       "id": "correction-impression3d",

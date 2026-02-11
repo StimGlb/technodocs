@@ -84,19 +84,7 @@
                     <h3 class="revision-card__title">Flashcards</h3>
                     <p class="revision-card__text">Révise avec les cartes interactives</p>
                 </a>
-                
-                <!-- <a href="pages/fiches.html" class="revision-card revision-card--fiches">
-                    <div class="revision-card__icon">📝</div>
-                    <h3 class="revision-card__title">Fiches de synthèse</h3>
-                    <p class="revision-card__text">L'essentiel à retenir pour chaque chapitre</p>
-                </a>
-                
-                <a href="pages/quiz.html" class="revision-card revision-card--quiz">
-                    <div class="revision-card__icon">❓</div>
-                    <h3 class="revision-card__title">Évaluations</h3>
-                    <p class="revision-card__text">Teste tes connaissances et tes compétences</p>
-                </a>
-            </div> -->
+            </div>
         </section>
         
         <!-- Section Corrections -->
@@ -107,24 +95,9 @@
             </div>
 
             <div class="correction-grid">
-                <a href="/src/pages/corrections/fiches_activites.html" class="correction-card correction-card--fiches">
-                    <div class="correction-card__icon">📋</div>
-                    <h3 class="correction-card__title">Fiches d'activités</h3>
-                    <p class="correction-card__text">Corrections des fiches d'activités en classe</p>
-                </a>
-
-                <!-- <a href="/src/pages/corrections/quiz.html" class="correction-card correction-card--quiz">
-                    <div class="correction-card__icon">❓</div>
-                    <h3 class="correction-card__title">Quiz</h3>
-                    <p class="correction-card__text">Réponses et explications des quiz</p>
-                </a>
-
-                <a href="/src/pages/corrections/evaluations.html" class="correction-card correction-card--eval">
-                    <div class="correction-card__icon">📊</div>
-                    <h3 class="correction-card__title">Évaluations</h3>
-                    <p class="correction-card__text">Corrigés détaillés des évaluations</p>
-                </a> -->
+                <!-- Corrections will be rendered here from /data/navigation.json -->
             </div>
+
         </section>
                <!-- Section Outils -->
         <section id="outils" class="section section--alt">
@@ -212,6 +185,43 @@
 
                     container.appendChild(a);
                 });
+
+                // Render corrections dynamically
+                const corrections = nav.corrections || [];
+                const correctionsContainer = document.querySelector('.correction-grid');
+                if (correctionsContainer) {
+                    correctionsContainer.innerHTML = '';
+                    corrections.filter(i => i.visible !== false).forEach(item => {
+                        const a = document.createElement('a');
+                        a.className = 'correction-card';
+
+                        const raw = item.path || item.url || '';
+                        let href = raw;
+                        if(!href.match(/^https?:\/\//i) && !href.startsWith('/')) href = raw;
+                        a.setAttribute('href', href || '#');
+
+                        if(item.icon && item.icon.value){
+                            const icon = document.createElement('div');
+                            icon.className = 'correction-card__icon';
+                            icon.textContent = item.icon.value;
+                            a.appendChild(icon);
+                        }
+
+                        const h3 = document.createElement('h3');
+                        h3.className = 'correction-card__title';
+                        h3.textContent = item.name || '';
+                        a.appendChild(h3);
+
+                        if(item.description){
+                            const p = document.createElement('p');
+                            p.className = 'correction-card__text';
+                            p.textContent = item.description;
+                            a.appendChild(p);
+                        }
+
+                        correctionsContainer.appendChild(a);
+                    });
+                }
             }catch(e){
                 // silent fail on missing navigation.json
             }

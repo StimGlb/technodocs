@@ -14,43 +14,34 @@ export default defineConfig({
 
     // Configuration du rollup
     rollupOptions: {
+      // Limiter les entrées HTML pour éviter de publier des copies "fantômes"
+      // (n'inclut que l'index principal et _dev.html par défaut, et les HTML
+      // trouvés directement à la racine). Ceci évite le crawl récursif qui
+      // générait trop d'entrées lors du build.
       input: (function collectHtmlInputs() {
         const inputs = {};
         const root = resolve(__dirname);
-        const ignore = new Set([
-          "node_modules",
-          "dist",
-          ".git",
-          "public",
-          "backups",
-        ]);
 
-        function walk(dir) {
-          for (const entry of readdirSync(dir, { withFileTypes: true })) {
-            const name = entry.name;
-            if (ignore.has(name)) continue;
-            const full = resolve(dir, name);
-            if (entry.isDirectory()) {
-              walk(full);
-            } else if (entry.isFile() && name.endsWith(".html")) {
-              let rel = relative(root, full);
+        // Priorité : index & _dev
+        const indexPath = resolve(root, "index.html");
+        const devPath = resolve(root, "_dev.html");
+
+        if (existsSync(indexPath)) inputs.main = indexPath;
+        if (existsSync(devPath)) inputs.dev = devPath;
+
+        // Inclure uniquement les fichiers HTML situés à la racine (non récursif)
+        try {
+          for (const entry of readdirSync(root, { withFileTypes: true })) {
+            if (entry.isFile() && entry.name.endsWith(".html")) {
+              const full = resolve(root, entry.name);
+              const rel = relative(root, full);
               const key = rel.replace(/\.html$/i, "").replace(/[\\/]/g, "-");
-              inputs[key || "index"] = full;
+              // Déjà ajoutés (index/_dev) sont ignorés par la clé
+              if (!inputs[key]) inputs[key || "index"] = full;
             }
           }
-        }
-
-        try {
-          walk(root);
         } catch (e) {
-          /* ignore read errors */
-        }
-
-        if (!inputs.main && existsSync(resolve(root, "index.html"))) {
-          inputs.main = resolve(root, "index.html");
-        }
-        if (!inputs.dev && existsSync(resolve(root, "_dev.html"))) {
-          inputs.dev = resolve(root, "_dev.html");
+          // ignore read errors
         }
 
         return inputs;
@@ -65,7 +56,7 @@ export default defineConfig({
 
   // Configuration du serveur de dev
   server: {
-    port: 3000,
+    port: 3001,
     open: true,
   },
 

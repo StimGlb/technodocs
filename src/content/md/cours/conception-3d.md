@@ -1,5 +1,3 @@
-# Conception et Impression 3D
-
 La modélisation et l'impression 3D permettent de passer d'une idée à un objet physique. Cette technologie est utilisée dans de nombreux domaines : industrie, médecine, architecture, mode...
 
 ---
