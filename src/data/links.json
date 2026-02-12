@@ -1,6 +1,17 @@
 {
   "outils": [
     {
+      "name": "Task Manager",
+      "url": "/dist/pages/outils/task-manager.html",
+      "tag": "Organisation, gestionnaire de travail",
+      "icon": {
+        "type": "emoji",
+        "src": "",
+        "alt": "Tinkercad"
+      },
+      "external": false
+    },
+    {
       "name": "Accède à ta classe",
       "url": "/dist/pages/outils/tinkercad-classes.html",
       "tag": "3D / Circuits",
