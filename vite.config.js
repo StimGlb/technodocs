@@ -14,7 +14,10 @@ export default defineConfig({
 
     // Configuration du rollup
     rollupOptions: {
-      // Inclut les HTML à la racine + tous ceux dans src/pages/ (récursif)
+      // Limiter les entrées HTML pour éviter de publier des copies "fantômes"
+      // (n'inclut que l'index principal et _dev.html par défaut, et les HTML
+      // trouvés directement à la racine). Ceci évite le crawl récursif qui
+      // générait trop d'entrées lors du build.
       input: (function collectHtmlInputs() {
         const inputs = {};
         const root = resolve(__dirname);
@@ -26,39 +29,20 @@ export default defineConfig({
         if (existsSync(indexPath)) inputs.main = indexPath;
         if (existsSync(devPath)) inputs.dev = devPath;
 
-        // HTML à la racine (non récursif)
+        // Inclure uniquement les fichiers HTML situés à la racine (non récursif)
         try {
           for (const entry of readdirSync(root, { withFileTypes: true })) {
             if (entry.isFile() && entry.name.endsWith(".html")) {
               const full = resolve(root, entry.name);
               const rel = relative(root, full);
               const key = rel.replace(/\.html$/i, "").replace(/[\\/]/g, "-");
+              // Déjà ajoutés (index/_dev) sont ignorés par la clé
               if (!inputs[key]) inputs[key || "index"] = full;
             }
           }
         } catch (e) {
           // ignore read errors
         }
-
-        // HTML dans src/pages/ (récursif)
-        function scanDir(dir) {
-          try {
-            for (const entry of readdirSync(dir, { withFileTypes: true })) {
-              const full = resolve(dir, entry.name);
-              if (entry.isDirectory()) {
-                scanDir(full);
-              } else if (entry.isFile() && entry.name.endsWith(".html")) {
-                const rel = relative(root, full);
-                const key = rel.replace(/\.html$/i, "").replace(/[\\/]/g, "-");
-                if (!inputs[key]) inputs[key] = full;
-              }
-            }
-          } catch (e) {
-            // ignore read errors
-          }
-        }
-        const pagesDir = resolve(root, "src/pages");
-        if (existsSync(pagesDir)) scanDir(pagesDir);
 
         return inputs;
       })(),
