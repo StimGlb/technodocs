@@ -9,7 +9,7 @@ export default defineConfig({
 
   // Dossier de build
   build: {
-    outDir: "src",
+    outDir: "dist",
     emptyOutDir: false,
 
     // Configuration du rollup
