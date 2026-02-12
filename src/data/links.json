@@ -2,11 +2,11 @@
   "outils": [
     {
       "name": "Accède à ta classe",
-      "url": "/dist/pages/outils/tinkercad-classes.html",
+      "url": "/src/pages/outils/tinkercad-classes.html",
       "tag": "3D / Circuits",
       "icon": {
         "type": "image",
-        "src": "/dist/images/logo-tinkercad.png",
+        "src": "/src/images/logo-tinkercad.png",
         "alt": "Tinkercad"
       },
       "external": false
@@ -55,7 +55,7 @@
   "corrections": [
     {
       "name": "Fiches d'activités",
-      "url": "/dist/pages/corrections/fiches_activites.html",
+      "url": "/src/pages/corrections/corrections-activites.html",
       "description": "Corrections des fiches d'activités en classe",
       "icon": "📋",
       "class": "correction-card--fiches"

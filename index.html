@@ -1,216 +1,296 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ressources de Technologie pour les collégiens - Cours, outils et exercices interactifs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Ressources de Technologie pour les collégiens - Cours, outils et exercices interactifs"
+    />
     <title>Techno Docs | Accueil</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/src/css/style.css" />
     <!-- Google Fonts - Police moderne et lisible -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
-</head>
-<body>
-
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
     <!-- Header avec navigation -->
     <div id="header-placeholder"></div>
 
     <main>
-        <!-- Hero Section -->
-        <section class="hero">
-            <div class="hero__content">
-                <h1 class="hero__title">Bienvenue sur <span class="highlight">TechnoDocs</span></h1>
-                <p class="hero__subtitle">Consulte les ressources, accède aux outils, révise les cours et vérifie les corrections.</p>
-                <div class="hero__actions">
-                    <a href="#cours" class="btn btn--primary">Commencer</a>
-                    <a href="#outils" class="btn btn--secondary">Voir les outils</a>
-                </div>
-            </div>
-            <div class="hero__illustration">
-                <div class="hero__shapes">
-                    <div class="shape shape--1"></div>
-                    <div class="shape shape--2"></div>
-                    <div class="shape shape--3"></div>
-                </div>
-            </div>
-        </section>
+      <!-- Hero Section -->
+      <section class="hero">
+        <!-- Shapes décoratives en arrière-plan -->
+        <div class="hero__shapes" aria-hidden="true">
+          <div class="shape shape--1"></div>
+          <div class="shape shape--2"></div>
+          <div class="shape shape--3"></div>
+          <div class="shape shape--4"></div>
+          <div class="shape shape--5"></div>
+        </div>
 
-        <!-- Section Cours -->
-        <section id="cours" class="section">
-            <div class="section__header">
-                <h2 class="section__title">📚 Cours</h2>
-                <p class="section__description">Accède aux documents et supports visuels</p>
+        <!-- Contenu principal -->
+        <div class="hero__inner">
+          <div class="hero__content">
+            <span class="hero__badge">🚀 Technologie au collège</span>
+            <h1 class="hero__title">
+              Bienvenue sur <span class="highlight">TechnoDocs</span>
+            </h1>
+            <p class="hero__subtitle">
+              <span class="typing__cursor">
+                Accédez au contenu des Cours, aux Activités en ligne,<br />
+                aux Corrections, aux Flashcards pour réviser et aux Outils.
+              </span>
+              <span class="typing__static"></span>
+            </p>
+            <div class="hero__actions">
+              <!-- <a
+                href="/src/pages/activites/devoirs.html"
+                class="btn btn--primary"
+              >
+                <span>📋</span> Activités
+              </a> -->
+              <a
+                href="/src/pages/ressources/ressources.html"
+                class="btn btn--tertiary"
+              >
+                <span>📁</span> Ressources
+              </a>
+              <a href="#revisions" class="btn btn--secondary">
+                <span>🧠</span> Révisions
+              </a>
             </div>
-            
-            <div class="cards-grid" id="flashcard-category-grid">
-                <!-- Les catégories seront chargées ici par JS ou définies statiquement -->
-                <a href="pages/conception-3d.html" class="card card--cours">
-                    <div class="card__icon">🏗️</div>
-                    <h3 class="card__title">Conception 3D</h3>
-                    <p class="card__text">Conception d'un objet utile, modélisation et impression 3D</p>
-                </a>
+          </div>
+          <!-- Image décorative (désactivée : hero-illustration.png manquant) -->
+          <!-- <div class="hero__visual">
+                    <img src="/src/assets/images/hero-illustration.png" alt="" class="hero__image" aria-hidden="true">
+                </div> -->
+        </div>
+      </section>
 
-                <a href="pages/reparabilite.html" class="card card--cours">
-                    <div class="card__icon">🔌</div>
-                    <h3 class="card__title">Réparabilité</h3>
-                    <p class="card__text">Indice de réparabilité, diagnostic de panne et améliorations</p>
-                </a>
+      <!-- Section Cours -->
+      <section id="cours" class="section">
+        <div class="section__header">
+          <h2 class="section__title">📚 Cours</h2>
+          <p class="section__description">
+            Accède aux documents et supports visuels
+          </p>
+        </div>
 
-                <!-- <a href="pages/programmation.html" class="card card--cours">
-                    <div class="card__icon">💻</div>
-                    <h3 class="card__title">Programmation</h3>
-                    <p class="card__text">Scratch, Python et Arduino</p>
-                </a>
+        <div class="cards-grid" id="flashcard-category-grid">
+          <!-- Les catégories seront chargées ici par JS (généré depuis src/data/navigation.json) -->
+        </div>
+      </section>
+      <!-- Section Révisions -->
+      <section id="revisions" class="section">
+        <div class="section__header">
+          <h2 class="section__title">🧠 Révisions</h2>
+          <p class="section__description">
+            Flashcards et fiches pour apprendre
+          </p>
+        </div>
 
-                <a href="pages/reseaux.html" class="card card--cours">
-                    <div class="card__icon">🌐</div>
-                    <h3 class="card__title">Internet & Réseaux</h3>
-                    <p class="card__text">Web, sécurité et communication</p>
-                </a> -->
-            </div>
-        </section>
-       <!-- Section Outils -->
-        <section id="outils" class="section section--alt">
-            <div class="section__header">
-                <h2 class="section__title">🛠️ Outils Numériques</h2>
-                <p class="section__description">Accès direct aux plateformes de création</p>
-            </div>
-            
-            <div class="tools-grid">                
-                <a href="/src/pages/outils/tinkercad-classes.html" target="_blank" rel="noopener" class="tool-card">
-                    <img src="/src/images/logo-tinkercad.png" alt="Tinkercad" class="selector-icon">
-                    <span class="tool-card__name">Rejoignez votre classe</span>
-                    <span class="tool-card__tag">3D / Circuits</span>
-                </a>
+        <div class="revision-grid">
+          <a
+            href="/src/pages/flashcards/flashcards.html"
+            class="revision-card revision-card--flashcards"
+          >
+            <div class="revision-card__icon">🗒️</div>
+            <h3 class="revision-card__title">Flashcards</h3>
+            <p class="revision-card__text">
+              Révise avec les cartes interactives
+            </p>
+          </a>
+        </div>
+      </section>
 
-                <a href="https://scratch.mit.edu/" target="_blank" rel="noopener" class="tool-card">
-                    <div class="tool-card__logo">🐱</div>
-                    <span class="tool-card__name">Scratch</span>
-                    <span class="tool-card__tag">Programmation visuelle</span>
-                </a>
-                
-                <a href="https://ide.mblock.cc/" target="_blank" rel="noopener" class="tool-card">
-                    <div class="tool-card__logo">🤖</div>
-                    <span class="tool-card__name">mBlock</span>
-                    <span class="tool-card__tag">Robotique</span>
-                </a>
+      <!-- Section Corrections -->
+      <section id="corrections" class="section">
+        <div class="section__header">
+          <h2 class="section__title">📝 Corrections</h2>
+          <p class="section__description">
+            Toutes les corrections des activités et évaluations
+          </p>
+        </div>
 
-                <a href="https://fr.vittascience.com/" target="_blank" rel="noopener" class="tool-card">
-                    <div class="tool-card__logo">🔬</div>
-                    <span class="tool-card__name">Vittascience</span>
-                    <span class="tool-card__tag">Arduino / micro:bit</span>
-                </a>
-                
-                <a href="https://trinket.io/" target="_blank" rel="noopener" class="tool-card">
-                    <div class="tool-card__logo">🐍</div>
-                    <span class="tool-card__name">Trinket</span>
-                    <span class="tool-card__tag">Python en ligne</span>
-                </a>
-            </div>
-        </section>
+        <div class="correction-grid">
+          <!-- Corrections will be rendered here from /data/navigation.json -->
+        </div>
+      </section>
+      <!-- Section Outils -->
+      <section id="outils" class="section section--alt">
+        <div class="section__header">
+          <h2 class="section__title">🛠️ Outils Numériques</h2>
+          <p class="section__description">
+            Accès direct aux plateformes de création
+          </p>
+        </div>
 
-        <!-- Section Révisions -->
-        <section id="revisions" class="section">
-            <div class="section__header">
-                <h2 class="section__title">🧠 Révisions</h2>
-                <p class="section__description">Flashcards et fiches pour mémoriser</p>
-            </div>
-            
-            <div class="revision-grid">
-                <a href="/src/pages/flashcards/flashcards.html" class="revision-card revision-card--flashcards">
-                    <div class="revision-card__icon">🗒️</div>
-                    <h3 class="revision-card__title">Flashcards</h3>
-                    <p class="revision-card__text">Révise en t'amusant avec des cartes interactives</p>
-                </a>
-                
-                <a href="pages/fiches.html" class="revision-card revision-card--fiches">
-                    <div class="revision-card__icon">📝</div>
-                    <h3 class="revision-card__title">Fiches de synthèse</h3>
-                    <p class="revision-card__text">L'essentiel à retenir pour chaque chapitre</p>
-                </a>
-                
-                <a href="pages/quiz.html" class="revision-card revision-card--quiz">
-                    <div class="revision-card__icon">❓</div>
-                    <h3 class="revision-card__title">Évaluations</h3>
-                    <p class="revision-card__text">Teste tes connaissances et tes compétences</p>
-                </a>
-            </div>
-        </section>
-        
-        <!-- Section Corrections -->
-        <section id="corrections" class="section">
-            <div class="section__header">
-                <h2 class="section__title">📝 Corrections</h2>
-                <p class="section__description">Toutes les corrections des activités et évaluations</p>
-            </div>
-
-            <div class="correction-grid">
-                <a href="/src/pages/corrections/index-corrections-fa.html" class="correction-card correction-card--fiches">
-                    <div class="correction-card__icon">📋</div>
-                    <h3 class="correction-card__title">Fiches d'activités</h3>
-                    <p class="correction-card__text">Corrections des fiches d'activités en classe</p>
-                </a>
-
-                <a href="/src/pages/corrections/quiz.html" class="correction-card correction-card--quiz">
-                    <div class="correction-card__icon">❓</div>
-                    <h3 class="correction-card__title">Quiz</h3>
-                    <p class="correction-card__text">Réponses et explications des quiz</p>
-                </a>
-
-                <a href="/src/pages/corrections/evaluations.html" class="correction-card correction-card--eval">
-                    <div class="correction-card__icon">📊</div>
-                    <h3 class="correction-card__title">Évaluations</h3>
-                    <p class="correction-card__text">Corrigés détaillés des évaluations</p>
-                </a>
-            </div>
-        </section>
-
-        <!-- Section Ressources
-        <section id="ressources" class="section section--alt">
-            <div class="section__header">
-                <h2 class="section__title">📁 Ressources</h2>
-                <p class="section__description">Documents, vidéos et liens utiles</p>
-            </div>
-            
-            <div class="resources-list">
-                <div class="resource-item">
-                    <span class="resource-item__icon">📹</span>
-                    <div class="resource-item__content">
-                        <h4>Tutoriels vidéo</h4>
-                        <p>Guides pas à pas en vidéo</p>
-                    </div>
-                    <a href="pages/videos.html" class="resource-item__link">Voir</a>
-                </div>
-                
-                <div class="resource-item">
-                    <span class="resource-item__icon">📄</span>
-                    <div class="resource-item__content">
-                        <h4>Documents PDF</h4>
-                        <p>Cours et exercices téléchargeables</p>
-                    </div>
-                    <a href="pages/documents.html" class="resource-item__link">Voir</a>
-                </div>
-                
-                <div class="resource-item">
-                    <span class="resource-item__icon">🔗</span>
-                    <div class="resource-item__content">
-                        <h4>Liens utiles</h4>
-                        <p>Sites et ressources externes</p>
-                    </div>
-                    <a href="pages/liens.html" class="resource-item__link">Voir</a>
-                </div>
-            </div>
-        </section> -->
+        <div class="tools-grid" id="tools-grid">
+          <!-- Outils: rendered dynamically from /data/navigation.json -->
+        </div>
+      </section>
     </main>
 
     <!-- Footer -->
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
+    <script type="module">
+      // Génération dynamique des cartes "Cours" depuis src/data/navigation.json
+      (async function () {
+        try {
+          const res = await fetch("/data/navigation.json");
+          if (!res.ok) return;
+          const nav = await res.json();
+          const courses = nav.cours || [];
+          const container = document.getElementById("flashcard-category-grid");
+          if (!container) return;
+          container.innerHTML = "";
+          courses
+            .filter((i) => i.visible !== false)
+            .forEach((item) => {
+              const a = document.createElement("a");
+              a.className = "card card--cours";
+
+              const raw = item.path || item.url || "";
+              let href = raw;
+              if (!href.match(/^https?:\/\//i) && !href.startsWith("/"))
+                href = raw;
+              a.setAttribute("href", href || "#");
+
+              if (item.icon && item.icon.value) {
+                const icon = document.createElement("div");
+                icon.className = "card__icon";
+                icon.textContent = item.icon.value;
+                a.appendChild(icon);
+              }
+
+              const h3 = document.createElement("h3");
+              h3.className = "card__title";
+              h3.textContent = item.name || "";
+              a.appendChild(h3);
+
+              if (item.description) {
+                const p = document.createElement("p");
+                p.className = "card__text";
+                p.textContent = item.description;
+                a.appendChild(p);
+              }
+
+              container.appendChild(a);
+            });
+
+          // Render corrections dynamically
+          const corrections = nav.corrections || [];
+          const correctionsContainer =
+            document.querySelector(".correction-grid");
+          if (correctionsContainer) {
+            correctionsContainer.innerHTML = "";
+            corrections
+              .filter((i) => i.visible !== false)
+              .forEach((item) => {
+                const a = document.createElement("a");
+                a.className = "correction-card";
+
+                const raw = item.path || item.url || "";
+                let href = raw;
+                if (!href.match(/^https?:\/\//i) && !href.startsWith("/"))
+                  href = raw;
+                a.setAttribute("href", href || "#");
+
+                if (item.icon && item.icon.value) {
+                  const icon = document.createElement("div");
+                  icon.className = "correction-card__icon";
+                  icon.textContent = item.icon.value;
+                  a.appendChild(icon);
+                }
+
+                const h3 = document.createElement("h3");
+                h3.className = "correction-card__title";
+                h3.textContent = item.name || "";
+                a.appendChild(h3);
+
+                if (item.description) {
+                  const p = document.createElement("p");
+                  p.className = "correction-card__text";
+                  p.textContent = item.description;
+                  a.appendChild(p);
+                }
+
+                correctionsContainer.appendChild(a);
+              });
+          }
+
+          // Render outils dynamically
+          const outils = nav.outils || [];
+          const outilsContainer =
+            document.getElementById("tools-grid") ||
+            document.querySelector(".tools-grid");
+          if (outilsContainer) {
+            outilsContainer.innerHTML = "";
+            outils
+              .filter((i) => i.visible !== false)
+              .forEach((item) => {
+                const raw = item.path || item.url || "";
+                let href = raw || "#";
+                if (!href.match(/^https?:\/\//i) && !href.startsWith("/"))
+                  href = "/" + href;
+
+                const a = document.createElement("a");
+                a.className = "tool-card";
+                a.setAttribute("href", href || "#");
+
+                // open external links in new tab
+                if (
+                  item.external === true ||
+                  (item.path && item.path.startsWith("src/pages/outils"))
+                ) {
+                  a.setAttribute("target", "_blank");
+                  a.setAttribute("rel", "noopener");
+                }
+
+                // Special-case Tinkercad to use logo image when available
+                if (item.id === "tinkercad-classes") {
+                  const img = document.createElement("img");
+                  img.className = "selector-icon";
+                  img.src = "/src/images/logo-tinkercad.png";
+                  img.alt = item.name || "Tinkercad";
+                  a.appendChild(img);
+                } else if (item.icon && item.icon.value) {
+                  const logo = document.createElement("div");
+                  logo.className = "tool-card__logo";
+                  logo.textContent = item.icon.value;
+                  a.appendChild(logo);
+                }
+
+                const name = document.createElement("span");
+                name.className = "tool-card__name";
+                name.textContent = item.name || "";
+                a.appendChild(name);
+
+                if (item.description) {
+                  const tag = document.createElement("span");
+                  tag.className = "tool-card__tag";
+                  tag.textContent = item.description;
+                  a.appendChild(tag);
+                }
+
+                outilsContainer.appendChild(a);
+              });
+          }
+        } catch (e) {
+          // silent fail on missing navigation.json
+        }
+      })();
+    </script>
     <script type="module" src="/src/js/components.js"></script>
     <script type="module" src="/src/js/app.js"></script>
     <script type="module" src="/src/js/main.js"></script>
-</body>
+  </body>
 </html>

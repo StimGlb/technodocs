@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Ressources de Technologie pour les collégiens - Cours, outils et exercices interactifs"
+    />
+    <title>Techno Docs | Accueil</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <!-- Google Fonts - Police moderne et lisible -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" crossorigin src="/assets/main-Be7hAb-5.js"></script>
+    <link rel="stylesheet" crossorigin href="/assets/main-Yu5u_uPn.css">
+  </head>
+  <body>
+    <!-- Header avec navigation -->
+    <div id="header-placeholder"></div>
+
+    <main>
+      <!-- Hero Section -->
+      <section class="hero">
+        <!-- Shapes décoratives en arrière-plan -->
+        <div class="hero__shapes" aria-hidden="true">
+          <div class="shape shape--1"></div>
+          <div class="shape shape--2"></div>
+          <div class="shape shape--3"></div>
+          <div class="shape shape--4"></div>
+          <div class="shape shape--5"></div>
+        </div>
+
+        <!-- Contenu principal -->
+        <div class="hero__inner">
+          <div class="hero__content">
+            <span class="hero__badge">🚀 Technologie au collège</span>
+            <h1 class="hero__title">
+              Bienvenue sur <span class="highlight">TechnoDocs</span>
+            </h1>
+            <p class="hero__subtitle">
+              <span class="typing__cursor">
+                Accédez au contenu des Cours, aux Activités en ligne,<br />
+                aux Corrections, aux Flashcards pour réviser et aux Outils.
+              </span>
+              <span class="typing__static"></span>
+            </p>
+            <div class="hero__actions">
+              <!-- <a
+                href="/src/pages/activites/devoirs.html"
+                class="btn btn--primary"
+              >
+                <span>📋</span> Activités
+              </a> -->
+              <a
+                href="/src/pages/ressources/ressources.html"
+                class="btn btn--tertiary"
+              >
+                <span>📁</span> Ressources
+              </a>
+              <a href="#revisions" class="btn btn--secondary">
+                <span>🧠</span> Révisions
+              </a>
+            </div>
+          </div>
+          <!-- Image décorative (désactivée : hero-illustration.png manquant) -->
+          <!-- <div class="hero__visual">
+                    <img src="/src/assets/images/hero-illustration.png" alt="" class="hero__image" aria-hidden="true">
+                </div> -->
+        </div>
+      </section>
+
+      <!-- Section Cours -->
+      <section id="cours" class="section">
+        <div class="section__header">
+          <h2 class="section__title">📚 Cours</h2>
+          <p class="section__description">
+            Accède aux documents et supports visuels
+          </p>
+        </div>
+
+        <div class="cards-grid" id="flashcard-category-grid">
+          <!-- Les catégories seront chargées ici par JS (généré depuis src/data/navigation.json) -->
+        </div>
+      </section>
+      <!-- Section Révisions -->
+      <section id="revisions" class="section">
+        <div class="section__header">
+          <h2 class="section__title">🧠 Révisions</h2>
+          <p class="section__description">
+            Flashcards et fiches pour apprendre
+          </p>
+        </div>
+
+        <div class="revision-grid">
+          <a
+            href="/src/pages/flashcards/flashcards.html"
+            class="revision-card revision-card--flashcards"
+          >
+            <div class="revision-card__icon">🗒️</div>
+            <h3 class="revision-card__title">Flashcards</h3>
+            <p class="revision-card__text">
+              Révise avec les cartes interactives
+            </p>
+          </a>
+        </div>
+      </section>
+
+      <!-- Section Corrections -->
+      <section id="corrections" class="section">
+        <div class="section__header">
+          <h2 class="section__title">📝 Corrections</h2>
+          <p class="section__description">
+            Toutes les corrections des activités et évaluations
+          </p>
+        </div>
+
+        <div class="correction-grid">
+          <!-- Corrections will be rendered here from /data/navigation.json -->
+        </div>
+      </section>
+      <!-- Section Outils -->
+      <section id="outils" class="section section--alt">
+        <div class="section__header">
+          <h2 class="section__title">🛠️ Outils Numériques</h2>
+          <p class="section__description">
+            Accès direct aux plateformes de création
+          </p>
+        </div>
+
+        <div class="tools-grid" id="tools-grid">
+          <!-- Outils: rendered dynamically from /data/navigation.json -->
+        </div>
+      </section>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+  </body>
+</html>

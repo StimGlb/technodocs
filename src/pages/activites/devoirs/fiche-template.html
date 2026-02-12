@@ -1,0 +1,125 @@
+  <!-- ========== SCRIPTS ========== -->
+    <script type="module" src="/src/js/components.js"></script>
+    <script type="module">
+        // ============================================
+        // CONFIGURATION FIREBASE - À ADAPTER
+        // ============================================
+        import { WizardFirebase } from '/src/js/wizard-firebase.js';
+
+        // Créer l'instance du wizard avec Firestore
+        window.wizardInstance = new WizardFirebase({
+            // Nom de la collection Firestore (unique par formulaire)
+            collectionName: 'devoir_cahier_charges_conception3d',
+            
+            // Champs obligatoires par phase pour marquer "completed"
+            requiredFields: {
+                1: [
+                    'studentName',
+                    'studentClass',
+                    'nom-projet',
+                    'probleme',
+                    'utilisateur',
+                    'lieu-utilisation',
+                    'frequence'
+                ],
+                2: [
+                    'fonction-principale',
+                    'dimensions-max',
+                    'materiau',
+                    'style'
+                ],
+                3: [
+                    'temps-impression',
+                    'assemblage',
+                    'support-impression',
+                    'criteres-reussite_fonction' // Au moins un critère de réussite est requis
+                ]
+            },
+            
+            // Callback à la complétion
+            onComplete: (data) => {
+                console.log('🎉 Formulaire complété:', data);
+            },
+            
+            // Callback sauvegarde réussie
+            onSaveSuccess: (data) => {
+                console.log('✅ Sauvegarde Firestore OK');
+            },
+            
+            // Callback erreur de sauvegarde
+            onSaveError: (error) => {
+                console.error('❌ Erreur Firestore:', error);
+            }
+        });
+
+        // Initialiser l'éditeur d'article avec ses protections
+        import('/src/js/article-editor.js').then(module => {
+            window.articleEditor = new module.ArticleEditor({
+                protectedFields: [
+                    '[data-field="probleme"]',
+                    '[data-field="fonction-principale"]',
+                    '[data-field="fonctions-secondaires"]',
+                    '[data-field="ameliorations"]'
+                ],
+                allowPasteFields: ['[data-field="aiPrompt"]'],
+                onPasteBlocked: (msg) => window.wizardInstance?.showToast(msg, 'warning')
+            });
+        });
+
+        /**
+        * Sécurise la réinitialisation en forçant un export JSON 
+        * avant de demander la confirmation de suppression.
+        */
+        window.handleSafeReset = function() {
+            console.log("Préparation de la réinitialisation : Export de secours...");
+            
+            // 1. On déclenche l'export JSON existant
+            // Note : wizardExportJSON est supposé être accessible globalement
+            if (typeof wizardExportJSON === "function") {
+                wizardExportJSON();
+            } else if (window.wizardInstance) {
+                // Si la fonction n'est pas globale, on peut essayer via l'instance
+                window.wizardInstance.exportToJSON(); 
+            }
+
+            // 2. On affiche un petit message dans le toast pour informer l'élève
+            if (window.wizardInstance && window.wizardInstance.showToast) {
+                window.wizardInstance.showToast("Sauvegarde de secours téléchargée !", "success");
+            }
+
+            // 3. On ouvre enfin la modale de confirmation
+            wizardShowModal('resetModal');
+        };
+
+            // ============================================
+            // LOGIQUE D'ACCÈS PAR MOT DE PASSE
+            // ============================================
+            import { CORRECT_PASSWORD } from '/src/js/wizard-config.js';
+
+            window.checkPassword = function() {
+            const passwordInput = document.getElementById('passwordInput');
+            const errorMessage = document.getElementById('errorMessage');
+            const passwordOverlay = document.getElementById('passwordOverlay');
+            const mainContent = document.querySelector('main.wizard');
+
+            if (passwordInput.value === CORRECT_PASSWORD) {
+                passwordOverlay.style.display = 'none';
+                mainContent.style.display = 'block';
+                errorMessage.style.display = 'none';
+                if (window.wizardInstance) {
+                    window.wizardInstance.init();
+                }
+            } else {
+                errorMessage.style.display = 'block';
+                passwordInput.value = '';
+            }
+        };
+
+        // Accès par touche Entrée
+        document.getElementById('passwordInput').addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+                checkPassword();
+            }
+        });
+    </script>

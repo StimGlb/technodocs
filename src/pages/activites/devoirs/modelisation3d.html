@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Devoir sur la conception, la modélisation et l'impression 3D - TechnoDocs"
+    />
+    <title>Conception & Impression 3D | TechnoDocs</title>
+
+    <!-- CSS du projet -->
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <style>
+      /* Styles spécifiques pour le mot de passe */
+      .password-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      .password-prompt {
+        background-color: var(--color-white);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+      }
+      .password-prompt h2 {
+        color: var(--color-primary-700);
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+      }
+      .password-prompt input[type="password"] {
+        width: calc(100% - 2rem);
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--color-gray-300);
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      .password-prompt button {
+        background-color: var(--color-primary-500);
+        color: var(--color-white);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.2s ease;
+      }
+      .password-prompt button:hover {
+        background-color: var(--color-primary-600);
+      }
+      .password-prompt .error-message {
+        color: var(--color-error);
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+      }
+    </style>
+    <!-- Overlay pour le mot de passe -->
+    <div id="passwordOverlay" class="password-overlay">
+      <div class="password-prompt">
+        <h2>🔒 Accès sécurisé</h2>
+        <p>Veuillez entrer le mot de passe pour accéder au formulaire.</p>
+        <input type="password" id="passwordInput" placeholder="Mot de passe" />
+        <button onclick="checkPassword()">Accéder</button>
+        <p id="errorMessage" class="error-message" style="display: none">
+          Mot de passe incorrect.
+        </p>
+      </div>
+    </div>
+    <main class="wizard">
+      <!-- ========== BANNIÈRE TITRE ========== -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">🖨️</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">
+            Modélisation et Impression 3D de votre Objet Technique
+          </h1>
+        </div>
+      </div>
+      <!-- ========== INFO ÉLÈVE ========== -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="studentName">Prénom et Nom</label>
+            <input
+              type="text"
+              id="studentName"
+              data-field="studentName"
+              placeholder=""
+              spellcheck="true"
+              lang="fr"
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="studentClass">Classe</label>
+            <select id="studentClass" data-field="studentClass">
+              <option value="">— Sélectionner —</option>
+              <optgroup label="5ème">
+                <option value="505">5ème5</option>
+                <option value="506">5ème6</option>
+                <option value="507">5ème7</option>
+              </optgroup>
+              <optgroup label="4ème">
+                <option value="401">4ème1</option>
+                <option value="402">4ème2</option>
+                <option value="403">4ème3</option>
+                <option value="404">4ème4</option>
+                <option value="405">4ème5</option>
+                <option value="406">4ème6</option>
+              </optgroup>
+              <optgroup label="3ème">
+                <option value="302">3ème2</option>
+                <option value="303">3ème3</option>
+                <option value="304">3ème4</option>
+                <option value="305">3ème5</option>
+                <option value="306">3ème6</option>
+                <option value="307">3ème7</option>
+                <option value="308">3ème8</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="wizard__student-field wizard__student-field--date">
+            <label>Date</label>
+            <span
+              class="wizard__date-display"
+              id="projectDate"
+              data-field="projectDate"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== PROGRESSION ========== -->
+      <section class="wizard__progress">
+        <div class="wizard__progress-header">
+          <h2 class="wizard__progress-title">Progression</h2>
+          <div class="wizard__save-indicator" id="saveIndicator">
+            <span class="wizard__save-dot"></span>
+            <span class="wizard__save-text">Auto-save</span>
+          </div>
+          <span class="wizard__progress-percentage" id="progressPercentage"
+            >0%</span
+          >
+        </div>
+        <div class="wizard__progress-bar">
+          <div
+            class="wizard__progress-fill"
+            id="progressFill"
+            style="width: 0%"
+          ></div>
+        </div>
+
+        <!-- Navigation par phases -->
+        <nav class="wizard__nav" id="phaseNav">
+          <button class="wizard__nav-btn active" data-phase="1">
+            <span class="wizard__nav-number">1</span>
+            <span>Conception</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="2">
+            <span class="wizard__nav-number">2</span>
+            <span>Préparation</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="3">
+            <span class="wizard__nav-number">3</span>
+            <span>Impression</span>
+          </button>
+        </nav>
+      </section>
+
+      <!-- ========== CONTENEUR FORMULAIRE ========== -->
+      <div class="wizard__container">
+        <!-- ========== PHASE 1 : Conception et Modélisation ========== -->
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">📐</div>
+            <h2 class="wizard__phase-title">
+              Phase 1 : Conception et Modélisation
+            </h2>
+            <p class="wizard__phase-subtitle">
+              Comprendre les bases de la création numérique pour l'impression
+              3D.
+            </p>
+          </div>
+
+          <!-- Champ logiciel de modélisation -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >Quel logiciel de modélisation 3D as-tu déjà utilisé ou connais-tu
+              ?</label
+            >
+            <p class="wizard__hint">
+              Ex: Tinkercad, SketchUp, Fusion 360, Blender...
+            </p>
+            <input
+              type="text"
+              class="wizard__input"
+              data-field="logicielModelisation"
+              placeholder="Nom du logiciel"
+              spellcheck="true"
+              lang="fr"
+            />
+          </div>
+
+          <!-- Zone de texte étapes de conception -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >Décris brièvement les étapes clés de la conception d'un objet
+              destiné à l'impression 3D.</label
+            >
+            <textarea
+              class="wizard__textarea"
+              data-field="etapesConception"
+              placeholder="Décris les étapes depuis l'idée jusqu'au modèle 3D final."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
+
+          <!-- Zone de texte importance échelle -->
+          <div class="wizard__group">
+            <label class="wizard__label"
+              >Pourquoi est-il important de vérifier l'échelle de son modèle
+              avant l'impression ?</label
+            >
+            <textarea
+              class="wizard__textarea"
+              data-field="importanceEchelle"
+              placeholder="Explique les conséquences d'une mauvaise échelle."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
+
+          <!-- Navigation -->
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- ========== PHASE 2 : Préparation à l'Impression 3D ========== -->
+        <section class="wizard__phase" data-phase="2">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">⚙️</div>
+            <h2 class="wizard__phase-title">
+              Phase 2 : Préparation à l'Impression 3D
+            </h2>
+            <p class="wizard__phase-subtitle">
+              Paramétrer et optimiser ton modèle pour l'imprimante.
+            </p>
+          </div>
+
+          <!-- Sélection type de filament -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >Quel type de filament est le plus courant pour débuter en
+              impression 3D ?</label
+            >
+            <select class="wizard__input" data-field="typeFilament">
+              <option value="">— Sélectionner —</option>
+              <option value="PLA">PLA (Acide Polylactique)</option>
+              <option value="ABS">ABS (Acrylonitrile Butadiène Styrène)</option>
+              <option value="PETG">
+                PETG (Polyéthylène Téréphtalate Glycolisé)
+              </option>
+              <option value="Nylon">Nylon</option>
+            </select>
+          </div>
+
+          <!-- Zone de texte rôle slicer -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >Qu'est-ce qu'un "slicer" (logiciel de tranchage) et quel est son
+              rôle ?</label
+            >
+            <p class="wizard__hint">
+              Explique son fonctionnement et son utilité.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="roleSlicer"
+              placeholder="Un slicer est un logiciel qui..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
+
+          <!-- Checkboxes paramètres slicer -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >Indique trois paramètres importants à régler dans un
+              slicer.</label
+            >
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  data-field="parametreSlicer_hauteurCouche"
+                />
+                <span class="wizard__checkbox-label"
+                  >📏 <strong>Hauteur de couche</strong> (résolution)</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  data-field="parametreSlicer_remplissage"
+                />
+                <span class="wizard__checkbox-label"
+                  >📦 <strong>Taux de remplissage</strong> (solidité)</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="parametreSlicer_supports" />
+                <span class="wizard__checkbox-label"
+                  >🏗️ <strong>Génération de supports</strong> (pour les
+                  porte-à-faux)</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="parametreSlicer_vitesse" />
+                <span class="wizard__checkbox-label"
+                  >⚡ <strong>Vitesse d'impression</strong></span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  data-field="parametreSlicer_temperature"
+                />
+                <span class="wizard__checkbox-label"
+                  >🌡️ <strong>Température d'extrusion/plateau</strong></span
+                >
+              </label>
+            </div>
+          </div>
+
+          <!-- Radio buttons option porte-à-faux -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >Si tu devais imprimer une pièce avec des porte-à-faux importants,
+              quelle option activerais-tu dans le slicer ?</label
+            >
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="optionPorteAFaux"
+                  data-field="optionPorteAFaux"
+                  value="Supports"
+                />
+                <span class="wizard__checkbox-label"
+                  >🏗️ <strong>Supports</strong></span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="optionPorteAFaux"
+                  data-field="optionPorteAFaux"
+                  value="Raft"
+                />
+                <span class="wizard__checkbox-label"
+                  >⚓ <strong>Raft</strong></span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="optionPorteAFaux"
+                  data-field="optionPorteAFaux"
+                  value="Brim"
+                />
+                <span class="wizard__checkbox-label"
+                  >🎩 <strong>Brim</strong></span
+                >
+              </label>
+            </div>
+          </div>
+
+          <!-- Navigation -->
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
+              ← Précédent
+            </button>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(3)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- ========== PHASE 3 : L'Impression et le Post-Traitement ========== -->
+        <section class="wizard__phase" data-phase="3">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">✅</div>
+            <h2 class="wizard__phase-title">
+              Phase 3 : L'Impression et le Post-Traitement
+            </h2>
+            <p class="wizard__phase-subtitle">
+              De l'impression à la finition de ton objet.
+            </p>
+          </div>
+
+          <!-- Zone de texte problème et solution -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >Décris un problème courant rencontré lors de l'impression 3D et
+              propose une solution.</label
+            >
+            <p class="wizard__hint">
+              Ex: décollement du plateau, bouchage de buse, spaghetti...
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="problemeImpression"
+              placeholder="Problème: ... Solution: ..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
+
+          <!-- Checkboxes post-traitement -->
+          <div class="wizard__group">
+            <label class="wizard__label"
+              >Quelles sont les étapes de post-traitement que tu pourrais
+              appliquer à un objet imprimé en 3D ? (plusieurs réponses
+              possibles)</label
+            >
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="postTraitement_poncage" />
+                <span class="wizard__checkbox-label"
+                  >🪵 <strong>Ponçage</strong></span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="postTraitement_peinture" />
+                <span class="wizard__checkbox-label"
+                  >🎨 <strong>Peinture</strong></span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="postTraitement_assemblage" />
+                <span class="wizard__checkbox-label"
+                  >🔗 <strong>Assemblage</strong> de plusieurs pièces</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input type="checkbox" data-field="postTraitement_nettoyage" />
+                <span class="wizard__checkbox-label"
+                  >🧼 <strong>Nettoyage</strong> (retrait des supports,
+                  bavures)</span
+                >
+              </label>
+            </div>
+          </div>
+
+          <!-- Zone de texte avantage impression 3D -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >Selon toi, quel est l'avantage principal de l'impression 3D
+              ?</label
+            >
+            <textarea
+              class="wizard__textarea"
+              data-field="avantageImpression"
+              placeholder="L'impression 3D permet de..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
+
+          <!-- Zone de texte expérience personnelle -->
+          <div class="wizard__group">
+            <label class="wizard__label"
+              >As-tu déjà imprimé un objet en 3D ? Si oui, décris-le.</label
+            >
+            <textarea
+              class="wizard__textarea"
+              data-field="experienceImpression"
+              placeholder="Oui, j'ai imprimé... / Non, pas encore."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
+
+          <!-- Navigation finale -->
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
+              ← Précédent
+            </button>
+            <button class="btn btn--success" onclick="wizardComplete()">
+              ✅ Terminer
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <!-- ========== BARRE D'ACTIONS ========== -->
+      <div class="wizard__actions">
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="wizardExportJSON()"
+        >
+          📤 Exporter
+        </button>
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="document.getElementById('importInput').click()"
+        >
+          📥 Importer
+        </button>
+        <input
+          type="file"
+          id="importInput"
+          accept=".json"
+          style="display: none"
+          onchange="wizardImportJSON(event)"
+        />
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="handleSafeReset()"
+        >
+          🗑️ Réinitialiser
+        </button>
+      </div>
+    </main>
+
+    <!-- Footer dynamique -->
+    <div id="footer-placeholder"></div>
+
+    <!-- ========== MODALES ========== -->
+
+    <!-- Modal Complétion -->
+    <div class="wizard__modal-overlay" id="completionModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
+        <div class="wizard__modal-content">
+          <p>Tu as terminé ton travail !</p>
+          <p style="margin-top: 1rem">
+            Tes réponses ont été
+            <strong>sauvegardées automatiquement</strong> dans la base de
+            données.
+          </p>
+          <p
+            style="
+              margin-top: 0.75rem;
+              font-size: 0.875rem;
+              color: var(--color-gray-500);
+            "
+          >
+            Tu peux aussi exporter une copie locale.
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('completionModal')"
+          >
+            Fermer
+          </button>
+          <button
+            class="btn btn--primary"
+            onclick="
+              wizardExportJSON();
+              wizardCloseModal('completionModal');
+            "
+          >
+            📤 Exporter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Reset -->
+    <div class="wizard__modal-overlay" id="resetModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
+        <div class="wizard__modal-content">
+          <p>
+            Une <strong>sauvegarde</strong> a été téléchargée automatiquement.
+          </p>
+          <p>
+            Voulez-vous <strong>recommencer</strong> avec un formulaire vide ?
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('resetModal')"
+          >
+            Annuler
+          </button>
+          <button
+            class="btn btn--primary"
+            style="background: var(--color-error)"
+            onclick="wizardReset()"
+          >
+            🗑️ Réinitialiser
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="wizard__toast" id="wizardToast">
+      <span class="wizard__toast-icon"></span>
+      <span class="wizard__toast-message"></span>
+    </div>
+
+    <!-- ========== SCRIPTS ========== -->
+    <script type="module" src="/src/js/components.js"></script>
+    <script type="module">
+      // ============================================
+      // CONFIGURATION FIREBASE - À ADAPTER
+      // ============================================
+      import { WizardFirebase } from "/src/js/wizard-firebase.js";
+
+      // Créer l'instance du wizard avec Firestore
+      window.wizardInstance = new WizardFirebase({
+        // Nom de la collection Firestore (unique par formulaire)
+        collectionName: "devoir_conception_impression_3d",
+
+        // Intervalle d'autosave (en ms)
+        autosaveInterval: 60000,
+
+        // Champs obligatoires par phase pour marquer "completed"
+        requiredFields: {
+          1: ["studentName", "logicielModelisation", "etapesConception"],
+          2: ["typeFilament", "roleSlicer", "optionPorteAFaux"],
+          3: ["problemeImpression", "avantageImpression"],
+        },
+
+        // Callback à la complétion
+        onComplete: (data) => {
+          console.log("🎉 Formulaire complété:", data);
+        },
+
+        // Callback sauvegarde réussie
+        onSaveSuccess: (data) => {
+          console.log("✅ Sauvegarde Firestore OK");
+        },
+
+        // Callback erreur de sauvegarde
+        onSaveError: (error) => {
+          console.error("❌ Erreur Firestore:", error);
+        },
+      });
+
+      // ============================================
+      // ARTICLE EDITOR - Anti-paste + Spellcheck
+      // ============================================
+      import("/src/js/article-editor.js").then((module) => {
+        window.articleEditor = new module.ArticleEditor({
+          // Champs protégés contre le copier-coller
+          protectedFields: [
+            '[data-field="etapesConception"]',
+            '[data-field="importanceEchelle"]',
+            '[data-field="roleSlicer"]',
+            '[data-field="problemeImpression"]',
+            '[data-field="avantageImpression"]',
+            '[data-field="experienceImpression"]',
+          ],
+          // Champ où le paste est autorisé (prompt IA)
+          allowPasteFields: ['[data-field="aiPrompt"]'],
+          // Callback pour afficher le toast
+          onPasteBlocked: (msg) =>
+            window.wizardInstance?.showToast(msg, "warning"),
+        });
+      });
+
+      /**
+       * Sécurise la réinitialisation en forçant un export JSON
+       * avant de demander la confirmation de suppression.
+       */
+      window.handleSafeReset = function () {
+        console.log(
+          "Préparation de la réinitialisation : Export de secours...",
+        );
+
+        // 1. On déclenche l'export JSON existant
+        if (typeof wizardExportJSON === "function") {
+          wizardExportJSON();
+        } else if (window.wizardInstance) {
+          window.wizardInstance.exportToJSON();
+        }
+
+        // 2. On affiche un petit message dans le toast pour informer l'élève
+        if (window.wizardInstance && window.wizardInstance.showToast) {
+          window.wizardInstance.showToast(
+            "Sauvegarde de secours téléchargée !",
+            "success",
+          );
+        }
+
+        // 3. On ouvre enfin la modale de confirmation
+        wizardShowModal("resetModal");
+      };
+
+      // ============================================
+      // LOGIQUE D'ACCÈS PAR MOT DE PASSE
+      // ============================================
+      import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+
+      window.checkPassword = function () {
+        const passwordInput = document.getElementById("passwordInput");
+        const errorMessage = document.getElementById("errorMessage");
+        const passwordOverlay = document.getElementById("passwordOverlay");
+        const mainContent = document.querySelector("main.wizard");
+
+        if (passwordInput.value === CORRECT_PASSWORD) {
+          passwordOverlay.style.display = "none";
+          mainContent.style.display = "block";
+          errorMessage.style.display = "none";
+          if (window.wizardInstance) {
+            window.wizardInstance.init();
+          }
+        } else {
+          errorMessage.style.display = "block";
+          passwordInput.value = "";
+        }
+      };
+
+      // Accès par touche Entrée
+      document
+        .getElementById("passwordInput")
+        .addEventListener("keypress", function (event) {
+          if (event.key === "Enter") {
+            event.preventDefault();
+            checkPassword();
+          }
+        });
+    </script>
+  </body>
+</html>

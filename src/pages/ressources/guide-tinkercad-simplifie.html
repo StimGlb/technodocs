@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guide Ultra-Simplifié Tinkercad — 5 Étapes pour ton Objet 3D</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-dark: #1a3a5c;
+    --blue-mid: #2b6ca3;
+    --blue-light: #4a9bd9;
+    --blue-pale: #d0e8f7;
+    --blue-bg: #eaf3fb;
+    --orange: #e8832a;
+    --orange-light: #f5a623;
+    --orange-pale: #fef0dc;
+    --green: #2eae6d;
+    --green-light: #27c770;
+    --green-pale: #d8f5e6;
+    --purple: #7c5cbf;
+    --purple-pale: #ede4fa;
+    --red: #e05555;
+    --red-pale: #fde4e4;
+    --teal: #1a9e8f;
+    --teal-pale: #d4f3ef;
+    --gray-dark: #3a3f47;
+    --gray-mid: #6b7280;
+    --gray-light: #f0f2f5;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(26,58,92,0.10);
+    --shadow-lg: 0 8px 32px rgba(26,58,92,0.14);
+    --radius: 20px;
+    --radius-sm: 14px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--blue-bg);
+    color: var(--gray-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Subtle background shapes */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -100px; right: -100px;
+    width: 450px; height: 450px;
+    background: radial-gradient(circle, rgba(232,131,42,0.06) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -100px; left: -100px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(74,155,217,0.07) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    text-align: center;
+    margin-bottom: 12px;
+    animation: fadeDown 0.6s ease-out;
+  }
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    border: 2px solid var(--blue-pale);
+    border-radius: 40px;
+    padding: 6px 18px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--blue-mid);
+    margin-bottom: 14px;
+  }
+  .header h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--blue-dark);
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  .header h1 .accent { color: var(--orange); }
+  .header p.subtitle {
+    font-size: 1.05rem;
+    color: var(--gray-mid);
+    max-width: 600px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* ─── ANALOGY BANNER ─── */
+  .analogy {
+    background: var(--white);
+    border: 2px dashed var(--orange);
+    border-radius: var(--radius);
+    padding: 18px 28px;
+    text-align: center;
+    margin-bottom: 36px;
+    animation: fadeUp 0.6s ease-out 0.1s both;
+  }
+  .analogy p {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    line-height: 1.55;
+  }
+  .analogy .emoji-big { font-size: 1.4rem; }
+
+  /* ─── TIMELINE ─── */
+  .timeline {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Vertical connector line */
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 47px;
+    top: 50px;
+    bottom: 50px;
+    width: 4px;
+    background: linear-gradient(
+      to bottom,
+      var(--orange) 0%,
+      var(--blue-light) 25%,
+      var(--purple) 50%,
+      var(--teal) 75%,
+      var(--green) 100%
+    );
+    border-radius: 4px;
+    z-index: 0;
+  }
+
+  .step-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Step number circle */
+  .step-number {
+    width: 96px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  .step-circle {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: white;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15);
+    border: 3px solid var(--white);
+  }
+
+  /* Card */
+  .step-card {
+    flex: 1;
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 24px 28px;
+    margin: 10px 0;
+    border-left: 5px solid;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .step-card:hover {
+    transform: translateX(4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .step-card h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.3rem;
+    font-weight: 800;
+    margin-bottom: 4px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .step-card h2 .step-emoji { font-size: 1.5rem; }
+  .step-card .step-subtitle {
+    font-size: 0.82rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 10px;
+    opacity: 0.7;
+  }
+  .step-card p {
+    font-size: 0.93rem;
+    line-height: 1.6;
+    color: var(--gray-dark);
+    margin-bottom: 12px;
+  }
+  .step-card p:last-child { margin-bottom: 0; }
+
+  /* Tip chips inside cards */
+  .tip-inline {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--gray-light);
+    border-radius: 20px;
+    padding: 5px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    margin-top: 4px;
+  }
+  .tip-inline .kbd {
+    background: var(--blue-dark);
+    color: white;
+    padding: 2px 8px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+  }
+
+  /* ─── Step colors ─── */
+  .step-1 .step-circle { background: var(--orange); }
+  .step-1 .step-card { border-left-color: var(--orange); }
+  .step-1 h2 { color: var(--orange); }
+  .step-1 .step-subtitle { color: var(--orange); }
+
+  .step-2 .step-circle { background: var(--blue-light); }
+  .step-2 .step-card { border-left-color: var(--blue-light); }
+  .step-2 h2 { color: var(--blue-light); }
+  .step-2 .step-subtitle { color: var(--blue-light); }
+
+  .step-3 .step-circle { background: var(--purple); }
+  .step-3 .step-card { border-left-color: var(--purple); }
+  .step-3 h2 { color: var(--purple); }
+  .step-3 .step-subtitle { color: var(--purple); }
+
+  .step-4 .step-circle { background: var(--teal); }
+  .step-4 .step-card { border-left-color: var(--teal); }
+  .step-4 h2 { color: var(--teal); }
+  .step-4 .step-subtitle { color: var(--teal); }
+
+  .step-5 .step-circle { background: var(--green); }
+  .step-5 .step-card { border-left-color: var(--green); }
+  .step-5 h2 { color: var(--green); }
+  .step-5 .step-subtitle { color: var(--green); }
+
+  /* Animations */
+  .step-1 { animation: fadeUp 0.6s ease-out 0.15s both; }
+  .step-2 { animation: fadeUp 0.6s ease-out 0.25s both; }
+  .step-3 { animation: fadeUp 0.6s ease-out 0.35s both; }
+  .step-4 { animation: fadeUp 0.6s ease-out 0.45s both; }
+  .step-5 { animation: fadeUp 0.6s ease-out 0.55s both; }
+
+  /* ─── GOLDEN RULES FOOTER ─── */
+  .golden-rules {
+    margin-top: 36px;
+    background: linear-gradient(135deg, var(--blue-dark) 0%, #1e4f7a 100%);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 20px;
+    animation: fadeUp 0.6s ease-out 0.65s both;
+  }
+  .golden-rules h3 {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--orange-light);
+    margin-bottom: 4px;
+  }
+  .rule-item {
+    background: rgba(255,255,255,0.08);
+    border-radius: var(--radius-sm);
+    padding: 18px 16px;
+    text-align: center;
+    border: 1px solid rgba(255,255,255,0.1);
+  }
+  .rule-item .rule-emoji {
+    font-size: 1.8rem;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .rule-item h4 {
+    font-family: 'Baloo 2', cursive;
+    color: white;
+    font-size: 0.95rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .rule-item p {
+    font-size: 0.78rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.4;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center;
+    margin-top: 28px;
+    padding-top: 16px;
+    border-top: 2px solid var(--blue-pale);
+    font-size: 0.78rem;
+    color: var(--gray-mid);
+    animation: fadeUp 0.6s ease-out 0.75s both;
+  }
+  .footer strong { color: var(--blue-dark); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 800px) {
+    .header h1 { font-size: 1.9rem; }
+    .timeline::before { left: 31px; }
+    .step-number { width: 64px; }
+    .step-circle { width: 44px; height: 44px; font-size: 1.2rem; }
+    .step-card { padding: 18px 20px; }
+    .golden-rules { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 500px) {
+    .golden-rules { grid-template-columns: 1fr; }
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; }
+    .step-card, .golden-rules, .analogy { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+    .step-card:hover { transform: none; }
+    .timeline::before { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-badge">🎓 Technologie · Collège · Tinkercad</div>
+    <h1>Ton Premier Objet 3D en <span class="accent">5 Étapes</span></h1>
+    <p class="subtitle">Le guide ultra-simplifié pour modéliser et exporter ton objet utile, prêt à imprimer.</p>
+  </header>
+
+  <!-- ANALOGY -->
+  <div class="analogy">
+    <p><span class="emoji-big">🧱</span> Imagine Tinkercad comme une boîte de <strong>LEGO numériques</strong> : tu empiles, tu creuses, tu assembles des formes simples pour construire ton idée ! <span class="emoji-big">💡</span></p>
+  </div>
+
+  <!-- TIMELINE -->
+  <div class="timeline">
+
+    <!-- ÉTAPE 1 -->
+    <div class="step-row step-1">
+      <div class="step-number"><div class="step-circle">1</div></div>
+      <div class="step-card">
+        <h2><span class="step-emoji">🧊</span> Dépose tes briques</h2>
+        <div class="step-subtitle">Glisser-déposer les formes de base</div>
+        <p>Ouvre la <strong>Bibliothèque de Formes</strong> (à droite) et fais glisser des cubes, cylindres et sphères sur le <strong>Plan de Construction</strong> (la grille bleue). Ce sont tes briques de base !</p>
+        <p>Commence simple : un cube pour le corps de ton objet, un cylindre pour un trou ou un pied.</p>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 2 -->
+    <div class="step-row step-2">
+      <div class="step-number"><div class="step-circle">2</div></div>
+      <div class="step-card">
+        <h2><span class="step-emoji">📐</span> Ajuste les dimensions</h2>
+        <div class="step-subtitle">Redimensionner et positionner</div>
+        <p>Clique sur une forme : des <strong>poignées blanches et noires</strong> apparaissent. Tire-les pour changer la taille. Le <strong>cône noir</strong> (en haut) sert à monter ou descendre la forme.</p>
+        <p>Pense en <strong>millimètres</strong> ! Clique sur une dimension pour taper une valeur précise.</p>
+        <div class="tip-inline">⌨️ Raccourci : <span class="kbd">D</span> = poser au sol</div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 3 -->
+    <div class="step-row step-3">
+      <div class="step-number"><div class="step-circle">3</div></div>
+      <div class="step-card">
+        <h2><span class="step-emoji">🕳️</span> Creuse et sculpte</h2>
+        <div class="step-subtitle">Addition vs Soustraction</div>
+        <p><strong>Additionner</strong> = empiler des formes pleines (solides). <strong>Soustraire</strong> = utiliser une forme en mode "Perçage" (transparente rayée) pour creuser un trou.</p>
+        <p>Sélectionne une forme → dans l'inspecteur, choisis <strong>"Perçage"</strong> au lieu de "Solide". Place-la là où tu veux creuser, puis sélectionne tout et clique <strong>Grouper</strong>.</p>
+        <div class="tip-inline">⌨️ Raccourci : <span class="kbd">Ctrl</span> + <span class="kbd">G</span> = grouper</div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 4 -->
+    <div class="step-row step-4">
+      <div class="step-number"><div class="step-circle">4</div></div>
+      <div class="step-card">
+        <h2><span class="step-emoji">🧩</span> Assemble et aligne</h2>
+        <div class="step-subtitle">Créer l'objet final</div>
+        <p>Sélectionne toutes tes pièces (clic + maintenir <strong>Shift</strong>), puis utilise l'outil <strong>Aligner</strong> pour les centrer parfaitement. Ensuite, <strong>Groupe</strong> tout pour fusionner en un seul objet.</p>
+        <p>Vérifie avec le <strong>Cube de Vue</strong> que ton objet est correct sous tous les angles : Face, Dessus, Droite.</p>
+        <div class="tip-inline">⌨️ Raccourci : <span class="kbd">L</span> = aligner</div>
+      </div>
+    </div>
+
+    <!-- ÉTAPE 5 -->
+    <div class="step-row step-5">
+      <div class="step-number"><div class="step-circle">5</div></div>
+      <div class="step-card">
+        <h2><span class="step-emoji">🚀</span> Exporte ton fichier STL</h2>
+        <div class="step-subtitle">Prêt pour l'imprimante 3D !</div>
+        <p>Clique sur <strong>Exporter</strong> (en haut à droite) → choisis le format <strong>.STL</strong>. C'est le fichier que le logiciel de tranchage (slicer) va transformer en instructions pour l'imprimante 3D.</p>
+        <p>Dernière vérification avant d'exporter : ton objet est-il bien <strong>posé à plat</strong> sur le plan ? Pas de pièce qui flotte dans le vide ?</p>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- GOLDEN RULES -->
+  <section class="golden-rules">
+    <h3>🏆 Les 4 Règles d'Or de la Modélisation</h3>
+    <div class="rule-item">
+      <span class="rule-emoji">📏</span>
+      <h4>Épaisseur mini</h4>
+      <p>Rien en dessous de <strong>2 mm</strong> : sinon ça casse à l'impression.</p>
+    </div>
+    <div class="rule-item">
+      <span class="rule-emoji">⬇️</span>
+      <h4>Bien posé au sol</h4>
+      <p>Touche <strong>D</strong> pour plaquer ta forme sur le plan. Rien ne flotte !</p>
+    </div>
+    <div class="rule-item">
+      <span class="rule-emoji">🔗</span>
+      <h4>Tout est groupé</h4>
+      <p>Avant d'exporter, sélectionne tout et <strong>Ctrl+G</strong>. Un seul bloc.</p>
+    </div>
+    <div class="rule-item">
+      <span class="rule-emoji">🔄</span>
+      <h4>Tourne autour</h4>
+      <p>Utilise le <strong>Cube de Vue</strong> pour vérifier chaque angle avant d'exporter.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <strong>Collège Moulin à Vent</strong> · Technologie 5ème · Séquence Impression 3D · Période 3
+  </div>
+
+</div>
+
+</body>
+</html>

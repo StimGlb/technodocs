@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fiche Outil — Plume & Toupie | Tinkercad</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Baloo+2:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --blue-dark: #1a3a5c;
+    --blue-mid: #2b6ca3;
+    --blue-light: #4a9bd9;
+    --blue-pale: #d0e8f7;
+    --blue-bg: #e8f2fa;
+    --orange: #e8832a;
+    --orange-light: #f5a623;
+    --orange-pale: #fef0dc;
+    --green: #2eae6d;
+    --green-pale: #d8f5e6;
+    --red: #e05555;
+    --red-pale: #fde4e4;
+    --gray-dark: #3a3f47;
+    --gray-mid: #6b7280;
+    --gray-light: #f0f2f5;
+    --white: #ffffff;
+    --shadow: 0 4px 20px rgba(26,58,92,0.10);
+    --shadow-lg: 0 8px 32px rgba(26,58,92,0.14);
+    --radius: 18px;
+    --radius-sm: 12px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--blue-bg);
+    color: var(--gray-dark);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Background decoration */
+  body::before {
+    content: '';
+    position: fixed;
+    top: -120px;
+    right: -120px;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(232,131,42,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+  }
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -80px;
+    left: -80px;
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, rgba(74,155,217,0.08) 0%, transparent 70%);
+    border-radius: 50%;
+    z-index: 0;
+  }
+
+  .page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 32px 24px 48px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── HEADER ─── */
+  .header {
+    text-align: center;
+    margin-bottom: 36px;
+    animation: fadeDown 0.7s ease-out;
+  }
+  .header-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--white);
+    border: 2px solid var(--blue-pale);
+    border-radius: 40px;
+    padding: 6px 18px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--blue-mid);
+    margin-bottom: 14px;
+    letter-spacing: 0.02em;
+  }
+  .header-badge .icon { font-size: 1.1rem; }
+  .header h1 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: var(--blue-dark);
+    line-height: 1.15;
+    margin-bottom: 6px;
+  }
+  .header h1 span.plume { color: var(--orange); }
+  .header h1 span.toupie { color: var(--blue-light); }
+  .header p.subtitle {
+    font-size: 1.05rem;
+    color: var(--gray-mid);
+    max-width: 640px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  /* ─── TWO-COLUMN TOOLS ─── */
+  .tools-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-bottom: 32px;
+  }
+
+  .tool-card {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    animation: fadeUp 0.7s ease-out both;
+    border: 2px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+  }
+  .tool-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-lg);
+  }
+  .tool-card:nth-child(1) { animation-delay: 0.15s; }
+  .tool-card:nth-child(2) { animation-delay: 0.3s; }
+  .tool-card.plume-card:hover { border-color: var(--orange); }
+  .tool-card.toupie-card:hover { border-color: var(--blue-light); }
+
+  .tool-header {
+    padding: 24px 28px 18px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .tool-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    flex-shrink: 0;
+  }
+  .plume-card .tool-icon {
+    background: var(--orange-pale);
+  }
+  .toupie-card .tool-icon {
+    background: var(--blue-pale);
+  }
+  .tool-title-group h2 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.55rem;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+  .plume-card h2 { color: var(--orange); }
+  .toupie-card h2 { color: var(--blue-mid); }
+  .tool-title-group .en-name {
+    font-size: 0.8rem;
+    color: var(--gray-mid);
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+
+  .tool-body {
+    padding: 0 28px 24px;
+  }
+
+  /* Description block */
+  .desc-block {
+    background: var(--gray-light);
+    border-radius: var(--radius-sm);
+    padding: 16px 18px;
+    margin-bottom: 18px;
+    position: relative;
+  }
+  .desc-block::before {
+    content: '💡';
+    position: absolute;
+    top: -10px;
+    left: 16px;
+    font-size: 1.2rem;
+    background: var(--gray-light);
+    padding: 0 4px;
+  }
+  .desc-block p {
+    font-size: 0.95rem;
+    line-height: 1.55;
+    color: var(--gray-dark);
+  }
+  .desc-block strong {
+    color: var(--blue-dark);
+  }
+
+  /* Section mini-titles */
+  .section-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 10px;
+    margin-top: 4px;
+  }
+  .plume-card .section-label { color: var(--orange); }
+  .toupie-card .section-label { color: var(--blue-mid); }
+  .section-label .dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .plume-card .dot { background: var(--orange); }
+  .toupie-card .dot { background: var(--blue-mid); }
+
+  /* When to use */
+  .when-block {
+    margin-bottom: 18px;
+  }
+  .when-block p {
+    font-size: 0.9rem;
+    line-height: 1.55;
+    color: var(--gray-dark);
+  }
+
+  /* Example object */
+  .example-box {
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    margin-bottom: 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  .plume-card .example-box { background: var(--orange-pale); }
+  .toupie-card .example-box { background: var(--blue-pale); }
+  .example-box .ex-icon {
+    font-size: 1.6rem;
+    flex-shrink: 0;
+    line-height: 1;
+    margin-top: 2px;
+  }
+  .example-box .ex-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .example-box .ex-text strong {
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+  }
+
+  /* Steps mini */
+  .steps-mini {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 18px;
+    flex-wrap: wrap;
+  }
+  .step-chip {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--white);
+    border: 1.5px solid var(--blue-pale);
+    border-radius: 30px;
+    padding: 6px 14px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--blue-dark);
+    white-space: nowrap;
+  }
+  .plume-card .step-chip { border-color: rgba(232,131,42,0.25); }
+  .toupie-card .step-chip { border-color: rgba(74,155,217,0.3); }
+  .step-chip .num {
+    width: 20px; height: 20px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    color: white;
+    font-weight: 800;
+  }
+  .plume-card .step-chip .num { background: var(--orange); }
+  .toupie-card .step-chip .num { background: var(--blue-mid); }
+
+  /* Warnings */
+  .warning-box {
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    background: var(--red-pale);
+    border-left: 4px solid var(--red);
+  }
+  .warning-box .warn-icon {
+    font-size: 1.2rem;
+    flex-shrink: 0;
+    line-height: 1.3;
+  }
+  .warning-box ul {
+    list-style: none;
+    padding: 0;
+  }
+  .warning-box li {
+    font-size: 0.85rem;
+    line-height: 1.5;
+    color: var(--gray-dark);
+    padding-left: 14px;
+    position: relative;
+    margin-bottom: 4px;
+  }
+  .warning-box li:last-child { margin-bottom: 0; }
+  .warning-box li::before {
+    content: '⚠';
+    position: absolute;
+    left: 0;
+    font-size: 0.75rem;
+  }
+
+  /* ─── COMPARISON TABLE ─── */
+  .compare-section {
+    background: var(--white);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 28px 32px;
+    margin-bottom: 32px;
+    animation: fadeUp 0.7s ease-out 0.45s both;
+  }
+  .compare-section h3 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.35rem;
+    font-weight: 800;
+    color: var(--blue-dark);
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  .compare-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: var(--radius-sm);
+    border: 2px solid var(--blue-pale);
+  }
+  .compare-table th, .compare-table td {
+    padding: 12px 18px;
+    text-align: left;
+    font-size: 0.88rem;
+    line-height: 1.45;
+  }
+  .compare-table thead th {
+    font-weight: 800;
+    font-size: 0.9rem;
+    color: var(--white);
+  }
+  .compare-table thead th:nth-child(1) { background: var(--blue-dark); width: 28%; }
+  .compare-table thead th:nth-child(2) { background: var(--orange); width: 36%; }
+  .compare-table thead th:nth-child(3) { background: var(--blue-mid); width: 36%; }
+  .compare-table tbody tr { border-bottom: 1px solid var(--blue-pale); }
+  .compare-table tbody tr:nth-child(even) { background: var(--gray-light); }
+  .compare-table tbody tr:last-child td { border-bottom: none; }
+  .compare-table tbody td:first-child {
+    font-weight: 700;
+    color: var(--blue-dark);
+  }
+
+  /* ─── TIPS BANNER ─── */
+  .tips-banner {
+    background: linear-gradient(135deg, var(--blue-dark) 0%, var(--blue-mid) 100%);
+    border-radius: var(--radius);
+    padding: 28px 32px;
+    color: white;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 24px;
+    animation: fadeUp 0.7s ease-out 0.6s both;
+  }
+  .tip-item {
+    text-align: center;
+  }
+  .tip-item .tip-emoji {
+    font-size: 2rem;
+    margin-bottom: 8px;
+    display: block;
+  }
+  .tip-item h4 {
+    font-family: 'Baloo 2', cursive;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: var(--orange-light);
+  }
+  .tip-item p {
+    font-size: 0.82rem;
+    line-height: 1.45;
+    opacity: 0.9;
+  }
+
+  /* ─── FOOTER ─── */
+  .footer {
+    text-align: center;
+    margin-top: 32px;
+    padding-top: 18px;
+    border-top: 2px solid var(--blue-pale);
+    font-size: 0.78rem;
+    color: var(--gray-mid);
+    animation: fadeUp 0.7s ease-out 0.75s both;
+  }
+  .footer strong { color: var(--blue-dark); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 800px) {
+    .tools-grid { grid-template-columns: 1fr; }
+    .tips-banner { grid-template-columns: 1fr; }
+    .header h1 { font-size: 2rem; }
+    .compare-table th, .compare-table td { padding: 10px 12px; font-size: 0.82rem; }
+  }
+
+  /* Print-friendly */
+  @media print {
+    body { background: white; }
+    .tool-card, .compare-section, .tips-banner { break-inside: avoid; box-shadow: none; border: 1px solid #ccc; }
+    .tool-card:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-badge">
+      <span class="icon">🎓</span> Technologie · Collège · Tinkercad
+    </div>
+    <h1>Les Outils Avancés : <span class="plume">Plume</span> & <span class="toupie">Toupie</span></h1>
+    <p class="subtitle">Deux outils puissants pour aller au-delà des formes de base et créer des objets uniques, prêts pour l'impression 3D.</p>
+  </header>
+
+  <!-- TOOL CARDS -->
+  <div class="tools-grid">
+
+    <!-- PLUME (Scribble) -->
+    <div class="tool-card plume-card">
+      <div class="tool-header">
+        <div class="tool-icon">✏️</div>
+        <div class="tool-title-group">
+          <h2>Plume</h2>
+          <span class="en-name">Scribble Tool</span>
+        </div>
+      </div>
+      <div class="tool-body">
+
+        <div class="desc-block">
+          <p><strong>Dessine une forme libre</strong> à la main, et Tinkercad la transforme en objet 3D ! C'est comme dessiner sur papier, mais ton dessin prend du volume automatiquement.</p>
+        </div>
+
+        <div class="section-label"><span class="dot"></span> Quand l'utiliser ?</div>
+        <div class="when-block">
+          <p>Quand tu veux créer des formes <strong>organiques ou personnalisées</strong> impossibles à faire avec des cubes et cylindres : lettres, logos, contours de main, formes libres...</p>
+        </div>
+
+        <div class="section-label"><span class="dot"></span> Exemple d'objet utile</div>
+        <div class="example-box">
+          <span class="ex-icon">🏷️</span>
+          <div class="ex-text">
+            <strong>Un porte-clés personnalisé</strong>
+            Dessine tes initiales ou un motif à main levée, puis extrude-les pour en faire un objet solide imprimable.
+          </div>
+        </div>
+
+        <div class="section-label"><span class="dot"></span> Les étapes en bref</div>
+        <div class="steps-mini">
+          <div class="step-chip"><span class="num">1</span> Ouvrir Plume</div>
+          <div class="step-chip"><span class="num">2</span> Dessiner</div>
+          <div class="step-chip"><span class="num">3</span> Ajuster hauteur</div>
+          <div class="step-chip"><span class="num">4</span> Grouper</div>
+        </div>
+
+        <div class="section-label"><span class="dot"></span> Pièges à éviter</div>
+        <div class="warning-box">
+          <span class="warn-icon">🚧</span>
+          <ul>
+            <li>Traits trop fins (&lt; 2 mm) → cassent à l'impression</li>
+            <li>Formes non fermées → erreurs de volume</li>
+            <li>Détails trop petits → invisibles une fois imprimés</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOUPIE (Shape Generators) -->
+    <div class="tool-card toupie-card">
+      <div class="tool-header">
+        <div class="tool-icon">🌀</div>
+        <div class="tool-title-group">
+          <h2>Toupie</h2>
+          <span class="en-name">Shape Generators</span>
+        </div>
+      </div>
+      <div class="tool-body">
+
+        <div class="desc-block">
+          <p><strong>Des formes paramétriques</strong> prêtes à l'emploi que tu personnalises avec des curseurs : engrenages, étoiles, textes 3D, ressorts... Le résultat est toujours propre et précis.</p>
+        </div>
+
+        <div class="section-label"><span class="dot"></span> Quand l'utiliser ?</div>
+        <div class="when-block">
+          <p>Quand tu as besoin de formes <strong>techniques et régulières</strong> difficiles à dessiner à la main : engrenages, filetages, formes à motifs répétitifs, textes en relief...</p>
+        </div>
+
+        <div class="section-label"><span class="dot"></span> Exemple d'objet utile</div>
+        <div class="example-box">
+          <span class="ex-icon">⚙️</span>
+          <div class="ex-text">
+            <strong>Un support de smartphone</strong>
+            Utilise un générateur de formes pour créer une base stable avec des encoches parfaitement dimensionnées.
+          </div>
+        </div>
+
+        <div class="section-label"><span class="dot"></span> Les étapes en bref</div>
+        <div class="steps-mini">
+          <div class="step-chip"><span class="num">1</span> Bibliothèque →&nbsp;Toupie</div>
+          <div class="step-chip"><span class="num">2</span> Choisir une forme</div>
+          <div class="step-chip"><span class="num">3</span> Régler les paramètres</div>
+          <div class="step-chip"><span class="num">4</span> Combiner</div>
+        </div>
+
+        <div class="section-label"><span class="dot"></span> Pièges à éviter</div>
+        <div class="warning-box">
+          <span class="warn-icon">🚧</span>
+          <ul>
+            <li>Trop de paramètres modifiés → forme complexe non imprimable</li>
+            <li>Oublier de vérifier les dimensions réelles (mm)</li>
+            <li>Parties en porte-à-faux → nécessitent des supports</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- COMPARISON TABLE -->
+  <section class="compare-section">
+    <h3>⚖️ Plume vs Toupie — Quel outil choisir ?</h3>
+    <table class="compare-table">
+      <thead>
+        <tr>
+          <th>Critère</th>
+          <th>✏️ Plume (Scribble)</th>
+          <th>🌀 Toupie (Generators)</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Type de forme</td>
+          <td>Libre, organique, dessinée</td>
+          <td>Précise, paramétrique, technique</td>
+        </tr>
+        <tr>
+          <td>Difficulté</td>
+          <td>⭐ Facile — comme dessiner</td>
+          <td>⭐⭐ Moyen — réglages à comprendre</td>
+        </tr>
+        <tr>
+          <td>Idéal pour</td>
+          <td>Décorations, textes, logos</td>
+          <td>Mécanismes, supports, structures</td>
+        </tr>
+        <tr>
+          <td>Précision</td>
+          <td>Approximative (main levée)</td>
+          <td>Exacte (valeurs numériques)</td>
+        </tr>
+        <tr>
+          <td>Conseil impression</td>
+          <td>Épaissir les traits &ge; 2 mm</td>
+          <td>Vérifier les porte-à-faux (&lt; 45°)</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- TIPS BANNER -->
+  <section class="tips-banner">
+    <div class="tip-item">
+      <span class="tip-emoji">🔗</span>
+      <h4>Combine les deux !</h4>
+      <p>Utilise la Plume pour la déco et la Toupie pour la structure, puis groupe tout ensemble.</p>
+    </div>
+    <div class="tip-item">
+      <span class="tip-emoji">📏</span>
+      <h4>Pense en millimètres</h4>
+      <p>Vérifie toujours les dimensions réelles. La règle d'or : rien en dessous de 2 mm d'épaisseur.</p>
+    </div>
+    <div class="tip-item">
+      <span class="tip-emoji">🖨️</span>
+      <h4>Teste avant d'imprimer</h4>
+      <p>Pose ton objet à plat (touche D) et vérifie qu'il est stable sur le plan de construction.</p>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <strong>Collège Moulin à Vent</strong> · Technologie 5ème · Séquence Impression 3D · Période 3
+  </div>
+
+</div>
+
+</body>
+</html>

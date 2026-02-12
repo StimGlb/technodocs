@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mini-Slicer 3D — Simulateur d'Impression | TechnoDocs</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0f1923;
+    --bg-card: #182633;
+    --bg-card-hover: #1e3044;
+    --bg-input: #0d1520;
+    --border: #2a3f52;
+    --border-accent: #3b5a78;
+    --text: #c8d6e0;
+    --text-bright: #e8f0f5;
+    --text-dim: #6a8499;
+    --accent: #00d4aa;
+    --accent-glow: rgba(0,212,170,0.15);
+    --accent-dim: #00a885;
+    --orange: #ff8c42;
+    --orange-glow: rgba(255,140,66,0.12);
+    --blue: #4a9bd9;
+    --blue-glow: rgba(74,155,217,0.12);
+    --red: #ff5f6b;
+    --yellow: #ffd166;
+    --purple: #a78bfa;
+    --shadow: 0 4px 24px rgba(0,0,0,0.4);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --mono: 'JetBrains Mono', monospace;
+    --sans: 'Nunito', sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: var(--mono);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* Subtle grid background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(var(--border) 1px, transparent 1px),
+      linear-gradient(90deg, var(--border) 1px, transparent 1px);
+    background-size: 60px 60px;
+    opacity: 0.08;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .app {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 20px 48px;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ─── HEADER ─── */
+  .app-header {
+    text-align: center;
+    margin-bottom: 28px;
+    animation: slideDown 0.5s ease-out;
+  }
+  .app-header__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--accent-glow);
+    border: 1px solid var(--accent-dim);
+    border-radius: 30px;
+    padding: 5px 16px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
+  }
+  .app-header h1 {
+    font-family: var(--sans);
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: var(--text-bright);
+    line-height: 1.15;
+  }
+  .app-header h1 .hl { color: var(--accent); }
+  .app-header p {
+    font-size: 0.85rem;
+    color: var(--text-dim);
+    margin-top: 6px;
+    font-weight: 500;
+  }
+
+  /* ─── LAYOUT ─── */
+  .dashboard {
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    grid-template-rows: auto auto;
+    gap: 20px;
+    animation: fadeUp 0.5s ease-out 0.1s both;
+  }
+
+  /* ─── PANEL (left) ─── */
+  .panel {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: var(--shadow);
+  }
+  .panel--controls {
+    grid-row: 1 / 3;
+  }
+  .panel__title {
+    font-family: var(--sans);
+    font-size: 0.95rem;
+    font-weight: 800;
+    color: var(--text-bright);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .panel__title .icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    flex-shrink: 0;
+  }
+  .panel__title .icon--green { background: var(--accent-glow); }
+  .panel__title .icon--orange { background: var(--orange-glow); }
+  .panel__title .icon--blue { background: var(--blue-glow); }
+
+  /* ─── CONTROL GROUP ─── */
+  .ctrl {
+    margin-bottom: 18px;
+  }
+  .ctrl:last-child { margin-bottom: 0; }
+  .ctrl__label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 6px;
+  }
+  .ctrl__name {
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .ctrl__value {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .ctrl__value--orange { color: var(--orange); }
+  .ctrl__value--blue { color: var(--blue); }
+  .ctrl__value--yellow { color: var(--yellow); }
+
+  /* Range slider */
+  .ctrl__range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 6px;
+    background: var(--bg-input);
+    border-radius: 3px;
+    outline: none;
+    border: 1px solid var(--border);
+    cursor: pointer;
+  }
+  .ctrl__range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg-card);
+    box-shadow: 0 0 8px var(--accent-glow);
+    cursor: pointer;
+    transition: transform 0.15s;
+  }
+  .ctrl__range::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+  }
+  .ctrl__range::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg-card);
+    cursor: pointer;
+  }
+  .ctrl__range--orange::-webkit-slider-thumb { background: var(--orange); box-shadow: 0 0 8px var(--orange-glow); }
+  .ctrl__range--orange::-moz-range-thumb { background: var(--orange); }
+  .ctrl__range--blue::-webkit-slider-thumb { background: var(--blue); box-shadow: 0 0 8px var(--blue-glow); }
+  .ctrl__range--blue::-moz-range-thumb { background: var(--blue); }
+
+  /* Steps marks */
+  .ctrl__steps {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 4px;
+    padding: 0 2px;
+  }
+  .ctrl__step {
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    font-weight: 600;
+  }
+
+  /* Divider */
+  .divider {
+    height: 1px;
+    background: var(--border);
+    margin: 18px 0;
+  }
+
+  /* Dimension inputs row */
+  .dim-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 4px;
+  }
+  .dim-input {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 8px 10px;
+    color: var(--text-bright);
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    font-weight: 700;
+    text-align: center;
+    width: 100%;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .dim-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-glow);
+  }
+  .dim-label {
+    text-align: center;
+    font-size: 0.65rem;
+    color: var(--text-dim);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin-top: 3px;
+  }
+
+  /* ─── RESULTS (top-right) ─── */
+  .results-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  .result-card {
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    text-align: center;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  .result-card:hover {
+    border-color: var(--border-accent);
+    background: var(--bg-card-hover);
+  }
+  .result-card__icon {
+    font-size: 1.4rem;
+    margin-bottom: 6px;
+  }
+  .result-card__value {
+    font-size: 1.6rem;
+    font-weight: 800;
+    color: var(--text-bright);
+    line-height: 1.1;
+    font-variant-numeric: tabular-nums;
+    margin-bottom: 2px;
+  }
+  .result-card__value--accent { color: var(--accent); }
+  .result-card__value--orange { color: var(--orange); }
+  .result-card__value--blue { color: var(--blue); }
+  .result-card__value--yellow { color: var(--yellow); }
+  .result-card__label {
+    font-size: 0.68rem;
+    color: var(--text-dim);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .result-card--wide {
+    grid-column: 1 / -1;
+    background: linear-gradient(135deg, rgba(0,212,170,0.06) 0%, var(--bg-input) 100%);
+    border-color: var(--accent-dim);
+  }
+  .result-card--wide .result-card__value {
+    font-size: 2.2rem;
+    color: var(--accent);
+  }
+
+  /* ─── CANVAS (bottom-right) ─── */
+  .panel--viz {
+    display: flex;
+    flex-direction: column;
+  }
+  .canvas-wrap {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 260px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    margin-top: 12px;
+    position: relative;
+    overflow: hidden;
+  }
+  .canvas-wrap canvas {
+    display: block;
+  }
+  .canvas-legend {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    margin-top: 10px;
+    flex-wrap: wrap;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 3px;
+  }
+
+  /* ─── INFO BANNER ─── */
+  .info-banner {
+    margin-top: 20px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--yellow);
+    border-radius: var(--radius-sm);
+    padding: 14px 18px;
+    font-size: 0.78rem;
+    line-height: 1.55;
+    color: var(--text);
+    animation: fadeUp 0.5s ease-out 0.3s both;
+  }
+  .info-banner strong { color: var(--yellow); }
+
+  /* ─── FOOTER ─── */
+  .app-footer {
+    text-align: center;
+    margin-top: 24px;
+    font-size: 0.7rem;
+    color: var(--text-dim);
+    letter-spacing: 0.03em;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes slideDown {
+    from { opacity: 0; transform: translateY(-16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 820px) {
+    .dashboard {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto auto auto;
+    }
+    .panel--controls { grid-row: auto; }
+    .app-header h1 { font-size: 1.7rem; }
+  }
+
+  /* Print */
+  @media print {
+    body { background: #fff; color: #222; }
+    .panel, .result-card, .canvas-wrap { border: 1px solid #ccc; box-shadow: none; background: #f9f9f9; }
+    .result-card__value, .ctrl__value { color: #111; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <header class="app-header">
+    <div class="app-header__badge">⚙️ Simulateur pédagogique</div>
+    <h1>Mini-<span class="hl">Slicer</span> 3D</h1>
+    <p>Simule le tranchage d'un objet et estime le temps d'impression FFF</p>
+  </header>
+
+  <!-- DASHBOARD -->
+  <div class="dashboard">
+
+    <!-- ═══ LEFT: CONTROLS ═══ -->
+    <div class="panel panel--controls">
+      <div class="panel__title">
+        <span class="icon icon--green">📐</span> Dimensions de l'objet
+      </div>
+
+      <div class="dim-row">
+        <div>
+          <input type="number" class="dim-input" id="dimX" value="20" min="5" max="200" step="1">
+          <div class="dim-label">X (mm)</div>
+        </div>
+        <div>
+          <input type="number" class="dim-input" id="dimY" value="20" min="5" max="200" step="1">
+          <div class="dim-label">Y (mm)</div>
+        </div>
+        <div>
+          <input type="number" class="dim-input" id="dimZ" value="20" min="5" max="200" step="1">
+          <div class="dim-label">Z (mm)</div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="panel__title">
+        <span class="icon icon--orange">🔧</span> Réglages d'impression
+      </div>
+
+      <!-- Layer height -->
+      <div class="ctrl">
+        <div class="ctrl__label">
+          <span class="ctrl__name">Hauteur de couche</span>
+          <span class="ctrl__value" id="valLayer">0.20 mm</span>
+        </div>
+        <input type="range" class="ctrl__range" id="layerHeight" min="0.1" max="0.3" step="0.05" value="0.2">
+        <div class="ctrl__steps">
+          <span class="ctrl__step">0.10</span>
+          <span class="ctrl__step">0.15</span>
+          <span class="ctrl__step">0.20</span>
+          <span class="ctrl__step">0.25</span>
+          <span class="ctrl__step">0.30</span>
+        </div>
+      </div>
+
+      <!-- Infill -->
+      <div class="ctrl">
+        <div class="ctrl__label">
+          <span class="ctrl__name">Remplissage</span>
+          <span class="ctrl__value ctrl__value--orange" id="valInfill">20%</span>
+        </div>
+        <input type="range" class="ctrl__range ctrl__range--orange" id="infill" min="0" max="100" step="5" value="20">
+        <div class="ctrl__steps">
+          <span class="ctrl__step">0%</span>
+          <span class="ctrl__step">25%</span>
+          <span class="ctrl__step">50%</span>
+          <span class="ctrl__step">75%</span>
+          <span class="ctrl__step">100%</span>
+        </div>
+      </div>
+
+      <!-- Speed -->
+      <div class="ctrl">
+        <div class="ctrl__label">
+          <span class="ctrl__name">Vitesse</span>
+          <span class="ctrl__value ctrl__value--blue" id="valSpeed">50 mm/s</span>
+        </div>
+        <input type="range" class="ctrl__range ctrl__range--blue" id="speed" min="20" max="100" step="5" value="50">
+        <div class="ctrl__steps">
+          <span class="ctrl__step">20</span>
+          <span class="ctrl__step">40</span>
+          <span class="ctrl__step">60</span>
+          <span class="ctrl__step">80</span>
+          <span class="ctrl__step">100</span>
+        </div>
+      </div>
+
+      <!-- Walls -->
+      <div class="ctrl">
+        <div class="ctrl__label">
+          <span class="ctrl__name">Périmètres (parois)</span>
+          <span class="ctrl__value ctrl__value--yellow" id="valWalls">2</span>
+        </div>
+        <input type="range" class="ctrl__range" id="walls" min="1" max="4" step="1" value="2">
+        <div class="ctrl__steps">
+          <span class="ctrl__step">1</span>
+          <span class="ctrl__step">2</span>
+          <span class="ctrl__step">3</span>
+          <span class="ctrl__step">4</span>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="panel__title">
+        <span class="icon icon--blue">🖨️</span> Matériau
+      </div>
+      <div class="ctrl">
+        <div class="ctrl__label">
+          <span class="ctrl__name">Filament</span>
+          <span class="ctrl__value" style="color:var(--purple);">PLA · 1.75mm</span>
+        </div>
+        <div style="font-size:0.7rem; color:var(--text-dim); margin-top:4px;">
+          Densité : 1.24 g/cm³ · Buse : 0.4 mm
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ TOP-RIGHT: RESULTS ═══ -->
+    <div class="panel">
+      <div class="panel__title">
+        <span class="icon icon--green">📊</span> Estimations
+      </div>
+      <div class="results-grid">
+        <div class="result-card result-card--wide">
+          <div class="result-card__icon">⏱️</div>
+          <div class="result-card__value result-card__value--accent" id="resTime">--</div>
+          <div class="result-card__label">Temps d'impression</div>
+        </div>
+        <div class="result-card">
+          <div class="result-card__icon">📏</div>
+          <div class="result-card__value result-card__value--orange" id="resLayers">--</div>
+          <div class="result-card__label">Couches</div>
+        </div>
+        <div class="result-card">
+          <div class="result-card__icon">🧵</div>
+          <div class="result-card__value result-card__value--blue" id="resFilament">--</div>
+          <div class="result-card__label">Filament (m)</div>
+        </div>
+        <div class="result-card">
+          <div class="result-card__icon">⚖️</div>
+          <div class="result-card__value result-card__value--yellow" id="resWeight">--</div>
+          <div class="result-card__label">Poids (g)</div>
+        </div>
+        <div class="result-card">
+          <div class="result-card__icon">📦</div>
+          <div class="result-card__value" id="resVolume" style="color:var(--purple);">--</div>
+          <div class="result-card__label">Volume matière (cm³)</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ BOTTOM-RIGHT: VISUALIZATION ═══ -->
+    <div class="panel panel--viz">
+      <div class="panel__title">
+        <span class="icon icon--orange">🔍</span> Coupe transversale (vue du dessus)
+      </div>
+      <div class="canvas-wrap">
+        <canvas id="sliceCanvas" width="400" height="300"></canvas>
+      </div>
+      <div class="canvas-legend">
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#00d4aa;"></div>
+          Périmètres (parois)
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#ff8c42;"></div>
+          Remplissage
+        </div>
+        <div class="legend-item">
+          <div class="legend-dot" style="background:#1e3044;"></div>
+          Vide intérieur
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- INFO BANNER -->
+  <div class="info-banner">
+    <strong>⚠️ Note pédagogique :</strong> Ce simulateur donne une <strong>estimation simplifiée</strong>. Un vrai slicer (Cura, PrusaSlicer…) calcule les trajets exacts de la buse, optimise les déplacements et gère les supports. Les temps réels peuvent varier de ±20%. L'objectif est de comprendre <strong>l'impact de chaque réglage</strong> sur le résultat final.
+  </div>
+
+  <!-- FOOTER -->
+  <div class="app-footer">
+    Collège Moulin à Vent · Technologie 5ème · Séquence Impression 3D
+  </div>
+
+</div>
+
+<script>
+(function() {
+  // ─── DOM refs ───
+  const $ = id => document.getElementById(id);
+
+  const dimX = $('dimX'), dimY = $('dimY'), dimZ = $('dimZ');
+  const layerHeight = $('layerHeight'), infill = $('infill');
+  const speed = $('speed'), walls = $('walls');
+  const valLayer = $('valLayer'), valInfill = $('valInfill');
+  const valSpeed = $('valSpeed'), valWalls = $('valWalls');
+  const resTime = $('resTime'), resLayers = $('resLayers');
+  const resFilament = $('resFilament'), resWeight = $('resWeight');
+  const resVolume = $('resVolume');
+  const canvas = $('sliceCanvas');
+  const ctx = canvas.getContext('2d');
+
+  // ─── Constants ───
+  const NOZZLE_DIAMETER = 0.4;       // mm
+  const FILAMENT_DIAMETER = 1.75;    // mm
+  const PLA_DENSITY = 1.24e-3;       // g/mm³ (1.24 g/cm³)
+  const FILAMENT_AREA = Math.PI * (FILAMENT_DIAMETER / 2) ** 2; // mm²
+  const TRAVEL_SPEED = 120;          // mm/s (déplacements sans extrusion)
+  const RETRACT_TIME = 0.4;          // sec per retraction
+  const LAYER_CHANGE_TIME = 1.5;     // sec per layer change (Z hop + prime)
+  const TOP_BOTTOM_LAYERS = 3;       // couches pleines haut/bas
+
+  // ─── Main calculation ───
+  function calculate() {
+    const x = clamp(parseFloat(dimX.value) || 20, 5, 200);
+    const y = clamp(parseFloat(dimY.value) || 20, 5, 200);
+    const z = clamp(parseFloat(dimZ.value) || 20, 5, 200);
+    const lh = parseFloat(layerHeight.value);
+    const inf = parseInt(infill.value) / 100;
+    const spd = parseInt(speed.value);
+    const w = parseInt(walls.value);
+
+    // Update value displays
+    valLayer.textContent = lh.toFixed(2) + ' mm';
+    valInfill.textContent = (inf * 100).toFixed(0) + '%';
+    valSpeed.textContent = spd + ' mm/s';
+    valWalls.textContent = w;
+
+    // Number of layers
+    const numLayers = Math.ceil(z / lh);
+
+    // Extrusion width (slightly wider than nozzle)
+    const extWidth = NOZZLE_DIAMETER * 1.05;
+
+    // Wall thickness
+    const wallThickness = w * extWidth;
+
+    // Inner dimensions (after removing walls)
+    const innerX = Math.max(0, x - 2 * wallThickness);
+    const innerY = Math.max(0, y - 2 * wallThickness);
+
+    // ─── Per-layer calculations ───
+    let totalExtrusionLength = 0; // mm of filament consumed
+    let totalPrintMoveLength = 0; // mm of print head travel while extruding
+    let totalTravelLength = 0;    // mm of non-extruding travel
+    let totalRetracts = 0;
+
+    for (let layer = 0; layer < numLayers; layer++) {
+      const isTopBottom = layer < TOP_BOTTOM_LAYERS || layer >= (numLayers - TOP_BOTTOM_LAYERS);
+      const layerInfill = isTopBottom ? 1.0 : inf; // top/bottom always 100%
+
+      // ── Perimeters ──
+      // Each perimeter is a rectangle, offset inward by (i * extWidth)
+      let perimeterLength = 0;
+      for (let i = 0; i < w; i++) {
+        const offset = i * extWidth + extWidth / 2;
+        const px = Math.max(0, x - 2 * offset);
+        const py = Math.max(0, y - 2 * offset);
+        if (px > 0 && py > 0) {
+          perimeterLength += 2 * (px + py);
+        }
+      }
+      totalPrintMoveLength += perimeterLength;
+
+      // ── Infill ──
+      // Simplified grid infill: lines spaced at (extWidth / infill_ratio)
+      if (innerX > 0 && innerY > 0 && layerInfill > 0) {
+        let infillLength = 0;
+        if (layerInfill >= 1.0) {
+          // Solid: lines across the full inner area
+          const numLines = Math.floor(innerY / extWidth);
+          infillLength = numLines * innerX;
+        } else {
+          // Grid: spacing = extWidth / infill
+          const spacing = extWidth / layerInfill;
+          // Lines in one direction (alternating layers would do X then Y)
+          const numLines = Math.max(1, Math.floor((layer % 2 === 0 ? innerY : innerX) / spacing));
+          const lineLen = (layer % 2 === 0) ? innerX : innerY;
+          infillLength = numLines * lineLen;
+        }
+        totalPrintMoveLength += infillLength;
+        // Retractions between infill segments
+        totalRetracts += Math.max(1, Math.floor(infillLength / 40)); // ~1 retract per 40mm
+      }
+
+      // Travel moves per layer (approximate)
+      totalTravelLength += (x + y) * 0.5; // moving between perimeter and infill start
+    }
+
+    // ── Extrusion volume ──
+    // Volume of material extruded = print_move_length * extWidth * layerHeight
+    const extrudedVolume = totalPrintMoveLength * extWidth * lh; // mm³
+
+    // Filament length consumed (volume / filament cross section)
+    const filamentLength = extrudedVolume / FILAMENT_AREA; // mm
+
+    // Weight
+    const weight = extrudedVolume * PLA_DENSITY; // grams
+
+    // ── Time estimation ──
+    const printTime = totalPrintMoveLength / spd;          // seconds
+    const travelTime = totalTravelLength / TRAVEL_SPEED;   // seconds
+    const retractTime = totalRetracts * RETRACT_TIME;      // seconds
+    const layerChangeTime = numLayers * LAYER_CHANGE_TIME; // seconds
+    const totalTime = printTime + travelTime + retractTime + layerChangeTime;
+
+    // ── Display results ───
+    resLayers.textContent = numLayers;
+    resFilament.textContent = (filamentLength / 1000).toFixed(2);
+    resWeight.textContent = weight.toFixed(1);
+    resVolume.textContent = (extrudedVolume / 1000).toFixed(1);
+    resTime.textContent = formatTime(totalTime);
+
+    // ── Draw visualization ──
+    drawSlice(x, y, w, extWidth, inf);
+  }
+
+  // ─── Canvas drawing ───
+  function drawSlice(objX, objY, numWalls, extW, infillRatio) {
+    const cw = canvas.width;
+    const ch = canvas.height;
+    ctx.clearRect(0, 0, cw, ch);
+
+    // Background
+    ctx.fillStyle = '#0d1520';
+    ctx.fillRect(0, 0, cw, ch);
+
+    // Scale to fit with padding
+    const padding = 30;
+    const scaleX = (cw - 2 * padding) / objX;
+    const scaleY = (ch - 2 * padding) / objY;
+    const scale = Math.min(scaleX, scaleY);
+
+    const drawW = objX * scale;
+    const drawH = objY * scale;
+    const offsetX = (cw - drawW) / 2;
+    const offsetY = (ch - drawH) / 2;
+
+    // Helper: draw rect from object coords
+    function drawRect(ox, oy, ow, oh, fill, stroke) {
+      const rx = offsetX + ox * scale;
+      const ry = offsetY + oy * scale;
+      const rw = ow * scale;
+      const rh = oh * scale;
+      if (fill) { ctx.fillStyle = fill; ctx.fillRect(rx, ry, rw, rh); }
+      if (stroke) {
+        ctx.strokeStyle = stroke;
+        ctx.lineWidth = 1;
+        ctx.strokeRect(rx, ry, rw, rh);
+      }
+    }
+
+    // Outer boundary
+    drawRect(0, 0, objX, objY, null, '#2a3f52');
+
+    // Draw walls (perimeters)
+    const wallColor = '#00d4aa';
+    for (let i = 0; i < numWalls; i++) {
+      const offset = i * extW;
+      const wx = offset;
+      const wy = offset;
+      const ww = objX - 2 * offset;
+      const wh = objY - 2 * offset;
+      if (ww <= 0 || wh <= 0) break;
+
+      ctx.strokeStyle = wallColor;
+      ctx.lineWidth = Math.max(1, extW * scale);
+      ctx.globalAlpha = 0.9 - i * 0.1;
+      const rx = offsetX + wx * scale;
+      const ry = offsetY + wy * scale;
+      ctx.strokeRect(rx, ry, ww * scale, wh * scale);
+    }
+    ctx.globalAlpha = 1;
+
+    // Inner area
+    const wallThick = numWalls * extW;
+    const innerX = Math.max(0, objX - 2 * wallThick);
+    const innerY = Math.max(0, objY - 2 * wallThick);
+
+    if (innerX > 0 && innerY > 0 && infillRatio > 0) {
+      const ix = offsetX + wallThick * scale;
+      const iy = offsetY + wallThick * scale;
+      const iw = innerX * scale;
+      const ih = innerY * scale;
+
+      ctx.save();
+      ctx.beginPath();
+      ctx.rect(ix, iy, iw, ih);
+      ctx.clip();
+
+      // Draw grid infill
+      const infillColor = '#ff8c42';
+      ctx.strokeStyle = infillColor;
+      ctx.lineWidth = Math.max(0.5, extW * scale * 0.6);
+      ctx.globalAlpha = 0.5 + infillRatio * 0.4;
+
+      if (infillRatio >= 1) {
+        // Solid fill
+        ctx.fillStyle = infillColor;
+        ctx.globalAlpha = 0.35;
+        ctx.fillRect(ix, iy, iw, ih);
+      } else if (infillRatio > 0) {
+        const spacing = (extW / infillRatio) * scale;
+        const maxSpacing = Math.max(iw, ih) * 2;
+        const actualSpacing = Math.min(spacing, maxSpacing);
+
+        if (actualSpacing > 2) {
+          // Horizontal lines
+          for (let ly = iy; ly < iy + ih; ly += actualSpacing) {
+            ctx.beginPath();
+            ctx.moveTo(ix, ly);
+            ctx.lineTo(ix + iw, ly);
+            ctx.stroke();
+          }
+          // Vertical lines
+          for (let lx = ix; lx < ix + iw; lx += actualSpacing) {
+            ctx.beginPath();
+            ctx.moveTo(lx, iy);
+            ctx.lineTo(lx, iy + ih);
+            ctx.stroke();
+          }
+        } else {
+          // Too dense to draw individual lines, fill
+          ctx.fillStyle = infillColor;
+          ctx.globalAlpha = 0.25;
+          ctx.fillRect(ix, iy, iw, ih);
+        }
+      }
+
+      ctx.restore();
+      ctx.globalAlpha = 1;
+    }
+
+    // Draw dimension labels
+    ctx.fillStyle = '#6a8499';
+    ctx.font = '600 11px "JetBrains Mono", monospace';
+    ctx.textAlign = 'center';
+
+    // X dimension (bottom)
+    ctx.fillText(objX + ' mm', cw / 2, offsetY + drawH + 18);
+
+    // Y dimension (left, rotated)
+    ctx.save();
+    ctx.translate(offsetX - 14, ch / 2);
+    ctx.rotate(-Math.PI / 2);
+    ctx.fillText(objY + ' mm', 0, 0);
+    ctx.restore();
+  }
+
+  // ─── Helpers ───
+  function clamp(val, min, max) {
+    return Math.max(min, Math.min(max, val));
+  }
+
+  function formatTime(seconds) {
+    if (seconds < 60) return Math.round(seconds) + ' sec';
+    const h = Math.floor(seconds / 3600);
+    const m = Math.round((seconds % 3600) / 60);
+    if (h === 0) return m + ' min';
+    return h + 'h ' + (m < 10 ? '0' : '') + m + 'min';
+  }
+
+  // ─── Events ───
+  const inputs = [dimX, dimY, dimZ, layerHeight, infill, speed, walls];
+  inputs.forEach(el => {
+    el.addEventListener('input', calculate);
+  });
+
+  // Clamp dimension inputs on change
+  [dimX, dimY, dimZ].forEach(el => {
+    el.addEventListener('change', () => {
+      el.value = clamp(parseFloat(el.value) || 20, 5, 200);
+      calculate();
+    });
+  });
+
+  // ─── Initial calculation ───
+  calculate();
+
+  // ─── Responsive canvas ───
+  function resizeCanvas() {
+    const wrap = canvas.parentElement;
+    const w = wrap.clientWidth - 4;
+    const h = Math.max(240, wrap.clientHeight - 4);
+    canvas.width = w * (window.devicePixelRatio || 1);
+    canvas.height = h * (window.devicePixelRatio || 1);
+    canvas.style.width = w + 'px';
+    canvas.style.height = h + 'px';
+    ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+    calculate();
+  }
+
+  // Resize on load and window resize
+  window.addEventListener('resize', resizeCanvas);
+  // Initial resize after a small delay to let layout settle
+  setTimeout(resizeCanvas, 100);
+})();
+</script>
+
+</body>
+</html>

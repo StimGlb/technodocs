@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task Manager | TechnoDocs</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Nunito:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/tools.css" />
+    <style>
+      @media (max-width: 480px) {
+        .results-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* Print styles */
+      @media print {
+        .task-form,
+        .toolbar__actions,
+        .task-checkbox,
+        .btn-delete {
+          display: none !important;
+        }
+
+        .task-item {
+          break-inside: avoid;
+          border-color: #ccc;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="app">
+      <!-- Header -->
+      <header class="app-header">
+        <div class="app-header__badge">
+          <span>Outil de Productivité</span>
+        </div>
+        <h1>Task <span class="hl">Manager</span></h1>
+        <p>Organise tes sessions de travail avec la méthode Pomodoro</p>
+      </header>
+
+      <!-- Dashboard -->
+      <div
+        class="dashboard"
+        style="
+          grid-template-columns: 1fr;
+          grid-template-rows: auto auto auto;
+          gap: 20px;
+        "
+      >
+
+        <!-- Formulaire d'ajout -->
+        <form class="task-form" id="taskForm">
+          <h2 class="task-form__title">➕ Nouvelle tâche</h2>
+
+          <div class="task-form__grid">
+            <div class="form-group">
+              <label for="taskTitle">Titre *</label>
+              <input
+                type="text"
+                id="taskTitle"
+                required
+                placeholder="Ex: Réviser les fractions"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="taskSubject">Matière *</label>
+              <select id="taskSubject" required>
+                <option value="">Sélectionne...</option>
+                <option value="Technologie">Technologie</option>
+                <option value="Mathématiques">Mathématiques</option>
+                <option value="Français">Français</option>
+                <option value="Histoire-Géo">Histoire-Géo</option>
+                <option value="Anglais">Anglais</option>
+                <option value="SVT">SVT</option>
+                <option value="Physique-Chimie">Physique-Chimie</option>
+                <option value="Autre">Autre</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="taskType">Type de travail *</label>
+              <select id="taskType" required>
+                <option value="">Sélectionne...</option>
+                <option value="Révisions">Révisions</option>
+                <option value="Exercices">Exercices</option>
+                <option value="Préparation">Préparation</option>
+                <option value="Lecture">Lecture</option>
+                <option value="Projet">Projet</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="taskPomodoros">Durée (minutes) *</label>
+              <select id="taskPomodoros" required>
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+                <option value="20">20</option>
+                <option value="25" selected>25</option>
+                <option value="30">30</option>
+                <option value="35">35</option>
+                <option value="40">40</option>
+                <option value="45">45</option>
+                <option value="50">50</option>
+                <option value="55">55</option>
+              </select>
+            </div>
+
+            <div class="form-group task-form__full">
+              <label for="taskNotes">Notes (optionnel)</label>
+              <textarea
+                id="taskNotes"
+                placeholder="Ajoute des détails..."
+              ></textarea>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-submit">Ajouter la tâche</button>
+        </form>
+
+        <!-- Liste des tâches -->
+        <div class="panel">
+          <div class="task-list" id="taskList">
+            <!-- Les tâches seront ajoutées ici dynamiquement -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Statistiques -->
+      <div class="panel">
+        <div class="panel__title">
+          <span class="icon icon--green">📊</span>
+          Statistiques
+        </div>
+        <div class="results-grid">
+          <div class="result-card">
+            <div class="result-card__icon">📝</div>
+            <div
+              class="result-card__value result-card__value--accent"
+              id="statTotal"
+            >
+              0
+            </div>
+            <div class="result-card__label">Tâches totales</div>
+          </div>
+          <div class="result-card">
+            <div class="result-card__icon">✅</div>
+            <div
+              class="result-card__value result-card__value--blue"
+              id="statCompleted"
+            >
+              0
+            </div>
+            <div class="result-card__label">Terminées</div>
+          </div>
+          <div class="result-card">
+            <div class="result-card__icon">📚</div>
+            <div class="result-card__value" id="statSubjects">0</div>
+            <div class="result-card__label">Matières étudiées</div>
+          </div>
+          <div class="result-card">
+            <div class="result-card__icon">⏱️</div>
+            <div class="result-card__value" id="statTotalMinutes">0</div>
+            <div class="result-card__label">Minutes totales</div>
+          </div>
+          <div class="result-card result-card--wide">
+            <div class="result-card__icon">🍅</div>
+            <div class="result-card__value" id="statEstimatedPomodoros">0</div>
+            <div class="result-card__label">Pomodoros estimés (25 min)</div>
+          </div>
+        </div>
+        <div class="toolbar">
+            <div class="toolbar__actions">
+              <button class="btn-tool" onclick="taskManager.exportJSON()">
+                📥 Téléchargement
+              </button>
+              <button class="btn-tool" onclick="taskManager.printTasks()">
+                🖨️ Impression
+              </button>
+              <button class="btn-tool" onclick="taskManager.clearCompleted()">
+                🗑️ Suppression
+              </button>
+            </div>
+        </div>
+    </div>
+
+      <!-- Info banner -->
+      <div class="info-banner">
+        <strong>💡 Astuce :</strong> La méthode du Pomodoro recommande 25
+        minutes de travail concentré suivies de 5 minutes de pause. Après 4
+        Timers, prends une pause de 15-30 minutes.
+      </div>
+
+      <!-- Footer -->
+      <footer class="app-footer">TechnoDocs © 2026 | Task Manager v1.0</footer>
+    </div>
+
+    <script type="module" src="../../js/task-manager.js"></script>
+  </body>
+</html>
