@@ -67,6 +67,12 @@
   ],
   "outils": [
     {
+      "id": "task-manager", "name": "Gestionnaire de tâches",
+      "path": "src/pages/outils/task-manager.html",
+      "icon": { "type": "emoji", "value": "📅" },
+      "description": "Organisez vos devoirs et échéances"
+    },
+    {
       "id": "tinkercad-classes",
       "name": "Tinkercad — Classes",
       "path": "src/pages/outils/tinkercad-classes.html",
