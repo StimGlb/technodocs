@@ -23,7 +23,8 @@
       "Bash(dir /s /b \"e:\\\\Dev\\\\technodocs-vanilla\\\\*wizard*.html\")",
       "Bash(findstr:*)",
       "Bash(npm install:*)",
-      "Bash(npx vite build:*)"
+      "Bash(npx vite build:*)",
+      "Bash(bash:*)"
     ],
     "deny": [],
     "ask": []
