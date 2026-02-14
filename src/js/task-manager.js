@@ -351,7 +351,7 @@ class PomodoroTimer {
         
         // État initial
         this.phaseEl.innerHTML = '<span class="phase-badge phase-badge--prep">Préparation</span>';
-        this.infoEl.textContent = `Prêt à travailler ${task.pomodoros} minutes ?`;
+        this.infoEl.textContent = `Prêt(e) à travailler ${task.pomodoros} minutes ?`;
         this.btnStart.textContent = 'Démarrer';
         this.btnStart.disabled = false;
         this.btnCancel.disabled = false;
