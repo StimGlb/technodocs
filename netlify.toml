@@ -24,6 +24,20 @@
 # Headers for caching and security
 [[headers]]
   for = "/*"
+      Content-Security-Policy = """
+      default-src 'self';
+      script-src 'self' https://www.gstatic.com;
+      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
+      font-src 'self' https://fonts.gstatic.com;
+      img-src 'self' data: https:;
+      connect-src 'self' 
+        https://*.firebaseio.com 
+        https://*.googleapis.com 
+        https://firestore.googleapis.com 
+        https://identitytoolkit.googleapis.com;
+      frame-src https://*.firebaseapp.com;
+    """
+
   [headers.values]
     # Security headers renforcés pour la production
     X-Frame-Options = "DENY"
