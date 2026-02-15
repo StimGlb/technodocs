@@ -181,14 +181,25 @@ class TaskManager {
     deleteBtn.textContent = "🗑️";
     deleteBtn.addEventListener("click", () => this.deleteTask(task.id));
 
-    const startBtn = document.createElement('button');
-    startBtn.className = 'btn-start';
-    startBtn.textContent = '▶️';
-    startBtn.title = 'Démarrer le timer';
+    const startBtn = document.createElement("button");
+    startBtn.className = "btn-start";
+    startBtn.type = "button";
+    startBtn.title = "Démarrer le timer";
+    startBtn.setAttribute("aria-label", "Démarrer le timer");
+
+    const startIcon = document.createElement("span");
+    startIcon.className = "btn-start__icon";
+    startIcon.textContent = "▶️";
+    startBtn.appendChild(startIcon);
+
+    const srText = document.createElement("span");
+    srText.className = "sr-only";
+    srText.textContent = "Démarrer le timer";
+    startBtn.appendChild(srText);
     // FIX: #3 - Guard si pomodoroTimer pas initialisé
-    startBtn.addEventListener('click', () => {
-        if (!this.pomodoroTimer) return;
-        this.pomodoroTimer.open(task);
+    startBtn.addEventListener("click", () => {
+      if (!this.pomodoroTimer) return;
+      this.pomodoroTimer.open(task);
     });
 
     // FIX: #7 - Un seul appendChild par élément, ordre correct
@@ -286,234 +297,245 @@ class TaskManager {
 // ========================================
 
 class PomodoroTimer {
-    constructor(taskManager) {
-        this.taskManager = taskManager;
-        this.currentTask = null;
-        this.isRunning = false;
-        this.isPaused = false;
-        this.isLocked = false;
-        this.preparationTime = 15; // Secondes avant verrouillage
-        this.timeRemaining = 0; // Secondes
-        this.timeElapsed = 0; // Secondes réellement écoulées
-        this.startTime = null;
-        this.timerInterval = null;
-        
-        // Éléments DOM
-        this.modal = document.getElementById('timerModal');
-        this.titleEl = document.getElementById('timerTaskTitle');
-        this.subjectEl = document.getElementById('timerTaskSubject');
-        this.displayEl = document.getElementById('timerDisplay');
-        this.phaseEl = document.getElementById('timerPhase');
-        this.infoEl = document.getElementById('timerInfo');
-        this.btnStart = document.getElementById('timerBtnStart');
-        this.btnCancel = document.getElementById('timerBtnCancel');
-        
-        this.attachEvents();
-        // FIX: #1 #2 - Retiré récursion infinie et this.init() inexistant
-    }
-    
-    attachEvents() {
-        this.btnStart.addEventListener('click', () => this.handleStart());
-        this.btnCancel.addEventListener('click', () => this.handleCancel());
-        
-        // Clic sur overlay pour fermer (seulement si non verrouillé)
-        this.modal.addEventListener('click', (e) => {
-            if (e.target === this.modal && !this.isLocked) {
-                this.handleCancel();
-            }
-        });
-        
-        // FIX: #8 - Stocker la référence pour pouvoir retirer le listener
-        this.keydownHandler = (e) => {
-            if (e.key === 'Escape' && this.modal.classList.contains('is-open') && !this.isLocked) {
-                this.handleCancel();
-            }
-        };
-        document.addEventListener('keydown', this.keydownHandler);
-    }
-    
-    // Ouvrir le modal avec une tâche
-    open(task) {
-        // FIX: #6 - Nettoyer les anciens intervals avant de réouvrir
-        this.cleanup();
+  constructor(taskManager) {
+    this.taskManager = taskManager;
+    this.currentTask = null;
+    this.isRunning = false;
+    this.isPaused = false;
+    this.isLocked = false;
+    this.preparationTime = 15; // Secondes avant verrouillage
+    this.timeRemaining = 0; // Secondes
+    this.timeElapsed = 0; // Secondes réellement écoulées
+    this.startTime = null;
+    this.timerInterval = null;
 
-        this.currentTask = task;
-        this.timeRemaining = task.pomodoros * 60; // Convertir minutes en secondes
-        this.timeElapsed = 0;
-        this.isRunning = false;
-        this.isPaused = false;
-        this.isLocked = false;
-        
-        // Mettre à jour l'affichage
-        this.titleEl.textContent = task.title;
-        this.subjectEl.textContent = task.subject;
-        this.updateDisplay();
-        
-        // État initial
-        this.phaseEl.innerHTML = '<span class="phase-badge phase-badge--prep">Préparation</span>';
-        this.infoEl.textContent = `Prêt à travailler ${task.pomodoros} minutes ?`;
-        this.btnStart.textContent = 'Démarrer';
-        this.btnStart.disabled = false;
-        this.btnCancel.disabled = false;
-        
-        // FIX: #10 - classList + reflow pour fiabiliser l'animation
-        this.modal.style.display = 'flex';
-        void this.modal.offsetWidth;
-        this.modal.classList.add('is-open');
-        document.body.style.overflow = 'hidden';
+    // Éléments DOM
+    this.modal = document.getElementById("timerModal");
+    this.titleEl = document.getElementById("timerTaskTitle");
+    this.subjectEl = document.getElementById("timerTaskSubject");
+    this.displayEl = document.getElementById("timerDisplay");
+    this.phaseEl = document.getElementById("timerPhase");
+    this.infoEl = document.getElementById("timerInfo");
+    this.btnStart = document.getElementById("timerBtnStart");
+    this.btnCancel = document.getElementById("timerBtnCancel");
 
-        // FIX: #8 - Réattacher le listener keydown
-        document.addEventListener('keydown', this.keydownHandler);
-    }
-    
-    // Fermer le modal
-    close() {
-        // FIX: #10 - Retirer la classe d'animation
-        this.modal.classList.remove('is-open');
-        this.modal.style.display = 'none';
-        document.body.style.overflow = '';
-        this.cleanup();
-    }
-    
-    // Gérer le bouton Démarrer
-    handleStart() {
-        if (!this.isRunning) {
-            this.start();
-        }
-    }
-    
-    // Démarrer le timer
-    start() {
-        this.isRunning = true;
-        this.startTime = Date.now();
-        
-        // Phase de préparation (5 secondes pour annuler)
-        this.phaseEl.innerHTML = '<span class="phase-badge phase-badge--prep">🚀 Démarrage...</span>';
-        this.infoEl.textContent = `Tu as ${this.preparationTime} secondes pour annuler`;
-        this.btnStart.disabled = true;
-        
-        let prepCountdown = this.preparationTime;
-        
-        const prepInterval = setInterval(() => {
-            prepCountdown--;
-            this.infoEl.textContent = `Tu as ${prepCountdown} seconde${prepCountdown > 1 ? 's' : ''} pour annuler`;
-            
-            if (prepCountdown <= 0) {
-                clearInterval(prepInterval);
-                this.lock();
-            }
-        }, 1000);
-        
-        // Stocker pour pouvoir nettoyer si annulation
-        this.preparationInterval = prepInterval;
-    }
-    
-    // Verrouiller le timer (plus d'annulation possible)
-    lock() {
-        this.isLocked = true;
-        this.btnCancel.disabled = true;
-        this.btnCancel.style.opacity = '0.5';
-        this.btnCancel.style.cursor = 'not-allowed';
-        
-        this.phaseEl.innerHTML = '<span class="phase-badge phase-badge--work">🔥 En cours</span>';
-        this.infoEl.textContent = 'Timer verrouillé - Reste concentré !';
-        
-        // Démarrer le vrai compte à rebours
-        this.startCountdown();
-        
-        // Avertissement si fermeture de fenêtre
-        window.addEventListener('beforeunload', this.beforeUnloadHandler);
-    }
-    
-    // Compte à rebours principal
-    startCountdown() {
-        this.timerInterval = setInterval(() => {
-            this.timeRemaining--;
-            this.timeElapsed++;
-            this.updateDisplay();
-            
-            if (this.timeRemaining <= 0) {
-                this.complete();
-            }
-        }, 1000);
-    }
-    
-    // Mise à jour de l'affichage MM:SS
-    updateDisplay() {
-        const minutes = Math.floor(this.timeRemaining / 60);
-        const seconds = this.timeRemaining % 60;
-        this.displayEl.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-    }
-    
-    // Timer terminé
-    complete() {
-        clearInterval(this.timerInterval);
-        window.removeEventListener('beforeunload', this.beforeUnloadHandler);
+    this.attachEvents();
+    // FIX: #1 #2 - Retiré récursion infinie et this.init() inexistant
+  }
 
-        // FIX: #9 - Vérifier que la tâche existe encore
-        if (!this.taskManager.tasks.find(t => t.id === this.currentTask.id)) {
-            console.warn('Tâche supprimée pendant le timer');
-            this.taskManager.showToast('⚠️ Tâche introuvable', 'error');
-            this.close();
-            return;
-        }
+  attachEvents() {
+    this.btnStart.addEventListener("click", () => this.handleStart());
+    this.btnCancel.addEventListener("click", () => this.handleCancel());
 
-        this.phaseEl.innerHTML = '<span class="phase-badge phase-badge--done">✅ Terminé !</span>';
-        this.infoEl.textContent = 'Bravo ! Prends une pause de 5 minutes.';
-        this.displayEl.textContent = '00:00';
-        
-        // Marquer la tâche comme terminée
-        this.taskManager.toggleTask(this.currentTask.id);
-        
-        // Notification
-        this.taskManager.showToast('🎉 Timer terminé ! Bien joué !', 'success');
-        
-        // Fermer après 3 secondes
-        setTimeout(() => {
-            this.close();
-        }, 3000);
-    }
-    
-    // Gérer l'annulation
-    handleCancel() {
-        if (this.isLocked) {
-            return; // Ne rien faire si verrouillé
-        }
-        
-        if (this.preparationInterval) {
-            clearInterval(this.preparationInterval);
-        }
-        
-        this.close();
-    }
-    
-    // Nettoyage
-    cleanup() {
-        if (this.timerInterval) {
-            clearInterval(this.timerInterval);
-        }
-        if (this.preparationInterval) {
-            clearInterval(this.preparationInterval);
-        }
-        window.removeEventListener('beforeunload', this.beforeUnloadHandler);
-        // FIX: #8 - Retirer le listener keydown
-        if (this.keydownHandler) {
-            document.removeEventListener('keydown', this.keydownHandler);
-        }
+    // Clic sur overlay pour fermer (seulement si non verrouillé)
+    this.modal.addEventListener("click", (e) => {
+      if (e.target === this.modal && !this.isLocked) {
+        this.handleCancel();
+      }
+    });
 
-        this.currentTask = null;
-        this.isRunning = false;
-        this.isLocked = false;
-    }
-    
-    // Handler pour beforeunload
-    beforeUnloadHandler = (e) => {
-        e.preventDefault();
-        e.returnValue = 'Timer en cours ! Tu vas perdre ta progression.';
-        return e.returnValue;
+    // FIX: #8 - Stocker la référence pour pouvoir retirer le listener
+    this.keydownHandler = (e) => {
+      if (
+        e.key === "Escape" &&
+        this.modal.classList.contains("is-open") &&
+        !this.isLocked
+      ) {
+        this.handleCancel();
+      }
     };
+    document.addEventListener("keydown", this.keydownHandler);
+  }
+
+  // Ouvrir le modal avec une tâche
+  open(task) {
+    // FIX: #6 - Nettoyer les anciens intervals avant de réouvrir
+    this.cleanup();
+
+    this.currentTask = task;
+    this.timeRemaining = task.pomodoros * 60; // Convertir minutes en secondes
+    this.timeElapsed = 0;
+    this.isRunning = false;
+    this.isPaused = false;
+    this.isLocked = false;
+
+    // Mettre à jour l'affichage
+    this.titleEl.textContent = task.title;
+    this.subjectEl.textContent = task.subject;
+    this.updateDisplay();
+
+    // État initial
+    this.phaseEl.innerHTML =
+      '<span class="phase-badge phase-badge--prep">Préparation</span>';
+    this.infoEl.textContent = `Prêt(e) à travailler ${task.pomodoros} minutes ?`;
+    this.btnStart.textContent = "Démarrer";
+    this.btnStart.disabled = false;
+    this.btnCancel.disabled = false;
+
+    // FIX: #10 - classList + reflow pour fiabiliser l'animation
+    this.modal.style.display = "flex";
+    void this.modal.offsetWidth;
+    this.modal.classList.add("is-open");
+    document.body.style.overflow = "hidden";
+
+    // FIX: #8 - Réattacher le listener keydown
+    document.addEventListener("keydown", this.keydownHandler);
+  }
+
+  // Fermer le modal
+  close() {
+    // FIX: #10 - Retirer la classe d'animation
+    this.modal.classList.remove("is-open");
+    this.modal.style.display = "none";
+    document.body.style.overflow = "";
+    this.cleanup();
+  }
+
+  // Gérer le bouton Démarrer
+  handleStart() {
+    if (!this.isRunning) {
+      this.start();
+    }
+  }
+
+  // Démarrer le timer
+  start() {
+    this.isRunning = true;
+    this.startTime = Date.now();
+
+    // Phase de préparation (5 secondes pour annuler)
+    this.phaseEl.innerHTML =
+      '<span class="phase-badge phase-badge--prep">🚀 Démarrage...</span>';
+    this.infoEl.textContent = `Tu as ${this.preparationTime} secondes pour annuler`;
+    this.btnStart.disabled = true;
+
+    let prepCountdown = this.preparationTime;
+
+    const prepInterval = setInterval(() => {
+      prepCountdown--;
+      this.infoEl.textContent = `Tu as ${prepCountdown} seconde${prepCountdown > 1 ? "s" : ""} pour annuler`;
+
+      if (prepCountdown <= 0) {
+        clearInterval(prepInterval);
+        this.lock();
+      }
+    }, 1000);
+
+    // Stocker pour pouvoir nettoyer si annulation
+    this.preparationInterval = prepInterval;
+  }
+
+  // Verrouiller le timer (plus d'annulation possible)
+  lock() {
+    this.isLocked = true;
+    this.btnCancel.disabled = true;
+    this.btnCancel.style.opacity = "0.5";
+    this.btnCancel.style.cursor = "not-allowed";
+
+    this.phaseEl.innerHTML =
+      '<span class="phase-badge phase-badge--work">🔥 En cours</span>';
+    this.infoEl.textContent = "Timer verrouillé - Reste concentré !";
+
+    // Démarrer le vrai compte à rebours
+    this.startCountdown();
+
+    // Avertissement si fermeture de fenêtre
+    window.addEventListener("beforeunload", this.beforeUnloadHandler);
+  }
+
+  // Compte à rebours principal
+  startCountdown() {
+    this.timerInterval = setInterval(() => {
+      this.timeRemaining--;
+      this.timeElapsed++;
+      this.updateDisplay();
+
+      if (this.timeRemaining <= 0) {
+        this.complete();
+      }
+    }, 1000);
+  }
+
+  // Mise à jour de l'affichage MM:SS
+  updateDisplay() {
+    const minutes = Math.floor(this.timeRemaining / 60);
+    const seconds = this.timeRemaining % 60;
+    this.displayEl.textContent = `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`;
+  }
+
+  // Timer terminé
+  complete() {
+    clearInterval(this.timerInterval);
+    window.removeEventListener("beforeunload", this.beforeUnloadHandler);
+
+    // FIX: #9 - Vérifier que la tâche existe encore
+    if (!this.taskManager.tasks.find((t) => t.id === this.currentTask.id)) {
+      console.warn("Tâche supprimée pendant le timer");
+      this.taskManager.showToast("⚠️ Tâche introuvable", "error");
+      this.close();
+      return;
+    }
+
+    this.phaseEl.innerHTML =
+      '<span class="phase-badge phase-badge--done">✅ Terminé !</span>';
+    this.infoEl.textContent = "Bravo ! Prends une pause de 5 minutes.";
+    this.displayEl.textContent = "00:00";
+
+    // Marquer la tâche comme terminée
+    this.taskManager.toggleTask(this.currentTask.id);
+
+    // Notification
+    this.taskManager.showToast("🎉 Timer terminé ! Bien joué !", "success");
+
+    // Fermer après 3 secondes
+    setTimeout(() => {
+      this.close();
+    }, 3000);
+  }
+
+  // Gérer l'annulation
+  handleCancel() {
+    if (this.isLocked) {
+      return; // Ne rien faire si verrouillé
+    }
+
+    if (this.preparationInterval) {
+      clearInterval(this.preparationInterval);
+    }
+
+    this.close();
+  }
+
+  // Nettoyage
+  cleanup() {
+    if (this.timerInterval) {
+      clearInterval(this.timerInterval);
+    }
+    if (this.preparationInterval) {
+      clearInterval(this.preparationInterval);
+    }
+    window.removeEventListener("beforeunload", this.beforeUnloadHandler);
+    // FIX: #8 - Retirer le listener keydown
+    if (this.keydownHandler) {
+      document.removeEventListener("keydown", this.keydownHandler);
+    }
+
+    this.currentTask = null;
+    this.isRunning = false;
+    this.isLocked = false;
+  }
+
+  // Handler pour beforeunload
+  beforeUnloadHandler = (e) => {
+    e.preventDefault();
+    e.returnValue = "Timer en cours ! Tu vas perdre ta progression.";
+    return e.returnValue;
+  };
 }
 
-// Initialisation
-const taskManager = new TaskManager();
-window.taskManager = taskManager;
+// Initialisation après que le DOM soit chargé pour garantir
+// que tous les éléments (notamment le modal timer) existent.
+window.addEventListener("DOMContentLoaded", () => {
+  const taskManager = new TaskManager();
+  window.taskManager = taskManager;
+});
