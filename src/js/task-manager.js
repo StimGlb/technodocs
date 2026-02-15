@@ -533,6 +533,9 @@ class PomodoroTimer {
   };
 }
 
-// Initialisation
-const taskManager = new TaskManager();
-window.taskManager = taskManager;
+// Initialisation après que le DOM soit chargé pour garantir
+// que tous les éléments (notamment le modal timer) existent.
+window.addEventListener("DOMContentLoaded", () => {
+  const taskManager = new TaskManager();
+  window.taskManager = taskManager;
+});
