@@ -287,7 +287,6 @@
           gap: 20px;
         "
       >
-
         <!-- Formulaire d'ajout -->
         <form class="task-form" id="taskForm">
           <h2 class="task-form__title">➕ Nouvelle tâche</h2>
@@ -411,19 +410,19 @@
           </div>
         </div>
         <div class="toolbar">
-            <div class="toolbar__actions">
-              <button class="btn-tool" onclick="taskManager.exportJSON()">
-                📥 Téléchargement
-              </button>
-              <button class="btn-tool" onclick="taskManager.printTasks()">
-                🖨️ Impression
-              </button>
-              <button class="btn-tool" onclick="taskManager.clearCompleted()">
-                🗑️ Suppression
-              </button>
-            </div>
+          <div class="toolbar__actions">
+            <button class="btn-tool" onclick="taskManager.exportJSON()">
+              📥 Téléchargement
+            </button>
+            <button class="btn-tool" onclick="taskManager.printTasks()">
+              🖨️ Impression
+            </button>
+            <button class="btn-tool" onclick="taskManager.clearCompleted()">
+              🗑️ Suppression
+            </button>
+          </div>
         </div>
-    </div>
+      </div>
 
       <!-- Info banner -->
       <div class="info-banner">
@@ -438,33 +437,46 @@
 
     <script type="module" src="../../js/task-manager.js"></script>
     <!-- Timer Modal -->
-    <div class="timer-modal" id="timerModal" style="display: none;">
-        <div class="timer-modal__card">
-            <div class="timer-modal__header">
-                <span class="timer-modal__icon">🍅</span>
-                <h3 class="timer-modal__title" id="timerTaskTitle">Titre de la tâche</h3>
-                <span class="timer-modal__subject" id="timerTaskSubject">Matière</span>
-            </div>
-            
-            <div class="timer-modal__body">
-                <div class="timer-modal__phase" id="timerPhase">
-                    <span class="phase-badge">Préparation</span>
-                </div>
-                <div class="timer-modal__display" id="timerDisplay">25:00</div>
-                <div class="timer-modal__info" id="timerInfo">
-                    Clique sur Démarrer pour lancer le timer
-                </div>
-            </div>
-            
-            <div class="timer-modal__footer">
-                <button class="timer-modal__btn timer-modal__btn--cancel" id="timerBtnCancel">
-                    Annuler
-                </button>
-                <button class="timer-modal__btn timer-modal__btn--start" id="timerBtnStart">
-                    Démarrer
-                </button>
-            </div>
+    <div class="timer-modal" id="timerModal" style="display: none">
+      <div class="timer-modal__card">
+        <div class="timer-modal__header">
+          <span class="timer-modal__icon">🍅</span>
+          <h3 class="timer-modal__title" id="timerTaskTitle">
+            Titre de la tâche
+          </h3>
+          <span class="timer-modal__subject" id="timerTaskSubject"
+            >Matière</span
+          >
         </div>
+
+        <div class="timer-modal__body">
+          <div class="timer-modal__phase" id="timerPhase">
+            <span class="phase-badge">Préparation</span>
+          </div>
+          <div class="timer-modal__display" id="timerDisplay">25:00</div>
+          <div class="timer-modal__info" id="timerInfo">
+            Clique sur Démarrer pour lancer le timer
+          </div>
+        </div>
+
+        <div class="timer-modal__footer">
+          <button
+            class="timer-modal__btn timer-modal__btn--cancel"
+            id="timerBtnCancel"
+          >
+            Annuler
+          </button>
+          <button
+            class="timer-modal__btn timer-modal__btn--start"
+            id="timerBtnStart"
+            type="button"
+            aria-label="Démarrer le timer"
+          >
+            <span>Démarrer</span>
+            <span class="sr-only">Démarrer le timer</span>
+          </button>
+        </div>
+      </div>
     </div>
   </body>
 </html>
