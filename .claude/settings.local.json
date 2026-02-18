@@ -24,7 +24,12 @@
       "Bash(findstr:*)",
       "Bash(npm install:*)",
       "Bash(npx vite build:*)",
-      "Bash(bash:*)"
+      "Bash(bash:*)",
+      "Bash(command -v:*)",
+      "Bash(where:*)",
+      "Bash(git -C \"e:/Dev/technodocs-vanilla\" ls-tree -L 1 HEAD)",
+      "Bash(git -C \"e:/Dev/technodocs-vanilla\" ls-tree -l HEAD)",
+      "Bash(git -C \"e:/Dev/technodocs-vanilla\" ls-tree -l HEAD scripts/)"
     ],
     "deny": [],
     "ask": []
