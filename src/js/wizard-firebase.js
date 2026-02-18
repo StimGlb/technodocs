@@ -157,7 +157,7 @@ export class WizardFirebase {
     }
 
     // Sinon, on crée une nouvelle session
-    const newDocId = `${now}_${Math.random().toString(36).substr(2, 9)}`;
+    const newDocId = `${now}_${Math.random().toString(36).substring(2, 11)}`;
     this.updateSessionTimestamp(newDocId);
     return newDocId;
   }
@@ -178,7 +178,10 @@ export class WizardFirebase {
    * Charge les données depuis Firestore
    */
   async loadFromFirestore() {
-    if (!this.firestoreEnabled) return;
+    if (!this.firestoreEnabled) {
+      console.log("Firestore non disponible - chargement ignoré");
+      return;
+    }
 
     try {
       const docRef = doc(db, this.collectionName, this.docId);
@@ -186,20 +189,35 @@ export class WizardFirebase {
 
       if (docSnap.exists()) {
         const data = docSnap.data();
-        this.formData = data.formData || {};
-        this.completedPhases = data.completedPhases || [];
 
-        // Restaurer les valeurs dans les champs
-        this.restoreFieldValues();
+        // Validation des données reçues
+        if (data && typeof data === "object") {
+          this.formData = data.formData || {};
+          this.completedPhases = Array.isArray(data.completedPhases)
+            ? data.completedPhases
+            : [];
 
-        this.showToast("📂 Données chargées", "success");
-        console.log("✅ Données chargées depuis Firestore");
+          // Restaurer les valeurs dans les champs
+          this.restoreFieldValues();
+
+          this.showToast("📂 Données chargées", "success");
+          console.log("✅ Données chargées depuis Firestore");
+        } else {
+          console.warn(
+            "Données Firestore invalides - utilisation des valeurs par défaut",
+          );
+        }
       } else {
         console.log("📝 Nouveau formulaire - aucune donnée existante");
       }
     } catch (error) {
       console.error("❌ Erreur chargement Firestore:", error);
       this.showToast("Erreur de chargement", "error");
+
+      // En cas d'erreur réseau, utiliser les données locales si disponibles
+      if (error.code === "unavailable" || error.code === "permission-denied") {
+        console.log("Mode hors ligne détecté - données locales conservées");
+      }
     }
   }
 
@@ -340,9 +358,21 @@ export class WizardFirebase {
     // Sauvegarde avant fermeture de page
     window.addEventListener("beforeunload", (e) => {
       if (this.isDirty) {
-        // Effectuer une sauvegarde synchrone ou bloquante si possible,
-        // mais les navigateurs limitent cela. Le debounce aide à minimiser la perte.
-        this.saveToFirestore(); // Appel direct pour tenter une dernière sauvegarde
+        // Les navigateurs ne permettent pas d'attendre les async dans beforeunload
+        // Mais on peut tenter une sauvegarde avec navigator.sendBeacon si disponible
+        if (navigator.sendBeacon && this.firestoreEnabled) {
+          try {
+            // Fallback: utiliser sendBeacon pour une sauvegarde de dernière chance
+            const data = JSON.stringify({
+              action: "save",
+              docId: this.docId,
+              formData: this.formData,
+            });
+            navigator.sendBeacon("/api/emergency-save", data);
+          } catch (error) {
+            console.warn("Échec sendBeacon:", error);
+          }
+        }
         e.preventDefault();
         e.returnValue = ""; // Message standard pour confirmer la fermeture
       }
@@ -354,11 +384,25 @@ export class WizardFirebase {
    * Annule toute sauvegarde précédemment planifiée.
    */
   scheduleAutosave() {
+    // Annuler le timeout précédent s'il existe
     if (this.autosaveTimeout) {
       clearTimeout(this.autosaveTimeout);
+      this.autosaveTimeout = null;
     }
-    this.autosaveTimeout = setTimeout(() => {
-      this.saveToFirestore();
+
+    // Ne planifier que si des données sont modifiées et Firestore est disponible
+    if (!this.isDirty || !this.firestoreEnabled) {
+      return;
+    }
+
+    this.autosaveTimeout = setTimeout(async () => {
+      try {
+        await this.saveToFirestore();
+      } catch (error) {
+        console.error("Erreur autosave planifiée:", error);
+      } finally {
+        this.autosaveTimeout = null;
+      }
     }, 5000); // Sauvegarde après 5 secondes d'inactivité
   }
 
@@ -445,7 +489,9 @@ export class WizardFirebase {
       }
     });
 
-    return totalFields > 0 ? Math.round((filledFields / totalFields) * 100) : 0;
+    // Éviter la division par zéro et arrondir correctement
+    const progress = totalFields > 0 ? (filledFields / totalFields) * 100 : 0;
+    return Math.round(Math.max(0, Math.min(100, progress))); // Clamp entre 0 et 100
   }
 
   /**
@@ -600,9 +646,17 @@ export class WizardFirebase {
       // On conserve les données existantes dans Firestore par sécurité.
       // On supprime uniquement l'ID local pour repartir sur un nouveau document.
 
-      // Supprimer l'ancienne session
-      localStorage.removeItem(`wizard_${this.collectionName}_session`);
-      localStorage.removeItem(`wizard_${this.collectionName}_docId`);
+      // Supprimer l'ancienne session et toutes les clés héritées
+      const keysToRemove = [
+        `wizard_${this.collectionName}_session`,
+        `wizard_${this.collectionName}_docId`,
+        `wizard_${this.collectionName}_formData`, // Legacy cleanup
+        `wizard_${this.collectionName}_progress`, // Legacy cleanup
+      ];
+
+      keysToRemove.forEach((key) => {
+        localStorage.removeItem(key);
+      });
 
       // Réinitialiser l'état
       this.formData = {};
@@ -626,7 +680,7 @@ export class WizardFirebase {
       });
 
       // Générer un nouvel ID et créer une nouvelle session
-      this.docId = `${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
+      this.docId = `${Date.now()}_${Math.random().toString(36).substring(2, 11)}`;
       this.updateSessionTimestamp(this.docId);
 
       // Réinitialiser la date du jour
@@ -687,25 +741,49 @@ export class WizardFirebase {
     const file = event.target.files[0];
     if (!file) return;
 
+    // Vérifier le type de fichier
+    if (file.type !== "application/json" && !file.name.endsWith(".json")) {
+      this.showToast("Veuillez sélectionner un fichier JSON", "warning");
+      event.target.value = "";
+      return;
+    }
+
     try {
       const text = await file.text();
       const data = JSON.parse(text);
 
-      if (data.formData) {
-        this.formData = data.formData;
-        this.restoreFieldValues();
-        this.isDirty = true; // Marquer comme dirty après import pour forcer une sauvegarde
-        await this.saveToFirestore();
-        this.updateProgress();
-        this.showToast("Données importées !", "success");
+      // Validation des données importées
+      if (data && typeof data === "object" && data.formData) {
+        // Vérifier que les données sont compatibles
+        if (typeof data.formData === "object") {
+          this.formData = { ...this.formData, ...data.formData }; // Merge au lieu d'écraser
+          this.restoreFieldValues();
+          this.isDirty = true; // Marquer comme dirty après import pour forcer une sauvegarde
+
+          if (this.firestoreEnabled) {
+            await this.saveToFirestore();
+          }
+
+          this.updateProgress();
+          this.showToast("Données importées !", "success");
+        } else {
+          throw new Error("Structure de données invalide");
+        }
+      } else {
+        throw new Error("Format de fichier non reconnu");
       }
     } catch (error) {
       console.error("❌ Erreur import:", error);
-      this.showToast("Fichier invalide", "error");
-    }
 
-    // Reset l'input file
-    event.target.value = "";
+      if (error instanceof SyntaxError) {
+        this.showToast("Fichier JSON invalide", "error");
+      } else {
+        this.showToast("Erreur lors de l'import: " + error.message, "error");
+      }
+    } finally {
+      // Reset l'input file dans tous les cas
+      event.target.value = "";
+    }
   }
 
   /**

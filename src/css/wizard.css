@@ -3,6 +3,15 @@
    Template réutilisable pour devoirs en ligne
    ======================================== */
 
+/* ---------- Typographie française (évite les orphelins de ponctuation) ---------- */
+.wizard h1,
+.wizard h2,
+.wizard h3,
+.wizard p,
+.wizard label {
+  text-wrap: pretty;
+}
+
 /* ---------- Layout Principal ---------- */
 
 /* ---------- Bannière Titre ---------- */
