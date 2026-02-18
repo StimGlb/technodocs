@@ -196,6 +196,12 @@ async function loadHeader() {
   try {
     // Use bundled header HTML (Vite raw import)
     safeReplaceElement(placeholder, headerHtml);
+    // Mark document that a header was injected so CSS can adapt pages without header
+    try {
+      document.body.classList.add("has-header");
+    } catch (e) {
+      /* ignore */
+    }
 
     // --- Traitement intelligent des ancres (`data-nav-anchor`) ---
     try {
@@ -264,6 +270,11 @@ async function loadHeader() {
       console.error("Erreur header:", error);
     }
   }
+}
+try {
+  document.body.classList.add("has-header");
+} catch (e) {
+  /* ignore */
 }
 
 // ===========================

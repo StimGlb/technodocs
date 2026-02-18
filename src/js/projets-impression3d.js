@@ -12,16 +12,18 @@ import {
   collection,
   getDocs,
 } from "./services/firebase-config.js";
-import { initComponents } from "./components.js";
+import { loadComponents } from "./components.js";
 
 // ─── Config ──────────────────────────────────────────────────────────────────
 
 const CONFIG = {
-  // Nom de la collection Firestore
-  collection: "presentation_objet_technique",
-  // true  → wizards/{collection}/submissions/{docId}  (wizard-firebase.js pattern)
-  // false → {collection}/{docId}                      (collection racine)
-  nested: true,
+  // Collections Firestore à agréger (ajouter/retirer librement)
+  collections: [
+    "presentation_objet_technique",
+    "devoir_conception_impression_3d",
+  ],
+  // false → collection racine (pattern wizard-firebase.js réel)
+  nested: false,
   // Champ de formData utilisé comme "catégorie" sur la carte
   categoryField: "objetCategorie",
 };
@@ -58,6 +60,33 @@ const POINTS_CLES = [
   { key: "pointsCles_ameliorations", label: "Améliorations" },
 ];
 
+// ─── Favoris (localStorage) ──────────────────────────────────────────────────
+
+const FAVORITES_KEY = "projets_impression3d_favorites";
+const favorites = new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]"));
+let filterFavoritesOnly = false;
+
+function saveFavorites() {
+  localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favorites]));
+}
+
+function toggleFavorite(id, btnEl) {
+  if (favorites.has(id)) {
+    favorites.delete(id);
+    btnEl.textContent = "☆";
+    btnEl.classList.remove("is-active");
+    btnEl.setAttribute("aria-label", "Ajouter aux favoris");
+  } else {
+    favorites.add(id);
+    btnEl.textContent = "★";
+    btnEl.classList.add("is-active");
+    btnEl.setAttribute("aria-label", "Retirer des favoris");
+  }
+  saveFavorites();
+  // Si le filtre favoris est actif, rafraîchir la grille
+  if (filterFavoritesOnly) applyFilters();
+}
+
 // ─── State ───────────────────────────────────────────────────────────────────
 
 let allProjects = [];
@@ -82,6 +111,7 @@ const filtersCount      = document.getElementById("filters-count");
 const statTotal      = document.getElementById("stat-total");
 const statComplete   = document.getElementById("stat-complete");
 const statInProgress = document.getElementById("stat-in-progress");
+const btnFavorites   = document.getElementById("btn-favorites");
 
 const modalOverlay = document.getElementById("modal-overlay");
 const modalTitle   = document.getElementById("modal-title");
@@ -91,7 +121,7 @@ const modalClose   = document.getElementById("modal-close");
 
 // ─── Init ────────────────────────────────────────────────────────────────────
 
-initComponents();
+loadComponents();
 bindEvents();
 loadProjects();
 
@@ -106,12 +136,18 @@ async function loadProjects() {
   }
 
   try {
-    const colRef = CONFIG.nested
-      ? collection(db, "wizards", CONFIG.collection, "submissions")
-      : collection(db, CONFIG.collection);
-    const snapshot = await getDocs(colRef);
+    const snapshots = await Promise.all(
+      CONFIG.collections.map((col) => {
+        const colRef = CONFIG.nested
+          ? collection(db, "wizards", col, "submissions")
+          : collection(db, col);
+        return getDocs(colRef);
+      })
+    );
 
-    allProjects = snapshot.docs.map((d) => ({ id: d.id, ...d.data() }));
+    allProjects = snapshots.flatMap((snap) =>
+      snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+    );
 
     updateHeroStats(allProjects);
     populateFilterOptions(allProjects);
@@ -131,6 +167,9 @@ function applyFilters() {
   const prog      = filterProgression.value;
 
   filteredProjects = allProjects.filter((p) => {
+    // Filtre favoris
+    if (filterFavoritesOnly && !favorites.has(p.id)) return false;
+
     // Recherche nom
     if (search && !normalize(p.studentName).includes(normalize(search))) return false;
 
@@ -238,6 +277,18 @@ function createProjectCard(project) {
   article.appendChild(objetEl);
   article.appendChild(meta);
   article.appendChild(progressBar);
+
+  // ── Étoile favorite ──
+  const favBtn = document.createElement("button");
+  favBtn.type = "button";
+  favBtn.className = "project-card__fav" + (favorites.has(project.id) ? " is-active" : "");
+  favBtn.textContent = favorites.has(project.id) ? "★" : "☆";
+  favBtn.setAttribute("aria-label", favorites.has(project.id) ? "Retirer des favoris" : "Ajouter aux favoris");
+  favBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    toggleFavorite(project.id, favBtn);
+  });
+  article.appendChild(favBtn);
 
   // ── Événements ──
   article.addEventListener("click", () => openModal(project));
@@ -544,6 +595,14 @@ function bindEvents() {
   filtersReset.addEventListener("click", resetFilters);
   btnRetry.addEventListener("click",     loadProjects);
 
+  btnFavorites.addEventListener("click", () => {
+    filterFavoritesOnly = !filterFavoritesOnly;
+    btnFavorites.classList.toggle("is-active", filterFavoritesOnly);
+    btnFavorites.setAttribute("aria-pressed", filterFavoritesOnly);
+    btnFavorites.textContent = filterFavoritesOnly ? "★ Favoris" : "☆ Favoris";
+    applyFilters();
+  });
+
   // Modal
   modalClose.addEventListener("click", closeModal);
   modalOverlay.addEventListener("click", (e) => {
@@ -560,6 +619,10 @@ function resetFilters() {
   filterClasse.value      = "";
   filterCategorie.value   = "";
   filterProgression.value = "";
+  filterFavoritesOnly     = false;
+  btnFavorites.classList.remove("is-active");
+  btnFavorites.setAttribute("aria-pressed", "false");
+  btnFavorites.textContent = "☆ Favoris";
   applyFilters();
   searchInput.focus();
 }

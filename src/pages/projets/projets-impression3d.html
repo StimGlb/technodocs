@@ -580,6 +580,57 @@
         font-weight: 600;
       }
 
+      /* ── Bouton favoris (barre de filtres) ── */
+      .btn-favorites {
+        display: flex;
+        align-items: center;
+        gap: var(--space-1);
+        padding: var(--space-2) var(--space-3);
+        border-radius: var(--radius-lg);
+        font-size: var(--text-sm);
+        font-weight: 500;
+        border: 1px solid var(--color-gray-200);
+        color: var(--color-gray-500);
+        transition: var(--transition-fast);
+        white-space: nowrap;
+      }
+
+      .btn-favorites:hover {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+      }
+
+      .btn-favorites.is-active {
+        border-color: var(--color-accent);
+        color: var(--color-accent);
+        background: rgba(245, 158, 11, 0.08);
+        font-weight: 600;
+      }
+
+      /* ── Étoile sur la carte ── */
+      .project-card__fav {
+        position: absolute;
+        top: var(--space-3);
+        right: var(--space-3);
+        font-size: 1.25rem;
+        line-height: 1;
+        color: var(--color-gray-300);
+        transition:
+          color var(--transition-fast),
+          transform var(--transition-fast);
+        z-index: 1;
+        padding: 2px;
+      }
+
+      .project-card__fav:hover {
+        color: var(--color-accent);
+        transform: scale(1.25);
+      }
+
+      .project-card__fav.is-active {
+        color: var(--color-accent);
+      }
+
       /* ── Responsive ── */
       @media (max-width: 640px) {
         .filters-bar__inner {
@@ -613,13 +664,11 @@
   </head>
 
   <body>
-    <div id="header-placeholder"></div>
-
     <main>
       <!-- ── Hero ── -->
       <section class="page-hero">
         <div class="page-hero__label">Impression 3D</div>
-        <h1 class="page-hero__title">Projets élèves</h1>
+        <h1 class="page-hero__title">Sélection des projets d'objets imprimables</h1>
         <p class="page-hero__subtitle">
           Visualisation et suivi des soumissions
         </p>
@@ -669,6 +718,11 @@
             <option value="in-progress">En cours</option>
             <option value="not-started">Non démarré</option>
           </select>
+
+          <!-- Favoris -->
+          <button class="btn-favorites" id="btn-favorites" type="button" aria-pressed="false" aria-label="Afficher les favoris uniquement">
+            ☆ Favoris
+          </button>
 
           <!-- Reset -->
           <button class="filters-bar__reset" id="filters-reset" type="button" aria-label="Réinitialiser les filtres">

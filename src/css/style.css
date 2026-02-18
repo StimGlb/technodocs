@@ -271,6 +271,14 @@ ol {
 
 /* ---------- Main Content ---------- */
 main {
+  /* Default: smaller top gap so pages without a visible header don't have excessive space */
+  margin-top: calc(var(--header-height) / 2);
+}
+
+/* If a header element exists in the DOM, increase the top margin to compensate for the fixed header.
+   Use :has() when available, with body.has-header as a fallback for older browsers. */
+body:has(.header) main,
+body.has-header main {
   margin-top: var(--header-height);
 }
 
