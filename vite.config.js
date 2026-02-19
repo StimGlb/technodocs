@@ -21,24 +21,28 @@ export default defineConfig({
         function scanDirectory(dir) {
           try {
             const entries = readdirSync(dir, { withFileTypes: true });
-            
+
             for (const entry of entries) {
               const fullPath = join(dir, entry.name);
-              
+
               if (entry.isDirectory()) {
                 // Scanner les sous-dossiers (sauf node_modules, dist, .git)
-                if (!['node_modules', 'dist', '.git', 'scripts'].includes(entry.name)) {
+                if (
+                  !["node_modules", "dist", ".git", "scripts"].includes(
+                    entry.name,
+                  )
+                ) {
                   scanDirectory(fullPath);
                 }
-              } else if (entry.name.endsWith('.html')) {
+              } else if (entry.name.endsWith(".html")) {
                 // Ajouter le fichier HTML
                 const relativePath = relative(root, fullPath);
                 const key = relativePath
-                  .replace(/\.html$/i, '')
-                  .replace(/[\\/]/g, '-')
-                  .replace(/^src-/, ''); // Enlever le préfixe "src-"
-                
-                inputs[key || 'index'] = fullPath;
+                  .replace(/\.html$/i, "")
+                  .replace(/[\\/]/g, "-")
+                  .replace(/^src-/, ""); // Enlever le préfixe "src-"
+
+                inputs[key || "index"] = fullPath;
               }
             }
           } catch (e) {
@@ -49,7 +53,7 @@ export default defineConfig({
         // Scanner depuis la racine
         scanDirectory(root);
 
-        console.log('📄 Fichiers HTML détectés:', Object.keys(inputs).length);
+        console.log("📄 Fichiers HTML détectés:", Object.keys(inputs).length);
         return inputs;
       })(),
     },
@@ -59,7 +63,7 @@ export default defineConfig({
 
   server: {
     port: 3001,
-    open: true,
+    open: false,
   },
 
   preview: {

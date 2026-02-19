@@ -6,26 +6,26 @@
 /* ---------- Variables CSS ---------- */
 :root {
   /* Couleurs principales - Palette vive et moderne */
-  --color-primary: #6366f1; /* Indigo */
-  --color-primary-dark: #4f46e5;
-  --color-primary-light: #a5b4fc;
+  --color-primary: #818cf8; /* Indigo (lighter for dark mode) */
+  --color-primary-dark: #6366f1;
+  --color-primary-light: #c7d2fe;
 
-  --color-secondary: #06b6d4; /* Cyan */
-  --color-secondary-dark: #0891b2;
+  --color-secondary: #22d3ee; /* Cyan (lighter) */
+  --color-secondary-dark: #06b6d4;
 
-  --color-accent: #f59e0b; /* Amber */
-  --color-success: #10b981; /* Emerald */
-  --color-error: #ef4444; /* Red */
+  --color-accent: #fbbf24; /* Amber (lighter) */
+  --color-success: #34d399; /* Emerald (lighter) */
+  --color-error: #f87171; /* Red (lighter) */
 
-  /* Neutres */
-  --color-white: #ffffff;
-  --color-gray-50: #f9fafb;
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-300: #d1d5db;
-  --color-gray-500: #6b7280;
-  --color-gray-700: #374151;
-  --color-gray-900: #111827;
+  /* Neutres - Dark mode */
+  --color-white: #1f2937;
+  --color-gray-50: #111827;
+  --color-gray-100: #1f2937;
+  --color-gray-200: #2d3748;
+  --color-gray-300: #4b5563;
+  --color-gray-500: #9ca3af;
+  --color-gray-700: #d1d5db;
+  --color-gray-900: #f3f4f6;
 
   /* Typographie */
   --font-main: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -89,7 +89,7 @@ html {
 body {
   font-family: var(--font-main);
   font-size: var(--text-base);
-  line-height: 1.6;
+  line-height: 1.2;
   color: var(--color-gray-700);
   background-color: var(--color-white);
   -webkit-font-smoothing: antialiased;
@@ -1114,8 +1114,8 @@ body.has-header main {
 
 /* ---------- Footer ---------- */
 .footer {
-  background: var(--color-gray-900);
-  color: var(--color-gray-300);
+  background: var(--color-gray-50);
+  color: var(--color-gray-700);
   padding: var(--space-6) var(--space-4);
 }
 
@@ -1133,7 +1133,7 @@ body.has-header main {
   font-family: var(--font-display);
   font-size: var(--text-lg);
   font-weight: 600;
-  color: var(--color-white);
+  color: var(--color-gray-700);
   margin-bottom: var(--space-2);
 }
 
@@ -1154,7 +1154,7 @@ body.has-header main {
 }
 
 .footer__links a:hover {
-  color: var(--color-white);
+  color: var(--color-primary);
 }
 
 /* ---------- Utilities ---------- */
@@ -1206,39 +1206,5 @@ body.has-header main {
 
   .hero__actions .btn {
     justify-content: center;
-  }
-}
-
-/* ---------- Wizard paper background (modern paper) ---------- */
-.wizard {
-  background-color: #fbf9f6;
-  background-image:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.6), rgba(246, 244, 240, 0.6)),
-    url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='f'><feTurbulence baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23f)' opacity='0.03' /></svg>");
-  background-repeat: repeat;
-  padding: var(--space-12) var(--space-6);
-  max-width: 1100px;
-  margin: var(--space-8) auto;
-  border-radius: 12px;
-  box-shadow:
-    0 30px 80px rgba(17, 24, 39, 0.08),
-    inset 0 1px 0 rgba(255, 255, 255, 0.6);
-  border: 1px solid rgba(17, 24, 39, 0.04);
-}
-
-.wizard.is-locked {
-  visibility: hidden; /* preserve layout so footer stays at bottom when content hidden */
-  pointer-events: none;
-}
-
-.wizard__banner {
-  border-radius: 8px 8px 0 0;
-}
-
-@media print {
-  .wizard {
-    background: #fff !important;
-    box-shadow: none !important;
-    border: none !important;
   }
 }
