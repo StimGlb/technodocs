@@ -7,11 +7,7 @@
  *                   completedPhases, formData, createdAt, updatedAt
  */
 
-import {
-  db,
-  collection,
-  getDocs,
-} from "./services/firebase-config.js";
+import { db, collection, getDocs } from "./services/firebase-config.js";
 import { loadComponents } from "./components.js";
 
 // ─── Config ──────────────────────────────────────────────────────────────────
@@ -33,38 +29,42 @@ const FIELD_GROUPS = [
   {
     title: "L'objet",
     fields: [
-      { key: "objetNom",         label: "Nom" },
-      { key: "objetCategorie",   label: "Catégorie" },
+      { key: "objetNom", label: "Nom" },
+      { key: "objetCategorie", label: "Catégorie" },
       { key: "objetDescription", label: "Description" },
       { key: "objetUtilisateur", label: "Utilisateur cible" },
-      { key: "objetProbleme",    label: "Problème résolu" },
+      { key: "objetProbleme", label: "Problème résolu" },
     ],
   },
   {
     title: "Présentation orale",
     fields: [
-      { key: "oralIntroduction",  label: "Introduction" },
+      { key: "oralIntroduction", label: "Introduction" },
       { key: "oralDeveloppement", label: "Développement" },
-      { key: "oralConclusion",    label: "Conclusion" },
-      { key: "oralQuestion",      label: "Question" },
+      { key: "oralConclusion", label: "Conclusion" },
+      { key: "oralQuestion", label: "Question" },
     ],
   },
 ];
 
 const POINTS_CLES = [
-  { key: "pointsCles_probleme",      label: "Problème" },
-  { key: "pointsCles_solution",      label: "Solution" },
-  { key: "pointsCles_conception",    label: "Conception" },
-  { key: "pointsCles_materiaux",     label: "Matériaux" },
-  { key: "pointsCles_difficultes",   label: "Difficultés" },
+  { key: "pointsCles_probleme", label: "Problème" },
+  { key: "pointsCles_solution", label: "Solution" },
+  { key: "pointsCles_conception", label: "Conception" },
+  { key: "pointsCles_materiaux", label: "Matériaux" },
+  { key: "pointsCles_difficultes", label: "Difficultés" },
   { key: "pointsCles_ameliorations", label: "Améliorations" },
 ];
 
 // ─── Favoris (localStorage) ──────────────────────────────────────────────────
 
 const FAVORITES_KEY = "projets_impression3d_favorites";
-const favorites = new Set(JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]"));
+const SORT_KEY = "projets_impression3d_sort";
+const favorites = new Set(
+  JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]"),
+);
 let filterFavoritesOnly = false;
+let currentSort = localStorage.getItem(SORT_KEY) || "name-asc";
 
 function saveFavorites() {
   localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favorites]));
@@ -94,30 +94,32 @@ let filteredProjects = [];
 
 // ─── DOM refs ────────────────────────────────────────────────────────────────
 
-const grid          = document.getElementById("projects-grid");
-const stateLoading  = document.getElementById("state-loading");
-const stateError    = document.getElementById("state-error");
-const stateEmpty    = document.getElementById("state-empty");
+const grid = document.getElementById("projects-grid");
+const stateLoading = document.getElementById("state-loading");
+const stateError = document.getElementById("state-error");
+const stateEmpty = document.getElementById("state-empty");
 const stateErrorMsg = document.getElementById("state-error-msg");
-const btnRetry      = document.getElementById("btn-retry");
+const btnRetry = document.getElementById("btn-retry");
 
-const searchInput       = document.getElementById("search-input");
-const filterClasse      = document.getElementById("filter-classe");
-const filterCategorie   = document.getElementById("filter-categorie");
+const searchInput = document.getElementById("search-input");
+const filterClasse = document.getElementById("filter-classe");
+const filterCategorie = document.getElementById("filter-categorie");
 const filterProgression = document.getElementById("filter-progression");
-const filtersReset      = document.getElementById("filters-reset");
-const filtersCount      = document.getElementById("filters-count");
+const filterSort = document.getElementById("filter-sort");
+const filtersReset = document.getElementById("filters-reset");
+const filtersCount = document.getElementById("filters-count");
 
-const statTotal      = document.getElementById("stat-total");
-const statComplete   = document.getElementById("stat-complete");
+const statTotal = document.getElementById("stat-total");
+const statComplete = document.getElementById("stat-complete");
 const statInProgress = document.getElementById("stat-in-progress");
-const btnFavorites   = document.getElementById("btn-favorites");
+const btnFavorites = document.getElementById("btn-favorites");
+const btnExport = document.getElementById("btn-export");
 
 const modalOverlay = document.getElementById("modal-overlay");
-const modalTitle   = document.getElementById("modal-title");
-const modalSubtitle= document.getElementById("modal-subtitle");
-const modalBody    = document.getElementById("modal-body");
-const modalClose   = document.getElementById("modal-close");
+const modalTitle = document.getElementById("modal-title");
+const modalSubtitle = document.getElementById("modal-subtitle");
+const modalBody = document.getElementById("modal-body");
+const modalClose = document.getElementById("modal-close");
 
 // ─── Init ────────────────────────────────────────────────────────────────────
 
@@ -131,7 +133,10 @@ async function loadProjects() {
   showState("loading");
 
   if (!db) {
-    showState("error", "Firebase non configuré. Vérifie les variables d'environnement VITE_FIREBASE_*.");
+    showState(
+      "error",
+      "Firebase non configuré. Vérifie les variables d'environnement VITE_FIREBASE_*.",
+    );
     return;
   }
 
@@ -142,12 +147,15 @@ async function loadProjects() {
           ? collection(db, "wizards", col, "submissions")
           : collection(db, col);
         return getDocs(colRef);
-      })
+      }),
     );
 
     allProjects = snapshots.flatMap((snap) =>
-      snap.docs.map((d) => ({ id: d.id, ...d.data() }))
+      snap.docs.map((d) => ({ id: d.id, ...d.data() })),
     );
+
+    // Restaurer le tri sauvegardé
+    filterSort.value = currentSort;
 
     updateHeroStats(allProjects);
     populateFilterOptions(allProjects);
@@ -161,17 +169,18 @@ async function loadProjects() {
 // ─── Filtering ───────────────────────────────────────────────────────────────
 
 function applyFilters() {
-  const search    = searchInput.value.trim().toLowerCase();
-  const classe    = filterClasse.value;
+  const search = searchInput.value.trim().toLowerCase();
+  const classe = filterClasse.value;
   const categorie = filterCategorie.value;
-  const prog      = filterProgression.value;
+  const prog = filterProgression.value;
 
   filteredProjects = allProjects.filter((p) => {
     // Filtre favoris
     if (filterFavoritesOnly && !favorites.has(p.id)) return false;
 
     // Recherche nom
-    if (search && !normalize(p.studentName).includes(normalize(search))) return false;
+    if (search && !normalize(p.studentName).includes(normalize(search)))
+      return false;
 
     // Filtre classe
     if (classe && p.studentClass !== classe) return false;
@@ -183,9 +192,10 @@ function applyFilters() {
     }
 
     // Filtre progression
-    if (prog === "complete"    && !p.isComplete)                           return false;
-    if (prog === "in-progress" && (p.isComplete || (p.progress ?? 0) === 0)) return false;
-    if (prog === "not-started" && (p.progress ?? 0) > 0)                  return false;
+    if (prog === "complete" && !p.isComplete) return false;
+    if (prog === "in-progress" && (p.isComplete || (p.progress ?? 0) === 0))
+      return false;
+    if (prog === "not-started" && (p.progress ?? 0) > 0) return false;
 
     return true;
   });
@@ -197,10 +207,16 @@ function applyFilters() {
 // ─── Render ──────────────────────────────────────────────────────────────────
 
 function renderGrid(projects) {
+  // Tri les projets selon la sélection
+  const sortedProjects = sortProjects(projects, currentSort);
+
+  // Gère l'état du bouton d'export
+  btnExport.disabled = sortedProjects.length === 0;
+
   // Vide le grid sans innerHTML
   while (grid.firstChild) grid.removeChild(grid.firstChild);
 
-  if (projects.length === 0) {
+  if (sortedProjects.length === 0) {
     showState("empty");
     return;
   }
@@ -208,14 +224,66 @@ function renderGrid(projects) {
   showState("grid");
 
   const fragment = document.createDocumentFragment();
-  projects.forEach((p) => fragment.appendChild(createProjectCard(p)));
+  sortedProjects.forEach((p) => fragment.appendChild(createProjectCard(p)));
   grid.appendChild(fragment);
 }
 
+// ─── Tri ──────────────────────────────────────────────────────────────────────
+
+function sortProjects(projects, sortBy) {
+  const copy = [...projects];
+
+  switch (sortBy) {
+    case "name-asc":
+      copy.sort((a, b) =>
+        normalize(a.studentName).localeCompare(normalize(b.studentName), "fr"),
+      );
+      break;
+    case "name-desc":
+      copy.sort((a, b) =>
+        normalize(b.studentName).localeCompare(normalize(a.studentName), "fr"),
+      );
+      break;
+    case "date-recent":
+      copy.sort((a, b) => {
+        const dateA = parseDate(a.projectDate || a.createdAt);
+        const dateB = parseDate(b.projectDate || b.createdAt);
+        return dateB - dateA;
+      });
+      break;
+    case "date-old":
+      copy.sort((a, b) => {
+        const dateA = parseDate(a.projectDate || a.createdAt);
+        const dateB = parseDate(b.projectDate || b.createdAt);
+        return dateA - dateB;
+      });
+      break;
+    case "progress-asc":
+      copy.sort((a, b) => (a.progress ?? 0) - (b.progress ?? 0));
+      break;
+    case "progress-desc":
+      copy.sort((a, b) => (b.progress ?? 0) - (a.progress ?? 0));
+      break;
+    default:
+      break;
+  }
+
+  return copy;
+}
+
+function parseDate(value) {
+  if (!value) return 0;
+  // Timestamp Firestore { seconds, nanoseconds }
+  if (value?.seconds) return value.seconds * 1000;
+  // String ISO ou date classique
+  const d = new Date(value);
+  return !isNaN(d) ? d.getTime() : 0;
+}
+
 function createProjectCard(project) {
-  const progress  = project.progress ?? 0;
+  const progress = project.progress ?? 0;
   const isComplete = project.isComplete ?? false;
-  const category   = getCategoryValue(project);
+  const category = getCategoryValue(project);
 
   // Wrapper
   const article = document.createElement("article");
@@ -281,9 +349,13 @@ function createProjectCard(project) {
   // ── Étoile favorite ──
   const favBtn = document.createElement("button");
   favBtn.type = "button";
-  favBtn.className = "project-card__fav" + (favorites.has(project.id) ? " is-active" : "");
+  favBtn.className =
+    "project-card__fav" + (favorites.has(project.id) ? " is-active" : "");
   favBtn.textContent = favorites.has(project.id) ? "★" : "☆";
-  favBtn.setAttribute("aria-label", favorites.has(project.id) ? "Retirer des favoris" : "Ajouter aux favoris");
+  favBtn.setAttribute(
+    "aria-label",
+    favorites.has(project.id) ? "Retirer des favoris" : "Ajouter aux favoris",
+  );
   favBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     toggleFavorite(project.id, favBtn);
@@ -321,7 +393,11 @@ function createProgressBadge(progress, isComplete) {
   dot.setAttribute("aria-hidden", "true");
 
   const label = document.createElement("span");
-  label.textContent = isComplete ? "Complet" : progress > 0 ? "En cours" : "Non démarré";
+  label.textContent = isComplete
+    ? "Complet"
+    : progress > 0
+      ? "En cours"
+      : "Non démarré";
 
   span.appendChild(dot);
   span.appendChild(label);
@@ -352,7 +428,8 @@ function createProgressBar(progress, isComplete) {
   track.setAttribute("aria-valuemax", "100");
 
   const fill = document.createElement("div");
-  fill.className = "progress-bar__fill" + (isComplete ? " progress-bar__fill--complete" : "");
+  fill.className =
+    "progress-bar__fill" + (isComplete ? " progress-bar__fill--complete" : "");
   fill.style.width = `${progress}%`;
 
   track.appendChild(fill);
@@ -364,13 +441,17 @@ function createProgressBar(progress, isComplete) {
 // ─── Modal ───────────────────────────────────────────────────────────────────
 
 function openModal(project) {
-  const progress   = project.progress ?? 0;
+  const progress = project.progress ?? 0;
   const isComplete = project.isComplete ?? false;
 
   // Titre / sous-titre
-  modalTitle.textContent   = project.studentName || "Projet";
-  modalSubtitle.textContent = [project.studentClass, formatDate(project.projectDate || project.createdAt)]
-    .filter(Boolean).join(" · ");
+  modalTitle.textContent = project.studentName || "Projet";
+  modalSubtitle.textContent = [
+    project.studentClass,
+    formatDate(project.projectDate || project.createdAt),
+  ]
+    .filter(Boolean)
+    .join(" · ");
 
   // Vide le body
   while (modalBody.firstChild) modalBody.removeChild(modalBody.firstChild);
@@ -399,7 +480,9 @@ function openModal(project) {
   progTrack.setAttribute("aria-valuemax", "100");
 
   const progFill = document.createElement("div");
-  progFill.className = "modal__progress-fill" + (isComplete ? " modal__progress-fill--complete" : "");
+  progFill.className =
+    "modal__progress-fill" +
+    (isComplete ? " modal__progress-fill--complete" : "");
   progFill.style.width = `${progress}%`;
 
   progTrack.appendChild(progFill);
@@ -408,7 +491,10 @@ function openModal(project) {
   modalBody.appendChild(progSection);
 
   // ── Phases complètes ──
-  if (Array.isArray(project.completedPhases) && project.completedPhases.length > 0) {
+  if (
+    Array.isArray(project.completedPhases) &&
+    project.completedPhases.length > 0
+  ) {
     const phasesTitle = document.createElement("p");
     phasesTitle.className = "modal__section-title";
     phasesTitle.textContent = "Phases validées";
@@ -500,13 +586,88 @@ function closeModal() {
   document.body.style.overflow = "";
 }
 
+// ─── Export CSV ──────────────────────────────────────────────────────────────
+
+function exportCSV() {
+  if (filteredProjects.length === 0) return;
+
+  // En-têtes
+  const headers = [
+    "Nom",
+    "Classe",
+    "Catégorie",
+    "Progression (%)",
+    "État",
+    "Date projet",
+    "Objet créé",
+    "Mis à jour",
+  ];
+
+  // Lignes de données
+  const rows = filteredProjects.map((p) => {
+    const progress = p.progress ?? 0;
+    const state = p.isComplete
+      ? "Complet"
+      : progress > 0
+        ? "En cours"
+        : "Non démarré";
+    const category = getCategoryValue(p) || "—";
+    const objetNom = p.formData?.objetNom || "—";
+    const projectDate = formatDate(p.projectDate || p.createdAt) || "—";
+    const createdAt = formatDate(p.createdAt) || "—";
+    const updatedAt = formatDate(p.updatedAt) || "—";
+
+    return [
+      escapeCSV(p.studentName || "—"),
+      escapeCSV(p.studentClass || "—"),
+      escapeCSV(category),
+      progress,
+      escapeCSV(state),
+      escapeCSV(projectDate),
+      escapeCSV(objetNom),
+      escapeCSV(createdAt),
+      escapeCSV(updatedAt),
+    ];
+  });
+
+  // Construction du CSV
+  const csvLines = [headers.join(";"), ...rows.map((r) => r.join(";"))];
+  const csvContent = csvLines.join("\n");
+
+  // UTF-8 BOM pour Excel/Calc
+  const BOM = "\uFEFF";
+  const blob = new Blob([BOM + csvContent], {
+    type: "text/csv;charset=utf-8;",
+  });
+
+  // Téléchargement
+  const link = document.createElement("a");
+  link.href = URL.createObjectURL(blob);
+  link.download = `projets-impression3d_${new Date().toISOString().split("T")[0]}.csv`;
+  link.click();
+  URL.revokeObjectURL(link.href);
+}
+
+function escapeCSV(value) {
+  const str = String(value ?? "");
+  // Échappe les guillemets et entoure si contient séparateur ou guillemets
+  if (str.includes(";") || str.includes('"') || str.includes("\n")) {
+    return `"${str.replace(/"/g, '""')}"`;
+  }
+  return str;
+}
+
 // ─── Options dynamiques des selects ─────────────────────────────────────────
 
 function populateFilterOptions(projects) {
-  const classes    = [...new Set(projects.map((p) => p.studentClass).filter(Boolean))].sort();
-  const categories = [...new Set(projects.map(getCategoryValue).filter(Boolean))].sort();
+  const classes = [
+    ...new Set(projects.map((p) => p.studentClass).filter(Boolean)),
+  ].sort();
+  const categories = [
+    ...new Set(projects.map(getCategoryValue).filter(Boolean)),
+  ].sort();
 
-  appendOptions(filterClasse,    classes);
+  appendOptions(filterClasse, classes);
   appendOptions(filterCategorie, categories);
 }
 
@@ -522,27 +683,30 @@ function appendOptions(select, values) {
 // ─── Stats hero ──────────────────────────────────────────────────────────────
 
 function updateHeroStats(projects) {
-  const complete   = projects.filter((p) => p.isComplete).length;
-  const inProgress = projects.filter((p) => !p.isComplete && (p.progress ?? 0) > 0).length;
+  const complete = projects.filter((p) => p.isComplete).length;
+  const inProgress = projects.filter(
+    (p) => !p.isComplete && (p.progress ?? 0) > 0,
+  ).length;
 
-  statTotal.textContent      = projects.length;
-  statComplete.textContent   = complete;
+  statTotal.textContent = projects.length;
+  statComplete.textContent = complete;
   statInProgress.textContent = inProgress;
 }
 
 function updateCount(shown, total) {
-  filtersCount.textContent = shown === total
-    ? `${total} projet${total > 1 ? "s" : ""}`
-    : `${shown} / ${total} projet${total > 1 ? "s" : ""}`;
+  filtersCount.textContent =
+    shown === total
+      ? `${total} projet${total > 1 ? "s" : ""}`
+      : `${shown} / ${total} projet${total > 1 ? "s" : ""}`;
 }
 
 // ─── États UI ────────────────────────────────────────────────────────────────
 
 function showState(state, errorMsg = "") {
   stateLoading.hidden = state !== "loading";
-  stateError.hidden   = state !== "error";
-  stateEmpty.hidden   = state !== "empty";
-  grid.hidden         = state !== "grid";
+  stateError.hidden = state !== "error";
+  stateEmpty.hidden = state !== "empty";
+  grid.hidden = state !== "grid";
 
   if (state === "error" && errorMsg) {
     stateErrorMsg.textContent = errorMsg;
@@ -588,12 +752,18 @@ function bindEvents() {
     debounceTimer = setTimeout(applyFilters, 250);
   });
 
-  filterClasse.addEventListener("change",      applyFilters);
-  filterCategorie.addEventListener("change",   applyFilters);
+  filterClasse.addEventListener("change", applyFilters);
+  filterCategorie.addEventListener("change", applyFilters);
   filterProgression.addEventListener("change", applyFilters);
 
+  filterSort.addEventListener("change", () => {
+    currentSort = filterSort.value;
+    localStorage.setItem(SORT_KEY, currentSort);
+    renderGrid(filteredProjects);
+  });
+
   filtersReset.addEventListener("click", resetFilters);
-  btnRetry.addEventListener("click",     loadProjects);
+  btnRetry.addEventListener("click", loadProjects);
 
   btnFavorites.addEventListener("click", () => {
     filterFavoritesOnly = !filterFavoritesOnly;
@@ -602,6 +772,8 @@ function bindEvents() {
     btnFavorites.textContent = filterFavoritesOnly ? "★ Favoris" : "☆ Favoris";
     applyFilters();
   });
+
+  btnExport.addEventListener("click", exportCSV);
 
   // Modal
   modalClose.addEventListener("click", closeModal);
@@ -615,14 +787,17 @@ function bindEvents() {
 }
 
 function resetFilters() {
-  searchInput.value       = "";
-  filterClasse.value      = "";
-  filterCategorie.value   = "";
+  searchInput.value = "";
+  filterClasse.value = "";
+  filterCategorie.value = "";
   filterProgression.value = "";
-  filterFavoritesOnly     = false;
+  filterSort.value = "name-asc";
+  currentSort = "name-asc";
+  filterFavoritesOnly = false;
   btnFavorites.classList.remove("is-active");
   btnFavorites.setAttribute("aria-pressed", "false");
   btnFavorites.textContent = "☆ Favoris";
+  localStorage.setItem(SORT_KEY, currentSort);
   applyFilters();
   searchInput.focus();
 }
