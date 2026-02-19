@@ -7,7 +7,7 @@
       name="description"
       content="Sélecteur de projets Impression 3D - Visualisation et suivi des projets élèves - TechnoDocs"
     />
-    <title>Projets Impression 3D | TechnoDocs</title>
+    <title>Vos Projets Impression 3D | TechnoDocs</title>
 
     <link rel="stylesheet" href="/src/css/style.css" />
     <link rel="stylesheet" href="/src/css/projets-impression3d.css" />
@@ -28,7 +28,7 @@
       <section class="page-hero">
         <div class="page-hero__label">Impression 3D</div>
         <h1 class="page-hero__title">
-          Sélection de vos projets d'objets imprimables
+          Vos projets d'objets imprimables
         </h1>
         <p class="page-hero__subtitle">
           Visualisation et suivi des soumissions
@@ -86,10 +86,11 @@
             class="filter-select"
             aria-label="Filtrer par progression"
           >
-            <option value="">Toute progression</option>
+            <option value="">Toutes progressions</option>
             <option value="complete">Complète</option>
             <option value="in-progress">En cours</option>
             <option value="not-started">Non démarré</option>
+
           </select>
 
           <select
@@ -97,12 +98,12 @@
             class="filter-select"
             aria-label="Trier les projets"
           >
+            <option value="progress-desc">Progression (décroissante)</option>  
             <option value="name-asc">🔽 Nom (A-Z)</option>
             <option value="name-desc">Nom (Z-A)</option>
             <option value="date-recent">Date récente</option>
             <option value="date-old">Date ancienne</option>
             <option value="progress-asc">Progression (croissante)</option>
-            <option value="progress-desc">Progression (décroissante)</option>
           </select>
 
           <!-- Favoris -->
@@ -116,26 +117,7 @@
             ☆ Favoris
           </button>
 
-          <!-- Export CSV -->
-          <button
-            class="btn-export"
-            id="btn-export"
-            type="button"
-            aria-label="Exporter les projets filtrés en CSV"
-            disabled
-          >
-            📊 Exporter
-          </button>
-
-          <!-- Reset -->
-          <button
-            class="filters-bar__reset"
-            id="filters-reset"
-            type="button"
-            aria-label="Réinitialiser les filtres"
-          >
-            ✕ Réinitialiser
-          </button>
+          <!-- Export et Reset retirés (gestion via JS) -->
 
           <!-- Compteur -->
           <span

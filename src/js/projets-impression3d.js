@@ -17,6 +17,7 @@ const CONFIG = {
   collections: [
     "presentation_objet_technique",
     "devoir_conception_impression_3d",
+    "devoir_cahier_charges_impression_3d",
   ],
   // false → collection racine (pattern wizard-firebase.js réel)
   nested: false,
@@ -210,8 +211,8 @@ function renderGrid(projects) {
   // Tri les projets selon la sélection
   const sortedProjects = sortProjects(projects, currentSort);
 
-  // Gère l'état du bouton d'export
-  btnExport.disabled = sortedProjects.length === 0;
+  // Gère l'état du bouton d'export (s'il existe)
+  if (btnExport) btnExport.disabled = sortedProjects.length === 0;
 
   // Vide le grid sans innerHTML
   while (grid.firstChild) grid.removeChild(grid.firstChild);
@@ -762,7 +763,7 @@ function bindEvents() {
     renderGrid(filteredProjects);
   });
 
-  filtersReset.addEventListener("click", resetFilters);
+  if (filtersReset) filtersReset.addEventListener("click", resetFilters);
   btnRetry.addEventListener("click", loadProjects);
 
   btnFavorites.addEventListener("click", () => {
@@ -773,7 +774,7 @@ function bindEvents() {
     applyFilters();
   });
 
-  btnExport.addEventListener("click", exportCSV);
+  if (btnExport) btnExport.addEventListener("click", exportCSV);
 
   // Modal
   modalClose.addEventListener("click", closeModal);
