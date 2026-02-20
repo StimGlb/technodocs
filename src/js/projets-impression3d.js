@@ -65,7 +65,7 @@ const favorites = new Set(
   JSON.parse(localStorage.getItem(FAVORITES_KEY) || "[]"),
 );
 let filterFavoritesOnly = false;
-let currentSort = localStorage.getItem(SORT_KEY) || "name-asc";
+let currentSort = localStorage.getItem(SORT_KEY) || "progress-desc";
 
 function saveFavorites() {
   localStorage.setItem(FAVORITES_KEY, JSON.stringify([...favorites]));
@@ -792,8 +792,8 @@ function resetFilters() {
   filterClasse.value = "";
   filterCategorie.value = "";
   filterProgression.value = "";
-  filterSort.value = "name-asc";
-  currentSort = "name-asc";
+  filterSort.value = "progress-desc";
+  currentSort = "progress-desc";
   filterFavoritesOnly = false;
   btnFavorites.classList.remove("is-active");
   btnFavorites.setAttribute("aria-pressed", "false");
