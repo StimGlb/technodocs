@@ -1,0 +1,247 @@
+# Fiche 2 — La chaîne d'énergie
+
+> 🎯 **Compétences visées** : SFC 1 · SFC 11 · CCRI 14
+
+---
+
+## 1. Les formes d'énergie
+
+L'énergie existe sous différentes formes. Dans un système technique, elle est **convertie** d'une forme à une autre pour réaliser une action.
+
+| Forme d'énergie | Exemple |
+|-----------------|---------|
+| **Électrique** | Courant dans un câble, batterie |
+| **Mécanique** | Mouvement d'une roue, rotation d'un moteur |
+| **Thermique** | Chaleur d'un radiateur, friction |
+| **Lumineuse** | LED, ampoule, écran |
+| **Chimique** | Carburant, pile, aliment |
+| **Nucléaire** | Centrale nucléaire |
+| **Hydraulique** | Barrage, courant d'eau |
+| **Éolienne** | Vent captée par une éolienne |
+| **Solaire** | Rayonnement captée par un panneau |
+
+⚠️ L'énergie ne se crée pas et ne se détruit pas : elle se **transforme** (principe de conservation de l'énergie). À chaque conversion, une partie est perdue sous forme de **chaleur** (pertes thermiques).
+
+---
+
+## 2. Les sources d'énergie
+
+### Renouvelables vs non renouvelables
+
+| Type | Principe | Exemples |
+|------|----------|----------|
+| **Renouvelable** | Se reconstitue naturellement à l'échelle humaine | Solaire, éolien, hydraulique, biomasse, géothermie |
+| **Non renouvelable** | Stock limité, s'épuise | Pétrole, gaz, charbon, uranium |
+
+Le choix de la source d'énergie d'un objet technique a un **impact direct** sur l'environnement (émissions de CO₂, déchets, épuisement des ressources).
+
+---
+
+## 3. La chaîne d'énergie : principe
+
+La chaîne d'énergie décrit le **trajet de l'énergie** dans un système technique, de la source jusqu'à l'action finale. Elle se décompose en **4 fonctions** :
+
+```
+ALIMENTER  →  DISTRIBUER  →  CONVERTIR  →  TRANSMETTRE  →  [ACTION]
+```
+
+| Fonction | Rôle | Question à se poser |
+|----------|------|---------------------|
+| **Alimenter** | Fournir l'énergie au système | D'où vient l'énergie ? |
+| **Distribuer** | Réguler, orienter, commander l'énergie | Qu'est-ce qui décide quand et combien d'énergie passe ? |
+| **Convertir** | Transformer l'énergie d'une forme à une autre | Quel composant change la forme d'énergie ? |
+| **Transmettre** | Acheminer l'énergie jusqu'à l'action | Comment l'énergie arrive-t-elle à l'endroit où elle agit ? |
+
+---
+
+## 4. Les constituants de la chaîne d'énergie
+
+### Alimenter
+
+| Constituant | Énergie fournie | Exemple d'objet |
+|-------------|----------------|-----------------|
+| Batterie / pile | Chimique → électrique | Smartphone, télécommande |
+| Secteur (prise 230V) | Électrique | Aspirateur, four |
+| Panneau solaire | Solaire → électrique | Calculatrice solaire |
+| Réservoir de carburant | Chimique | Trottinette thermique |
+| Ressort | Mécanique (élastique) | Montre mécanique |
+
+### Distribuer
+
+| Constituant | Rôle | Exemple |
+|-------------|------|---------|
+| Interrupteur | Tout ou rien (on/off) | Lampe de bureau |
+| Variateur | Régler l'intensité | Éclairage de salle |
+| Carte électronique | Commander selon un programme | Robot aspirateur |
+| Bouton poussoir | Activation momentanée | Perceuse (gâchette) |
+
+### Convertir
+
+| Constituant | Conversion | Exemple |
+|-------------|-----------|---------|
+| Moteur électrique | Électrique → mécanique (rotation) | Ventilateur, trottinette |
+| Résistance chauffante | Électrique → thermique | Grille-pain, fer à repasser |
+| LED / ampoule | Électrique → lumineuse | Lampe, écran |
+| Haut-parleur | Électrique → sonore | Enceinte Bluetooth |
+| Moteur thermique | Chimique → mécanique | Voiture, tondeuse |
+| Vérin | Hydraulique/pneumatique → mécanique (translation) | Pelleteuse |
+
+### Transmettre
+
+| Constituant | Type de mouvement | Exemple |
+|-------------|-------------------|---------|
+| Engrenages | Rotation → rotation (modifie vitesse/couple) | Perceuse, vélo |
+| Courroie + poulies | Rotation → rotation (à distance) | Machine à laver |
+| Chaîne + pignons | Rotation → rotation | Vélo |
+| Vis sans fin | Rotation → rotation (réduction) | Portail automatique |
+| Crémaillère | Rotation → translation | Direction de voiture |
+| Bielles | Rotation → translation | Moteur de voiture |
+| Câble / fil | Acheminer l'énergie électrique | Tous appareils filaires |
+| Arbre de transmission | Rotation → rotation | Éolienne |
+
+---
+
+## 5. Lire et compléter un schéma de chaîne d'énergie
+
+### Méthode
+
+1. **Identifier l'action réalisée** par le système (ex. : « déplacer la trottinette »)
+2. **Remonter la chaîne** en se demandant : quel composant transmet ? convertit ? distribue ? alimente ?
+3. **Nommer la forme d'énergie** entre chaque bloc
+4. **Placer les constituants** dans les bons blocs
+
+### Exemple complet — Trottinette électrique
+
+```
+  Batterie      Contrôleur      Moteur         Courroie       → Avancer
+  lithium       électronique    électrique      + roue
+ ┌──────────┐  ┌──────────┐   ┌──────────┐   ┌──────────┐
+ │ALIMENTER │→ │DISTRIBUER│→  │CONVERTIR │→  │TRANSMETTRE│→  ACTION
+ └──────────┘  └──────────┘   └──────────┘   └──────────┘
+   Énergie       Énergie        Énergie         Énergie
+   chimique      électrique     électrique      mécanique
+   → électrique  régulée        → mécanique     (rotation→
+                                (rotation)       translation)
+```
+
+### Exemple complet — Lampe de bureau LED
+
+```
+  Secteur 230V   Interrupteur    LED           (directe)     → Éclairer
+ ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐
+ │ALIMENTER │→  │DISTRIBUER│→  │CONVERTIR │→  │TRANSMETTRE│→  ACTION
+ └──────────┘   └──────────┘   └──────────┘   └──────────┘
+   Énergie        Énergie        Énergie        Énergie
+   électrique     électrique     électrique     lumineuse
+                  (commandée)    → lumineuse
+```
+
+---
+
+## 6. Rendement et pertes
+
+Aucune conversion d'énergie n'est parfaite. On mesure l'efficacité avec le **rendement** :
+
+```
+Rendement (%) = (Énergie utile / Énergie consommée) × 100
+```
+
+- Un moteur électrique a un rendement d'environ **85-95 %** (très bon)
+- Une ampoule à incandescence : environ **5 %** (95 % perdu en chaleur)
+- Une LED : environ **40-50 %**
+- Un moteur thermique : environ **30-40 %**
+
+Plus le rendement est élevé, moins il y a de **pertes** (souvent sous forme de chaleur, bruit ou vibrations). C'est un critère de **performance** (OST 32) et de **choix responsable** (OST 31).
+
+---
+
+## ✅ L'essentiel en 5 points
+
+1. La chaîne d'énergie décrit le parcours de l'énergie en **4 fonctions** : alimenter, distribuer, convertir, transmettre.
+2. Chaque fonction est assurée par un **constituant** identifiable dans l'objet réel.
+3. Entre chaque bloc, on identifie la **forme d'énergie** (électrique, mécanique, thermique…).
+4. L'énergie se conserve mais chaque conversion génère des **pertes** — le **rendement** mesure l'efficacité.
+5. Le choix de la source d'énergie (**renouvelable** vs non renouvelable) est un enjeu environnemental majeur.
+
+---
+
+## 🧪 Exercices type DNB
+
+### Exercice 1 — Compléter une chaîne d'énergie
+
+Un vélo à assistance électrique (VAE) possède : une batterie lithium, un contrôleur, un moteur électrique dans le moyeu de la roue arrière, et la roue elle-même.
+
+**a)** Complète la chaîne d'énergie du VAE :
+
+| Alimenter | Distribuer | Convertir | Transmettre | Action |
+|-----------|-----------|-----------|-------------|--------|
+| ? | ? | ? | ? | Se déplacer |
+
+**b)** Quelle forme d'énergie entre dans le moteur ? Quelle forme en sort ?
+
+**c)** Le moteur a un rendement de 90 %. Si la batterie fournit 200 Wh, quelle énergie mécanique utile est produite ?
+
+**Réponses :**
+
+**a)**
+
+| Alimenter | Distribuer | Convertir | Transmettre | Action |
+|-----------|-----------|-----------|-------------|--------|
+| Batterie lithium | Contrôleur électronique | Moteur électrique | Roue arrière (moyeu) | Se déplacer |
+
+**b)** L'énergie électrique entre dans le moteur ; l'énergie mécanique (rotation) en sort.
+
+**c)** Énergie utile = 200 × 90 / 100 = **180 Wh**. Les 20 Wh restants sont perdus principalement sous forme de chaleur.
+
+---
+
+### Exercice 2 — Identifier les constituants
+
+On démonte un sèche-cheveux. On trouve à l'intérieur : un cordon secteur, un interrupteur 2 positions (tiède/chaud), une résistance chauffante, un moteur électrique et une hélice.
+
+**a)** Le sèche-cheveux réalise deux actions simultanées. Lesquelles ?
+
+**b)** Construis les deux chaînes d'énergie (une par action) en identifiant les constituants.
+
+**c)** La résistance chauffante réalise quelle conversion d'énergie ?
+
+**Réponses :**
+
+**a)** Action 1 : chauffer l'air. Action 2 : souffler l'air (le déplacer).
+
+**b)**
+
+Chaîne 1 — Chauffer :
+Alimenter : secteur (cordon) → Distribuer : interrupteur 2 positions → Convertir : résistance chauffante → Transmettre : flux d'air → Action : chauffer
+
+Chaîne 2 — Souffler :
+Alimenter : secteur (cordon) → Distribuer : interrupteur → Convertir : moteur électrique → Transmettre : hélice → Action : déplacer l'air
+
+**c)** Énergie électrique → énergie thermique (chaleur).
+
+---
+
+### Exercice 3 — Comparaison et choix
+
+Un collège hésite entre deux solutions pour chauffer une salle :
+
+| Critère | Radiateur électrique | Pompe à chaleur |
+|---------|---------------------|-----------------|
+| Source d'énergie | Secteur (électrique) | Secteur + air extérieur |
+| Rendement | 100 % (effet Joule) | 300 % (COP = 3) |
+| Coût d'achat | 150 € | 2 500 € |
+| Coût annuel d'utilisation | 800 € | 270 € |
+
+**a)** Comment un rendement de 300 % est-il possible pour la pompe à chaleur ?
+
+**b)** Au bout de combien d'années le surcoût d'achat de la pompe à chaleur est-il rentabilisé ?
+
+**c)** En termes de développement durable, quel argument supplémentaire justifie la pompe à chaleur ?
+
+**Réponses :**
+
+**a)** La pompe à chaleur ne crée pas d'énergie à partir de rien : elle **prélève de la chaleur dans l'air extérieur** (énergie gratuite et renouvelable) et la transfère à l'intérieur. Pour 1 kWh d'électricité consommé, elle restitue 3 kWh de chaleur. Le COP (coefficient de performance) de 3 signifie qu'elle récupère 2 kWh dans l'environnement pour chaque kWh électrique dépensé.
+
+**b)** Surcoût d'achat : 2 500 − 150 = 2 350 €. Économie annuelle : 800 − 270 = 530 €. Rentabilisation : 2 350 / 530 ≈ **4,4 ans**, soit environ 5 ans.
+
+**c)** La pompe à chaleur consomme environ 3 fois moins d'électricité pour le même chauffage, ce qui réduit la demande sur le réseau électrique et donc les émissions de CO₂ associées à la production d'électricité. Elle utilise une source d'énergie renouvelable (la chaleur de l'air) en complément, ce qui s'inscrit dans la transition énergétique.

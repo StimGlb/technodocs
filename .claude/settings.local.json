@@ -29,7 +29,9 @@
       "Bash(where:*)",
       "Bash(git -C \"e:/Dev/technodocs-vanilla\" ls-tree -L 1 HEAD)",
       "Bash(git -C \"e:/Dev/technodocs-vanilla\" ls-tree -l HEAD)",
-      "Bash(git -C \"e:/Dev/technodocs-vanilla\" ls-tree -l HEAD scripts/)"
+      "Bash(git -C \"e:/Dev/technodocs-vanilla\" ls-tree -l HEAD scripts/)",
+      "Bash(grep -l \"Fiche 01 —\" e:/Dev/technodocs-vanilla/src/pages/revisions/*.html)",
+      "Bash(grep \"slides\" e:/Dev/technodocs-vanilla/src/data/revisions/*.json)"
     ],
     "deny": [],
     "ask": []
