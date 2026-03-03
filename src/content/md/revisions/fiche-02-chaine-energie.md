@@ -41,16 +41,14 @@ Le choix de la source d'énergie d'un objet technique a un **impact direct** sur
 
 La chaîne d'énergie décrit le **trajet de l'énergie** dans un système technique, de la source jusqu'à l'action finale. Elle se décompose en **4 fonctions** :
 
-```
-ALIMENTER  →  DISTRIBUER  →  CONVERTIR  →  TRANSMETTRE  →  [ACTION]
-```
+![Chaîne d'énergie — Schéma de principe](../../assets/revisions/chaine-energie-principe.svg)
 
-| Fonction | Rôle | Question à se poser |
-|----------|------|---------------------|
-| **Alimenter** | Fournir l'énergie au système | D'où vient l'énergie ? |
-| **Distribuer** | Réguler, orienter, commander l'énergie | Qu'est-ce qui décide quand et combien d'énergie passe ? |
-| **Convertir** | Transformer l'énergie d'une forme à une autre | Quel composant change la forme d'énergie ? |
-| **Transmettre** | Acheminer l'énergie jusqu'à l'action | Comment l'énergie arrive-t-elle à l'endroit où elle agit ? |
+| Fonction | Question à se poser |
+|----------|---------------------|
+| **Alimenter** | D'où vient l'énergie ? |
+| **Distribuer** | Qu'est-ce qui décide quand et combien d'énergie passe ? |
+| **Convertir** | Quel composant change la forme d'énergie ? |
+| **Transmettre** | Comment l'énergie arrive-t-elle à l'endroit où elle agit ? |
 
 ---
 
@@ -112,29 +110,11 @@ ALIMENTER  →  DISTRIBUER  →  CONVERTIR  →  TRANSMETTRE  →  [ACTION]
 
 ### Exemple complet — Trottinette électrique
 
-```
-  Batterie      Contrôleur      Moteur         Courroie       → Avancer
-  lithium       électronique    électrique      + roue
- ┌──────────┐  ┌──────────┐   ┌──────────┐   ┌──────────┐
- │ALIMENTER │→ │DISTRIBUER│→  │CONVERTIR │→  │TRANSMETTRE│→  ACTION
- └──────────┘  └──────────┘   └──────────┘   └──────────┘
-   Énergie       Énergie        Énergie         Énergie
-   chimique      électrique     électrique      mécanique
-   → électrique  régulée        → mécanique     (rotation→
-                                (rotation)       translation)
-```
+![Chaîne d'énergie — Trottinette électrique](../../assets/revisions/chaine-energie-trottinette.svg)
 
 ### Exemple complet — Lampe de bureau LED
 
-```
-  Secteur 230V   Interrupteur    LED           (directe)     → Éclairer
- ┌──────────┐   ┌──────────┐   ┌──────────┐   ┌──────────┐
- │ALIMENTER │→  │DISTRIBUER│→  │CONVERTIR │→  │TRANSMETTRE│→  ACTION
- └──────────┘   └──────────┘   └──────────┘   └──────────┘
-   Énergie        Énergie        Énergie        Énergie
-   électrique     électrique     électrique     lumineuse
-                  (commandée)    → lumineuse
-```
+![Chaîne d'énergie — Lampe de bureau LED](../../assets/revisions/chaine-energie-lampe.svg)
 
 ---
 
@@ -142,14 +122,14 @@ ALIMENTER  →  DISTRIBUER  →  CONVERTIR  →  TRANSMETTRE  →  [ACTION]
 
 Aucune conversion d'énergie n'est parfaite. On mesure l'efficacité avec le **rendement** :
 
-```
-Rendement (%) = (Énergie utile / Énergie consommée) × 100
-```
+**Rendement (%) = (Énergie utile / Énergie consommée) × 100**
 
-- Un moteur électrique a un rendement d'environ **85-95 %** (très bon)
-- Une ampoule à incandescence : environ **5 %** (95 % perdu en chaleur)
-- Une LED : environ **40-50 %**
-- Un moteur thermique : environ **30-40 %**
+| Convertisseur | Rendement approximatif | Pertes principales |
+|---------------|----------------------|-------------------|
+| Moteur électrique | 85 – 95 % | Chaleur, frottements |
+| LED | 40 – 50 % | Chaleur |
+| Moteur thermique | 30 – 40 % | Chaleur, gaz |
+| Ampoule incandescence | ~5 % | Chaleur (95 %) |
 
 Plus le rendement est élevé, moins il y a de **pertes** (souvent sous forme de chaleur, bruit ou vibrations). C'est un critère de **performance** (OST 32) et de **choix responsable** (OST 31).
 
@@ -171,11 +151,7 @@ Plus le rendement est élevé, moins il y a de **pertes** (souvent sous forme de
 
 Un vélo à assistance électrique (VAE) possède : une batterie lithium, un contrôleur, un moteur électrique dans le moyeu de la roue arrière, et la roue elle-même.
 
-**a)** Complète la chaîne d'énergie du VAE :
-
-| Alimenter | Distribuer | Convertir | Transmettre | Action |
-|-----------|-----------|-----------|-------------|--------|
-| ? | ? | ? | ? | Se déplacer |
+**a)** Complète la chaîne d'énergie du VAE en plaçant chaque constituant dans la bonne fonction (Alimenter, Distribuer, Convertir, Transmettre).
 
 **b)** Quelle forme d'énergie entre dans le moteur ? Quelle forme en sort ?
 
@@ -183,11 +159,7 @@ Un vélo à assistance électrique (VAE) possède : une batterie lithium, un con
 
 **Réponses :**
 
-**a)**
-
-| Alimenter | Distribuer | Convertir | Transmettre | Action |
-|-----------|-----------|-----------|-------------|--------|
-| Batterie lithium | Contrôleur électronique | Moteur électrique | Roue arrière (moyeu) | Se déplacer |
+**a)** Alimenter : batterie lithium → Distribuer : contrôleur électronique → Convertir : moteur électrique → Transmettre : roue arrière (moyeu) → Action : se déplacer.
 
 **b)** L'énergie électrique entre dans le moteur ; l'énergie mécanique (rotation) en sort.
 
@@ -201,7 +173,7 @@ On démonte un sèche-cheveux. On trouve à l'intérieur : un cordon secteur, un
 
 **a)** Le sèche-cheveux réalise deux actions simultanées. Lesquelles ?
 
-**b)** Construis les deux chaînes d'énergie (une par action) en identifiant les constituants.
+**b)** Construis les deux chaînes d'énergie (une par action) en identifiant les constituants pour chaque fonction.
 
 **c)** La résistance chauffante réalise quelle conversion d'énergie ?
 
@@ -211,11 +183,9 @@ On démonte un sèche-cheveux. On trouve à l'intérieur : un cordon secteur, un
 
 **b)**
 
-Chaîne 1 — Chauffer :
-Alimenter : secteur (cordon) → Distribuer : interrupteur 2 positions → Convertir : résistance chauffante → Transmettre : flux d'air → Action : chauffer
+Chaîne 1 — Chauffer : Alimenter (secteur / cordon) → Distribuer (interrupteur 2 positions) → Convertir (résistance chauffante) → Transmettre (flux d'air) → Action (chauffer).
 
-Chaîne 2 — Souffler :
-Alimenter : secteur (cordon) → Distribuer : interrupteur → Convertir : moteur électrique → Transmettre : hélice → Action : déplacer l'air
+Chaîne 2 — Souffler : Alimenter (secteur / cordon) → Distribuer (interrupteur) → Convertir (moteur électrique) → Transmettre (hélice) → Action (déplacer l'air).
 
 **c)** Énergie électrique → énergie thermique (chaleur).
 
