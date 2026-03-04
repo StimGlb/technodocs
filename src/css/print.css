@@ -1,0 +1,111 @@
+/* ========================================
+   TECHNO DOCS - Styles impression / PDF
+   Chargé uniquement en media="print"
+   Cible : rendu A4 propre via Ctrl+P → Chrome
+   ======================================== */
+
+@media print {
+
+  /* ── Page A4 ── */
+  @page {
+    size: A4 portrait;
+    margin: 15mm 12mm 15mm 12mm;
+  }
+
+  /* ── Masquer les éléments non imprimables ── */
+  #header-placeholder,
+  #footer-placeholder,
+  .cours-hero__shapes,
+  .no-print { display: none !important; }
+
+  /* ── Reset écran → papier ── */
+  body {
+    font-size: 11pt;
+    line-height: 1.5;
+    color: #000;
+    background: #fff;
+  }
+
+  /* ── En-tête fiche (hero simplifié pour le papier) ── */
+  .cours-hero {
+    background: none;
+    padding: 0;
+    margin-bottom: 8mm;
+    border-bottom: 2pt solid #333;
+    page-break-after: avoid;
+  }
+
+  .cours-hero__title {
+    font-size: 16pt;
+    color: #000;
+  }
+
+  .cours-hero__subtitle {
+    font-size: 11pt;
+    color: #444;
+  }
+
+  /* ── Contenu Markdown ── */
+  .md-content {
+    max-width: 100%;
+    padding: 0;
+  }
+
+  .md-content h2 {
+    font-size: 13pt;
+    margin-top: 6mm;
+    page-break-after: avoid;
+  }
+
+  .md-content h3 {
+    font-size: 12pt;
+    page-break-after: avoid;
+  }
+
+  /* ── Gestion des sauts de page ── */
+  .md-content img,
+  .md-content table,
+  .md-content pre,
+  .md-content blockquote {
+    page-break-inside: avoid;
+  }
+
+  .page-break {
+    page-break-before: always;
+  }
+
+  /* ── Métadonnées de la fiche (bandeau activité) ── */
+  .fiche-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4mm;
+    font-size: 9pt;
+    border: 1pt solid #999;
+    padding: 3mm;
+    margin-bottom: 6mm;
+    page-break-inside: avoid;
+  }
+
+  .fiche-meta__item {
+    flex: 1 1 auto;
+  }
+
+  /* ── Zones de réponse élève ── */
+  .zone-reponse {
+    border: 1pt solid #ccc;
+    min-height: 25mm;
+    margin: 3mm 0;
+    page-break-inside: avoid;
+  }
+
+  .zone-reponse--large {
+    min-height: 50mm;
+  }
+
+  /* ── Liens : afficher l'URL en print ── */
+  a[href^="http"]::after {
+    content: " (" attr(href) ")";
+    font-size: 8pt;
+    color: #666;
+  }
+}

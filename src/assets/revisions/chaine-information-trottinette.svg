@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 200" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="box" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="action" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect width="900" height="200" rx="12" fill="url(#bg)"/>
+  <text x="450" y="24" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="600">Cha&#238;ne d'information &#8212; Trottinette &#233;lectrique</text>
+
+  <rect x="20" y="40" width="150" height="75" rx="8" fill="url(#box)" stroke="#475569" stroke-width="1.5"/>
+  <text x="95" y="62" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="600">ACQ&#201;RIR</text>
+  <text x="95" y="80" text-anchor="middle" fill="#e2e8f0" font-size="11">Capteur de vitesse</text>
+  <text x="95" y="94" text-anchor="middle" fill="#e2e8f0" font-size="11">Acc&#233;l&#233;rateur (poign&#233;e)</text>
+  <line x1="175" y1="77" x2="200" y2="77" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="205" y="40" width="150" height="75" rx="8" fill="url(#box)" stroke="#475569" stroke-width="1.5"/>
+  <text x="280" y="62" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="600">TRAITER</text>
+  <text x="280" y="80" text-anchor="middle" fill="#e2e8f0" font-size="11">Contr&#244;leur</text>
+  <text x="280" y="94" text-anchor="middle" fill="#e2e8f0" font-size="11">&#233;lectronique</text>
+  <line x1="360" y1="77" x2="385" y2="77" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="390" y="40" width="150" height="75" rx="8" fill="url(#box)" stroke="#475569" stroke-width="1.5"/>
+  <text x="465" y="62" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="600">COMMUNIQUER</text>
+  <text x="465" y="80" text-anchor="middle" fill="#e2e8f0" font-size="11">&#201;cran LCD</text>
+  <text x="465" y="94" text-anchor="middle" fill="#e2e8f0" font-size="11">(vitesse, batterie)</text>
+  <line x1="545" y1="77" x2="570" y2="77" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="575" y="40" width="150" height="75" rx="8" fill="url(#box)" stroke="#475569" stroke-width="1.5"/>
+  <text x="650" y="62" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="600">COMMANDER</text>
+  <text x="650" y="80" text-anchor="middle" fill="#e2e8f0" font-size="11">Signal vers</text>
+  <text x="650" y="94" text-anchor="middle" fill="#e2e8f0" font-size="11">le moteur</text>
+  <line x1="730" y1="77" x2="755" y2="77" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="760" y="40" width="120" height="75" rx="8" fill="url(#action)"/>
+  <text x="820" y="68" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">CHA&#206;NE</text>
+  <text x="820" y="85" text-anchor="middle" fill="#bfdbfe" font-size="11" font-weight="700">D'&#201;NERGIE</text>
+
+  <text x="95" y="148" text-anchor="middle" fill="#fbbf24" font-size="10">Grandeur physique :</text>
+  <text x="95" y="162" text-anchor="middle" fill="#fbbf24" font-size="10">vitesse, position</text>
+  <text x="280" y="148" text-anchor="middle" fill="#fbbf24" font-size="10">Signal &#233;lectrique</text>
+  <text x="280" y="162" text-anchor="middle" fill="#fbbf24" font-size="10">num&#233;rique</text>
+  <text x="465" y="148" text-anchor="middle" fill="#fbbf24" font-size="10">Information</text>
+  <text x="465" y="162" text-anchor="middle" fill="#fbbf24" font-size="10">visuelle</text>
+  <text x="650" y="148" text-anchor="middle" fill="#fbbf24" font-size="10">Ordre &#233;lectrique</text>
+  <text x="650" y="162" text-anchor="middle" fill="#fbbf24" font-size="10">(PWM)</text>
+</svg>

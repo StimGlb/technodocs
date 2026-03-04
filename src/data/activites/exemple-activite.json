@@ -1,0 +1,11 @@
+{
+  "title": "Activité exemple — Habitat & énergie",
+  "subtitle": "Fiche d'activité élève",
+  "niveau": "5ème",
+  "sequence": "Habitat & énergie",
+  "seance": "Séance 2/6",
+  "duree": "1h30",
+  "competences": ["CCRI 16", "SFC 12"],
+  "markdownPath": "../../content/md/activites/exemple-activite.md",
+  "slides": []
+}

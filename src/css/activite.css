@@ -1,0 +1,54 @@
+/* ========================================
+   TECHNO DOCS - Styles Fiches d'activité
+   Bandeau métadonnées + zones de réponse
+   ======================================== */
+
+/* ── Bandeau métadonnées (visible écran et print) ── */
+.fiche-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  margin: var(--space-4) auto;
+  max-width: var(--container-max);
+}
+
+.fiche-meta__item {
+  flex: 1 1 160px;
+  color: var(--color-gray-700);
+}
+
+.fiche-meta__item strong {
+  color: var(--color-gray-900);
+  font-weight: 600;
+}
+
+/* ── Zones de réponse élève (utiles en édition / print) ── */
+.zone-reponse {
+  border: 1px dashed var(--color-gray-400);
+  border-radius: var(--radius-sm);
+  min-height: 80px;
+  margin: var(--space-3) 0;
+  padding: var(--space-2);
+  background: var(--color-gray-50);
+}
+
+.zone-reponse--large {
+  min-height: 160px;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .fiche-meta {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .fiche-meta__item {
+    flex: 1 1 auto;
+  }
+}

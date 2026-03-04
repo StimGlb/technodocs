@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 200" font-family="'Segoe UI', Arial, sans-serif">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="box" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#334155"/>
+      <stop offset="100%" stop-color="#1e293b"/>
+    </linearGradient>
+    <linearGradient id="action" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#64748b"/>
+    </marker>
+  </defs>
+  <rect width="900" height="200" rx="12" fill="url(#bg)"/>
+  <text x="450" y="24" text-anchor="middle" fill="#e2e8f0" font-size="14" font-weight="600">Cha&#238;ne d'information &#8212; Sch&#233;ma de principe</text>
+
+  <rect x="20" y="40" width="150" height="80" rx="8" fill="url(#box)" stroke="#475569" stroke-width="1.5"/>
+  <text x="95" y="65" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="600">ACQU&#201;RIR</text>
+  <text x="95" y="82" text-anchor="middle" fill="#94a3b8" font-size="10" font-style="italic">Capter une grandeur</text>
+  <text x="95" y="96" text-anchor="middle" fill="#94a3b8" font-size="10" font-style="italic">physique</text>
+  <line x1="175" y1="80" x2="200" y2="80" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="205" y="40" width="150" height="80" rx="8" fill="url(#box)" stroke="#475569" stroke-width="1.5"/>
+  <text x="280" y="65" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="600">TRAITER</text>
+  <text x="280" y="82" text-anchor="middle" fill="#94a3b8" font-size="10" font-style="italic">Analyser, d&#233;cider</text>
+  <text x="280" y="96" text-anchor="middle" fill="#94a3b8" font-size="10" font-style="italic">(programme)</text>
+  <line x1="360" y1="80" x2="385" y2="80" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="390" y="40" width="150" height="80" rx="8" fill="url(#box)" stroke="#475569" stroke-width="1.5"/>
+  <text x="465" y="65" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="600">COMMUNIQUER</text>
+  <text x="465" y="82" text-anchor="middle" fill="#94a3b8" font-size="10" font-style="italic">Afficher, transmettre</text>
+  <text x="465" y="96" text-anchor="middle" fill="#94a3b8" font-size="10" font-style="italic">&#224; l'utilisateur</text>
+  <line x1="545" y1="80" x2="570" y2="80" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="575" y="40" width="150" height="80" rx="8" fill="url(#box)" stroke="#475569" stroke-width="1.5"/>
+  <text x="650" y="65" text-anchor="middle" fill="#93c5fd" font-size="12" font-weight="600">COMMANDER</text>
+  <text x="650" y="82" text-anchor="middle" fill="#94a3b8" font-size="10" font-style="italic">Envoyer un ordre</text>
+  <text x="650" y="96" text-anchor="middle" fill="#94a3b8" font-size="10" font-style="italic">&#224; la cha&#238;ne d'&#233;nergie</text>
+  <line x1="730" y1="80" x2="755" y2="80" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <rect x="760" y="40" width="120" height="80" rx="8" fill="url(#action)"/>
+  <text x="820" y="70" text-anchor="middle" fill="#ffffff" font-size="11" font-weight="700">CHA&#206;NE</text>
+  <text x="820" y="87" text-anchor="middle" fill="#bfdbfe" font-size="11" font-weight="700">D'&#201;NERGIE</text>
+
+  <text x="95" y="150" text-anchor="middle" fill="#fbbf24" font-size="10">Capteurs</text>
+  <text x="280" y="150" text-anchor="middle" fill="#fbbf24" font-size="10">Microcontr&#244;leur</text>
+  <text x="465" y="150" text-anchor="middle" fill="#fbbf24" font-size="10">IHM (&#233;cran, LED...)</text>
+  <text x="650" y="150" text-anchor="middle" fill="#fbbf24" font-size="10">Carte, relais</text>
+
+  <text x="450" y="185" text-anchor="middle" fill="#94a3b8" font-size="10" font-style="italic">La cha&#238;ne d'information pilote la cha&#238;ne d'&#233;nergie</text>
+</svg>

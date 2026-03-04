@@ -31,6 +31,24 @@ export async function initCoursPage(configPath) {
     // Rendre le hero
     renderHero(config);
 
+    // Peuplement conditionnel du bandeau métadonnées (fiches d'activité)
+    const metaFields = {
+      ficheNiveau: config.niveau,
+      ficheSequence: config.sequence,
+      ficheSeance: config.seance,
+      ficheDuree: config.duree,
+      ficheCompetences: config.competences?.join(', ')
+    };
+
+    Object.entries(metaFields).forEach(([id, value]) => {
+      const el = document.getElementById(id);
+      if (el && value) el.textContent = value;
+    });
+
+    // Masquer le bandeau si aucun champ meta n'est présent (ex : fiches de révision)
+    const metaSection = document.getElementById('ficheMeta');
+    if (metaSection && !config.niveau) metaSection.style.display = 'none';
+
     // Rendre le carousel
     renderCarousel(config.slides);
 
@@ -474,7 +492,7 @@ function generateTableOfContents(content) {
 
   const title = document.createElement("h2");
   title.className = "md-toc__title";
-  title.textContent = "📑 Sommaire";
+  title.textContent = "Sommaire";
   nav.appendChild(title);
 
   const list = document.createElement("ul");
