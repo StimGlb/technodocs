@@ -41,6 +41,160 @@
   min-height: 160px;
 }
 
+/* ══════════════════════════════════════════
+   STRUCTURE FICHE D'ACTIVITÉ — Styles écran
+   ══════════════════════════════════════════ */
+
+/* ── Ligne d'identification élève (masquée à l'écran) ── */
+.no-screen {
+  display: none;
+}
+
+/* ── Bandeau OST + Problématique ── */
+.fiche-ost {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 2px solid var(--color-gray-200, #ddd);
+  border-radius: 8px;
+  background: var(--color-gray-50, #f8f9fa);
+}
+
+.fiche-ost__item {
+  flex: 1;
+}
+
+.fiche-ost__label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.25rem;
+  color: var(--color-gray-500, #666);
+}
+
+.fiche-ost__value {
+  font-size: 1rem;
+}
+
+/* ── Bloc Travail demandé ── */
+.fiche-travail {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  background: var(--color-primary-lighter, #e8f0fe);
+  border-radius: 6px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ── Bloc d'activité (cadre) ── */
+.fiche-activite {
+  border: 2px solid var(--color-gray-200, #ddd);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.fiche-activite__titre {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+/* ── Layout deux colonnes : consignes + illustration ── */
+.fiche-deux-colonnes {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.fiche-deux-colonnes__gauche {
+  flex: 3;
+}
+
+.fiche-deux-colonnes__droite {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Zone de réponse élève (espace vide pour écriture) ── */
+.zone-reponse {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-height: 60px;
+  margin: 0.75rem 0;
+  background: #fafafa;
+}
+
+.zone-reponse--medium {
+  min-height: 100px;
+}
+
+.zone-reponse--large {
+  min-height: 150px;
+}
+
+/* ── Zone avec lignes d'écriture ── */
+.zone-reponse--lignes {
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 1.4rem,
+    #e0e0e0 1.4rem,
+    #e0e0e0 calc(1.4rem + 1px)
+  );
+  background-position: 0 0.5rem;
+}
+
+/* ── Zone illustration / schéma ── */
+.zone-illustration {
+  border: 1px dashed #bbb;
+  border-radius: 4px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+/* ── Bloc conclusion ── */
+.fiche-conclusion {
+  border: 2px solid var(--color-gray-200, #ddd);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.fiche-conclusion__titre {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+/* ── Indicateur "travail sur ordi" ── */
+.fiche-ordi {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  background: #e3f2fd;
+  border-radius: 4px;
+  color: #1565c0;
+  font-weight: 500;
+}
+
+.fiche-ordi::before {
+  content: "💻";
+}
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
   .fiche-meta {
