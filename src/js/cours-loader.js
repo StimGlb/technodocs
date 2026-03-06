@@ -49,6 +49,21 @@ export async function initCoursPage(configPath) {
     const metaSection = document.getElementById('ficheMeta');
     if (metaSection && !config.niveau) metaSection.style.display = 'none';
 
+    // Peuplement conditionnel du header print (fiches d'activité)
+    const printFields = {
+      printNiveau: config.niveau,
+      printSequence: config.sequence,
+      printSeance: config.seance,
+      printDuree: config.duree,
+      printCompetences: config.competences?.join(', '),
+      printTitre: config.title
+    };
+
+    Object.entries(printFields).forEach(([id, value]) => {
+      const el = document.getElementById(id);
+      if (el && value) el.textContent = value;
+    });
+
     // Rendre le carousel
     renderCarousel(config.slides);
 

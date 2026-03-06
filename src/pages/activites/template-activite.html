@@ -79,8 +79,54 @@
             </div>
         </section>
 
+        <!-- ══════════════════════════════════════════
+             EN-TÊTE PRINT (masqué à l'écran)
+             Remplace .fiche-meta + .fiche-identite en impression
+             ══════════════════════════════════════════ -->
+        <div class="print-header">
+
+            <!-- Rangée 1 : Identification élève -->
+            <div class="print-header__identite">
+                <div class="print-header__champ">
+                    <span class="print-header__label">Prénom :</span>
+                    <span class="print-header__ligne"></span>
+                </div>
+                <div class="print-header__champ">
+                    <span class="print-header__label">Nom :</span>
+                    <span class="print-header__ligne"></span>
+                </div>
+                <div class="print-header__champ print-header__champ--court">
+                    <span class="print-header__label">Classe :</span>
+                    <span class="print-header__ligne"></span>
+                </div>
+            </div>
+
+            <!-- Rangée 2 : Bandeau principal -->
+            <div class="print-header__bandeau">
+                <div class="print-header__gauche">
+                    <div class="print-header__sequence" id="printSequence">—</div>
+                    <div class="print-header__seance" id="printSeance">—</div>
+                </div>
+                <div class="print-header__centre">
+                    <div class="print-header__type">Fiche d'activité</div>
+                    <div class="print-header__titre" id="printTitre">—</div>
+                </div>
+                <div class="print-header__droite">
+                    <div class="print-header__logo">TechnoDocs</div>
+                </div>
+            </div>
+
+            <!-- Rangée 3 : Infos complémentaires -->
+            <div class="print-header__infos">
+                <span><strong>Niveau :</strong> <span id="printNiveau">—</span></span>
+                <span><strong>Durée :</strong> <span id="printDuree">—</span></span>
+                <span><strong>Compétences :</strong> <span id="printCompetences">—</span></span>
+            </div>
+
+        </div>
+
         <!-- Ligne d'identification élève (visible uniquement en impression) -->
-        <div class="fiche-identite no-screen" aria-hidden="true">
+        <div class="fiche-identite" aria-hidden="true">
             <div class="fiche-identite__champ">
                 <span class="fiche-identite__label">Prénom :</span>
                 <span class="fiche-identite__ligne"></span>

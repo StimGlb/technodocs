@@ -45,9 +45,18 @@
    STRUCTURE FICHE D'ACTIVITÉ — Styles écran
    ══════════════════════════════════════════ */
 
-/* ── Ligne d'identification élève (masquée à l'écran) ── */
-.no-screen {
+/* ── Blocs print-only : masqués à l'écran ── */
+.print-header {
   display: none;
+}
+
+.fiche-identite {
+  display: none;
+}
+
+/* ── Premier élément du Markdown : supprimer la marge haute superflue ── */
+.md-content > *:first-child {
+  margin-top: 0;
 }
 
 /* ── Bandeau OST + Problématique ── */
@@ -77,6 +86,19 @@
 
 .fiche-ost__value {
   font-size: 1rem;
+}
+
+/* ── Éviter la double bordure visuelle entre OST et Travail demandé ── */
+/* Les deux blocs se collent et partagent une seule ligne de séparation */
+.fiche-ost {
+  margin-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.fiche-ost + .fiche-travail {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
 }
 
 /* ── Bloc Travail demandé ── */
