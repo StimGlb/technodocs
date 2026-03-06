@@ -27,7 +27,7 @@
 
 **1.** Observe le support de téléphone fourni. Identifie les **3 parties principales** de l'objet et note leur fonction.
 
-<div class="zone-reponse zone-reponse--lignes" style="min-height: 80px;"></div>
+<div class="zone-reponse zone-reponse--medium zone-reponse--lignes"></div>
 
 **2.** Quel **matériau** a été utilisé pour fabriquer cet objet ? Coche la bonne réponse :
 
@@ -65,7 +65,7 @@
 **3.** En t'aidant de l'objet réel, modélise la **base du support** en respectant les dimensions suivantes :
 
 | Dimension | Valeur |
-|-----------|--------|
+| --------- | ------ |
 | Longueur  | 80 mm  |
 | Largeur   | 60 mm  |
 | Hauteur   | 5 mm   |

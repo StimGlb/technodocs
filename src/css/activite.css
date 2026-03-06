@@ -27,30 +27,12 @@
   font-weight: 600;
 }
 
-/* ── Zones de réponse élève (utiles en édition / print) ── */
-.zone-reponse {
-  border: 1px dashed var(--color-gray-400);
-  border-radius: var(--radius-sm);
-  min-height: 80px;
-  margin: var(--space-3) 0;
-  padding: var(--space-2);
-  background: var(--color-gray-50);
-}
-
-.zone-reponse--large {
-  min-height: 160px;
-}
-
 /* ══════════════════════════════════════════
    STRUCTURE FICHE D'ACTIVITÉ — Styles écran
    ══════════════════════════════════════════ */
 
 /* ── Blocs print-only : masqués à l'écran ── */
 .print-header {
-  display: none;
-}
-
-.fiche-identite {
   display: none;
 }
 
@@ -105,7 +87,7 @@
 .fiche-travail {
   padding: 0.75rem 1rem;
   margin-bottom: 1.5rem;
-  background: var(--color-primary-lighter, #e8f0fe);
+  background: var(--bg-subtle, rgba(255, 255, 255, 0.06));
   border-radius: 6px;
   font-weight: 500;
   text-align: center;
@@ -150,6 +132,7 @@
   border-radius: 4px;
   min-height: 60px;
   margin: 0.75rem 0;
+  padding: 0.5rem;
   background: #fafafa;
 }
 
@@ -226,5 +209,17 @@
 
   .fiche-meta__item {
     flex: 1 1 auto;
+  }
+}
+
+/* ── Responsive : colonnes → empilé sur tablette/mobile ── */
+@media (max-width: 768px) {
+  .fiche-deux-colonnes {
+    flex-direction: column;
+  }
+
+  .fiche-deux-colonnes__droite {
+    order: -1; /* illustration au-dessus des consignes sur mobile */
+    margin-bottom: 0.75rem;
   }
 }

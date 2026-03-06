@@ -1,9 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- ╔══════════════════════════════════════════════════════════════╗
          ║  TEMPLATE FICHE D'ACTIVITÉ ÉLÈVE — TechnoDocs              ║
          ║                                                              ║
@@ -28,123 +27,118 @@
     <title>[À MODIFIER] | Fiche d'activité | TechnoDocs</title>
 
     <!-- [À MODIFIER] Description SEO -->
-    <meta name="description" content="[À MODIFIER] — Fiche d'activité élève TechnoDocs">
+    <meta
+      name="description"
+      content="[À MODIFIER] — Fiche d'activité élève TechnoDocs"
+    />
 
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/markdown.css">
-    <link rel="stylesheet" href="../../css/cours.css">
-    <link rel="stylesheet" href="../../css/activite.css">
-    <link rel="stylesheet" href="../../css/print.css" media="print">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/markdown.css" />
+    <link rel="stylesheet" href="../../css/cours.css" />
+    <link rel="stylesheet" href="../../css/activite.css" />
+    <link rel="stylesheet" href="../../css/print.css" media="print" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@400;500&family=Lexend:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-</head>
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@400;500&family=Lexend:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
+  <body>
     <div id="header-placeholder"></div>
 
     <main>
-        <!-- Hero (titre + subtitle chargés par cours-loader.js via le JSON) -->
-        <section class="cours-hero">
-            <div class="cours-hero__shapes" aria-hidden="true">
-                <div class="cours-shape cours-shape--1"></div>
-                <div class="cours-shape cours-shape--2"></div>
-                <div class="cours-shape cours-shape--3"></div>
-            </div>
+      <!-- Hero (titre + subtitle chargés par cours-loader.js via le JSON) -->
+      <section class="cours-hero">
+        <div class="cours-hero__shapes" aria-hidden="true">
+          <div class="cours-shape cours-shape--1"></div>
+          <div class="cours-shape cours-shape--2"></div>
+          <div class="cours-shape cours-shape--3"></div>
+        </div>
 
-            <div class="cours-hero__header">
-                <h1 class="cours-hero__title" id="cours-title">Chargement…</h1>
-                <p class="cours-hero__subtitle" id="cours-subtitle">Fiche d'activité élève</p>
-            </div>
-        </section>
+        <div class="cours-hero__header">
+          <h1 class="cours-hero__title" id="cours-title">Chargement…</h1>
+          <p class="cours-hero__subtitle" id="cours-subtitle">
+            Fiche d'activité élève
+          </p>
+        </div>
+      </section>
 
-        <!-- Métadonnées de la fiche (peuplées par cours-loader.js via le JSON) -->
-        <section class="fiche-meta" id="ficheMeta" aria-label="Informations de la séance">
-            <div class="fiche-meta__item">
-                <strong>Niveau :</strong> <span id="ficheNiveau">—</span>
-            </div>
-            <div class="fiche-meta__item">
-                <strong>Séquence :</strong> <span id="ficheSequence">—</span>
-            </div>
-            <div class="fiche-meta__item">
-                <strong>Séance :</strong> <span id="ficheSeance">—</span>
-            </div>
-            <div class="fiche-meta__item">
-                <strong>Durée :</strong> <span id="ficheDuree">—</span>
-            </div>
-            <div class="fiche-meta__item">
-                <strong>Compétences :</strong> <span id="ficheCompetences">—</span>
-            </div>
-        </section>
+      <!-- Métadonnées de la fiche (peuplées par cours-loader.js via le JSON) -->
+      <section
+        class="fiche-meta"
+        id="ficheMeta"
+        aria-label="Informations de la séance"
+      >
+        <div class="fiche-meta__item">
+          <strong>Niveau :</strong> <span id="ficheNiveau">—</span>
+        </div>
+        <div class="fiche-meta__item">
+          <strong>Séquence :</strong> <span id="ficheSequence">—</span>
+        </div>
+        <div class="fiche-meta__item">
+          <strong>Séance :</strong> <span id="ficheSeance">—</span>
+        </div>
+        <div class="fiche-meta__item">
+          <strong>Durée :</strong> <span id="ficheDuree">—</span>
+        </div>
+        <div class="fiche-meta__item">
+          <strong>Compétences :</strong> <span id="ficheCompetences">—</span>
+        </div>
+      </section>
 
-        <!-- ══════════════════════════════════════════
+      <!-- ══════════════════════════════════════════
              EN-TÊTE PRINT (masqué à l'écran)
-             Remplace .fiche-meta + .fiche-identite en impression
+             Remplace .fiche-meta en impression
              ══════════════════════════════════════════ -->
-        <div class="print-header">
-
-            <!-- Rangée 1 : Identification élève -->
-            <div class="print-header__identite">
-                <div class="print-header__champ">
-                    <span class="print-header__label">Prénom :</span>
-                    <span class="print-header__ligne"></span>
-                </div>
-                <div class="print-header__champ">
-                    <span class="print-header__label">Nom :</span>
-                    <span class="print-header__ligne"></span>
-                </div>
-                <div class="print-header__champ print-header__champ--court">
-                    <span class="print-header__label">Classe :</span>
-                    <span class="print-header__ligne"></span>
-                </div>
-            </div>
-
-            <!-- Rangée 2 : Bandeau principal -->
-            <div class="print-header__bandeau">
-                <div class="print-header__gauche">
-                    <div class="print-header__sequence" id="printSequence">—</div>
-                    <div class="print-header__seance" id="printSeance">—</div>
-                </div>
-                <div class="print-header__centre">
-                    <div class="print-header__type">Fiche d'activité</div>
-                    <div class="print-header__titre" id="printTitre">—</div>
-                </div>
-                <div class="print-header__droite">
-                    <div class="print-header__logo">TechnoDocs</div>
-                </div>
-            </div>
-
-            <!-- Rangée 3 : Infos complémentaires -->
-            <div class="print-header__infos">
-                <span><strong>Niveau :</strong> <span id="printNiveau">—</span></span>
-                <span><strong>Durée :</strong> <span id="printDuree">—</span></span>
-                <span><strong>Compétences :</strong> <span id="printCompetences">—</span></span>
-            </div>
-
+      <div class="print-header">
+        <!-- Rangée 1 : Identification élève -->
+        <div class="print-header__identite">
+          <div class="print-header__champ">
+            <span class="print-header__label">Prénom :</span>
+            <span class="print-header__ligne"></span>
+          </div>
+          <div class="print-header__champ">
+            <span class="print-header__label">Nom :</span>
+            <span class="print-header__ligne"></span>
+          </div>
+          <div class="print-header__champ print-header__champ--court">
+            <span class="print-header__label">Classe :</span>
+            <span class="print-header__ligne"></span>
+          </div>
         </div>
 
-        <!-- Ligne d'identification élève (visible uniquement en impression) -->
-        <div class="fiche-identite" aria-hidden="true">
-            <div class="fiche-identite__champ">
-                <span class="fiche-identite__label">Prénom :</span>
-                <span class="fiche-identite__ligne"></span>
-            </div>
-            <div class="fiche-identite__champ">
-                <span class="fiche-identite__label">Nom :</span>
-                <span class="fiche-identite__ligne"></span>
-            </div>
-            <div class="fiche-identite__champ">
-                <span class="fiche-identite__label">Classe :</span>
-                <span class="fiche-identite__ligne"></span>
-            </div>
+        <!-- Rangée 2 : Bandeau principal -->
+        <div class="print-header__bandeau">
+          <div class="print-header__gauche">
+            <div class="print-header__sequence" id="printSequence">—</div>
+            <div class="print-header__seance" id="printSeance">—</div>
+          </div>
+          <div class="print-header__centre">
+            <div class="print-header__type">Fiche d'activité</div>
+            <div class="print-header__titre" id="printTitre">—</div>
+          </div>
+          <div class="print-header__droite">
+            <div class="print-header__logo">TechnoDocs</div>
+          </div>
         </div>
 
-        <!-- Contenu Markdown (chargé par cours-loader.js) -->
-        <article class="md-content" id="markdown-container">
-            <div class="md-loading">Chargement de la fiche…</div>
-        </article>
+        <!-- Rangée 3 : Infos complémentaires -->
+        <div class="print-header__infos">
+          <span><strong>Niveau :</strong> <span id="printNiveau">—</span></span>
+          <span><strong>Durée :</strong> <span id="printDuree">—</span></span>
+          <span
+            ><strong>Compétences :</strong>
+            <span id="printCompetences">—</span></span
+          >
+        </div>
+      </div>
+
+      <!-- Contenu Markdown (chargé par cours-loader.js) -->
+      <article class="md-content" id="markdown-container">
+        <div class="md-loading">Chargement de la fiche…</div>
+      </article>
     </main>
 
     <div id="footer-placeholder"></div>
@@ -155,11 +149,10 @@
     <!-- Scripts modules -->
     <script type="module" src="../../js/components.js"></script>
     <script type="module">
-        import { initCoursPage } from '../../js/cours-loader.js';
+      import { initCoursPage } from "../../js/cours-loader.js";
 
-        // [À MODIFIER] Chemin vers le JSON de configuration de cette fiche
-        initCoursPage('../../data/activites/exemple-activite.json');
+      // [À MODIFIER] Chemin vers le JSON de configuration de cette fiche
+      initCoursPage("../../data/activites/exemple-activite.json");
     </script>
-</body>
-
+  </body>
 </html>
