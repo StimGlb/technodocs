@@ -1,0 +1,10 @@
+{
+  "title": "Séance 1 — Consommation dans une maison connectée",
+  "subtitle": "Fiche d'activité élève",
+  "niveau": "5ème",
+  "sequence": "Habitat & énergie",
+  "seance": "Séance 1/6",
+  "duree": "1h30",
+  "competences": ["OST 31", "OST 11"],
+  "markdownPath": "../../content/md/activites/s1-5eme-consommation-maison.md"
+}
