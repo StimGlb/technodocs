@@ -46,8 +46,34 @@
        ══════════════════════════════════════ */
   .print-header {
     display: block !important;
-    margin-bottom: 5mm;
+    margin-bottom: 2mm !important;
     border: 1pt solid #333 !important;
+  }
+
+  #markdown-container {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .md-content {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+  }
+
+  .md-content > *:first-child {
+    margin-top: 0 !important;
+  }
+
+  main {
+    padding-top: 0 !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .md-content {
+    flex-grow: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
   }
 
   .print-header__identite {
@@ -190,18 +216,23 @@
     display: flex !important;
     gap: 3mm !important;
     border: 1pt solid #999 !important;
-    padding: 2mm 3mm !important;
-    margin-bottom: 2mm !important;
+    padding: 1mm 3mm !important;
+    margin-bottom: 1mm !important;
+  }
+
+  .fiche-ost__item {
+    line-height: 1.1 !important;
   }
 
   .fiche-ost__label {
-    font-size: 7pt !important;
+    font-size: 6pt !important;
     margin-bottom: 0 !important;
     color: #333 !important;
   }
 
   .fiche-ost__value {
-    font-size: 8.5pt !important;
+    font-size: 8pt !important;
+    line-height: 1.15 !important;
   }
 
   /* Travail demandé */
@@ -209,9 +240,9 @@
     background: #eee !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
-    padding: 1.5mm 3mm !important;
-    margin-bottom: 3mm !important;
-    font-size: 9pt !important;
+    padding: 1mm 3mm !important;
+    margin-bottom: 2mm !important;
+    font-size: 8.5pt !important;
     color: #000 !important;
   }
 
@@ -222,15 +253,15 @@
   /* Blocs d'activité et conclusion */
   .fiche-activite,
   .fiche-conclusion {
-    padding: 2mm 3mm !important;
-    margin-bottom: 3mm !important;
+    padding: 1.5mm 2mm !important;
+    margin-bottom: 2mm !important;
     border: 1pt solid #999 !important;
   }
 
   .fiche-activite__titre,
   .fiche-conclusion__titre {
-    font-size: 10pt !important;
-    margin-bottom: 2mm !important;
+    font-size: 9pt !important;
+    margin-bottom: 1mm !important;
     color: #000 !important;
   }
 
@@ -257,6 +288,10 @@
     min-height: 60mm !important;
   }
 
+  .zone-reponse--compact {
+    min-height: 18mm !important;
+  }
+
   .zone-reponse--lignes {
     background: #fff !important;
     background-image: repeating-linear-gradient(
@@ -267,6 +302,30 @@
     ) !important;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
+  }
+
+  .zone-reponse--fill {
+    flex-grow: 1;
+    min-height: 15mm !important;
+  }
+
+  /* Bloc notes */
+  .fiche-notes {
+    border: 0.5pt dashed #aaa !important;
+    padding: 1mm 2mm !important;
+    margin-top: 1mm !important;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .fiche-notes__titre {
+    font-size: 7pt !important;
+    font-weight: 600;
+    margin-bottom: 0.5mm !important;
+    color: #666 !important;
+    text-transform: uppercase;
+    letter-spacing: 0.5pt;
   }
 
   /* Zone illustration */
@@ -292,26 +351,37 @@
   }
 
   .md-content p {
-    margin: 1mm 0 !important;
+    margin: 0.5mm 0 !important;
     font-size: 9pt !important;
     line-height: 1.3 !important;
   }
 
   .md-content ul,
   .md-content ol {
-    margin: 1mm 0 !important;
+    margin: 0.5mm 0 !important;
     padding-left: 5mm !important;
   }
 
   .md-content li {
-    margin-bottom: 0.5mm !important;
+    margin-bottom: 0.25mm !important;
     font-size: 9pt !important;
     line-height: 1.3 !important;
   }
 
   .md-content table {
     font-size: 8pt !important;
-    margin: 2mm 0 !important;
+    margin: 1mm 0 !important;
+  }
+
+  .md-content th,
+  .md-content td {
+    padding: 0.5mm 2mm !important;
+    font-size: 7.5pt !important;
+  }
+
+  .md-content hr {
+    margin: 1mm 0 !important;
+    border-width: 0.5pt !important;
   }
 
   .md-content h2 {

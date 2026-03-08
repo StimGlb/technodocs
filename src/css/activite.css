@@ -144,6 +144,10 @@
   min-height: 150px;
 }
 
+.zone-reponse--compact {
+  min-height: 40px;
+}
+
 /* ── Zone avec lignes d'écriture ── */
 .zone-reponse--lignes {
   background-image: repeating-linear-gradient(
@@ -198,6 +202,23 @@
 
 .fiche-ordi::before {
   content: "💻";
+}
+
+/* ── Encadré prise de notes (fin de fiche) ── */
+.fiche-notes {
+  border: 1px dashed var(--border-color, #ccc);
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-top: 1rem;
+}
+
+.fiche-notes__titre {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted, #888);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
 }
 
 /* ── Responsive ── */

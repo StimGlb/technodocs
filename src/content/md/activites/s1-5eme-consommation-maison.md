@@ -30,11 +30,11 @@
 
 **1.2** Identifie les **2 postes les plus consommateurs** et inscris-les ci-dessous.
 
-<div class="zone-reponse zone-reponse--lignes"></div>
+<div class="zone-reponse zone-reponse--compact zone-reponse--lignes"></div>
 
 **1.3** Calcule le **coût annuel** de la veille électrique (380 kWh × 0,25 €/kWh).
 
-<div class="zone-reponse zone-reponse--lignes"></div>
+<div class="zone-reponse zone-reponse--compact zone-reponse--lignes"></div>
 
 </div>
 <div class="fiche-deux-colonnes__droite">
@@ -72,7 +72,7 @@
 
 **2.2** Quel poste offre le plus grand potentiel d'économies avec des équipements connectés ? Explique en 1-2 phrases.
 
-<div class="zone-reponse zone-reponse--medium zone-reponse--lignes"></div>
+<div class="zone-reponse zone-reponse--compact zone-reponse--lignes"></div>
 
 </div>
 
@@ -95,35 +95,23 @@
 - ☐ Ampoule incandescente
 - ☐ Ampoule LED
 
-<div class="zone-reponse zone-reponse--medium zone-reponse--lignes"></div>
+<div class="zone-reponse zone-reponse--compact zone-reponse--lignes"></div>
 
-</div>
-<div class="fiche-deux-colonnes__droite">
+**Ce que je retiens :**
 
-| Critère | Incandescente | LED |
-|---------|--------------|-----|
-| Durée de vie | 1 000 h | 25 000 h |
-| Puissance | 60 W | 9 W |
-| Matériaux | Verre, tungstène | Verre, électronique |
-| Recyclage | Poubelle ordinaire | Point de collecte |
-| Coût | 1 € | 6 € |
+Le poste \_\_\_\_\_\_\_\_\_\_\_\_\_\_ consomme le plus d'électricité dans une maison.
 
-</div>
-</div>
+Une ampoule **LED** consomme environ \_\_\_\_\_\_\_\_\_\_\_\_\_\_ fois moins qu'une incandescente.
+
+Le cycle de vie d'un objet comprend les étapes : extraction → \_\_\_\_\_\_\_\_\_\_\_\_\_\_ → transport → \_\_\_\_\_\_\_\_\_\_\_\_\_\_ → fin de vie.
 
 </div>
 
 <!-- ════════════════════════════════════════ -->
-<!-- SYNTHÈSE                                -->
+<!-- PRISE DE NOTES                          -->
 <!-- ════════════════════════════════════════ -->
 
-<div class="fiche-conclusion">
-<div class="fiche-conclusion__titre">Ce que je retiens</div>
-
-> Le poste **\_\_\_\_\_\_\_\_\_\_\_\_\_\_** consomme le plus d'électricité dans une maison.
-
-> Une ampoule **LED** consomme environ **\_\_\_\_\_\_\_\_\_\_\_\_\_\_** fois moins qu'une incandescente.
-
-> Le cycle de vie d'un objet comprend les étapes : extraction → **\_\_\_\_\_\_\_\_\_\_\_\_\_\_** → transport → **\_\_\_\_\_\_\_\_\_\_\_\_\_\_** → fin de vie.
-
+<div class="fiche-notes">
+<div class="fiche-notes__titre">Notes</div>
+<div class="zone-reponse zone-reponse--fill zone-reponse--lignes"></div>
 </div>

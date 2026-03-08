@@ -63,7 +63,8 @@ export default defineConfig({
 
   server: {
     port: 3001,
-    open: false,
+    // Ouvrir la page _dev.html automatiquement en local
+    open: "/_dev.html",
   },
 
   preview: {

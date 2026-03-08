@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>S1 - Consommation maison connectée | TechnoDocs</title>
+    <meta name="robots" content="noindex" />
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- Password Overlay -->
+    <div id="passwordOverlay" class="password-overlay">
+      <div class="password-prompt">
+        <h2>🔒 Accès sécurisé</h2>
+        <p>Cette activité est réservée.<br />Saisissez le mot de passe.</p>
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="••••"
+          autocomplete="off"
+        />
+        <button onclick="checkPassword()">Déverrouiller</button>
+        <p id="errorMessage" class="error-message" style="display: none">
+          ❌ Mot de passe incorrect
+        </p>
+      </div>
+    </div>
+
+    <!-- Main Wizard -->
+    <main class="wizard is-locked">
+      <!-- Banner -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">🏠</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">
+            Séance 1 — Consommation dans une maison connectée
+          </h1>
+          <p class="wizard__phase-subtitle">
+            Niveau 5ème • Séquence : Habitat & énergie • Durée : 1h30
+          </p>
+        </div>
+      </div>
+
+      <!-- Student Info -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="studentName">Prénom et Nom</label>
+            <input
+              type="text"
+              id="studentName"
+              data-field="studentName"
+              placeholder=""
+              required
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="studentClass">Classe</label>
+            <select id="studentClass" data-field="studentClass" required>
+              <option value="">— Sélectionner —</option>
+              <option value="501">5ème 1</option>
+              <option value="502">5ème 2</option>
+              <option value="503">5ème 3</option>
+              <option value="504">5ème 4</option>
+              <option value="505">5ème 5</option>
+              <option value="506">5ème 6</option>
+            </select>
+          </div>
+          <div class="wizard__student-field wizard__student-field--date">
+            <label>Date</label>
+            <span
+              id="projectDate"
+              class="wizard__date-display"
+              data-field="projectDate"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Progress -->
+      <section class="wizard__progress">
+        <div class="wizard__progress-header">
+          <h2 class="wizard__progress-title">Progression</h2>
+          <div class="wizard__save-indicator" id="saveIndicator">
+            <span class="wizard__save-dot"></span>
+            <span class="wizard__save-text">Auto-save</span>
+          </div>
+          <span class="wizard__progress-percentage" id="progressPercentage"
+            >0%</span
+          >
+        </div>
+
+        <div class="wizard__progress-bar">
+          <div
+            class="wizard__progress-fill"
+            id="progressFill"
+            style="width: 0%"
+          ></div>
+        </div>
+
+        <nav class="wizard__nav" id="phaseNav">
+          <button class="wizard__nav-btn active" data-phase="1">
+            <span class="wizard__nav-number">1</span>
+            <span>Où va l'électricité</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="2">
+            <span class="wizard__nav-number">2</span>
+            <span>Éco-gestes</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="3">
+            <span class="wizard__nav-number">3</span>
+            <span>Cycle de vie</span>
+          </button>
+        </nav>
+      </section>
+
+      <!-- Wizard Container -->
+      <div class="wizard__container">
+        <!-- PHASE 1 -->
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">1</span>
+              Où va l'électricité ?
+            </h2>
+            <p class="wizard__phase-subtitle">Barème : 6 points</p>
+          </div>
+
+          <!-- Data Table -->
+          <div class="wizard__situation">
+            <p><strong>📊 Répartition de la consommation annuelle :</strong></p>
+            <table style="width: 100%; border-collapse: collapse">
+              <tr style="background: #f0f0f0">
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left">
+                  Poste
+                </th>
+                <th
+                  style="border: 1px solid #ddd; padding: 8px; text-align: right"
+                >
+                  kWh/an
+                </th>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 8px">Chauffage</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
+                  2 800
+                </td>
+              </tr>
+              <tr style="background: #f9f9f9">
+                <td style="border: 1px solid #ddd; padding: 8px">
+                  Eau chaude sanitaire
+                </td>
+                <td
+                  style="border: 1px solid #ddd; padding: 8px; text-align: right"
+                >
+                  1 000
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 8px">
+                  Électroménager
+                </td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
+                  750
+                </td>
+              </tr>
+              <tr style="background: #f9f9f9">
+                <td style="border: 1px solid #ddd; padding: 8px">Éclairage</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
+                  500
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 8px">Audiovisuel</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
+                  450
+                </td>
+              </tr>
+              <tr style="background: #f9f9f9">
+                <td style="border: 1px solid #ddd; padding: 8px">Cuisson</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
+                  380
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 8px">Veille</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
+                  380
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Q1.1 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Question ouverte</span>
+              <span class="wizard__question-points">3 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Q1.1 — Diagramme en bâtons
+            </h3>
+            <p class="wizard__question-text">
+              Trace le <strong>diagramme en bâtons</strong> représentant la
+              consommation annuelle des différents postes électriques. Décris
+              les valeurs de chaque bâton.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="q1_diagramme_batons"
+              placeholder="Chauffage : 2800 kWh (le plus haut)..."
+              maxlength="400"
+              rows="5"
+              spellcheck="true"
+              lang="fr"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span id="q1_count">0</span> / 400 caractères
+            </div>
+          </div>
+
+          <!-- Q1.2 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Réponse courte</span>
+              <span class="wizard__question-points">1 point</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Q1.2 — Deux postes consommateurs
+            </h3>
+            <p class="wizard__question-text">
+              Identifie les <strong>2 postes</strong> qui consomment le plus
+              d'électricité.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="q2_postes_consommateurs"
+              placeholder="1. ... 2. ..."
+              maxlength="200"
+              rows="3"
+              spellcheck="true"
+              lang="fr"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span id="q2_count">0</span> / 200 caractères
+            </div>
+          </div>
+
+          <!-- Q1.3 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Calcul</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">Q1.3 — Coût de la veille</h3>
+            <p class="wizard__question-text">
+              La veille des appareils consomme <strong>380 kWh par an</strong>.
+              Le prix de l'électricité est de <strong>0,25 €/kWh</strong>.
+              Calcule le coût annuel de la veille.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="q3_cout_veille"
+              placeholder="Coût = consommation × prix = ... × ... = ... €/an"
+              maxlength="200"
+              rows="3"
+              spellcheck="true"
+              lang="fr"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span id="q3_count">0</span> / 200 caractères
+            </div>
+          </div>
+
+          <!-- Phase Nav -->
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" disabled>← Précédent</button>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- PHASE 2 -->
+        <section class="wizard__phase" data-phase="2">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">2</span>
+              Les éco-gestes dans une maison connectée
+            </h2>
+            <p class="wizard__phase-subtitle">Barème : 6 points</p>
+          </div>
+
+          <!-- Q2.1 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Tableau à compléter</span>
+              <span class="wizard__question-points">4 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Q2.1 — Éco-gestes et équipements connectés
+            </h3>
+            <p class="wizard__question-text">
+              Pour chaque poste, propose un <strong>éco-geste simple</strong> et
+              un <strong>équipement connecté</strong> qui pourrait aider.
+            </p>
+
+            <!-- Éclairage -->
+            <div
+              style="
+                margin: 1.5rem 0;
+                padding: 1rem;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+              "
+            >
+              <h4 style="margin-bottom: 0.75rem; font-size: 1rem">
+                💡 Éclairage
+              </h4>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 1rem;
+                "
+              >
+                <div>
+                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                    >Éco-geste</label
+                  >
+                  <textarea
+                    class="wizard__textarea"
+                    data-field="q4_ecogeste_eclairage"
+                    maxlength="150"
+                    rows="2"
+                    style="width: 100%"
+                  ></textarea>
+                </div>
+                <div>
+                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                    >Équipement connecté</label
+                  >
+                  <textarea
+                    class="wizard__textarea"
+                    data-field="q4_connecte_eclairage"
+                    maxlength="150"
+                    rows="2"
+                    style="width: 100%"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Veille -->
+            <div
+              style="
+                margin: 1.5rem 0;
+                padding: 1rem;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+              "
+            >
+              <h4 style="margin-bottom: 0.75rem; font-size: 1rem">
+                ⏻ Veille
+              </h4>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 1rem;
+                "
+              >
+                <div>
+                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                    >Éco-geste</label
+                  >
+                  <textarea
+                    class="wizard__textarea"
+                    data-field="q5_ecogeste_veille"
+                    maxlength="150"
+                    rows="2"
+                    style="width: 100%"
+                  ></textarea>
+                </div>
+                <div>
+                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                    >Équipement connecté</label
+                  >
+                  <textarea
+                    class="wizard__textarea"
+                    data-field="q5_connecte_veille"
+                    maxlength="150"
+                    rows="2"
+                    style="width: 100%"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Chauffage -->
+            <div
+              style="
+                margin: 1.5rem 0;
+                padding: 1rem;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+              "
+            >
+              <h4 style="margin-bottom: 0.75rem; font-size: 1rem">
+                🔥 Chauffage
+              </h4>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 1rem;
+                "
+              >
+                <div>
+                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                    >Éco-geste</label
+                  >
+                  <textarea
+                    class="wizard__textarea"
+                    data-field="q6_ecogeste_chauffage"
+                    maxlength="150"
+                    rows="2"
+                    style="width: 100%"
+                  ></textarea>
+                </div>
+                <div>
+                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                    >Équipement connecté</label
+                  >
+                  <textarea
+                    class="wizard__textarea"
+                    data-field="q6_connecte_chauffage"
+                    maxlength="150"
+                    rows="2"
+                    style="width: 100%"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+
+            <!-- Audiovisuel -->
+            <div
+              style="
+                margin: 1.5rem 0;
+                padding: 1rem;
+                border: 1px solid #ddd;
+                border-radius: 6px;
+              "
+            >
+              <h4 style="margin-bottom: 0.75rem; font-size: 1rem">
+                📺 Audiovisuel
+              </h4>
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: 1fr 1fr;
+                  gap: 1rem;
+                "
+              >
+                <div>
+                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                    >Éco-geste</label
+                  >
+                  <textarea
+                    class="wizard__textarea"
+                    data-field="q7_ecogeste_audiovisuel"
+                    maxlength="150"
+                    rows="2"
+                    style="width: 100%"
+                  ></textarea>
+                </div>
+                <div>
+                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                    >Équipement connecté</label
+                  >
+                  <textarea
+                    class="wizard__textarea"
+                    data-field="q7_connecte_audiovisuel"
+                    maxlength="150"
+                    rows="2"
+                    style="width: 100%"
+                  ></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Q2.2 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Question ouverte</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Q2.2 — Poste avec le plus grand potentiel
+            </h3>
+            <p class="wizard__question-text">
+              Quel poste offre le plus grand potentiel d'économies avec des
+              équipements connectés ? Explique en <strong>1-2 phrases</strong>.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="q8_poste_economies"
+              maxlength="300"
+              rows="4"
+              spellcheck="true"
+              lang="fr"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span id="q8_count">0</span> / 300 caractères
+            </div>
+          </div>
+
+          <!-- Phase Nav -->
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
+              ← Précédent
+            </button>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(3)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- PHASE 3 -->
+        <section class="wizard__phase" data-phase="3">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">3</span>
+              Le cycle de vie d'une ampoule
+            </h2>
+            <p class="wizard__phase-subtitle">Barème : 8 points</p>
+          </div>
+
+          <!-- Document Ressource -->
+          <div class="wizard__situation">
+            <p>
+              <strong>📊 Comparaison ampoule incandescente vs LED :</strong>
+            </p>
+            <table style="width: 100%; border-collapse: collapse">
+              <tr style="background: #f0f0f0">
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left">
+                  Critère
+                </th>
+                <th
+                  style="border: 1px solid #ddd; padding: 8px; text-align: left"
+                >
+                  Incandescente
+                </th>
+                <th
+                  style="border: 1px solid #ddd; padding: 8px; text-align: left"
+                >
+                  LED
+                </th>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 8px">Durée de vie</td>
+                <td style="border: 1px solid #ddd; padding: 8px">1 000 h</td>
+                <td style="border: 1px solid #ddd; padding: 8px">25 000 h</td>
+              </tr>
+              <tr style="background: #f9f9f9">
+                <td style="border: 1px solid #ddd; padding: 8px">Puissance</td>
+                <td style="border: 1px solid #ddd; padding: 8px">60 W</td>
+                <td style="border: 1px solid #ddd; padding: 8px">9 W</td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 8px">Matériaux</td>
+                <td style="border: 1px solid #ddd; padding: 8px">
+                  Verre, tungstène
+                </td>
+                <td style="border: 1px solid #ddd; padding: 8px">
+                  Verre, électronique
+                </td>
+              </tr>
+              <tr style="background: #f9f9f9">
+                <td style="border: 1px solid #ddd; padding: 8px">Recyclage</td>
+                <td style="border: 1px solid #ddd; padding: 8px">
+                  Poubelle ordinaire
+                </td>
+                <td style="border: 1px solid #ddd; padding: 8px">
+                  Point de collecte
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 8px">Prix</td>
+                <td style="border: 1px solid #ddd; padding: 8px">1 €</td>
+                <td style="border: 1px solid #ddd; padding: 8px">6 €</td>
+              </tr>
+            </table>
+            <p style="margin-top: 1rem; font-size: 0.9rem; color: #666">
+              <strong>Cycle de vie :</strong> Extraction → Fabrication →
+              Transport → Utilisation → Fin de vie
+            </p>
+          </div>
+
+          <!-- Q3.1 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">QCM multiple</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Q3.1 — Étapes du cycle de vie
+            </h3>
+            <p class="wizard__question-text">
+              Identifie les <strong>2 étapes du cycle de vie</strong> qui sont
+              les plus différentes entre une ampoule incandescente et une LED.
+            </p>
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q9_etapes_cycle_vie"
+                  data-field="q9_etapes_cycle_vie"
+                  value="A"
+                />
+                <span>A) Extraction des matières premières</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q9_etapes_cycle_vie"
+                  data-field="q9_etapes_cycle_vie"
+                  value="B"
+                />
+                <span>B) Fabrication</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q9_etapes_cycle_vie"
+                  data-field="q9_etapes_cycle_vie"
+                  value="C"
+                />
+                <span>C) Transport</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q9_etapes_cycle_vie"
+                  data-field="q9_etapes_cycle_vie"
+                  value="D"
+                />
+                <span>D) Utilisation</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q9_etapes_cycle_vie"
+                  data-field="q9_etapes_cycle_vie"
+                  value="E"
+                />
+                <span>E) Fin de vie (recyclage)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Q3.2 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Argumentation</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">Q3.2 — Recommandation</h3>
+            <p class="wizard__question-text">
+              Quelle ampoule recommandes-tu ?
+            </p>
+            <div class="wizard__radio-group">
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q10_recommandation_ampoule"
+                  data-field="q10_recommandation_ampoule"
+                  value="incandescente"
+                />
+                <span>Ampoule incandescente</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q10_recommandation_ampoule"
+                  data-field="q10_recommandation_ampoule"
+                  value="LED"
+                />
+                <span>Ampoule LED</span>
+              </label>
+            </div>
+            <p style="margin-top: 1rem; font-weight: 600; font-size: 0.9rem">
+              Justifie ton choix en 2-3 phrases :
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="q10_justification"
+              maxlength="300"
+              rows="3"
+              spellcheck="true"
+              lang="fr"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span id="q10_count">0</span> / 300 caractères
+            </div>
+          </div>
+
+          <!-- Q3.3 Synthèse -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Ce que je retiens</span>
+              <span class="wizard__question-points">3 points</span>
+            </div>
+            <h3 class="wizard__question-title">Q3.3 — Synthèse</h3>
+            <p class="wizard__question-text">
+              Complète les phrases de synthèse :
+            </p>
+
+            <div style="margin-top: 1.5rem">
+              <label style="display: block; margin-bottom: 1rem">
+                <span style="font-weight: 600">1.</span> Le poste
+                <input
+                  type="text"
+                  data-field="q11_synthese_poste"
+                  placeholder="chauffage, éclairage..."
+                  style="
+                    width: 150px;
+                    border-bottom: 2px solid #999;
+                    padding: 0.25rem 0.5rem;
+                    margin: 0 0.5rem;
+                  "
+                />
+                consomme le plus d'électricité dans une maison.
+              </label>
+
+              <label style="display: block; margin-bottom: 1rem">
+                <span style="font-weight: 600">2.</span> Une ampoule LED
+                consomme environ
+                <input
+                  type="text"
+                  data-field="q12_synthese_ratio"
+                  placeholder="nombre"
+                  style="
+                    width: 100px;
+                    border-bottom: 2px solid #999;
+                    padding: 0.25rem 0.5rem;
+                    margin: 0 0.5rem;
+                  "
+                />
+                fois moins qu'une incandescente.
+              </label>
+
+              <label style="display: block; margin-bottom: 0">
+                <span style="font-weight: 600">3.</span> Les étapes du cycle
+                de vie : extraction →
+                <input
+                  type="text"
+                  data-field="q13_synthese_cycle"
+                  placeholder="deux étapes"
+                  style="
+                    width: 180px;
+                    border-bottom: 2px solid #999;
+                    padding: 0.25rem 0.5rem;
+                    margin: 0 0.5rem;
+                  "
+                />
+                → transport → fin de vie.
+              </label>
+            </div>
+          </div>
+
+          <!-- Phase Nav -->
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
+              ← Précédent
+            </button>
+            <button class="btn btn--primary" onclick="wizardComplete()">
+              🎯 Terminer l'activité
+            </button>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Toast -->
+    <div id="wizardToast" class="wizard__toast">
+      <span class="wizard__toast-icon">ℹ️</span>
+      <span class="wizard__toast-message">Message</span>
+    </div>
+
+    <!-- Completion Modal -->
+    <div id="completionModal" class="wizard__modal-overlay">
+      <div class="wizard__modal">
+        <div class="wizard__modal-header">
+          <h2>🎉 Activité terminée !</h2>
+        </div>
+        <div class="wizard__modal-body">
+          <p>Votre activité a été sauvegardée avec succès.</p>
+          <p style="margin-top: 1rem; font-size: 0.9rem; color: #666">
+            Merci d'avoir completé cette activité interactif. Vos réponses ont
+            été enregistrées.
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardShowModal('resetModal')"
+          >
+            Recommencer
+          </button>
+          <button
+            class="btn btn--primary"
+            onclick="wizardExportJSON()"
+          >
+            Télécharger mes réponses
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reset Modal -->
+    <div id="resetModal" class="wizard__modal-overlay">
+      <div class="wizard__modal">
+        <div class="wizard__modal-header">
+          <h2>⚠️ Réinitialiser l'activité ?</h2>
+        </div>
+        <div class="wizard__modal-body">
+          <p>
+            Êtes-vous sûr ? Vos réponses seront perdues après cette action.
+          </p>
+          <p style="margin-top: 1rem; font-size: 0.9rem; color: #666">
+            Une copie de vos réponses sera téléchargée automatiquement comme
+            sauvegarde.
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('resetModal')"
+          >
+            Annuler
+          </button>
+          <button class="btn btn--primary" onclick="wizardReset()">
+            Réinitialiser
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module">
+      import { WizardFirebase } from "/src/js/wizard-firebase.js";
+      import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+
+      window.wizardInstance = new WizardFirebase({
+        collectionName: "activite_s1_consommation_maison_5eme",
+        autosaveInterval: 60000,
+        requiredFields: {
+          1: [
+            "studentName",
+            "studentClass",
+            "q1_diagramme_batons",
+            "q2_postes_consommateurs",
+            "q3_cout_veille"
+          ],
+          2: [
+            "q4_ecogeste_eclairage",
+            "q4_connecte_eclairage",
+            "q5_ecogeste_veille",
+            "q5_connecte_veille",
+            "q6_ecogeste_chauffage",
+            "q6_connecte_chauffage",
+            "q7_ecogeste_audiovisuel",
+            "q7_connecte_audiovisuel",
+            "q8_poste_economies"
+          ],
+          3: [
+            "q9_etapes_cycle_vie",
+            "q10_recommandation_ampoule",
+            "q10_justification",
+            "q11_synthese_poste",
+            "q12_synthese_ratio",
+            "q13_synthese_cycle"
+          ]
+        },
+        onComplete: (data) => {
+          console.log("🎉 Activité terminée:", data);
+          window.wizardShowModal("completionModal");
+        },
+        onSaveSuccess: () => {
+          console.log("✅ Sauvegarde Firestore OK");
+        },
+        onSaveError: (error) => {
+          console.error("❌ Erreur Firestore:", error);
+        },
+        autoInit: false
+      });
+
+      // Password check
+      window.checkPassword = function() {
+        const input = document.getElementById("passwordInput");
+        const error = document.getElementById("errorMessage");
+        const overlay = document.getElementById("passwordOverlay");
+        const main = document.querySelector("main.wizard");
+
+        if (input.value === CORRECT_PASSWORD) {
+          overlay.style.display = "none";
+          main.classList.remove("is-locked");
+          error.style.display = "none";
+          window.wizardInstance?.init();
+        } else {
+          error.style.display = "block";
+          input.value = "";
+          input.focus();
+        }
+      };
+
+      // Enter key support
+      document
+        .getElementById("passwordInput")
+        ?.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            checkPassword();
+          }
+        });
+
+      // Character counters
+      const counters = [
+        { field: "q1_diagramme_batons", counter: "q1_count" },
+        { field: "q2_postes_consommateurs", counter: "q2_count" },
+        { field: "q3_cout_veille", counter: "q3_count" },
+        { field: "q8_poste_economies", counter: "q8_count" },
+        { field: "q10_justification", counter: "q10_count" }
+      ];
+
+      counters.forEach(({ field, counter }) => {
+        const textarea = document.querySelector(`[data-field="${field}"]`);
+        const span = document.getElementById(counter);
+        if (textarea && span) {
+          textarea.addEventListener("input", () => {
+            span.textContent = textarea.value.length;
+          });
+        }
+      });
+
+      // Global functions
+      window.wizardGoToPhase = (phase) =>
+        window.wizardInstance?.goToPhase(phase);
+      window.wizardComplete = () => window.wizardInstance?.complete();
+      window.wizardReset = () => window.wizardInstance?.reset();
+      window.wizardExportJSON = () =>
+        window.wizardInstance?.exportJSON();
+      window.wizardImportJSON = (e) =>
+        window.wizardInstance?.importJSON(e);
+      window.wizardShowModal = (id) =>
+        window.wizardInstance?.showModal(id);
+      window.wizardCloseModal = (id) =>
+        window.wizardInstance?.closeModal(id);
+    </script>
+
+    <!-- Anti-paste protection -->
+    <script>
+      import("/src/js/article-editor.js").then((module) => {
+        window.articleEditor = new module.ArticleEditor({
+          protectedFields: [
+            '[data-field="q8_poste_economies"]',
+            '[data-field="q10_justification"]'
+          ],
+          onPasteBlocked: (msg) =>
+            window.wizardInstance?.showToast(msg, "warning")
+        });
+      });
+    </script>
+  </body>
+</html>

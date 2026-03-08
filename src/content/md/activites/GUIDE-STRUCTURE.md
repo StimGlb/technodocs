@@ -16,8 +16,10 @@ Chaque fiche `.md` suit cette structure :
 | Classe | Hauteur écran | Hauteur print | Usage |
 |--------|--------------|---------------|-------|
 | `.zone-reponse` | 60px | 25mm | Réponse courte (1-2 lignes) |
+| `.zone-reponse--compact` | 40px | 18mm | Très courte, compactage 2 pages |
 | `.zone-reponse--medium` | 100px | 40mm | Réponse moyenne (3-5 lignes) |
 | `.zone-reponse--large` | 150px | 55mm | Réponse longue, schéma, collage |
+| `.zone-reponse--fill` | flex-grow | 30mm min | Remplit l'espace restant (fin de page) |
 | `.zone-reponse--lignes` | (modificateur) | (modificateur) | Ajoute des lignes d'écriture |
 
 Combinaison possible : `<div class="zone-reponse zone-reponse--medium zone-reponse--lignes"></div>`
@@ -42,6 +44,17 @@ Hauteur personnalisée via style inline : `style="min-height: 80px;"` (écran un
 
 `<span class="fiche-ordi">Sur ordinateur</span>` — affiche un badge 💻 pour signaler
 que l'activité se fait sur un poste informatique.
+
+### Encadré prise de notes (fin de fiche)
+
+```html
+<div class="fiche-notes">
+<div class="fiche-notes__titre">Notes</div>
+<div class="zone-reponse zone-reponse--fill zone-reponse--lignes"></div>
+</div>
+```
+
+À placer en fin de fiche. L'espace s'adapte à la place restante sur la dernière page.
 
 ### Saut de page (impression)
 

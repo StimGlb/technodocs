@@ -31,7 +31,9 @@
       "Bash(git -C \"e:/Dev/technodocs-vanilla\" ls-tree -l HEAD)",
       "Bash(git -C \"e:/Dev/technodocs-vanilla\" ls-tree -l HEAD scripts/)",
       "Bash(grep -l \"Fiche 01 —\" e:/Dev/technodocs-vanilla/src/pages/revisions/*.html)",
-      "Bash(grep \"slides\" e:/Dev/technodocs-vanilla/src/data/revisions/*.json)"
+      "Bash(grep \"slides\" e:/Dev/technodocs-vanilla/src/data/revisions/*.json)",
+      "Bash(grep -n \"window.wizardInstance\\\\|new WizardFirebase\" e:/Dev/technodocs-vanilla/src/pages/activites/devoirs/*.html)",
+      "Bash(grep -n \"requiredFields\" e:/Dev/technodocs-vanilla/src/pages/activites/devoirs/*.html)"
     ],
     "deny": [],
     "ask": []
