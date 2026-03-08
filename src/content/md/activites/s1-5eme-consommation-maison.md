@@ -24,9 +24,7 @@
 <div class="fiche-deux-colonnes">
 <div class="fiche-deux-colonnes__gauche">
 
-**1.1** Trace le **diagramme en bâtons** représentant la consommation annuelle des différents postes électriques.
-
-<div class="zone-illustration">(Diagramme en bâtons — document annexe)</div>
+**1.1** Utilise le générateur de graphes en ligne pour créer un **diagramme en bâtons** représentant la consommation annuelle des différents postes électriques.
 
 **1.2** Identifie les **2 postes les plus consommateurs** et inscris-les ci-dessous.
 

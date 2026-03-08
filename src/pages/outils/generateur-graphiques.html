@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Générateur de graphiques | TechnoDocs</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Nunito:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/tools.css" />
+    <style>
+      /* ─── SECTION PRINCIPALE ─── */
+      .chart-container {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 32px;
+        padding: 0;
+      }
+
+      @media (max-width: 768px) {
+        .chart-container {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+      }
+
+      /* ─── FORMULAIRE ─── */
+      .chart-form {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .chart-form h2 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-bright);
+        margin-bottom: 8px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .form-group label {
+        font-size: 0.85rem;
+        color: var(--text-dim);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .form-group input {
+        background: var(--bg-input);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-glow);
+      }
+
+      /* ─── BOUTONS ─── */
+      .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 8px;
+      }
+
+      .btn {
+        padding: 10px 16px;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: inherit;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #000;
+        flex: 1;
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-dim);
+        transform: translateY(-2px);
+      }
+
+      .btn-danger {
+        background: rgba(255, 95, 107, 0.15);
+        color: var(--red);
+        border: 1px solid rgba(255, 95, 107, 0.3);
+        width: 100%;
+      }
+
+      .btn-danger:hover {
+        background: rgba(255, 95, 107, 0.25);
+      }
+
+      /* ─── TYPE DE GRAPHIQUE ─── */
+      .chart-type-section {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+      }
+
+      .chart-type-section h2 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-bright);
+        margin-bottom: 16px;
+      }
+
+      .chart-type-toggle {
+        display: flex;
+        gap: 12px;
+      }
+
+      .btn-toggle {
+        flex: 1;
+        padding: 12px 16px;
+        border: 2px solid var(--border);
+        background: transparent;
+        color: var(--text);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .btn-toggle.active {
+        border-color: var(--accent);
+        background: var(--accent-glow);
+        color: var(--text-bright);
+      }
+
+      .btn-toggle:hover:not(.active) {
+        border-color: var(--accent-dim);
+      }
+
+      /* ─── LISTE DES DONNÉES ─── */
+      .chart-data-section {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+      }
+
+      .chart-data-section h2 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-bright);
+        margin-bottom: 16px;
+      }
+
+      .chart-data-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 8px;
+      }
+
+      .chart-data-list::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .chart-data-list::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .chart-data-list::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 3px;
+      }
+
+      .chart-data-list::-webkit-scrollbar-thumb:hover {
+        background: var(--border-accent);
+      }
+
+      .data-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--bg-input);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 12px;
+        font-size: 0.9rem;
+      }
+
+      .data-item-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+      }
+
+      .data-item-label {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .data-item-value {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .btn-item-delete {
+        background: rgba(255, 95, 107, 0.15);
+        color: var(--red);
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .btn-item-delete:hover {
+        background: rgba(255, 95, 107, 0.3);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 32px 16px;
+        color: var(--text-dim);
+      }
+
+      .empty-state p {
+        font-size: 0.9rem;
+      }
+
+      /* ─── GRAPHIQUE ─── */
+      .chart-canvas-wrapper {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .chart-canvas-wrapper h2 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-bright);
+        margin-bottom: 16px;
+      }
+
+      .chart-wrapper {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        position: relative;
+      }
+
+      #chartCanvas {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      .chart-empty {
+        text-align: center;
+        color: var(--text-dim);
+        padding: 40px 20px;
+      }
+
+      .chart-empty p {
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+      }
+
+      .chart-empty .emoji {
+        font-size: 3rem;
+        margin-bottom: 12px;
+        display: block;
+        opacity: 0.5;
+      }
+
+      /* ─── ANIMATIONS ─── */
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .data-item {
+        animation: slideDown 0.2s ease-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app-header"></div>
+
+    <main class="app">
+      <!-- SECTION HÉRO -->
+      <div class="app-header">
+        <span class="app-header__badge">Outil Interactif</span>
+        <h1>Générateur de <span class="hl">Graphiques</span></h1>
+        <p>Créez et visualisez vos données en temps réel</p>
+      </div>
+
+      <!-- CONTENEUR PRINCIPAL (2 colonnes) -->
+      <div class="chart-container">
+        <!-- COLONNE GAUCHE : Contrôles -->
+        <div>
+          <!-- FORMULAIRE -->
+          <div class="chart-form">
+            <h2>Ajouter des données</h2>
+
+            <div class="form-group">
+              <label for="labelInput">Étiquette</label>
+              <input
+                type="text"
+                id="labelInput"
+                placeholder="Ex: Janvier, Ventes, etc."
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="valueInput">Valeur</label>
+              <input
+                type="number"
+                id="valueInput"
+                placeholder="Ex: 1200"
+                min="0"
+              />
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" id="addBtn">Ajouter</button>
+            </div>
+
+            <button class="btn btn-danger" id="clearAllBtn">Tout effacer</button>
+          </div>
+
+          <!-- TYPE DE GRAPHIQUE -->
+          <div class="chart-type-section">
+            <h2>Type de graphique</h2>
+            <div class="chart-type-toggle">
+              <button class="btn-toggle active" id="chartTypeBar">
+                📊 Barres
+              </button>
+              <button class="btn-toggle" id="chartTypeLine">📈 Courbe</button>
+            </div>
+          </div>
+
+          <!-- LISTE DES DONNÉES -->
+          <div class="chart-data-section">
+            <h2>Données</h2>
+            <div class="chart-data-list" id="dataList">
+              <div class="empty-state">
+                <p>Aucune donnée pour le moment</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLONNE DROITE : Graphique -->
+        <div class="chart-canvas-wrapper">
+          <h2>Aperçu</h2>
+          <div class="chart-wrapper">
+            <canvas id="chartCanvas"></canvas>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="app-footer"></div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Composants dynamiques (Header/Footer) -->
+    <script type="module" src="../../js/components.js"></script>
+
+    <!-- Générateur de graphiques -->
+    <script type="module">
+      import { ChartGenerator } from "../../js/chart-generator.js";
+      new ChartGenerator();
+    </script>
+  </body>
+</html>

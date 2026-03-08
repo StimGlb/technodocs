@@ -53,7 +53,17 @@
   ],
   "outils": [
     {
-      "id": "task-manager", "name": "Gestionnaire de tâches",
+      "id": "generateur-graphiques",
+      "name": "Générateur de Graphiques",
+      "path": "src/pages/outils/generateur-graphiques.html",
+      "icon": { "type": "emoji", "value": "📈" },
+      "description": "Créez des graphiques interactifs à partir de vos données (CSV / manuelles)",
+      "status": "ready",
+      "visible": true
+    },
+    {
+      "id": "task-manager",
+      "name": "Gestionnaire de tâches",
       "path": "src/pages/outils/task-manager.html",
       "icon": { "type": "emoji", "value": "📅" },
       "description": "Organisez vos devoirs et échéances"
