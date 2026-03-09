@@ -303,6 +303,34 @@
         opacity: 0.5;
       }
 
+      /* ─── BARRE D'ACTIONS ─── */
+      .chart-actions {
+        display: flex;
+        gap: var(--space-3, 0.75rem);
+        margin-top: var(--space-4, 1rem);
+        flex-wrap: wrap;
+      }
+
+      .chart-actions__btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
+        background: var(--color-gray-100, #374151);
+        color: var(--color-gray-700, #d1d5db);
+        border: 1px solid var(--color-gray-200, #4b5563);
+        border-radius: var(--radius-md, 6px);
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.15s;
+        font-family: inherit;
+      }
+
+      .chart-actions__btn:hover {
+        background: var(--color-gray-200, #4b5563);
+      }
+
       /* ─── ANIMATIONS ─── */
       @keyframes slideDown {
         from {
@@ -392,6 +420,15 @@
           <h2>Aperçu</h2>
           <div class="chart-wrapper">
             <canvas id="chartCanvas"></canvas>
+          </div>
+          <div class="chart-actions">
+            <button id="chartExport" class="chart-actions__btn">
+              💾 Exporter JSON
+            </button>
+            <label class="chart-actions__btn">
+              📂 Importer JSON
+              <input type="file" accept=".json" id="chartImport" style="display: none;" />
+            </label>
           </div>
         </div>
       </div>

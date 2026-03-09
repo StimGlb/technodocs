@@ -28,8 +28,10 @@ export class ChartGenerator {
   init() {
     this.cacheElements();
     this.bindEvents();
+    this.loadFromStorage();
     this.renderChart();
     this.renderDataList();
+    this.updateTypeToggle();
   }
 
   /**
@@ -66,6 +68,17 @@ export class ChartGenerator {
     this.valueInput.addEventListener("keypress", (e) => {
       if (e.key === "Enter") this.handleAddEntry();
     });
+
+    // Export / Import
+    document.getElementById("chartExport")
+      ?.addEventListener("click", () => this.exportToJSON());
+    document.getElementById("chartImport")
+      ?.addEventListener("change", (e) => {
+        if (e.target.files[0]) {
+          this.importFromJSON(e.target.files[0]);
+          e.target.value = "";
+        }
+      });
   }
 
   /**
@@ -102,6 +115,7 @@ export class ChartGenerator {
     this.entries.push({ label, value });
     this.renderChart();
     this.renderDataList();
+    this.saveToStorage();
   }
 
   /**
@@ -111,6 +125,7 @@ export class ChartGenerator {
     this.entries.splice(index, 1);
     this.renderChart();
     this.renderDataList();
+    this.saveToStorage();
   }
 
   /**
@@ -132,6 +147,7 @@ export class ChartGenerator {
    */
   clearAll() {
     this.entries = [];
+    localStorage.removeItem("technodocs_chart_generator");
     this.renderChart();
     this.renderDataList();
   }
@@ -143,17 +159,9 @@ export class ChartGenerator {
     if (type === this.chartType) return;
 
     this.chartType = type;
-
-    // Met à jour les classes actives
-    if (type === "bar") {
-      this.chartTypeBarBtn.classList.add("active");
-      this.chartTypeLineBtn.classList.remove("active");
-    } else {
-      this.chartTypeLineBtn.classList.add("active");
-      this.chartTypeBarBtn.classList.remove("active");
-    }
-
+    this.updateTypeToggle();
     this.renderChart();
+    this.saveToStorage();
   }
 
   /**
@@ -290,6 +298,90 @@ export class ChartGenerator {
 
       this.dataListElement.appendChild(itemEl);
     });
+  }
+
+  /**
+   * Met à jour l'état visuel du toggle barres/courbe
+   */
+  updateTypeToggle() {
+    if (this.chartType === "bar") {
+      this.chartTypeBarBtn.classList.add("active");
+      this.chartTypeLineBtn.classList.remove("active");
+    } else {
+      this.chartTypeLineBtn.classList.add("active");
+      this.chartTypeBarBtn.classList.remove("active");
+    }
+  }
+
+  /**
+   * Sauvegarde l'état dans localStorage
+   */
+  saveToStorage() {
+    localStorage.setItem(
+      "technodocs_chart_generator",
+      JSON.stringify({ entries: this.entries, chartType: this.chartType })
+    );
+  }
+
+  /**
+   * Restaure l'état depuis localStorage
+   */
+  loadFromStorage() {
+    try {
+      const saved = localStorage.getItem("technodocs_chart_generator");
+      if (saved) {
+        const data = JSON.parse(saved);
+        this.entries = data.entries || [];
+        this.chartType = data.chartType || "bar";
+      }
+    } catch (e) {
+      // Données corrompues, on repart de zéro
+    }
+  }
+
+  /**
+   * Exporte les données en fichier JSON
+   */
+  exportToJSON() {
+    const data = {
+      title: "Données graphique",
+      chartType: this.chartType,
+      entries: this.entries,
+      exportedAt: new Date().toISOString(),
+    };
+    const blob = new Blob([JSON.stringify(data, null, 2)], {
+      type: "application/json",
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `graphique_${new Date().toISOString().slice(0, 10)}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  /**
+   * Importe des données depuis un fichier JSON
+   */
+  importFromJSON(file) {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const data = JSON.parse(e.target.result);
+        if (!Array.isArray(data.entries)) throw new Error("Format invalide");
+        this.entries = data.entries.filter(
+          (entry) => entry.label && typeof entry.value === "number"
+        );
+        this.chartType = data.chartType || "bar";
+        this.renderDataList();
+        this.renderChart();
+        this.updateTypeToggle();
+        this.saveToStorage();
+      } catch (err) {
+        alert("Fichier invalide. Vérifiez le format JSON.");
+      }
+    };
+    reader.readAsText(file);
   }
 
   /**

@@ -11,7 +11,7 @@
 </div>
 
 <div class="fiche-travail">
-    <strong>Travail demandé :</strong> Analyser la consommation électrique d'une maison et proposer des solutions pour économiser l'énergie.
+    <strong>Analyser la consommation électrique d'une maison</strong> et proposer des solutions pour économiser l'énergie.
 </div>
 
 <!-- ════════════════════════════════════════ -->
