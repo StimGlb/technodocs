@@ -128,7 +128,42 @@
     <script type="module">
       import { initCoursPage } from "../../js/cours-loader.js";
 
-      initCoursPage("../../data/activites/activite-consommation-maison.json");
+      await initCoursPage(
+        "../../data/activites/activite-consommation-maison.json",
+      );
+
+      // Détection robuste des images insérées via Markdown
+      document.querySelectorAll(".fiche-img").forEach((figure) => {
+        const img = figure.querySelector("img");
+        if (!img) return;
+
+        const markLoaded = () => {
+          figure.classList.remove("is-error");
+          figure.classList.add("is-loaded");
+        };
+
+        const markError = () => {
+          figure.classList.remove("is-loaded");
+          figure.classList.add("is-error");
+          console.warn("Image non trouvée :", img.src);
+        };
+
+        // Cas 1 : image déjà chargée et valide (cache navigateur)
+        if (img.complete && img.naturalWidth > 0) {
+          markLoaded();
+          return;
+        }
+
+        // Cas 2 : chargement terminé mais image invalide (404 ou erreur)
+        if (img.complete && img.naturalWidth === 0) {
+          markError();
+          return;
+        }
+
+        // Cas 3 : image en cours de chargement — écouter les événements
+        img.addEventListener("load", markLoaded);
+        img.addEventListener("error", markError);
+      });
     </script>
   </body>
 </html>

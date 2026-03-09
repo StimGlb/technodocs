@@ -37,7 +37,7 @@ export async function initCoursPage(configPath) {
       ficheSequence: config.sequence,
       ficheSeance: config.seance,
       ficheDuree: config.duree,
-      ficheCompetences: config.competences?.join(', ')
+      ficheCompetences: config.competences?.join(", "),
     };
 
     Object.entries(metaFields).forEach(([id, value]) => {
@@ -46,8 +46,8 @@ export async function initCoursPage(configPath) {
     });
 
     // Masquer le bandeau si aucun champ meta n'est présent (ex : fiches de révision)
-    const metaSection = document.getElementById('ficheMeta');
-    if (metaSection && !config.niveau) metaSection.style.display = 'none';
+    const metaSection = document.getElementById("ficheMeta");
+    if (metaSection && !config.niveau) metaSection.style.display = "none";
 
     // Peuplement conditionnel du header print (fiches d'activité)
     const printFields = {
@@ -55,8 +55,8 @@ export async function initCoursPage(configPath) {
       printSequence: config.sequence,
       printSeance: config.seance,
       printDuree: config.duree,
-      printCompetences: config.competences?.join(', '),
-      printTitre: config.title
+      printCompetences: config.competences?.join(", "),
+      printTitre: config.title,
     };
 
     Object.entries(printFields).forEach(([id, value]) => {
@@ -439,6 +439,20 @@ async function loadMarkdownContent(path) {
       });
 
       const htmlContent = marked.parse(markdownText);
+
+      // Debug: log whether the rendered HTML contains the fiche-img marker
+      try {
+        console.debug(
+          "[cours-loader] rendered HTML contains 'fiche-img':",
+          htmlContent.includes("fiche-img"),
+        );
+        console.debug(
+          "[cours-loader] rendered HTML preview:\n",
+          htmlContent.slice(0, 1200),
+        );
+      } catch (e) {
+        console.debug("[cours-loader] debug log error:", e);
+      }
 
       // Rendu sécurisé via DOMParser
       const parser = new DOMParser();

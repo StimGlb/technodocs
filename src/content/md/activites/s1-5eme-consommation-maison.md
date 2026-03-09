@@ -21,6 +21,14 @@
 <div class="fiche-activite">
 <div class="fiche-activite__titre">Activité 1 : Où va l'électricité ?</div>
 
+<div class="fiche-img fiche-img--16-9">
+    <img src="/src/assets/fiches/maison-consommation.png"
+             alt="Utilisation de l'électricité dans une maison"
+             loading="lazy"
+             decoding="async">
+    <div class="fiche-img__caption">Utilisation de l'électricité dans une maison</div>
+</div>
+
 <div class="fiche-deux-colonnes">
 <div class="fiche-deux-colonnes__gauche">
 
@@ -37,15 +45,15 @@
 </div>
 <div class="fiche-deux-colonnes__droite">
 
-| Poste | kWh/an |
-|------|--------|
-| Chauffage | 2 800 |
-| ECS | 1 000 |
-| Électroménager | 750 |
-| Éclairage | 500 |
-| Audiovisuel | 450 |
-| Cuisson | 380 |
-| Veille | 380 |
+| Poste          | kWh/an |
+| -------------- | ------ |
+| Chauffage      | 2 800  |
+| ECS            | 1 000  |
+| Électroménager | 750    |
+| Éclairage      | 500    |
+| Audiovisuel    | 450    |
+| Cuisson        | 380    |
+| Veille         | 380    |
 
 </div>
 </div>
@@ -61,12 +69,12 @@
 
 **2.1** Complète le tableau avec des exemples d'éco-gestes et d'équipements connectés.
 
-| Poste | Éco-geste simple | Équipement connecté possible |
-|------|------------------|------------------------------|
-| Éclairage | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp; |
-| Veille | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp; |
-| Chauffage | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp; |
-| Audiovisuel | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp; |
+| Poste       | Éco-geste simple | Équipement connecté possible |
+| ----------- | ---------------- | ---------------------------- |
+| Éclairage   | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp;             |
+| Veille      | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp;             |
+| Chauffage   | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp;             |
+| Audiovisuel | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp;             |
 
 **2.2** Quel poste offre le plus grand potentiel d'économies avec des équipements connectés ? Explique en 1-2 phrases.
 

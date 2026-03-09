@@ -221,6 +221,94 @@
   letter-spacing: 0.03em;
 }
 
+/* ── Zone d'image fiche (4:3 ou 16:9) ── */
+.fiche-img {
+  margin: 1rem 0;
+  border: 1px solid var(--color-gray-300, #4b5563);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  min-height: 40px;
+}
+
+/* Motif hachuré pendant le chargement */
+.fiche-img:not(.is-loaded):not(.is-error) {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.02) 0px,
+    rgba(255, 255, 255, 0.02) 10px,
+    rgba(255, 255, 255, 0.05) 10px,
+    rgba(255, 255, 255, 0.05) 20px
+  );
+}
+
+.fiche-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* L'image devient visible quand le conteneur reçoit .is-loaded */
+.fiche-img.is-loaded img {
+  opacity: 1;
+}
+
+.fiche-img--4-3 img {
+  aspect-ratio: 4 / 3;
+}
+
+.fiche-img--16-9 img {
+  aspect-ratio: 16 / 9;
+}
+
+.fiche-img figcaption {
+  font-size: 0.8rem;
+  color: var(--color-gray-500, #888);
+  text-align: center;
+  padding: 0.4rem 0.75rem;
+  border-top: 1px solid var(--color-gray-300, #4b5563);
+  font-style: italic;
+}
+
+/* Caption used when replacing <figure>/<figcaption> with a <div> in Markdown */
+.fiche-img__caption {
+  font-size: 0.8rem;
+  color: var(--color-gray-500, #888);
+  text-align: center;
+  padding: 0.4rem 0.75rem;
+  border-top: 1px solid var(--color-gray-300, #4b5563);
+  font-style: italic;
+}
+
+/* Erreur de chargement : afficher un placeholder visible */
+.fiche-img.is-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--color-gray-500, #888);
+  font-size: 0.85rem;
+  font-style: italic;
+  border-style: dashed;
+}
+
+.fiche-img.is-error::after {
+  content: "⚠ Image non trouvée";
+}
+
+.fiche-img.is-error img {
+  display: none;
+}
+
+@media print {
+  .fiche-img img {
+    opacity: 1 !important;
+  }
+}
+
 /* ── Responsive ── */
 @media (max-width: 640px) {
   .fiche-meta {
