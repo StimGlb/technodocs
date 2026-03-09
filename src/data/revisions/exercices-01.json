@@ -1,0 +1,11 @@
+{
+  "title": "Exercices type DNB",
+  "subtitle": "Révisions Technologie — DNB",
+  "niveau": "4ème / 3ème",
+  "sequence": "Révisions DNB",
+  "seance": "Exercices 01",
+  "duree": "—",
+  "competences": ["Évolution technologique", "Choix responsable", "IA & biais"],
+  "markdownPath": "../../content/md/revisions/exercices-01.md",
+  "slides": []
+}
