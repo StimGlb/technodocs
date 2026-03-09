@@ -109,7 +109,7 @@ Le cycle de vie d'un objet comprend les étapes : extraction → \_\_\_\_\_\_\_\
 <!-- PRISE DE NOTES                          -->
 <!-- ════════════════════════════════════════ -->
 
-<div class="fiche-notes">
+<!-- <div class="fiche-notes">
 <div class="fiche-notes__titre">Notes</div>
 <div class="zone-reponse zone-reponse--fill zone-reponse--lignes"></div>
-</div>
+</div> -->
