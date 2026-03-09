@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Générateur de graphiques v2 | TechnoDocs</title>
+    <title>Générateur de graphiques v1.3 | TechnoDocs</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -439,9 +439,9 @@
     <main class="app">
       <!-- SECTION HÉRO -->
       <div class="app-header">
-        <span class="app-header__badge">Outil Interactif · v2</span>
+        <span class="app-header__badge">Outil Interactif · v1.3</span>
         <h1>Générateur de <span class="hl">Graphiques</span></h1>
-        <p>Comparaison multi-séries et visualisation en temps réel</p>
+        <p>Import JSON · kWh / % · Veille mis en évidence · Comparatif multi-séries</p>
       </div>
 
       <!-- CONTENEUR PRINCIPAL (2 colonnes) -->
@@ -539,9 +539,9 @@
     <!-- Composants dynamiques (Header/Footer) -->
     <script type="module" src="../../js/components.js"></script>
 
-    <!-- Générateur de graphiques v2 -->
+    <!-- Générateur de graphiques v3 -->
     <script type="module">
-      const STORAGE_KEY = "technodocs_chart_generator_v2";
+      const STORAGE_KEY = "technodocs_chart_generator_v3";
 
       const COMPARATIVE_DATA = {
         labels: [
@@ -564,7 +564,7 @@
         ],
       };
 
-      class ChartGeneratorV2 {
+      class ChartGeneratorV3 {
         constructor() {
           this.mode = "single"; // 'single' | 'comparison'
           this.entries = [];
@@ -1055,7 +1055,7 @@
                   exportedAt: new Date().toISOString(),
                 }
               : {
-                  mode: "single",
+                  title: "Données graphique",
                   chartType: this.chartType,
                   entries: this.entries,
                   exportedAt: new Date().toISOString(),
@@ -1137,7 +1137,7 @@
         }
       }
 
-      new ChartGeneratorV2();
+      new ChartGeneratorV3();
     </script>
   </body>
 </html>

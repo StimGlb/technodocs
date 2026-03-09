@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>S1 - Consommation maison connectée | TechnoDocs</title>
+    <title>Séance 1 - Consommation maison connectée | TechnoDocs</title>
     <meta name="robots" content="noindex" />
     <link rel="stylesheet" href="/src/css/style.css" />
     <link rel="stylesheet" href="/src/css/wizard.css" />
@@ -13,6 +13,138 @@
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
       rel="stylesheet"
     />
+    <style>
+      /* ── Lien vers l'outil ── */
+      .wizard__tool-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: var(--space-3) var(--space-5);
+        background: rgba(99, 102, 241, 0.15);
+        color: #818cf8;
+        border: 1px solid rgba(99, 102, 241, 0.3);
+        border-radius: var(--radius-md);
+        font-weight: 600;
+        font-size: var(--text-sm);
+        text-decoration: none;
+        margin-bottom: var(--space-4);
+        transition: background 0.15s, border-color 0.15s;
+      }
+
+      .wizard__tool-link:hover {
+        background: rgba(99, 102, 241, 0.25);
+        border-color: rgba(99, 102, 241, 0.5);
+      }
+
+      /* ── Zone d'import ── */
+      .wizard__import-zone {
+        border: 2px dashed var(--color-gray-300);
+        border-radius: var(--radius-lg);
+        padding: var(--space-5);
+        text-align: center;
+        margin-bottom: var(--space-4);
+        transition: border-color 0.15s, background 0.15s;
+      }
+
+      .wizard__import-zone:hover {
+        border-color: var(--color-primary);
+        background: rgba(99, 102, 241, 0.05);
+      }
+
+      .wizard__import-zone.has-data {
+        display: none;
+      }
+
+      .wizard__import-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: var(--space-3) var(--space-5);
+        background: var(--color-primary);
+        color: white;
+        border-radius: var(--radius-md);
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+
+      .wizard__import-btn:hover {
+        background: var(--color-primary-dark, #4f46e5);
+      }
+
+      .wizard__import-hint {
+        margin-top: var(--space-3);
+        font-size: var(--text-sm);
+        color: var(--color-gray-500);
+      }
+
+      /* ── Résumé des données importées ── */
+      .wizard__chart-preview {
+        background: rgba(52, 211, 153, 0.08);
+        border: 1px solid rgba(52, 211, 153, 0.3);
+        border-radius: var(--radius-lg);
+        padding: var(--space-4);
+        margin-bottom: var(--space-4);
+      }
+
+      .wizard__chart-preview-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: var(--space-3);
+      }
+
+      .wizard__chart-preview-status {
+        font-weight: 700;
+        color: #34d399;
+        font-size: var(--text-sm);
+      }
+
+      .wizard__chart-preview-reset {
+        background: none;
+        border: 1px solid rgba(239, 68, 68, 0.4);
+        color: #f87171;
+        padding: var(--space-1) var(--space-3);
+        border-radius: var(--radius-md);
+        font-size: var(--text-xs);
+        cursor: pointer;
+        transition: background 0.15s;
+      }
+
+      .wizard__chart-preview-reset:hover {
+        background: rgba(239, 68, 68, 0.15);
+      }
+
+      .wizard__chart-preview-data {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: var(--space-2);
+        margin-bottom: var(--space-3);
+      }
+
+      .wizard__chart-preview-item {
+        display: flex;
+        justify-content: space-between;
+        padding: var(--space-2) var(--space-3);
+        background: rgba(255, 255, 255, 0.06);
+        border-radius: var(--radius-sm);
+        font-size: var(--text-sm);
+      }
+
+      .wizard__chart-preview-item-label {
+        color: var(--color-gray-700);
+      }
+
+      .wizard__chart-preview-item-value {
+        font-weight: 700;
+        color: var(--color-gray-900);
+      }
+
+      .wizard__chart-preview-meta {
+        font-size: var(--text-xs);
+        color: var(--color-gray-500);
+      }
+    </style>
   </head>
   <body>
     <!-- Password Overlay -->
@@ -105,10 +237,14 @@
         <nav class="wizard__nav" id="phaseNav">
           <button class="wizard__nav-btn active" data-phase="1">
             <span class="wizard__nav-number">1</span>
-            <span>Éco-gestes</span>
+            <span>Où va l'électricité</span>
           </button>
           <button class="wizard__nav-btn" data-phase="2">
             <span class="wizard__nav-number">2</span>
+            <span>Éco-gestes</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="3">
+            <span class="wizard__nav-number">3</span>
             <span>Cycle de vie</span>
           </button>
         </nav>
@@ -121,6 +257,201 @@
           <div class="wizard__phase-header">
             <h2 class="wizard__phase-title">
               <span class="wizard__phase-number">1</span>
+              Où va l'électricité ?
+            </h2>
+            <p class="wizard__phase-subtitle">Barème : 6 points</p>
+          </div>
+
+          <!-- Data Table -->
+          <div class="wizard__situation">
+            <p><strong>📊 Répartition de la consommation annuelle :</strong></p>
+            <table style="width: 100%; border-collapse: collapse">
+              <tr style="background: #f0f0f0">
+                <th style="border: 1px solid #ddd; padding: 8px; text-align: left">
+                  Poste
+                </th>
+                <th
+                  style="border: 1px solid #ddd; padding: 8px; text-align: right"
+                >
+                  kWh/an
+                </th>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 8px">Chauffage</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
+                  2 800
+                </td>
+              </tr>
+              <tr style="background: #f9f9f9">
+                <td style="border: 1px solid #ddd; padding: 8px">
+                  Eau chaude sanitaire
+                </td>
+                <td
+                  style="border: 1px solid #ddd; padding: 8px; text-align: right"
+                >
+                  1 000
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 8px">
+                  Électroménager
+                </td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
+                  750
+                </td>
+              </tr>
+              <tr style="background: #f9f9f9">
+                <td style="border: 1px solid #ddd; padding: 8px">Éclairage</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
+                  500
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 8px">Audiovisuel</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
+                  450
+                </td>
+              </tr>
+              <tr style="background: #f9f9f9">
+                <td style="border: 1px solid #ddd; padding: 8px">Cuisson</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
+                  380
+                </td>
+              </tr>
+              <tr>
+                <td style="border: 1px solid #ddd; padding: 8px">Veille</td>
+                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
+                  380
+                </td>
+              </tr>
+            </table>
+          </div>
+
+          <!-- Q1.1 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Diagramme</span>
+              <span class="wizard__question-points">3 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Q1.1 — Diagramme en bâtons
+            </h3>
+            <p class="wizard__question-text">
+              À l'aide du tableau de données ci-dessus, crée un <strong>diagramme en bâtons</strong>
+              avec le générateur de graphiques, puis importe ton fichier JSON ici.
+            </p>
+
+            <!-- Lien vers le générateur -->
+            <a href="/src/pages/outils/generateur-graphiques-v3.html"
+               target="_blank"
+               class="wizard__tool-link"
+               id="chartGeneratorLink">
+              📊 Ouvrir le Générateur de graphiques →
+            </a>
+
+            <!-- Zone d'import -->
+            <div class="wizard__import-zone" id="chartImportZone">
+              <label class="wizard__import-btn" id="chartImportLabel">
+                📂 Importer mon fichier JSON
+                <input type="file" accept=".json" id="chartFileInput" style="display: none;">
+              </label>
+              <p class="wizard__import-hint">
+                Exporte ton graphique depuis le générateur (bouton 💾), puis importe le fichier ici.
+              </p>
+            </div>
+
+            <!-- Résumé des données importées (masqué par défaut) -->
+            <div class="wizard__chart-preview" id="chartPreview" style="display: none;">
+              <div class="wizard__chart-preview-header">
+                <span class="wizard__chart-preview-status">✅ Données importées</span>
+                <button type="button" class="wizard__chart-preview-reset" id="chartResetBtn">
+                  ✕ Supprimer
+                </button>
+              </div>
+              <div class="wizard__chart-preview-data" id="chartPreviewData">
+                <!-- Rempli dynamiquement par JS -->
+              </div>
+              <div class="wizard__chart-preview-meta" id="chartPreviewMeta">
+                <!-- Type de graphique + date d'export -->
+              </div>
+            </div>
+
+            <!-- Champ caché pour stocker le JSON dans WizardFirebase -->
+            <textarea
+              class="wizard__textarea"
+              data-field="q1_diagramme_batons"
+              id="chartDataField"
+              style="display: none;"
+            ></textarea>
+          </div>
+
+          <!-- Q1.2 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Réponse courte</span>
+              <span class="wizard__question-points">1 point</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Q1.2 — Deux postes consommateurs
+            </h3>
+            <p class="wizard__question-text">
+              Identifie les <strong>2 postes</strong> qui consomment le plus
+              d'électricité.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="q2_postes_consommateurs"
+              placeholder="1. ... 2. ..."
+              maxlength="200"
+              rows="3"
+              spellcheck="true"
+              lang="fr"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span id="q2_count">0</span> / 200 caractères
+            </div>
+          </div>
+
+          <!-- Q1.3 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Calcul</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">Q1.3 — Coût de la veille</h3>
+            <p class="wizard__question-text">
+              La veille des appareils consomme <strong>380 kWh par an</strong>.
+              Le prix de l'électricité est de <strong>0,25 €/kWh</strong>.
+              Calcule le coût annuel de la veille.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="q3_cout_veille"
+              placeholder="Coût = consommation × prix = ... × ... = ... €/an"
+              maxlength="200"
+              rows="3"
+              spellcheck="true"
+              lang="fr"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span id="q3_count">0</span> / 200 caractères
+            </div>
+          </div>
+
+          <!-- Phase Nav -->
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" disabled>← Précédent</button>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- PHASE 2 -->
+        <section class="wizard__phase" data-phase="2">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">2</span>
               Les éco-gestes dans une maison connectée
             </h2>
             <p class="wizard__phase-subtitle">Barème : 6 points</p>
@@ -353,18 +684,20 @@
 
           <!-- Phase Nav -->
           <div class="wizard__phase-nav">
-            <button class="btn btn--secondary" disabled>← Précédent</button>
-            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
+              ← Précédent
+            </button>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(3)">
               Suivant →
             </button>
           </div>
         </section>
 
-        <!-- PHASE 2 -->
-        <section class="wizard__phase" data-phase="2">
+        <!-- PHASE 3 -->
+        <section class="wizard__phase" data-phase="3">
           <div class="wizard__phase-header">
             <h2 class="wizard__phase-title">
-              <span class="wizard__phase-number">2</span>
+              <span class="wizard__phase-number">3</span>
               Le cycle de vie d'une ampoule
             </h2>
             <p class="wizard__phase-subtitle">Barème : 8 points</p>
@@ -556,7 +889,7 @@
                 <input
                   type="text"
                   data-field="q11_synthese_poste"
-                  placeholder="chauffage, éclairage..."
+                  placeholder=""
                   style="
                     width: 150px;
                     border-bottom: 2px solid #999;
@@ -573,7 +906,7 @@
                 <input
                   type="text"
                   data-field="q12_synthese_ratio"
-                  placeholder="nombre"
+                  placeholder=""
                   style="
                     width: 100px;
                     border-bottom: 2px solid #999;
@@ -605,7 +938,7 @@
 
           <!-- Phase Nav -->
           <div class="wizard__phase-nav">
-            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
               ← Précédent
             </button>
             <button class="btn btn--primary" onclick="wizardComplete()">
@@ -693,6 +1026,11 @@
           1: [
             "studentName",
             "studentClass",
+            "q1_diagramme_batons",
+            "q2_postes_consommateurs",
+            "q3_cout_veille"
+          ],
+          2: [
             "q4_ecogeste_eclairage",
             "q4_connecte_eclairage",
             "q5_ecogeste_veille",
@@ -703,7 +1041,7 @@
             "q7_connecte_audiovisuel",
             "q8_poste_economies"
           ],
-          2: [
+          3: [
             "q9_etapes_cycle_vie",
             "q10_recommandation_ampoule",
             "q10_justification",
@@ -756,6 +1094,8 @@
 
       // Character counters
       const counters = [
+        { field: "q2_postes_consommateurs", counter: "q2_count" },
+        { field: "q3_cout_veille", counter: "q3_count" },
         { field: "q8_poste_economies", counter: "q8_count" },
         { field: "q10_justification", counter: "q10_count" }
       ];
@@ -769,6 +1109,150 @@
           });
         }
       });
+
+      // =============================================
+      // IMPORT JSON DIAGRAMME (Q1.1)
+      // =============================================
+      function setupChartImport() {
+        const fileInput = document.getElementById('chartFileInput');
+        const importZone = document.getElementById('chartImportZone');
+        const preview = document.getElementById('chartPreview');
+        const previewData = document.getElementById('chartPreviewData');
+        const previewMeta = document.getElementById('chartPreviewMeta');
+        const dataField = document.getElementById('chartDataField');
+        const resetBtn = document.getElementById('chartResetBtn');
+
+        if (!fileInput) return;
+
+        // Import du fichier
+        fileInput.addEventListener('change', (e) => {
+          const file = e.target.files[0];
+          if (!file) return;
+
+          const reader = new FileReader();
+          reader.onload = (event) => {
+            try {
+              const data = JSON.parse(event.target.result);
+
+              // Validation
+              if (!Array.isArray(data.entries) || data.entries.length === 0) {
+                throw new Error('Aucune donnée trouvée');
+              }
+
+              // Valider que chaque entrée a label + value
+              const validEntries = data.entries.filter(
+                e => e.label && typeof e.value === 'number'
+              );
+
+              if (validEntries.length === 0) {
+                throw new Error('Format de données invalide');
+              }
+
+              // Stocker le JSON complet dans le champ caché
+              dataField.value = JSON.stringify(data, null, 2);
+
+              // Déclencher un événement input pour que WizardFirebase détecte le changement
+              dataField.dispatchEvent(new Event('input', { bubbles: true }));
+
+              // Afficher le résumé
+              renderChartPreview(validEntries, data);
+
+              // Masquer la zone d'import, afficher le preview
+              importZone.classList.add('has-data');
+              preview.style.display = 'block';
+
+              // Toast de confirmation
+              if (window.wizardInstance?.showToast) {
+                window.wizardInstance.showToast(
+                  `${validEntries.length} valeurs importées avec succès`,
+                  'success'
+                );
+              }
+
+            } catch (err) {
+              if (window.wizardInstance?.showToast) {
+                window.wizardInstance.showToast(
+                  'Fichier invalide — vérifie que tu as exporté depuis le générateur de graphiques.',
+                  'error'
+                );
+              }
+            }
+
+            // Reset l'input pour permettre re-import du même fichier
+            e.target.value = '';
+          };
+
+          reader.readAsText(file);
+        });
+
+        // Suppression des données
+        resetBtn.addEventListener('click', () => {
+          dataField.value = '';
+          dataField.dispatchEvent(new Event('input', { bubbles: true }));
+          previewData.innerHTML = '';
+          previewMeta.innerHTML = '';
+          preview.style.display = 'none';
+          importZone.classList.remove('has-data');
+        });
+
+        // Restauration au chargement (si le champ a déjà des données — ex: autosave)
+        if (dataField.value) {
+          try {
+            const data = JSON.parse(dataField.value);
+            const validEntries = data.entries.filter(
+              e => e.label && typeof e.value === 'number'
+            );
+            if (validEntries.length > 0) {
+              renderChartPreview(validEntries, data);
+              importZone.classList.add('has-data');
+              preview.style.display = 'block';
+            }
+          } catch (e) {
+            // Données corrompues — on ignore silencieusement
+          }
+        }
+      }
+
+      function renderChartPreview(entries, data) {
+        const previewData = document.getElementById('chartPreviewData');
+        const previewMeta = document.getElementById('chartPreviewMeta');
+
+        // Grille des valeurs
+        previewData.innerHTML = entries.map(e => `
+          <div class="wizard__chart-preview-item">
+            <span class="wizard__chart-preview-item-label">${e.label}</span>
+            <span class="wizard__chart-preview-item-value">${e.value.toLocaleString('fr-FR')}</span>
+          </div>
+        `).join('');
+
+        // Métadonnées
+        const chartTypeLabel = data.chartType === 'bar' ? 'Barres' : 'Courbe';
+        const exportDate = data.exportedAt
+          ? new Date(data.exportedAt).toLocaleString('fr-FR')
+          : '—';
+        previewMeta.innerHTML = `Type : ${chartTypeLabel} • Exporté le ${exportDate} • ${entries.length} valeurs`;
+      }
+
+      // Initialiser après le DOM
+      document.addEventListener('DOMContentLoaded', setupChartImport);
+
+      // Restauration différée (attend que WizardFirebase ait rempli les champs)
+      setTimeout(() => {
+        const dataField = document.getElementById('chartDataField');
+        if (dataField?.value) {
+          try {
+            const data = JSON.parse(dataField.value);
+            const validEntries = data.entries?.filter(
+              e => e.label && typeof e.value === 'number'
+            );
+            if (validEntries?.length > 0) {
+              renderChartPreview(validEntries, data);
+              document.getElementById('chartImportZone')?.classList.add('has-data');
+              document.getElementById('chartPreview').style.display = 'block';
+            }
+          } catch (e) {}
+        }
+      }, 2000); // 2s laisse le temps à Firestore de charger
 
       // Global functions
       window.wizardGoToPhase = (phase) =>
