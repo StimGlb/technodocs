@@ -103,13 +103,29 @@
 
 <div class="zone-reponse zone-reponse--compact zone-reponse--lignes"></div>
 
+</div>
+<div class="fiche-deux-colonnes__droite">
+
+| Critère      | Incandescente    | LED                 |
+| ------------ | ---------------- | ------------------- |
+| Durée de vie | 1 000 h          | 25 000 h            |
+| Puissance    | 60 W             | 9 W                 |
+| Matériaux    | Verre, tungstène | Verre, électronique |
+| Recyclage    | Poubelle         | Point de collecte   |
+| Prix         | 1 €              | 6 €                 |
+
+</div>
+</div>
+
+---
+
 **Ce que je retiens :**
 
-Le poste \_\_\_\_\_\_\_\_\_\_\_\_\_\_ consomme le plus d'électricité dans une maison.
+Le poste \_\_\_\_\_\_\_\_\_\_\_\_ consomme le plus d'électricité dans une maison.
 
-Une ampoule **LED** consomme environ \_\_\_\_\_\_\_\_\_\_\_\_\_\_ fois moins qu'une incandescente.
+Une ampoule **LED** consomme environ \_\_\_\_\_\_\_\_\_\_\_\_ fois moins qu'une incandescente.
 
-Le cycle de vie d'un objet comprend les étapes : extraction → \_\_\_\_\_\_\_\_\_\_\_\_\_\_ → transport → \_\_\_\_\_\_\_\_\_\_\_\_\_\_ → fin de vie.
+Le cycle de vie d'un objet comprend les étapes : extraction → \_\_\_\_\_\_\_\_\_ → transport → \_\_\_\_\_\_\_\_\_ → fin de vie.
 
 </div>
 

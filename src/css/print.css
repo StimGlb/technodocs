@@ -334,6 +334,27 @@
     border: 0.5pt dashed #aaa !important;
   }
 
+  /* ── Images fiches : réduire en print ── */
+  .fiche-img {
+    margin: 1mm 0 !important;
+    border: 0.5pt solid #999 !important;
+  }
+
+  .fiche-img img {
+    opacity: 1 !important;
+    max-height: 105mm !important;
+    width: auto !important;
+    margin: 0 auto !important;
+    display: block !important;
+  }
+
+  .fiche-img__caption {
+    font-size: 7pt !important;
+    padding: 0.5mm 2mm !important;
+    border-top: 0.5pt solid #999 !important;
+    color: #666 !important;
+  }
+
   /* Badge ordi */
   .fiche-ordi {
     border: 0.5pt solid #999 !important;
