@@ -65,12 +65,9 @@
             <label for="studentClass">Classe</label>
             <select id="studentClass" data-field="studentClass" required>
               <option value="">— Sélectionner —</option>
-              <option value="501">5ème 1</option>
-              <option value="502">5ème 2</option>
-              <option value="503">5ème 3</option>
-              <option value="504">5ème 4</option>
-              <option value="505">5ème 5</option>
-              <option value="506">5ème 6</option>
+              <option value="504">5ème 5</option>
+              <option value="505">5ème 6</option>
+              <option value="506">5ème 7</option>
             </select>
           </div>
           <div class="wizard__student-field wizard__student-field--date">
@@ -108,14 +105,10 @@
         <nav class="wizard__nav" id="phaseNav">
           <button class="wizard__nav-btn active" data-phase="1">
             <span class="wizard__nav-number">1</span>
-            <span>Où va l'électricité</span>
+            <span>Éco-gestes</span>
           </button>
           <button class="wizard__nav-btn" data-phase="2">
             <span class="wizard__nav-number">2</span>
-            <span>Éco-gestes</span>
-          </button>
-          <button class="wizard__nav-btn" data-phase="3">
-            <span class="wizard__nav-number">3</span>
             <span>Cycle de vie</span>
           </button>
         </nav>
@@ -123,176 +116,11 @@
 
       <!-- Wizard Container -->
       <div class="wizard__container">
-        <!-- PHASE 1 -->
+        <!-- PHASE 2 -->
         <section class="wizard__phase active" data-phase="1">
           <div class="wizard__phase-header">
             <h2 class="wizard__phase-title">
               <span class="wizard__phase-number">1</span>
-              Où va l'électricité ?
-            </h2>
-            <p class="wizard__phase-subtitle">Barème : 6 points</p>
-          </div>
-
-          <!-- Data Table -->
-          <div class="wizard__situation">
-            <p><strong>📊 Répartition de la consommation annuelle :</strong></p>
-            <table style="width: 100%; border-collapse: collapse">
-              <tr style="background: #f0f0f0">
-                <th style="border: 1px solid #ddd; padding: 8px; text-align: left">
-                  Poste
-                </th>
-                <th
-                  style="border: 1px solid #ddd; padding: 8px; text-align: right"
-                >
-                  kWh/an
-                </th>
-              </tr>
-              <tr>
-                <td style="border: 1px solid #ddd; padding: 8px">Chauffage</td>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
-                  2 800
-                </td>
-              </tr>
-              <tr style="background: #f9f9f9">
-                <td style="border: 1px solid #ddd; padding: 8px">
-                  Eau chaude sanitaire
-                </td>
-                <td
-                  style="border: 1px solid #ddd; padding: 8px; text-align: right"
-                >
-                  1 000
-                </td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid #ddd; padding: 8px">
-                  Électroménager
-                </td>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
-                  750
-                </td>
-              </tr>
-              <tr style="background: #f9f9f9">
-                <td style="border: 1px solid #ddd; padding: 8px">Éclairage</td>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
-                  500
-                </td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid #ddd; padding: 8px">Audiovisuel</td>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
-                  450
-                </td>
-              </tr>
-              <tr style="background: #f9f9f9">
-                <td style="border: 1px solid #ddd; padding: 8px">Cuisson</td>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
-                  380
-                </td>
-              </tr>
-              <tr>
-                <td style="border: 1px solid #ddd; padding: 8px">Veille</td>
-                <td style="border: 1px solid #ddd; padding: 8px; text-align: right">
-                  380
-                </td>
-              </tr>
-            </table>
-          </div>
-
-          <!-- Q1.1 -->
-          <div class="wizard__question">
-            <div class="wizard__question-header">
-              <span class="wizard__question-badge">Question ouverte</span>
-              <span class="wizard__question-points">3 points</span>
-            </div>
-            <h3 class="wizard__question-title">
-              Q1.1 — Diagramme en bâtons
-            </h3>
-            <p class="wizard__question-text">
-              Trace le <strong>diagramme en bâtons</strong> représentant la
-              consommation annuelle des différents postes électriques. Décris
-              les valeurs de chaque bâton.
-            </p>
-            <textarea
-              class="wizard__textarea"
-              data-field="q1_diagramme_batons"
-              placeholder="Chauffage : 2800 kWh (le plus haut)..."
-              maxlength="400"
-              rows="5"
-              spellcheck="true"
-              lang="fr"
-            ></textarea>
-            <div class="wizard__char-counter">
-              <span id="q1_count">0</span> / 400 caractères
-            </div>
-          </div>
-
-          <!-- Q1.2 -->
-          <div class="wizard__question">
-            <div class="wizard__question-header">
-              <span class="wizard__question-badge">Réponse courte</span>
-              <span class="wizard__question-points">1 point</span>
-            </div>
-            <h3 class="wizard__question-title">
-              Q1.2 — Deux postes consommateurs
-            </h3>
-            <p class="wizard__question-text">
-              Identifie les <strong>2 postes</strong> qui consomment le plus
-              d'électricité.
-            </p>
-            <textarea
-              class="wizard__textarea"
-              data-field="q2_postes_consommateurs"
-              placeholder="1. ... 2. ..."
-              maxlength="200"
-              rows="3"
-              spellcheck="true"
-              lang="fr"
-            ></textarea>
-            <div class="wizard__char-counter">
-              <span id="q2_count">0</span> / 200 caractères
-            </div>
-          </div>
-
-          <!-- Q1.3 -->
-          <div class="wizard__question">
-            <div class="wizard__question-header">
-              <span class="wizard__question-badge">Calcul</span>
-              <span class="wizard__question-points">2 points</span>
-            </div>
-            <h3 class="wizard__question-title">Q1.3 — Coût de la veille</h3>
-            <p class="wizard__question-text">
-              La veille des appareils consomme <strong>380 kWh par an</strong>.
-              Le prix de l'électricité est de <strong>0,25 €/kWh</strong>.
-              Calcule le coût annuel de la veille.
-            </p>
-            <textarea
-              class="wizard__textarea"
-              data-field="q3_cout_veille"
-              placeholder="Coût = consommation × prix = ... × ... = ... €/an"
-              maxlength="200"
-              rows="3"
-              spellcheck="true"
-              lang="fr"
-            ></textarea>
-            <div class="wizard__char-counter">
-              <span id="q3_count">0</span> / 200 caractères
-            </div>
-          </div>
-
-          <!-- Phase Nav -->
-          <div class="wizard__phase-nav">
-            <button class="btn btn--secondary" disabled>← Précédent</button>
-            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
-              Suivant →
-            </button>
-          </div>
-        </section>
-
-        <!-- PHASE 2 -->
-        <section class="wizard__phase" data-phase="2">
-          <div class="wizard__phase-header">
-            <h2 class="wizard__phase-title">
-              <span class="wizard__phase-number">2</span>
               Les éco-gestes dans une maison connectée
             </h2>
             <p class="wizard__phase-subtitle">Barème : 6 points</p>
@@ -525,20 +353,18 @@
 
           <!-- Phase Nav -->
           <div class="wizard__phase-nav">
-            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
-              ← Précédent
-            </button>
-            <button class="btn btn--primary" onclick="wizardGoToPhase(3)">
+            <button class="btn btn--secondary" disabled>← Précédent</button>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
               Suivant →
             </button>
           </div>
         </section>
 
         <!-- PHASE 3 -->
-        <section class="wizard__phase" data-phase="3">
+        <section class="wizard__phase" data-phase="2">
           <div class="wizard__phase-header">
             <h2 class="wizard__phase-title">
-              <span class="wizard__phase-number">3</span>
+              <span class="wizard__phase-number">2</span>
               Le cycle de vie d'une ampoule
             </h2>
             <p class="wizard__phase-subtitle">Barème : 8 points</p>
@@ -779,7 +605,7 @@
 
           <!-- Phase Nav -->
           <div class="wizard__phase-nav">
-            <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
               ← Précédent
             </button>
             <button class="btn btn--primary" onclick="wizardComplete()">
@@ -867,11 +693,6 @@
           1: [
             "studentName",
             "studentClass",
-            "q1_diagramme_batons",
-            "q2_postes_consommateurs",
-            "q3_cout_veille"
-          ],
-          2: [
             "q4_ecogeste_eclairage",
             "q4_connecte_eclairage",
             "q5_ecogeste_veille",
@@ -882,7 +703,7 @@
             "q7_connecte_audiovisuel",
             "q8_poste_economies"
           ],
-          3: [
+          2: [
             "q9_etapes_cycle_vie",
             "q10_recommandation_ampoule",
             "q10_justification",
@@ -935,9 +756,6 @@
 
       // Character counters
       const counters = [
-        { field: "q1_diagramme_batons", counter: "q1_count" },
-        { field: "q2_postes_consommateurs", counter: "q2_count" },
-        { field: "q3_cout_veille", counter: "q3_count" },
         { field: "q8_poste_economies", counter: "q8_count" },
         { field: "q10_justification", counter: "q10_count" }
       ];
