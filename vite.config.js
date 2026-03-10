@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import { resolve, relative, join } from "path";
 import { readdirSync, statSync, existsSync } from "fs";
+import { copy } from "vite-plugin-copy";
 
 export default defineConfig({
   root: ".",
@@ -60,6 +61,12 @@ export default defineConfig({
 
     copyPublicDir: true,
   },
+
+  plugins: [
+    copy([
+      { src: "src/content", dest: "dist/src" },
+    ]),
+  ],
 
   server: {
     port: 3001,

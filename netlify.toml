@@ -8,6 +8,9 @@
   # Run the Vite build so import.meta.env VITE_* vars are embedded
   command = "npm run build"
 
+[build.environment]
+  NODE_VERSION = "20"
+
 # Local development configuration
 [dev]
   # Command to run for local development

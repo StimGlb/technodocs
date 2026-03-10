@@ -21,16 +21,24 @@
 <div class="fiche-activite">
 <div class="fiche-activite__titre">Activité 1 : Où va l'électricité ?</div>
 
-<div class="fiche-img fiche-img--16-9">
-    <img src="/src/assets/fiches/maison-consommation.png"
-             alt="Utilisation de l'électricité dans une maison"
-             loading="lazy"
-             decoding="async">
-    <div class="fiche-img__caption">Utilisation de l'électricité dans une maison</div>
+<div class="fiche-une-colonne">
+
+Le tableau ci-dessous présente la répartition de la consommation électrique annuelle d'un foyer français moyen.
+
+| Poste de consommation | Consommation annuelle (kWh) | Part (%) |
+|---|---|---|
+| Chauffage électrique | 2 800 | 45 % |
+| Eau chaude sanitaire | 1 000 | 16 % |
+| Électroménager (réfrigérateur, lave-linge…) | 750 | 12 % |
+| Éclairage | 500 | 8 % |
+| Audiovisuel (TV, box, ordinateurs) | 450 | 7 % |
+| Cuisson | 380 | 6 % |
+| Veille des appareils | 380 | 6 % |
+| **Total** | **6 260** | **100 %** |
+
 </div>
 
-<div class="fiche-deux-colonnes">
-<div class="fiche-deux-colonnes__gauche">
+<div class="fiche-une-colonne">
 
 **1.1** Utilise le générateur de graphes en ligne pour créer un **diagramme en bâtons** représentant la consommation annuelle des différents postes électriques.
 
@@ -38,27 +46,12 @@
 
 <div class="zone-reponse zone-reponse--compact zone-reponse--lignes"></div>
 
-**1.3** Calcule le **coût annuel** de la veille électrique (coût moyen d'un kWh : 0,25 €).
+**1.3** Calcule le **coût annuel** de la veille électrique (380 kWh × 0,25 €/kWh).
 
 <div class="zone-reponse zone-reponse--compact zone-reponse--lignes"></div>
 
 </div>
-<div class="fiche-deux-colonnes__droite">
 
-Le tableau ci-dessous présente la répartition de la consommation électrique annuelle d'un foyer français moyen.
-
-| Poste de consommation                       | Consommation annuelle (kWh) |  Part (%) |
-| ------------------------------------------- | --------------------------: | --------: |
-| Chauffage électrique                        |                       2 800 |      45 % |
-| Eau chaude sanitaire                        |                       1 000 |      16 % |
-| Électroménager (réfrigérateur, lave-linge…) |                         750 |      12 % |
-| Éclairage                                   |                         500 |       8 % |
-| Audiovisuel (TV, box, ordinateurs)          |                         450 |       7 % |
-| Cuisson                                     |                         380 |       6 % |
-| Veille des appareils                        |                         380 |       6 % |
-| **Total**                                   |                   **6 260** | **100 %** |
-
-</div>
 </div>
 
 </div>
@@ -72,12 +65,12 @@ Le tableau ci-dessous présente la répartition de la consommation électrique a
 
 **2.1** Complète le tableau avec des exemples d'éco-gestes et d'équipements connectés.
 
-| Poste       | Éco-geste simple | Équipement connecté possible |
-| ----------- | ---------------- | ---------------------------- |
-| Éclairage   | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp;             |
-| Veille      | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp;             |
-| Chauffage   | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp;             |
-| Audiovisuel | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp;             |
+| Poste | Éco-geste simple | Équipement connecté possible |
+|------|------------------|------------------------------|
+| Éclairage | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp; |
+| Veille | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp; |
+| Chauffage | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp; |
+| Audiovisuel | &nbsp;<br>&nbsp; | &nbsp;<br>&nbsp; |
 
 **2.2** Quel poste offre le plus grand potentiel d'économies avec des équipements connectés ? Explique en 1-2 phrases.
 
@@ -106,29 +99,13 @@ Le tableau ci-dessous présente la répartition de la consommation électrique a
 
 <div class="zone-reponse zone-reponse--compact zone-reponse--lignes"></div>
 
-</div>
-<div class="fiche-deux-colonnes__droite">
-
-| Critère      | Incandescente    | LED                 |
-| ------------ | ---------------- | ------------------- |
-| Durée de vie | 1 000 h          | 25 000 h            |
-| Puissance    | 60 W             | 9 W                 |
-| Matériaux    | Verre, tungstène | Verre, électronique |
-| Recyclage    | Poubelle         | Point de collecte   |
-| Prix         | 1 €              | 6 €                 |
-
-</div>
-</div>
-
----
-
 **Ce que je retiens :**
 
-Le poste \_\_\_\_\_\_\_\_\_\_\_\_ consomme le plus d'électricité dans une maison.
+Le poste \_\_\_\_\_\_\_\_\_\_\_\_\_\_ consomme le plus d'électricité dans une maison.
 
-Une ampoule **LED** consomme environ \_\_\_\_\_\_\_\_\_\_\_\_ fois moins qu'une incandescente.
+Une ampoule **LED** consomme environ \_\_\_\_\_\_\_\_\_\_\_\_\_\_ fois moins qu'une incandescente.
 
-Le cycle de vie d'un objet comprend les étapes : extraction → \_\_\_\_\_\_\_\_\_ → transport → \_\_\_\_\_\_\_\_\_ → fin de vie.
+Le cycle de vie d'un objet comprend les étapes : extraction → \_\_\_\_\_\_\_\_\_\_\_\_\_\_ → transport → \_\_\_\_\_\_\_\_\_\_\_\_\_\_ → fin de vie.
 
 </div>
 
