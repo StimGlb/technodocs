@@ -27,11 +27,15 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.3",
+    "eslint-plugin-vue": "^10.8.0",
+    "globals": "^17.4.0",
     "vite": "^7.3.1"
   },
   "dependencies": {
-    "@netlify/plugin-lighthouse": "^6.0.4",
+    "@netlify/plugin-lighthouse": "^6.0.1",
     "firebase": "^12.8.0",
-    "firebase-admin": "^13.6.1"
+    "firebase-admin": "^10.3.0"
   }
 }

@@ -38,22 +38,25 @@
 
 <div class="zone-reponse zone-reponse--compact zone-reponse--lignes"></div>
 
-**1.3** Calcule le **coût annuel** de la veille électrique (380 kWh × 0,25 €/kWh).
+**1.3** Calcule le **coût annuel** de la veille électrique (coût moyen d'un kWh : 0,25 €).
 
 <div class="zone-reponse zone-reponse--compact zone-reponse--lignes"></div>
 
 </div>
 <div class="fiche-deux-colonnes__droite">
 
-| Poste          | kWh/an |
-| -------------- | ------ |
-| Chauffage      | 2 800  |
-| ECS            | 1 000  |
-| Électroménager | 750    |
-| Éclairage      | 500    |
-| Audiovisuel    | 450    |
-| Cuisson        | 380    |
-| Veille         | 380    |
+Le tableau ci-dessous présente la répartition de la consommation électrique annuelle d'un foyer français moyen.
+
+| Poste de consommation                       | Consommation annuelle (kWh) |  Part (%) |
+| ------------------------------------------- | --------------------------: | --------: |
+| Chauffage électrique                        |                       2 800 |      45 % |
+| Eau chaude sanitaire                        |                       1 000 |      16 % |
+| Électroménager (réfrigérateur, lave-linge…) |                         750 |      12 % |
+| Éclairage                                   |                         500 |       8 % |
+| Audiovisuel (TV, box, ordinateurs)          |                         450 |       7 % |
+| Cuisson                                     |                         380 |       6 % |
+| Veille des appareils                        |                         380 |       6 % |
+| **Total**                                   |                   **6 260** | **100 %** |
 
 </div>
 </div>
