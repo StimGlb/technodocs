@@ -11,34 +11,28 @@
 </div>
 
 <div class="fiche-travail">
-    <strong>Analyser la consommation électrique d'une maison</strong> et proposer des solutions pour économiser l'énergie.
+    <div class="fiche-ost__item">
+        La famille Kiagi vient d'emménager dans une nouvelle maison. Ils souhaitent équiper leur logement d'appareils connectés pour réduire leur consommation électrique : ampoules intelligentes, prises programmables, thermostat connecté…
+    </div>
+    <div class="fiche-img">
+        <img src="/src/assets/fiches/maison-consommation.png"
+                alt="Utilisation de l'électricité dans une maison"
+                loading="lazy"
+                decoding="async">
+            <span class="fiche-img__caption">Données : Répartition de la consommation électrique annuelle d'un foyer français moyen.</span>
+    </div>
 </div>
+
 
 <!-- ════════════════════════════════════════ -->
 <!-- ACTIVITÉ 1                              -->
-<!-- ════════════════════════════════════════ -->
+<!-- ════════════════════════════════════════ --> 
+
+
+**Travail demandée : <strong>Analyser la consommation électrique d'une maison</strong> et proposer des solutions pour permettre à la fammile Kiagi d'économiser l'énergie.**  
 
 <div class="fiche-activite">
 <div class="fiche-activite__titre">Activité 1 : Où va l'électricité ?</div>
-
-<div class="fiche-une-colonne">
-
-Le tableau ci-dessous présente la répartition de la consommation électrique annuelle d'un foyer français moyen.
-
-| Poste de consommation | Consommation annuelle en kilo Watt Heure (kWh) | Part (%) |
-|---|---|---|
-| Chauffage électrique | 2 800 | 45 % |
-| Eau chaude sanitaire | 1 000 | 16 % |
-| Électroménager (réfrigérateur, lave-linge…) | 750 | 12 % |
-| Éclairage | 500 | 8 % |
-| Audiovisuel (TV, box, ordinateurs) | 450 | 7 % |
-| Cuisson | 380 | 6 % |
-| Veille des appareils | 380 | 6 % |
-| **Total** | **6 260** | **100 %** |
-
-</div>
-
-<div class="fiche-une-colonne">
 
 **1.1** Utilise le générateur de graphes en ligne pour créer un **diagramme en bâtons** représentant la consommation annuelle des différents postes électriques.
 
