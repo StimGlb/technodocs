@@ -11,9 +11,14 @@
   "workspace": {
     "packageJson": {
       "dependencies": [
-        "npm:@netlify/plugin-lighthouse@^6.0.4",
-        "npm:firebase-admin@^13.6.1",
+        "npm:@eslint/js@^10.0.1",
+        "npm:@netlify/plugin-lighthouse@^6.0.1",
+        "npm:eslint-plugin-vue@^10.8.0",
+        "npm:eslint@^10.0.3",
+        "npm:firebase-admin@^10.3.0",
         "npm:firebase@^12.8.0",
+        "npm:globals@^17.4.0",
+        "npm:vite-plugin-copy@~0.1.6",
         "npm:vite@^7.3.1"
       ]
     }
