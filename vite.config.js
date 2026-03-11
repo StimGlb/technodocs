@@ -1,71 +1,83 @@
 import { defineConfig } from "vite";
-import { resolve, relative } from "path";
-import { readdirSync, existsSync } from "fs";
+import { resolve, relative, join } from "path";
+import { readdirSync, statSync, existsSync } from "fs";
+import { copy } from "vite-plugin-copy";
 
 export default defineConfig({
-  // Configuration de base
   root: ".",
   base: "/",
 
-  // Dossier de build
   build: {
     outDir: "dist",
+    assetsDir: "assets",
+    sourcemap: false,
     emptyOutDir: false,
 
-    // Configuration du rollup
     rollupOptions: {
-      // Limiter les entrées HTML pour éviter de publier des copies "fantômes"
-      // (n'inclut que l'index principal et _dev.html par défaut, et les HTML
-      // trouvés directement à la racine). Ceci évite le crawl récursif qui
-      // générait trop d'entrées lors du build.
       input: (function collectHtmlInputs() {
         const inputs = {};
         const root = resolve(__dirname);
 
-        // Priorité : index & _dev
-        const indexPath = resolve(root, "index.html");
-        const devPath = resolve(root, "_dev.html");
+        // Fonction récursive pour scanner tous les dossiers
+        function scanDirectory(dir) {
+          try {
+            const entries = readdirSync(dir, { withFileTypes: true });
 
-        if (existsSync(indexPath)) inputs.main = indexPath;
-        if (existsSync(devPath)) inputs.dev = devPath;
+            for (const entry of entries) {
+              const fullPath = join(dir, entry.name);
 
-        // Inclure uniquement les fichiers HTML situés à la racine (non récursif)
-        try {
-          for (const entry of readdirSync(root, { withFileTypes: true })) {
-            if (entry.isFile() && entry.name.endsWith(".html")) {
-              const full = resolve(root, entry.name);
-              const rel = relative(root, full);
-              const key = rel.replace(/\.html$/i, "").replace(/[\\/]/g, "-");
-              // Déjà ajoutés (index/_dev) sont ignorés par la clé
-              if (!inputs[key]) inputs[key || "index"] = full;
+              if (entry.isDirectory()) {
+                // Scanner les sous-dossiers (sauf node_modules, dist, .git)
+                if (
+                  !["node_modules", "dist", ".git", "scripts"].includes(
+                    entry.name,
+                  )
+                ) {
+                  scanDirectory(fullPath);
+                }
+              } else if (entry.name.endsWith(".html")) {
+                // Ajouter le fichier HTML
+                const relativePath = relative(root, fullPath);
+                const key = relativePath
+                  .replace(/\.html$/i, "")
+                  .replace(/[\\/]/g, "-")
+                  .replace(/^src-/, ""); // Enlever le préfixe "src-"
+
+                inputs[key || "index"] = fullPath;
+              }
             }
+          } catch (e) {
+            console.error(`Erreur scan ${dir}:`, e.message);
           }
-        } catch (e) {
-          // ignore read errors
         }
 
+        // Scanner depuis la racine
+        scanDirectory(root);
+
+        console.log("📄 Fichiers HTML détectés:", Object.keys(inputs).length);
         return inputs;
       })(),
     },
 
-    // Copier les assets
     copyPublicDir: true,
   },
 
-  plugins: [],
+  plugins: [
+    copy([
+      { src: "src/content", dest: "dist/src" },
+    ]),
+  ],
 
-  // Configuration du serveur de dev
   server: {
     port: 3001,
-    open: true,
+    // Ouvrir la page _dev.html automatiquement en local
+    open: "/_dev.html",
   },
 
-  // Configuration du serveur de preview
   preview: {
     port: 4173,
   },
 
-  // Résolution des modules
   resolve: {
     alias: {
       "@": resolve(__dirname, "src"),
@@ -75,6 +87,5 @@ export default defineConfig({
     },
   },
 
-  // Public directory
   publicDir: "public",
 });

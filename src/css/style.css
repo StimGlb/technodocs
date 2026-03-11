@@ -6,26 +6,26 @@
 /* ---------- Variables CSS ---------- */
 :root {
   /* Couleurs principales - Palette vive et moderne */
-  --color-primary: #6366f1; /* Indigo */
-  --color-primary-dark: #4f46e5;
-  --color-primary-light: #a5b4fc;
+  --color-primary: #818cf8; /* Indigo (lighter for dark mode) */
+  --color-primary-dark: #6366f1;
+  --color-primary-light: #c7d2fe;
 
-  --color-secondary: #06b6d4; /* Cyan */
-  --color-secondary-dark: #0891b2;
+  --color-secondary: #22d3ee; /* Cyan (lighter) */
+  --color-secondary-dark: #06b6d4;
 
-  --color-accent: #f59e0b; /* Amber */
-  --color-success: #10b981; /* Emerald */
-  --color-error: #ef4444; /* Red */
+  --color-accent: #fbbf24; /* Amber (lighter) */
+  --color-success: #34d399; /* Emerald (lighter) */
+  --color-error: #f87171; /* Red (lighter) */
 
-  /* Neutres */
-  --color-white: #ffffff;
-  --color-gray-50: #f9fafb;
-  --color-gray-100: #f3f4f6;
-  --color-gray-200: #e5e7eb;
-  --color-gray-300: #d1d5db;
-  --color-gray-500: #6b7280;
-  --color-gray-700: #374151;
-  --color-gray-900: #111827;
+  /* Neutres - Dark mode */
+  --color-white: #1f2937;
+  --color-gray-50: #111827;
+  --color-gray-100: #1f2937;
+  --color-gray-200: #2d3748;
+  --color-gray-300: #4b5563;
+  --color-gray-500: #9ca3af;
+  --color-gray-700: #d1d5db;
+  --color-gray-900: #f3f4f6;
 
   /* Typographie */
   --font-main: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
@@ -89,7 +89,7 @@ html {
 body {
   font-family: var(--font-main);
   font-size: var(--text-base);
-  line-height: 1.6;
+  line-height: 1.2;
   color: var(--color-gray-700);
   background-color: var(--color-white);
   -webkit-font-smoothing: antialiased;
@@ -271,6 +271,14 @@ ol {
 
 /* ---------- Main Content ---------- */
 main {
+  /* Default: smaller top gap so pages without a visible header don't have excessive space */
+  margin-top: calc(var(--header-height) / 2);
+}
+
+/* If a header element exists in the DOM, increase the top margin to compensate for the fixed header.
+   Use :has() when available, with body.has-header as a fallback for older browsers. */
+body:has(.header) main,
+body.has-header main {
   margin-top: var(--header-height);
 }
 
@@ -972,58 +980,124 @@ main {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--space-4);
-}
+  .correction-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: var(--space-8);
+    border-radius: var(--radius-xl);
+    color: var(--color-white);
+    text-align: center;
+    transition:
+      transform var(--transition-base),
+      box-shadow var(--transition-base),
+      border-color var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+    min-height: 220px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    box-shadow: var(--shadow-md);
+  }
 
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
+  .correction-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      transparent 0%,
+      rgba(0, 0, 0, 0.08) 100%
+    );
+    pointer-events: none;
+  }
 
-.form-group--full {
-  grid-column: 1 / -1;
-}
+  .correction-card::after {
+    /* subtle decorative glow */
+    content: "";
+    position: absolute;
+    width: 140px;
+    height: 140px;
+    right: -30px;
+    bottom: -30px;
+    background: radial-gradient(
+      circle at 30% 30%,
+      rgba(255, 255, 255, 0.12),
+      transparent 40%
+    );
+    filter: blur(8px);
+    pointer-events: none;
+    opacity: 0.9;
+  }
 
-.form-group label {
-  font-weight: 500;
-  font-size: var(--text-sm);
-  color: var(--color-gray-700);
-}
+  .correction-card--fiches {
+    background: linear-gradient(135deg, #8b5cf6 0%, #a78bfa 100%);
+  }
 
-.form-group input,
-.form-group select,
-.form-group textarea {
-  padding: var(--space-3) var(--space-4);
-  border: 2px solid var(--color-gray-200);
-  border-radius: var(--radius-md);
-  font: inherit;
-  font-size: var(--text-base);
-  transition: var(--transition-fast);
-  background: var(--color-white);
-}
+  .correction-card--quiz {
+    background: linear-gradient(135deg, #ec4899 0%, #f472b6 100%);
+  }
 
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus {
-  outline: none;
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px var(--color-primary-light);
-}
+  .correction-card--eval {
+    background: linear-gradient(135deg, #14b8a6 0%, #5eead4 100%);
+  }
 
-.form-group textarea {
-  resize: vertical;
-  min-height: 100px;
-}
+  .correction-card:hover,
+  .correction-card:focus-within {
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: var(--shadow-xl);
+    border-color: rgba(255, 255, 255, 0.12);
+  }
 
-.contact-form .btn {
-  grid-column: 1 / -1;
-  margin-top: var(--space-4);
-}
+  .correction-card:focus-within {
+    outline: 3px solid rgba(255, 255, 255, 0.06);
+    outline-offset: 4px;
+  }
 
-.form-feedback {
-  grid-column: 1 / -1;
-  padding: var(--space-4);
-  border-radius: var(--radius-md);
+  .correction-card__icon {
+    font-size: 3rem;
+    margin-bottom: var(--space-4);
+    position: relative;
+    z-index: 2;
+  }
+
+  .correction-card__title {
+    font-family: var(--font-display);
+    font-size: var(--text-xl);
+    font-weight: 700;
+    margin-bottom: var(--space-2);
+    position: relative;
+    z-index: 2;
+    color: var(--color-white);
+  }
+
+  .correction-card__text {
+    font-size: var(--text-sm);
+    opacity: 0.95;
+    position: relative;
+    z-index: 2;
+    color: rgba(255, 255, 255, 0.95);
+  }
+
+  .correction-card__link {
+    margin-top: var(--space-4);
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--color-white);
+    padding: 0.5rem 0.9rem;
+    border-radius: var(--radius-md);
+    font-weight: 600;
+    transition:
+      background var(--transition-fast),
+      transform var(--transition-fast);
+    z-index: 2;
+  }
+
+  .correction-card__link:hover,
+  .correction-card__link:focus {
+    background: rgba(255, 255, 255, 0.14);
+    transform: translateY(-2px);
+  }
   text-align: center;
   font-weight: 500;
 }
@@ -1040,8 +1114,8 @@ main {
 
 /* ---------- Footer ---------- */
 .footer {
-  background: var(--color-gray-900);
-  color: var(--color-gray-300);
+  background: var(--color-gray-50);
+  color: var(--color-gray-700);
   padding: var(--space-6) var(--space-4);
 }
 
@@ -1059,7 +1133,7 @@ main {
   font-family: var(--font-display);
   font-size: var(--text-lg);
   font-weight: 600;
-  color: var(--color-white);
+  color: var(--color-gray-700);
   margin-bottom: var(--space-2);
 }
 
@@ -1080,7 +1154,7 @@ main {
 }
 
 .footer__links a:hover {
-  color: var(--color-white);
+  color: var(--color-primary);
 }
 
 /* ---------- Utilities ---------- */

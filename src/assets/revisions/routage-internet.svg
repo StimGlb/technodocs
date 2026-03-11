@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 940 300" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" xmlns:serif="http://www.serif.com/" style="fill-rule:evenodd;clip-rule:evenodd;">
+    <path d="M940,12L940,288C940,294.623 934.623,300 928,300L12,300C5.377,300 0,294.623 0,288L0,12C0,5.377 5.377,0 12,0L928,0C934.623,0 940,5.377 940,12Z" style="fill:url(#_Linear1);"/>
+    <g transform="matrix(1,0,0,1,470,26)">
+        <text x="-154.021px" y="0px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:14px;fill:rgb(226,232,240);">Circulation des données sur Internet (routage)</text>
+    </g>
+    <path d="M140,118L140,152C140,156.415 136.415,160 132,160L28,160C23.585,160 20,156.415 20,152L20,118C20,113.585 23.585,110 28,110L132,110C136.415,110 140,113.585 140,118Z" style="fill:url(#_Linear2);stroke:rgb(71,85,105);stroke-width:1.2px;"/>
+    <g transform="matrix(1,0,0,1,80,132)">
+        <text x="-39.948px" y="0px" style="font-family:'SegoeUIEmoji', 'Segoe UI Emoji', sans-serif;font-size:11px;fill:rgb(147,197,253);">💻</text>
+        <text x="-21.788px" y="0px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:11px;fill:rgb(147,197,253);">PC (source)</text>
+    </g>
+    <g transform="matrix(1,0,0,1,80,148)">
+        <text x="-26.275px" y="0px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:9px;fill:rgb(251,191,36);">192.168.1.10</text>
+    </g>
+    <path d="M145,135L175,135" style="fill:none;fill-rule:nonzero;stroke:rgb(100,116,139);stroke-width:2px;"/>
+    <path d="M310,113L310,157C310,161.415 306.415,165 302,165L188,165C183.585,165 180,161.415 180,157L180,113C180,108.585 183.585,105 188,105L302,105C306.415,105 310,108.585 310,113Z" style="fill:url(#_Linear3);"/>
+    <g transform="matrix(1,0,0,1,245,130)">
+        <text x="-28.775px" y="0px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:12px;fill:white;">Routeur <tspan x="20.109px " y="0px ">A</tspan></text>
+    </g>
+    <g transform="matrix(1,0,0,1,245,148)">
+        <text x="-37.251px" y="0px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:10px;fill:rgb(196,181,253);">T<tspan x="-32.251px -26.689px " y="0px 0px ">ab</tspan>le de routage</text>
+    </g>
+    <path d="M600,66L600,244C600,252.831 592.831,260 584,260L356,260C347.169,260 340,252.831 340,244L340,66C340,57.169 347.169,50 356,50L584,50C592.831,50 600,57.169 600,66Z" style="fill:none;stroke:rgb(248,113,113);stroke-width:1.5px;stroke-dasharray:8,4;"/>
+    <g transform="matrix(1,0,0,1,470,76)">
+        <text x="-32.5px" y="0px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:13px;fill:rgb(248,113,113);">INTERNET</text>
+    </g>
+    <circle cx="400" cy="130" r="24" style="fill:rgb(30,41,59);stroke:rgb(248,113,113);stroke-width:1.5px;"/>
+    <g transform="matrix(1,0,0,1,400,135)">
+        <text x="-7.031px" y="0px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:11px;fill:rgb(251,146,60);">R1</text>
+    </g>
+    <circle cx="470" cy="210" r="24" style="fill:rgb(30,41,59);stroke:rgb(248,113,113);stroke-width:1.5px;"/>
+    <g transform="matrix(1,0,0,1,470,215)">
+        <text x="-7.031px" y="0px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:11px;fill:rgb(251,146,60);">R2</text>
+    </g>
+    <circle cx="540" cy="130" r="24" style="fill:rgb(30,41,59);stroke:rgb(248,113,113);stroke-width:1.5px;"/>
+    <g transform="matrix(1,0,0,1,540,135)">
+        <text x="-7.031px" y="0px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:11px;fill:rgb(251,146,60);">R3</text>
+    </g>
+    <path d="M424,130L516,130" style="fill:none;fill-rule:nonzero;stroke:rgb(71,85,105);stroke-width:1.5px;"/>
+    <path d="M412,150L458,192" style="fill:none;fill-rule:nonzero;stroke:rgb(71,85,105);stroke-width:1.5px;"/>
+    <path d="M484,192L528,150" style="fill:none;fill-rule:nonzero;stroke:rgb(71,85,105);stroke-width:1.5px;"/>
+    <path d="M315,130L376,130" style="fill:none;fill-rule:nonzero;stroke:rgb(251,191,36);stroke-width:3px;stroke-dasharray:8,4;"/>
+    <path d="M424,130L516,130" style="fill:none;fill-rule:nonzero;stroke:rgb(251,191,36);stroke-width:3px;stroke-dasharray:8,4;"/>
+    <path d="M564,130L625,130" style="fill:none;fill-rule:nonzero;stroke:rgb(251,191,36);stroke-width:3px;stroke-dasharray:8,4;"/>
+    <path d="M760,113L760,157C760,161.415 756.415,165 752,165L638,165C633.585,165 630,161.415 630,157L630,113C630,108.585 633.585,105 638,105L752,105C756.415,105 760,108.585 760,113Z" style="fill:url(#_Linear4);"/>
+    <g transform="matrix(1,0,0,1,695,130)">
+        <text x="-28.998px" y="0px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:12px;fill:white;">Routeur B</text>
+    </g>
+    <g transform="matrix(1,0,0,1,695,148)">
+        <text x="-37.251px" y="0px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:10px;fill:rgb(110,231,183);">T<tspan x="-32.251px -26.689px " y="0px 0px ">ab</tspan>le de routage</text>
+    </g>
+    <path d="M765,135L795,135" style="fill:none;fill-rule:nonzero;stroke:rgb(100,116,139);stroke-width:2px;"/>
+    <path d="M925,118L925,152C925,156.415 921.415,160 917,160L808,160C803.585,160 800,156.415 800,152L800,118C800,113.585 803.585,110 808,110L917,110C921.415,110 925,113.585 925,118Z" style="fill:url(#_Linear5);stroke:rgb(71,85,105);stroke-width:1.2px;"/>
+    <g transform="matrix(1,0,0,1,862,132)">
+        <text x="-47.593px" y="0px" style="font-family:'SegoeUIEmoji', 'Segoe UI Emoji', sans-serif;font-size:11px;fill:rgb(147,197,253);">🖥</text>
+        <text x="-29.434px" y="0px" style="font-family:'Arial-BoldMT', 'Arial', sans-serif;font-weight:700;font-size:11px;fill:rgb(147,197,253);">Serveur (dest.)</text>
+    </g>
+    <g transform="matrix(1,0,0,1,862,148)">
+        <text x="-21.27px" y="0px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:9px;fill:rgb(251,191,36);">82.45.12.3</text>
+    </g>
+    <g transform="matrix(1,0,0,1,133.771973,0)">
+        <path d="M40,282L75,282" style="fill:none;fill-rule:nonzero;stroke:rgb(251,191,36);stroke-width:3px;stroke-dasharray:8,4;"/>
+        <g transform="matrix(1,0,0,1,85,286)">
+            <text x="0px" y="0px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:10px;fill:rgb(251,191,36);">Chemin emprunté par les paquets</text>
+        </g>
+        <circle cx="280" cy="282" r="8" style="fill:rgb(30,41,59);stroke:rgb(248,113,113);stroke-width:1.5px;"/>
+        <g transform="matrix(1,0,0,1,296,286)">
+            <text x="0px" y="0px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:10px;fill:rgb(251,146,60);">Routeurs intermédiaires</text>
+        </g>
+        <path d="M470,282L505,282" style="fill:none;fill-rule:nonzero;stroke:rgb(71,85,105);stroke-width:1.5px;"/>
+        <g transform="matrix(1,0,0,1,515,286)">
+            <text x="0px" y="0px" style="font-family:'ArialMT', 'Arial', sans-serif;font-size:10px;fill:rgb(148,163,184);">Autres liaisons disponibles</text>
+        </g>
+    </g>
+    <defs>
+        <linearGradient id="_Linear1" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,300,-300,0,0,0)"><stop offset="0" style="stop-color:rgb(30,41,59);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(15,23,42);stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear2" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,50,-50,0,20,110)"><stop offset="0" style="stop-color:rgb(51,65,85);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(30,41,59);stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear3" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,60,-60,0,180,105)"><stop offset="0" style="stop-color:rgb(124,58,237);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(91,33,182);stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear4" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,60,-60,0,630,105)"><stop offset="0" style="stop-color:rgb(5,150,105);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(4,120,87);stop-opacity:1"/></linearGradient>
+        <linearGradient id="_Linear5" x1="0" y1="0" x2="1" y2="0" gradientUnits="userSpaceOnUse" gradientTransform="matrix(0,50,-50,0,800,110)"><stop offset="0" style="stop-color:rgb(51,65,85);stop-opacity:1"/><stop offset="1" style="stop-color:rgb(30,41,59);stop-opacity:1"/></linearGradient>
+    </defs>
+</svg>

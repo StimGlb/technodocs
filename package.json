@@ -7,14 +7,21 @@
     "dev": "vite",
     "dev:netlify": "netlify dev",
     "build": "vite build",
+    "build:check": "npm run build && ls -la dist/src/content",
     "preview": "vite preview",
-    "deploy:preview": "netlify deploy",
-    "deploy:prod": "netlify deploy --prod",
-    "deploy:dev": "netlify deploy --dir=. --message='Dev preview'",
+    "deploy:preview": "git push origin HEAD && echo '⏳ Netlify preview en cours...'",
+    "deploy:prod": "git push origin main && echo '⏳ Netlify prod en cours...'",
+    "deploy:manual:preview": "npm run build && netlify deploy --dir=dist",
+    "deploy:manual:prod": "npm run build && netlify deploy --prod --dir=dist",
     "security-check": "node security-check.js",
     "security-check:prod": "node security-check.js https://technodocs.netlify.app",
     "commit": "bash ./scripts/autocommit.sh",
-    "export:firestore": "node scripts/export-firestore.js"
+    "dev:sync": "node scripts/sync-dev-pages.js",
+    "dev:sync:dry": "node scripts/sync-dev-pages.js --dry-run",
+    "hooks:install": "node scripts/setup-hooks.js",
+    "export:firestore": "node scripts/export-firestore.js",
+    "clean:previews": "node scripts/netlify-clean.js",
+    "clean:previews:dry": "node scripts/netlify-clean.js --dry-run"
   },
   "keywords": [
     "flashcards",
@@ -25,11 +32,16 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "vite": "^7.3.1"
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.0.3",
+    "eslint-plugin-vue": "^10.8.0",
+    "globals": "^17.4.0",
+    "vite": "^7.3.1",
+    "vite-plugin-copy": "^0.1.6"
   },
   "dependencies": {
-    "@netlify/plugin-lighthouse": "^6.0.4",
+    "@netlify/plugin-lighthouse": "^6.0.1",
     "firebase": "^12.8.0",
-    "firebase-admin": "^13.6.1"
+    "firebase-admin": "^10.3.0"
   }
 }

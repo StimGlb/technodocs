@@ -1,0 +1,334 @@
+/* ========================================
+   TECHNO DOCS - Styles Fiches d'activité
+   Bandeau métadonnées + zones de réponse
+   ======================================== */
+
+/* ── Bandeau métadonnées (visible écran et print) ── */
+.fiche-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-gray-50);
+  border: 1px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  font-size: var(--text-sm);
+  margin: var(--space-4) auto;
+  max-width: var(--container-max);
+}
+
+.fiche-meta__item {
+  flex: 1 1 160px;
+  color: var(--color-gray-700);
+}
+
+.fiche-meta__item strong {
+  color: var(--color-gray-900);
+  font-weight: 600;
+}
+
+/* ══════════════════════════════════════════
+   STRUCTURE FICHE D'ACTIVITÉ — Styles écran
+   ══════════════════════════════════════════ */
+
+/* ── Blocs print-only : masqués à l'écran ── */
+.print-header {
+  display: none;
+}
+
+/* ── Premier élément du Markdown : supprimer la marge haute superflue ── */
+.md-content > *:first-child {
+  margin-top: 0;
+}
+
+/* ── Bandeau OST + Problématique ── */
+.fiche-ost {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 2px solid var(--color-gray-200, #ddd);
+  border-radius: 8px;
+  background: var(--color-gray-50, #f8f9fa);
+}
+
+.fiche-ost__item {
+  flex: 1;
+}
+
+.fiche-ost__label {
+  display: block;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.25rem;
+  color: var(--color-gray-500, #666);
+}
+
+.fiche-ost__value {
+  font-size: 1rem;
+}
+
+/* ── Éviter la double bordure visuelle entre OST et Travail demandé ── */
+/* Les deux blocs se collent et partagent une seule ligne de séparation */
+.fiche-ost {
+  margin-bottom: 0;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.fiche-ost + .fiche-travail {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+}
+
+/* ── Bloc Travail demandé ── */
+.fiche-travail {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1.5rem;
+  background: var(--bg-subtle, rgba(255, 255, 255, 0.06));
+  border-radius: 6px;
+  font-weight: 500;
+  text-align: center;
+}
+
+/* ── Bloc d'activité (cadre) ── */
+.fiche-activite {
+  border: 2px solid var(--color-gray-200, #ddd);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.fiche-activite__titre {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+/* ── Layout deux colonnes : consignes + illustration ── */
+.fiche-deux-colonnes {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+}
+
+.fiche-deux-colonnes__gauche {
+  flex: 3;
+}
+
+.fiche-deux-colonnes__droite {
+  flex: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Zone de réponse élève (espace vide pour écriture) ── */
+.zone-reponse {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  min-height: 60px;
+  margin: 0.75rem 0;
+  padding: 0.5rem;
+  background: #fafafa;
+}
+
+.zone-reponse--medium {
+  min-height: 100px;
+}
+
+.zone-reponse--large {
+  min-height: 150px;
+}
+
+.zone-reponse--compact {
+  min-height: 40px;
+}
+
+/* ── Zone avec lignes d'écriture ── */
+.zone-reponse--lignes {
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 1.4rem,
+    #e0e0e0 1.4rem,
+    #e0e0e0 calc(1.4rem + 1px)
+  );
+  background-position: 0 0.5rem;
+}
+
+/* ── Zone illustration / schéma ── */
+.zone-illustration {
+  border: 1px dashed #bbb;
+  border-radius: 4px;
+  min-height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #999;
+  font-style: italic;
+  font-size: 0.85rem;
+}
+
+/* ── Bloc conclusion ── */
+.fiche-conclusion {
+  border: 2px solid var(--color-gray-200, #ddd);
+  border-radius: 8px;
+  padding: 1.25rem;
+  margin-bottom: 1.5rem;
+}
+
+.fiche-conclusion__titre {
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+/* ── Indicateur "travail sur ordi" ── */
+.fiche-ordi {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  font-size: 0.8rem;
+  background: #e3f2fd;
+  border-radius: 4px;
+  color: #1565c0;
+  font-weight: 500;
+}
+
+.fiche-ordi::before {
+  content: "💻";
+}
+
+/* ── Encadré prise de notes (fin de fiche) ── */
+.fiche-notes {
+  border: 1px dashed var(--border-color, #ccc);
+  border-radius: 6px;
+  padding: 0.75rem;
+  margin-top: 1rem;
+}
+
+.fiche-notes__titre {
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: var(--text-muted, #888);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+/* ── Zone d'image fiche (4:3 ou 16:9) ── */
+.fiche-img {
+  margin: 1rem 0;
+  border: 1px solid var(--color-gray-300, #4b5563);
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.04);
+  min-height: 40px;
+}
+
+/* Motif hachuré pendant le chargement */
+.fiche-img:not(.is-loaded):not(.is-error) {
+  background: repeating-linear-gradient(
+    -45deg,
+    rgba(255, 255, 255, 0.02) 0px,
+    rgba(255, 255, 255, 0.02) 10px,
+    rgba(255, 255, 255, 0.05) 10px,
+    rgba(255, 255, 255, 0.05) 20px
+  );
+}
+
+.fiche-img img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* L'image devient visible quand le conteneur reçoit .is-loaded */
+.fiche-img.is-loaded img {
+  opacity: 1;
+}
+
+.fiche-img--4-3 img {
+  aspect-ratio: 4 / 3;
+}
+
+.fiche-img--16-9 img {
+  aspect-ratio: 16 / 9;
+}
+
+.fiche-img figcaption {
+  font-size: 0.8rem;
+  color: var(--color-gray-500, #888);
+  text-align: center;
+  padding: 0.4rem 0.75rem;
+  border-top: 1px solid var(--color-gray-300, #4b5563);
+  font-style: italic;
+}
+
+/* Caption used when replacing <figure>/<figcaption> with a <div> in Markdown */
+.fiche-img__caption {
+  font-size: 0.8rem;
+  color: var(--color-gray-500, #888);
+  text-align: center;
+  padding: 0.4rem 0.75rem;
+  border-top: 1px solid var(--color-gray-300, #4b5563);
+  font-style: italic;
+}
+
+/* Erreur de chargement : afficher un placeholder visible */
+.fiche-img.is-error {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  color: var(--color-gray-500, #888);
+  font-size: 0.85rem;
+  font-style: italic;
+  border-style: dashed;
+}
+
+.fiche-img.is-error::after {
+  content: "⚠ Image non trouvée";
+}
+
+.fiche-img.is-error img {
+  display: none;
+}
+
+@media print {
+  .fiche-img img {
+    opacity: 1 !important;
+  }
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+  .fiche-meta {
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .fiche-meta__item {
+    flex: 1 1 auto;
+  }
+}
+
+/* ── Responsive : colonnes → empilé sur tablette/mobile ── */
+@media (max-width: 768px) {
+  .fiche-deux-colonnes {
+    flex-direction: column;
+  }
+
+  .fiche-deux-colonnes__droite {
+    order: -1; /* illustration au-dessus des consignes sur mobile */
+    margin-bottom: 0.75rem;
+  }
+}

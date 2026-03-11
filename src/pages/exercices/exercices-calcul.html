@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculs en Technologie | TechnoDocs</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="stylesheet" href="/src/css/wizard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <main class="wizard">
+        <!-- En-tête du formulaire -->
+        <div class="wizard__header">
+            <h1 class="wizard__title">📊 Calculs en Technologie</h1>
+            <p class="wizard__subtitle">Travail supplémentaire noté - 5 exercices de calcul</p>
+            
+            <!-- Barre de progression -->
+            <div class="wizard__progress">
+                <div class="wizard__progress-bar">
+                    <div id="progressFill" class="wizard__progress-fill" style="width: 0%"></div>
+                </div>
+                <div class="wizard__progress-label">
+                    <span id="progressPercentage">0%</span>
+                    <span>complété</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ========== INFO ÉLÈVE ========== -->
+        <div class="wizard__student-info">
+            <div class="wizard__student-row">
+            <div class="wizard__student-field wizard__student-field--name">
+                <label for="studentName">Prénom et Nom</label>
+                <input
+                type="text"
+                id="studentName"
+                data-field="studentName"
+                placeholder=""
+                spellcheck="true"
+                lang="fr"
+                />
+            </div>
+            <div class="wizard__student-field wizard__student-field--class">
+                <label for="studentClass">Classe</label>
+                <select id="studentClass" data-field="studentClass">
+                <option value="">— Sélectionner —</option>
+                <optgroup label="5ème">
+                    <option value="505">5ème 5</option>
+                    <option value="506">5ème 6</option>
+                    <option value="507">5ème 7</option>
+                </optgroup>
+                <optgroup label="4ème">
+                    <option value="401">4ème 1</option>
+                    <option value="402">4ème 2</option>
+                    <option value="403">4ème 3</option>
+                    <option value="404">4ème 4</option>
+                    <option value="405">4ème 5</option>
+                </optgroup>
+                <optgroup label="3ème">
+                    <option value="302">3ème 2</option>
+                    <option value="303">3ème 3</option>
+                    <option value="304">3ème 4</option>
+                    <option value="305">3ème 5</option>
+                    <option value="306">3ème 6</option>
+                    <option value="307">3ème 7</option>
+                    <option value="308">3ème 8</option>
+                </optgroup>
+                </select>
+            </div>
+            <div class="wizard__student-field wizard__student-field--date">
+                <label>Date</label>
+                <span
+                class="wizard__date-display"
+                id="projectDate"
+                data-field="projectDate"
+                ></span>
+            </div>
+            </div>
+        </div>
+
+        <!-- Navigation par phases -->
+        <div class="wizard__nav">
+            <button class="wizard__nav-btn active" data-phase="1">
+                <span class="wizard__nav-number">1</span>
+                <span class="wizard__nav-text">Téléchargement</span>
+            </button>
+            <button class="wizard__nav-btn" data-phase="2">
+                <span class="wizard__nav-number">2</span>
+                <span class="wizard__nav-text">Électricité</span>
+            </button>
+            <button class="wizard__nav-btn" data-phase="3">
+                <span class="wizard__nav-number">3</span>
+                <span class="wizard__nav-text">Résolution</span>
+            </button>
+            <button class="wizard__nav-btn" data-phase="4">
+                <span class="wizard__nav-number">4</span>
+                <span class="wizard__nav-text">Impression 3D</span>
+            </button>
+            <button class="wizard__nav-btn" data-phase="5">
+                <span class="wizard__nav-number">5</span>
+                <span class="wizard__nav-text">Stockage</span>
+            </button>
+        </div>
+
+        <!-- Phase 1 : Vitesse de téléchargement -->
+        <div class="wizard__phase active" data-phase="1">
+            <div class="wizard__phase-header">
+                <h2 class="wizard__phase-title">📥 Exercice 1 : Vitesse de téléchargement</h2>
+                <p class="wizard__phase-description">
+                    Un élève télécharge un fichier de <strong>1,5 Go</strong> avec une connexion de <strong>20 Mo/s</strong>.
+                </p>
+            </div>
+
+            <div class="wizard__questions">
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">1.</span>
+                        Convertis 1,5 Go en Mo
+                    </label>
+                    <div class="wizard__input-group">
+                        <input 
+                            type="number" 
+                            data-field="ex1_q1" 
+                            class="wizard__input"
+                            placeholder="Résultat en Mo"
+                            step="0.01"
+                        >
+                        <span class="wizard__unit">Mo</span>
+                    </div>
+                </div>
+
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">2.</span>
+                        Calcule le temps nécessaire pour télécharger ce fichier (en secondes)
+                    </label>
+                    <div class="wizard__input-group">
+                        <input 
+                            type="number" 
+                            data-field="ex1_q2" 
+                            class="wizard__input"
+                            placeholder="Temps en secondes"
+                            step="0.1"
+                        >
+                        <span class="wizard__unit">s</span>
+                    </div>
+                </div>
+
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">3.</span>
+                        Exprime ce temps en minutes et secondes
+                    </label>
+                    <textarea 
+                        data-field="ex1_q3" 
+                        class="wizard__textarea"
+                        placeholder=""
+                        rows="2"
+                    ></textarea>
+                </div>
+            </div>
+
+            <div class="wizard__actions">
+                <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+                    Exercice suivant →
+                </button>
+            </div>
+        </div>
+
+        <!-- Phase 2 : Consommation électrique -->
+        <div class="wizard__phase" data-phase="2">
+            <div class="wizard__phase-header">
+                <h2 class="wizard__phase-title">⚡ Exercice 2 : Consommation électrique</h2>
+                <p class="wizard__phase-description">
+                    Un ordinateur consomme <strong>150 W</strong>. Il est utilisé <strong>3 h/jour</strong> pendant <strong>5 jours</strong>.
+                </p>
+            </div>
+
+            <div class="wizard__questions">
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">1.</span>
+                        Calcule l'énergie consommée sur cette période en Wh
+                    </label>
+                    <div class="wizard__input-group">
+                        <input 
+                            type="number" 
+                            data-field="ex2_q1" 
+                            class="wizard__input"
+                            placeholder="Résultat en Wh"
+                            step="0.1"
+                        >
+                        <span class="wizard__unit">Wh</span>
+                    </div>
+                </div>
+
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">2.</span>
+                        Convertis cette énergie en kWh
+                    </label>
+                    <div class="wizard__input-group">
+                        <input 
+                            type="number" 
+                            data-field="ex2_q2" 
+                            class="wizard__input"
+                            placeholder="Résultat en kWh"
+                            step="0.001"
+                        >
+                        <span class="wizard__unit">kWh</span>
+                    </div>
+                </div>
+
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">3.</span>
+                        Si l'électricité coûte 0,15 €/kWh, quel est le coût de cette consommation ? (arrondit à 2 décimales)
+                    </label>
+                    <div class="wizard__input-group">
+                        <input 
+                            type="number" 
+                            data-field="ex2_q3" 
+                            class="wizard__input"
+                            placeholder="Coût en euros"
+                            step="0.01"
+                        >
+                        <span class="wizard__unit">€</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard__actions">
+                <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
+                    ← Précédent
+                </button>
+                <button class="btn btn--primary" onclick="wizardGoToPhase(3)">
+                    Exercice suivant →
+                </button>
+            </div>
+        </div>
+
+        <!-- Phase 3 : Résolution d'écran -->
+        <div class="wizard__phase" data-phase="3">
+            <div class="wizard__phase-header">
+                <h2 class="wizard__phase-title">🖥️ Exercice 3 : Résolution d'écran</h2>
+                <p class="wizard__phase-description">
+                    Un écran d'ordinateur a une résolution de <strong>1920 × 1080 pixels</strong>.
+                </p>
+            </div>
+
+            <div class="wizard__questions">
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">1.</span>
+                        Calcule le nombre total de pixels de cet écran
+                    </label>
+                    <div class="wizard__input-group">
+                        <input 
+                            type="number" 
+                            data-field="ex3_q1" 
+                            class="wizard__input"
+                            placeholder="Nombre de pixels"
+                        >
+                        <span class="wizard__unit">pixels</span>
+                    </div>
+                </div>
+
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">2.</span>
+                        Si chaque pixel utilise 3 octets de mémoire, quelle quantité de mémoire (en Mo) est nécessaire pour une image plein écran ?
+                    </label>
+                    <div class="wizard__input-group">
+                        <input 
+                            type="number" 
+                            data-field="ex3_q2" 
+                            class="wizard__input"
+                            placeholder="Mémoire nécessaire"
+                            step="0.01"
+                        >
+                        <span class="wizard__unit">Mo</span>
+                    </div>
+                </div>
+
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">3.</span>
+                        Compare avec un smartphone de 1280 × 720 pixels. Quel est le rapport entre le nombre de pixels des deux écrans ?
+                    </label>
+                    <textarea 
+                        data-field="ex3_q3" 
+                        class="wizard__textarea"
+                        placeholder="Ex: L'écran d'ordinateur a X fois plus de pixels que le smartphone"
+                        rows="3"
+                    ></textarea>
+                </div>
+            </div>
+
+            <div class="wizard__actions">
+                <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
+                    ← Précédent
+                </button>
+                <button class="btn btn--primary" onclick="wizardGoToPhase(4)">
+                    Exercice suivant →
+                </button>
+            </div>
+        </div>
+
+        <!-- Phase 4 : Impression 3D -->
+        <div class="wizard__phase" data-phase="4">
+            <div class="wizard__phase-header">
+                <h2 class="wizard__phase-title">🖨️ Exercice 4 : Impression 3D</h2>
+                <p class="wizard__phase-description">
+                    Une imprimante 3D utilise un filament à <strong>25 €/kg</strong>. Elle consomme <strong>50 g/h</strong>.
+                </p>
+            </div>
+
+            <div class="wizard__questions">
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">1.</span>
+                        Quel est le coût du filament pour 3 heures d'impression ?
+                    </label>
+                    <div class="wizard__input-group">
+                        <input 
+                            type="number" 
+                            data-field="ex4_q1" 
+                            class="wizard__input"
+                            placeholder="Coût en euros"
+                            step="0.01"
+                        >
+                        <span class="wizard__unit">€</span>
+                    </div>
+                </div>
+
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">2.</span>
+                        Si l'objet a un volume de 125 cm³ et la densité du plastique est de 1,2 g/cm³, calcule la masse de plastique nécessaire
+                    </label>
+                    <div class="wizard__input-group">
+                        <input 
+                            type="number" 
+                            data-field="ex4_q2" 
+                            class="wizard__input"
+                            placeholder="Masse en grammes"
+                            step="0.1"
+                        >
+                        <span class="wizard__unit">g</span>
+                    </div>
+                </div>
+
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">3.</span>
+                        Combien de temps faudra-t-il pour imprimer cet objet ?
+                    </label>
+                    <div class="wizard__input-group">
+                        <input 
+                            type="number" 
+                            data-field="ex4_q3" 
+                            class="wizard__input"
+                            placeholder="Temps en heures"
+                            step="0.1"
+                        >
+                        <span class="wizard__unit">h</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard__actions">
+                <button class="btn btn--secondary" onclick="wizardGoToPhase(3)">
+                    ← Précédent
+                </button>
+                <button class="btn btn--primary" onclick="wizardGoToPhase(5)">
+                    Exercice suivant →
+                </button>
+            </div>
+        </div>
+
+        <!-- Phase 5 : Stockage de photos -->
+        <div class="wizard__phase" data-phase="5">
+            <div class="wizard__phase-header">
+                <h2 class="wizard__phase-title">📸 Exercice 5 : Stockage de photos</h2>
+                <p class="wizard__phase-description">
+                    Un appareil photo prend des photos de <strong>12 mégapixels</strong>. Chaque photo fait <strong>4 Mo</strong>.
+                </p>
+            </div>
+
+            <div class="wizard__questions">
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">1.</span>
+                        Si la carte mémoire a une capacité de 32 Go, combien de photos peut-on y stocker ?
+                    </label>
+                    <div class="wizard__input-group">
+                        <input 
+                            type="number" 
+                            data-field="ex5_q1" 
+                            class="wizard__input"
+                            placeholder="Nombre de photos"
+                        >
+                        <span class="wizard__unit">photos</span>
+                    </div>
+                </div>
+
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">2.</span>
+                        Si on prend 50 photos/jour pendant 2 semaines de vacances, aura-t-on assez d'espace ?
+                    </label>
+                    <textarea 
+                        data-field="ex5_q2" 
+                        class="wizard__textarea"
+                        placeholder="Justifie ta réponse avec un calcul"
+                        rows="3"
+                    ></textarea>
+                </div>
+
+                <div class="wizard__question">
+                    <label class="wizard__label">
+                        <span class="wizard__question-number">3.</span>
+                        Quelle devrait être la capacité minimale de la carte pour stocker 1000 photos ?
+                    </label>
+                    <div class="wizard__input-group">
+                        <input 
+                            type="number" 
+                            data-field="ex5_q3" 
+                            class="wizard__input"
+                            placeholder="Capacité en Go"
+                            step="0.1"
+                        >
+                        <span class="wizard__unit">Go</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard__actions">
+                <button class="btn btn--secondary" onclick="wizardGoToPhase(4)">
+                    ← Précédent
+                </button>
+                <button class="btn btn--primary" onclick="wizardComplete()">
+                    ✅ Terminer et envoyer
+                </button>
+            </div>
+        </div>
+
+        <!-- Indicateur de sauvegarde -->
+        <div id="saveIndicator" class="wizard__save-indicator">
+            <span class="wizard__save-dot"></span>
+            <span class="wizard__save-text">Auto-save</span>
+        </div>
+
+        <!-- Boutons actions -->
+        <div class="wizard__footer-actions">
+            <button class="btn btn--secondary" onclick="wizardShowModal('resetModal')">
+                🔄 Réinitialiser
+            </button>
+            <button class="btn btn--secondary" onclick="wizardExportJSON()">
+                💾 Exporter
+            </button>
+            <label class="btn btn--secondary" style="cursor: pointer;">
+                📂 Importer
+                <input type="file" accept=".json" onchange="wizardImportJSON(event)" style="display: none;">
+            </label>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+     <!-- ========== MODALES ========== -->
+
+    <!-- Modal Complétion -->
+    <div class="wizard__modal-overlay" id="completionModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">🎉 Bravo !</h3>
+        <div class="wizard__modal-content">
+          <p>Ta présentation est prête !</p>
+          <p style="margin-top: 1rem">
+            Tes réponses ont été <strong>sauvegardées automatiquement</strong>.
+          </p>
+          <p
+            style="
+              margin-top: 0.75rem;
+              font-size: 0.875rem;
+              color: var(--color-gray-500);
+            "
+          >
+            💡 Entraîne-toi à l'oral devant un miroir ou un proche !
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('completionModal')"
+          >
+            Fermer
+          </button>
+          <button
+            class="btn btn--primary"
+            onclick="
+              wizardExportJSON();
+              wizardCloseModal('completionModal');
+            "
+          >
+            📤 Exporter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Reset -->
+    <div class="wizard__modal-overlay" id="resetModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
+        <div class="wizard__modal-content">
+          <p>
+            Une <strong>sauvegarde</strong> a été téléchargée automatiquement.
+          </p>
+          <p>
+            Voulez-vous <strong>recommencer</strong> avec un formulaire vide ?
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('resetModal')"
+          >
+            Annuler
+          </button>
+          <button
+            class="btn btn--primary"
+            style="background: var(--color-error)"
+            onclick="wizardReset()"
+          >
+            🗑️ Réinitialiser
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast de notification -->
+    <div id="wizardToast" class="wizard__toast">
+        <span class="wizard__toast-icon">ℹ️</span>
+        <span class="wizard__toast-message">Message</span>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="/src/js/main.js"></script>
+    <script type="module">
+        import { WizardFirebase } from '/src/js/wizard-firebase.js';
+
+        // Configuration du wizard
+        const wizardConfig = {
+            collectionName: 'exercices_technologie',
+            requiredFields: {
+                1: ['ex1_q1', 'ex1_q2', 'ex1_q3'],
+                2: ['ex2_q1', 'ex2_q2', 'ex2_q3'],
+                3: ['ex3_q1', 'ex3_q2', 'ex3_q3'],
+                4: ['ex4_q1', 'ex4_q2', 'ex4_q3'],
+                5: ['ex5_q1', 'ex5_q2', 'ex5_q3']
+            },
+            onComplete: (formData) => {
+                console.log('✅ Formulaire complété:', formData);
+            },
+            onSaveSuccess: (data) => {
+                console.log('💾 Sauvegarde réussie:', data);
+            },
+            onSaveError: (error) => {
+                console.error('❌ Erreur sauvegarde:', error);
+            }
+        };
+
+        // Initialiser le wizard
+        window.wizardInstance = new WizardFirebase(wizardConfig);
+    </script>
+</body>
+</html>

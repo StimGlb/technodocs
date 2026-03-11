@@ -7,6 +7,7 @@
     <title>Activités du jour | TechnoDocs</title>
 
     <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="stylesheet" href="/src/css/cours.css">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -16,32 +17,59 @@
     <div id="header-placeholder"></div>
 
     <main>
-        <!-- En-tête de la page -->
-        <section class="section section--alt">
-            <div class="section__header">
-                <h1 class="section__title">📋 Les Activités en cours de Technologie</h1>
-                <p class="section__description">Sélectionne une activité pour commencer.</p>
+        <!-- Hero -->
+        <section class="cours-hero">
+            <div class="cours-hero__shapes" aria-hidden="true">
+                <div class="cours-shape cours-shape--1"></div>
+                <div class="cours-shape cours-shape--2"></div>
+                <div class="cours-shape cours-shape--3"></div>
+            </div>
+            <div class="cours-hero__header">
+                <span class="cours-hero__badge">📋 Activités en ligne</span>
+                <h1 class="cours-hero__title">Les Devoirs en ligne de Technologie</h1>
+                <p class="cours-hero__subtitle">Sélectionne un devoir pour commencer.</p>
+                <div class="cours-hero__chips">
+                    <span class="cours-chip">📐 5ème</span>
+                    <span class="cours-chip">📐 4ème</span>
+                    <span class="cours-chip">📐 3ème</span>
+                </div>
             </div>
         </section>
 
         <!-- Grille des devoirs -->
         <section class="section">
             <div class="cards-grid">
+                <!-- Carte 1 : Évaluation 3D et Réparabilité
+                <a href="/src/pages/activites/devoirs/evaluation-3d-reparabilite-5eme.html" class="card card--activite">
+                    <h2 class="card__title">Évaluation Conception et modélisation 3D</h2>
+                    <p class="card__text">Teste tes compétences en modélisation 3D et en analyse de la réparabilité des objets.</p>
+                    <span class="card__badge">5ème</span>
+                </a> -->
 
-                <!-- Carte 1 : Conception d'un objet technique -->
-                <a href="/src/pages/activites/devoirs/conception3d.html" class="card card--activite">
-                    <div class="card__icon">🔧</div>
-                    <h2 class="card__title">Conception et Cahier des Charges</h2>
-                    <p class="card__text">Conçois un objet utile en respectant un cahier des charges et les contraintes de fabrication.</p>
-                    <span class="card__badge">Devoir en ligne</span>
+                <a href="/src/pages/activites/devoirs/s1-5eme-consommation-maison.html" class="card card--activite">
+                    <h2 class="card__title">Activité en ligne : Consommation dans une maison connectée.</h2>
+                    <p class="card__text"></p>
+                    <span class="card__badge">5ème</span>
                 </a>
 
-                <!-- Carte 2 : Amélioration d'un objet technique -->
-                <a href="/src/pages/activites/devoirs/modelisation3d.html" class="card card--activite">
-                    <div class="card__icon">🏗️</div>
-                    <h2 class="card__title">Modélisation et Impression 3D</h2>
-                    <p class="card__text">Mets en pratique tes compétences en conception et impression 3D.</p>
-                    <span class="card__badge">Devoir en ligne</span>
+                <!-- Carte 2 : Évaluation 3D et Réparabilité -->   
+                    <a href="/src/pages/activites/devoirs/evaluation-3d-reparabilite-4eme.html" class="card card--activite">
+                        <h2 class="card__title">Évaluation 3D et Réparabilité</h2>
+                        <p class="card__text">Teste tes compétences en modélisation 3D et en analyse de la réparabilité des objets.</p>
+                        <span class="card__badge">4ème</span>
+                    </a>
+
+                <!-- Carte 2 : Évaluation 3D et Réparabilité -->
+                <a href="/src/pages/activites/devoirs/evaluation-3d-reparabilite-3eme.html" class="card card--activite">
+                    <h2 class="card__title">Évaluation 3D et Réparabilité</h2>
+                    <p class="card__text">Teste tes compétences en modélisation 3D et en analyse de la réparabilité des objets.</p>
+                    <span class="card__badge">3ème</span>
+                </a>
+
+                <a href="/src/pages/exercices/exercices-calcul.html" class="card card--activite">
+                <h2 class="card__title">Exercices de calcul en Technologie</h2>
+                    <p class="card__text">Teste tes compétences en calcul et en résolution de problèmes en technologie.</p>
+                    <span class="card__badge">Niveau Difficile</span>
                 </a>
 
             </div>

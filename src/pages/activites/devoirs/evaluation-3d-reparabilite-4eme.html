@@ -1,0 +1,1100 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Évaluation en ligne : Modélisation 3D et Réparabilité - Niveau 4ème - TechnoDocs"
+    />
+    <title>Évaluation 3D & Réparabilité | 4ème | TechnoDocs</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles spécifiques à cette évaluation -->
+    <style>
+      /* ── Layout : supprime le margin-top hérité du header injecté ── */
+      body:has(.header) main.wizard,
+      body.has-header main.wizard {
+        margin-top: 0;
+      }
+
+      /* ── Bloc question ── */
+      .wizard__question {
+        background: var(--color-white);
+        border: 1px solid var(--color-gray-200);
+        border-left: 4px solid var(--color-primary);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6);
+        margin-bottom: var(--space-6);
+      }
+
+      /* ── En-tête : badge + points ── */
+      .wizard__question-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        margin-bottom: var(--space-3);
+      }
+
+      .wizard__question-badge {
+        display: inline-block;
+        padding: var(--space-1) var(--space-3);
+        background: rgba(129, 140, 248, 0.2);
+        color: #c7d2fe;
+        border-radius: var(--radius-full);
+        font-size: var(--text-xs);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .wizard__question-points {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-gray-500);
+        white-space: nowrap;
+      }
+
+      /* ── Titre et texte ── */
+      .wizard__question-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 700;
+        color: var(--color-gray-900);
+        margin: 0 0 var(--space-3) 0;
+      }
+
+      .wizard__question-text {
+        color: var(--color-gray-700);
+        line-height: 1.65;
+        margin-bottom: var(--space-4);
+      }
+
+      /* ── Bloc situation (contexte) ── */
+      .wizard__situation {
+        background: rgba(34, 211, 238, 0.12);
+        border-left: 4px solid #22d3ee;
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        padding: var(--space-4);
+        margin-bottom: var(--space-4);
+        color: var(--color-gray-700);
+        line-height: 1.65;
+      }
+
+      /* ── Placeholder image ── */
+      .wizard__visual-placeholder {
+        background: var(--color-gray-100);
+        border: 2px dashed var(--color-gray-300);
+        border-radius: var(--radius-md);
+        padding: var(--space-4);
+        text-align: center;
+        color: var(--color-gray-500);
+        margin-bottom: var(--space-4);
+      }
+
+      .wizard__visual-placeholder--small {
+        padding: var(--space-2) var(--space-4);
+      }
+
+      /* ── Boîte indicateurs de réussite ── */
+      .wizard__help-box {
+        background: rgba(52, 211, 153, 0.12);
+        border: 1px solid rgba(52, 211, 153, 0.4);
+        border-radius: var(--radius-md);
+        padding: var(--space-4);
+        margin-bottom: var(--space-4);
+        font-size: var(--text-sm);
+        color: var(--color-gray-700);
+      }
+
+      .wizard__help-box ul {
+        margin: var(--space-2) 0 0 0;
+        padding-left: var(--space-4);
+      }
+
+      .wizard__help-box li {
+        margin: var(--space-1) 0;
+      }
+
+      /* ── Compteur de caractères ── */
+      .wizard__char-counter {
+        text-align: right;
+        font-size: var(--text-xs);
+        color: var(--color-gray-400);
+        margin-top: var(--space-1);
+      }
+
+      /* ── Numéro de phase dans le titre ── */
+      .wizard__phase-number {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 2rem;
+        height: 2rem;
+        background: var(--color-primary);
+        color: var(--color-white);
+        border-radius: var(--radius-full);
+        font-size: var(--text-base);
+        font-weight: 700;
+        margin-right: var(--space-2);
+        vertical-align: middle;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header dynamique -->
+    <div id="header-placeholder"></div>
+
+    <!-- =============================================
+         OVERLAY MOT DE PASSE
+         ============================================= -->
+    <div id="passwordOverlay" class="password-overlay">
+      <div class="password-prompt">
+        <h2>🔒 Accès sécurisé</h2>
+        <p>
+          Cette évaluation est réservée.<br />
+          Saisissez le mot de passe.
+        </p>
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="****"
+          autocomplete
+        />
+        <button onclick="checkPassword()">Déverrouiller</button>
+        <p id="errorMessage" class="error-message" style="display: none">
+          ❌ Mot de passe incorrect
+        </p>
+      </div>
+    </div>
+
+    <!-- =============================================
+          CONTENU PRINCIPAL (masqué jusqu'au déverrouillage)
+          ============================================= -->
+    <main class="wizard is-locked">
+      <!-- Bannière titre -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">🖨️</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">
+            Évaluation : Modélisation 3D et Réparabilité
+          </h1>
+          <p
+            class="wizard__phase-subtitle"
+            style="
+              color: rgba(255, 255, 255, 0.85);
+              margin-bottom: var(--space-2);
+            "
+          >
+            Niveau 4ème • Durée : 40 minutes • Barème : /20 points
+          </p>
+        </div>
+      </div>
+
+      <!-- Informations élève -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="studentName">Prénom et Nom</label>
+            <input
+              type="text"
+              id="studentName"
+              data-field="studentName"
+              placeholder=""
+              required
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="studentClass">Classe</label>
+            <select id="studentClass" data-field="studentClass" required>
+              <option value="402">4ème 2</option>
+              <option value="403">4ème 3</option>
+              <option value="404">4ème 4</option>
+              <option value="405">4ème 5</option>
+              <option value="406">4ème 6</option>
+              <option value="407">4ème 7</option>
+              <option value="408">4ème 8</option>
+            </select>
+          </div>
+          <div class="wizard__student-field wizard__student-field--date">
+            <label>Date</label>
+            <span
+              id="projectDate"
+              class="wizard__date-display"
+              data-field="projectDate"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barre de progression -->
+      <section class="wizard__progress">
+        <div class="wizard__progress-header">
+          <h2 class="wizard__progress-title">Progression</h2>
+          <div class="wizard__save-indicator" id="saveIndicator">
+            <span class="wizard__save-dot"></span>
+            <span class="wizard__save-text">Auto-save</span>
+          </div>
+          <span class="wizard__progress-percentage" id="progressPercentage"
+            >0%</span
+          >
+        </div>
+        <div class="wizard__progress-bar">
+          <div
+            class="wizard__progress-fill"
+            id="progressFill"
+            style="width: 0%"
+          ></div>
+        </div>
+
+        <nav class="wizard__nav" id="phaseNav">
+          <button class="wizard__nav-btn active" data-phase="1">
+            <span class="wizard__nav-number">1</span>
+            <span>Modélisation 3D</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="2">
+            <span class="wizard__nav-number">2</span>
+            <span>Réparabilité</span>
+          </button>
+        </nav>
+      </section>
+
+      <!-- =============================================
+             CONTENEUR DES PHASES
+             ============================================= -->
+      <div class="wizard__container">
+
+        <!-- =============================================
+                 PHASE 1 : MODÉLISATION 3D ET TINKERCAD (/10)
+                 ============================================= -->
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">1</span>
+              Modélisation 3D et Tinkercad
+            </h2>
+            <p class="wizard__phase-subtitle">Barème : 10 points</p>
+          </div>
+
+          <!-- Question 1.1 - Rôle de Tinkercad -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">QCM unique</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 1.1 - Rôle de Tinkercad
+            </h3>
+            <p class="wizard__question-text">
+              Tinkercad est un logiciel de <strong>CAO</strong> (Conception
+              Assistée par Ordinateur). À quoi sert-il principalement ?
+            </p>
+
+            <div class="wizard__radio-group">
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q1_role_tinkercad"
+                  data-field="q1_role_tinkercad"
+                  value="A"
+                />
+                <span>A) Modifier des photos et des images</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q1_role_tinkercad"
+                  data-field="q1_role_tinkercad"
+                  value="B"
+                />
+                <span>B) Concevoir des objets en 3D en vue de les imprimer ou simuler</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q1_role_tinkercad"
+                  data-field="q1_role_tinkercad"
+                  value="C"
+                />
+                <span>C) Créer des présentations et diaporamas</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q1_role_tinkercad"
+                  data-field="q1_role_tinkercad"
+                  value="D"
+                />
+                <span>D) Programmer des applications mobiles</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 1.2 - Opérations booléennes -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">QCM multiple</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 1.2 - Créer un porte-crayon dans Tinkercad
+            </h3>
+            <p class="wizard__question-text">
+              Tu veux créer un <strong>porte-crayon cylindrique</strong> avec
+              des trous sur le dessus pour y glisser les crayons. Quelles
+              opérations utilises-tu dans Tinkercad ?
+              <em>(2 réponses attendues)</em>
+            </p>
+
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q2_operations_portecrayon"
+                  data-field="q2_operations_portecrayon"
+                  value="A"
+                />
+                <span>A) Placer un cylindre comme forme de base (le corps du porte-crayon)</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q2_operations_portecrayon"
+                  data-field="q2_operations_portecrayon"
+                  value="B"
+                />
+                <span>B) Ajouter des cylindres en mode "trou" et les regrouper avec la base</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q2_operations_portecrayon"
+                  data-field="q2_operations_portecrayon"
+                  value="C"
+                />
+                <span>C) Peindre les trous en noir pour les faire apparaître</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q2_operations_portecrayon"
+                  data-field="q2_operations_portecrayon"
+                  value="D"
+                />
+                <span>D) Imprimer deux fois le même objet pour doubler l'épaisseur</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 1.3 - Matériau d'impression -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">QCM unique</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 1.3 - Choisir le bon filament
+            </h3>
+            <p class="wizard__question-text">
+              Quel filament est le plus utilisé par les débutants pour imprimer
+              en 3D, car il est <strong>facile à utiliser</strong> et
+              <strong>partiellement biodégradable</strong> (à base d'amidon de
+              maïs) ?
+            </p>
+
+            <div class="wizard__radio-group">
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q3_filament"
+                  data-field="q3_filament"
+                  value="A"
+                />
+                <span>A) ABS (résistant à la chaleur, mais délicat à imprimer)</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q3_filament"
+                  data-field="q3_filament"
+                  value="B"
+                />
+                <span>B) PLA (facile, accessible, partiellement biodégradable)</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q3_filament"
+                  data-field="q3_filament"
+                  value="C"
+                />
+                <span>C) PETG (résistant à l'eau et à la chaleur)</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q3_filament"
+                  data-field="q3_filament"
+                  value="D"
+                />
+                <span>D) TPU (souple comme du caoutchouc)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 1.4 - Paramètre de remplissage -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">QCM unique</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 1.4 - Économiser du filament
+            </h3>
+            <p class="wizard__question-text">
+              Tu veux imprimer un objet <strong>creux à l'intérieur</strong>
+              pour utiliser moins de matière. Quel paramètre dois-tu réduire
+              dans le logiciel de découpe (slicer) ?
+            </p>
+
+            <div class="wizard__radio-group">
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q4_remplissage"
+                  data-field="q4_remplissage"
+                  value="A"
+                />
+                <span>A) La température de la buse</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q4_remplissage"
+                  data-field="q4_remplissage"
+                  value="B"
+                />
+                <span>B) Le pourcentage de remplissage (infill)</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q4_remplissage"
+                  data-field="q4_remplissage"
+                  value="C"
+                />
+                <span>C) La couleur du filament</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q4_remplissage"
+                  data-field="q4_remplissage"
+                  value="D"
+                />
+                <span>D) La taille de l'écran de l'imprimante</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 1.5 - Concevoir un porte-stylo (PROTÉGÉE) -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Question ouverte</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 1.5 - Concevoir un objet simple
+            </h3>
+            <p class="wizard__question-text">
+              Décris <strong>en 2 ou 3 phrases</strong> comment tu créerais un
+              <strong>porte-stylo simple</strong> dans Tinkercad. Quelles
+              formes de base utiliserais-tu et comment les assemblerais-tu ?
+            </p>
+
+            <div class="wizard__help-box">
+              <p><strong>💡 Indicateurs de réussite :</strong></p>
+              <ul>
+                <li>✅ Au moins une forme de base citée (cylindre, cube…)</li>
+                <li>✅ Mention de l'opération "trou" ou regroupement</li>
+                <li>✅ Description logique et cohérente</li>
+              </ul>
+            </div>
+
+            <textarea
+              class="wizard__textarea"
+              data-field="q5_conception_portestylo"
+              placeholder="Exemple : Je commencerais par placer un cylindre large comme base..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+              rows="5"
+              maxlength="400"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span id="q5_char_count">0</span> / 400 caractères
+            </div>
+          </div>
+
+          <!-- Navigation Phase 1 -->
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" disabled>← Précédent</button>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- =============================================
+                 PHASE 2 : RÉPARABILITÉ ET DURÉE DE VIE (/10)
+                 ============================================= -->
+        <section class="wizard__phase" data-phase="2">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">2</span>
+              Réparabilité et durée de vie
+            </h2>
+            <p class="wizard__phase-subtitle">Barème : 10 points</p>
+          </div>
+
+          <!-- Question 2.1 - L'indice de réparabilité -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">QCM unique</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 2.1 - L'indice de réparabilité
+            </h3>
+            <p class="wizard__question-text">
+              Depuis 2021 en France, les fabricants doivent afficher un
+              <strong>indice de réparabilité</strong> sur certains produits
+              électroniques. Sur quelle échelle est-il noté ?
+            </p>
+
+            <div class="wizard__radio-group">
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q6_indice_echelle"
+                  data-field="q6_indice_echelle"
+                  value="A"
+                />
+                <span>A) Sur 5 (comme les avis en ligne)</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q6_indice_echelle"
+                  data-field="q6_indice_echelle"
+                  value="B"
+                />
+                <span>B) Sur 10</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q6_indice_echelle"
+                  data-field="q6_indice_echelle"
+                  value="C"
+                />
+                <span>C) Sur 20 (comme à l'école)</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q6_indice_echelle"
+                  data-field="q6_indice_echelle"
+                  value="D"
+                />
+                <span>D) En pourcentage (sur 100)</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 2.2 - Comprendre l'indice -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">QCM multiple</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 2.2 - Comprendre l'indice de réparabilité
+            </h3>
+            <p class="wizard__question-text">
+              Parmi ces affirmations, lesquelles sont
+              <strong>correctes</strong> concernant l'indice de réparabilité ?
+              <em>(2 réponses attendues)</em>
+            </p>
+
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q7_indice_affirmations"
+                  data-field="q7_indice_affirmations"
+                  value="A"
+                />
+                <span>A) Un indice élevé (ex. : 8/10) signifie que le produit est facile à réparer</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q7_indice_affirmations"
+                  data-field="q7_indice_affirmations"
+                  value="B"
+                />
+                <span>B) Un indice faible (ex. : 2/10) signifie que le produit est très solide</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q7_indice_affirmations"
+                  data-field="q7_indice_affirmations"
+                  value="C"
+                />
+                <span>C) Il est affiché obligatoirement sur certains produits vendus en France depuis 2021</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="checkbox"
+                  name="q7_indice_affirmations"
+                  data-field="q7_indice_affirmations"
+                  value="D"
+                />
+                <span>D) Il concerne uniquement les voitures électriques</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 2.3 - Diagnostic de panne -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Analyse de situation</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 2.3 - Diagnostic de panne
+            </h3>
+            <div class="wizard__situation">
+              <p>
+                Ta <strong>tablette ne se charge plus</strong>. Tu testes le
+                câble sur un autre appareil : il fonctionne. Tu essaies un
+                autre câble sur ta tablette : elle ne charge toujours pas.
+              </p>
+            </div>
+            <p class="wizard__question-text">
+              Quelle est l'<strong>hypothèse la plus probable</strong> sur
+              l'origine de la panne ?
+            </p>
+
+            <div class="wizard__visual-placeholder wizard__visual-placeholder--small">
+              <p>🔋 <em>Tablette avec indicateur de charge</em></p>
+            </div>
+
+            <div class="wizard__radio-group">
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q8_diagnostic_tablette"
+                  data-field="q8_diagnostic_tablette"
+                  value="A"
+                />
+                <span>A) L'écran de la tablette est cassé</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q8_diagnostic_tablette"
+                  data-field="q8_diagnostic_tablette"
+                  value="B"
+                />
+                <span>B) Le port de charge de la tablette est défectueux</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q8_diagnostic_tablette"
+                  data-field="q8_diagnostic_tablette"
+                  value="C"
+                />
+                <span>C) La connexion Wi-Fi est coupée</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q8_diagnostic_tablette"
+                  data-field="q8_diagnostic_tablette"
+                  value="D"
+                />
+                <span>D) La coque de protection est trop épaisse</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Question 2.4 - Réparer plutôt qu'acheter (PROTÉGÉE) -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Question ouverte</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 2.4 - Réparer plutôt qu'acheter neuf
+            </h3>
+            <p class="wizard__question-text">
+              Un objet du quotidien tombe en panne. Explique pourquoi il serait
+              préférable de le <strong>réparer</strong> plutôt que d'en acheter
+              un neuf. <strong>Donne 2 raisons</strong> (environnementale,
+              économique ou autre).
+            </p>
+
+            <div class="wizard__help-box">
+              <p><strong>💡 Indicateurs de réussite :</strong></p>
+              <ul>
+                <li>✅ 2 raisons distinctes clairement formulées</li>
+                <li>✅ Au moins une raison liée à l'environnement ou à l'économie</li>
+                <li>✅ Phrases complètes et compréhensibles</li>
+              </ul>
+            </div>
+
+            <textarea
+              class="wizard__textarea"
+              data-field="q9_raisons_reparation"
+              placeholder="Raison 1 : ...&#10;Raison 2 : ..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+              rows="5"
+              maxlength="400"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span id="q9_char_count">0</span> / 400 caractères
+            </div>
+          </div>
+
+          <!-- Question 2.5 - Impression 3D et réparation -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">QCM unique</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 2.5 - Impression 3D et réparation
+            </h3>
+            <p class="wizard__question-text">
+              Dans quel cas l'impression 3D peut-elle permettre de
+              <strong>réparer un objet</strong> ?
+            </p>
+
+            <div class="wizard__radio-group">
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q10_impression_reparation"
+                  data-field="q10_impression_reparation"
+                  value="A"
+                />
+                <span>A) Pour changer la couleur de l'objet cassé</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q10_impression_reparation"
+                  data-field="q10_impression_reparation"
+                  value="B"
+                />
+                <span>B) Quand une pièce cassée n'est plus disponible dans le commerce et peut être recréée en 3D</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q10_impression_reparation"
+                  data-field="q10_impression_reparation"
+                  value="C"
+                />
+                <span>C) Pour rendre l'objet plus léger</span>
+              </label>
+              <label class="wizard__radio">
+                <input
+                  type="radio"
+                  name="q10_impression_reparation"
+                  data-field="q10_impression_reparation"
+                  value="D"
+                />
+                <span>D) Pour connecter l'objet à Internet</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Navigation Phase 2 (finale) -->
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
+              ← Précédent
+            </button>
+            <button class="btn btn--success" onclick="wizardComplete()">
+              ✅ Terminer l'évaluation
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <!-- =============================================
+             BARRE D'ACTIONS GLOBALES
+             ============================================= -->
+      <div class="wizard__actions">
+        <button class="btn btn--secondary" onclick="wizardExportJSON()">
+          💾 Exporter ma copie
+        </button>
+        <label class="btn btn--secondary">
+          📂 Importer une copie
+          <input
+            type="file"
+            accept=".json"
+            onchange="wizardImportJSON(event)"
+            style="display: none"
+          />
+        </label>
+        <button class="btn btn--secondary" onclick="handleSafeReset()">
+          🔄 Réinitialiser
+        </button>
+        <button class="btn btn--secondary" onclick="window.print()">
+          🖨️ Imprimer
+        </button>
+      </div>
+    </main>
+
+    <!-- Footer dynamique -->
+    <div id="footer-placeholder"></div>
+
+    <!-- =============================================
+         MODALES
+         ============================================= -->
+
+    <!-- Modale de complétion -->
+    <div class="wizard__modal-overlay" id="completionModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">🎉 Évaluation terminée !</h3>
+        <div class="wizard__modal-content">
+          <p>
+            Votre travail a été sauvegardé automatiquement dans la base de
+            données.<br />
+            Vous pouvez maintenant fermer cette page.
+          </p>
+          <p
+            style="
+              margin-top: 1rem;
+              font-size: 0.875rem;
+              color: var(--color-gray-500);
+            "
+          >
+            💡 Pensez à exporter votre copie (bouton "Exporter ma copie") pour
+            garder une sauvegarde personnelle !
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--primary"
+            onclick="wizardCloseModal('completionModal')"
+          >
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modale de réinitialisation -->
+    <div class="wizard__modal-overlay" id="resetModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">⚠️ Réinitialiser l'évaluation ?</h3>
+        <div class="wizard__modal-content">
+          <p>
+            Cette action effacera toutes vos réponses.<br />
+            <strong>Une sauvegarde a été automatiquement téléchargée.</strong>
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('resetModal')"
+          >
+            Annuler
+          </button>
+          <button
+            class="btn btn--primary"
+            style="background: var(--color-error)"
+            onclick="wizardReset()"
+          >
+            Confirmer la réinitialisation
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="wizardToast" class="wizard__toast">
+      <span class="wizard__toast-icon">ℹ️</span>
+      <span class="wizard__toast-message">Message</span>
+    </div>
+
+    <!-- =============================================
+         SCRIPTS
+         ============================================= -->
+
+    <!-- Composants dynamiques (header/footer) -->
+    <script type="module" src="/src/js/components.js"></script>
+
+    <!-- Configuration et initialisation WizardFirebase -->
+    <script type="module">
+      import { WizardFirebase } from "/src/js/wizard-firebase.js";
+
+      // =============================================
+      // CONFIGURATION WIZARDFIREBAE
+      // =============================================
+      window.wizardInstance = new WizardFirebase({
+        // Identifiant unique de la collection Firestore
+        collectionName: "evaluation_3d_reparabilite_4eme",
+
+        // Intervalle autosave (60 secondes par défaut)
+        autosaveInterval: 60000,
+
+        // Champs obligatoires par phase
+        requiredFields: {
+          1: [
+            "studentName",
+            "studentClass",
+            "q1_role_tinkercad",
+            "q2_operations_portecrayon",
+            "q3_filament",
+            "q4_remplissage",
+            "q5_conception_portestylo",
+          ],
+          2: [
+            "q6_indice_echelle",
+            "q7_indice_affirmations",
+            "q8_diagnostic_tablette",
+            "q9_raisons_reparation",
+            "q10_impression_reparation",
+          ],
+        },
+
+        // Callbacks
+        onComplete: (data) => {
+          console.log("🎉 Évaluation terminée:", data);
+        },
+        onSaveSuccess: () => {
+          console.log("✅ Sauvegarde Firestore OK");
+        },
+        onSaveError: (error) => {
+          console.error("❌ Erreur Firestore:", error);
+        },
+
+        // Ne pas initialiser automatiquement (attend le déverrouillage)
+        autoInit: false,
+      });
+
+      // =============================================
+      // ANTI-COPIER-COLLER SUR TEXTAREAS
+      // =============================================
+      import("/src/js/article-editor.js").then((module) => {
+        window.articleEditor = new module.ArticleEditor({
+          protectedFields: [
+            '[data-field="q5_conception_portestylo"]',
+            '[data-field="q9_raisons_reparation"]',
+          ],
+          onPasteBlocked: (msg) =>
+            window.wizardInstance?.showToast(msg, "warning"),
+        });
+      });
+
+      // =============================================
+      // COMPTEURS DE CARACTÈRES
+      // =============================================
+      function setupCharCounters() {
+        const counters = [
+          { field: "q5_conception_portestylo", counter: "q5_char_count" },
+          { field: "q9_raisons_reparation", counter: "q9_char_count" },
+        ];
+
+        counters.forEach(({ field, counter }) => {
+          const textarea = document.querySelector(`[data-field="${field}"]`);
+          const span = document.getElementById(counter);
+
+          if (textarea && span) {
+            textarea.addEventListener("input", () => {
+              span.textContent = textarea.value.length;
+            });
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupCharCounters);
+
+      // =============================================
+      // RÉINITIALISATION SÉCURISÉE
+      // =============================================
+      window.handleSafeReset = function () {
+        if (typeof wizardExportJSON === "function") {
+          wizardExportJSON();
+        } else if (window.wizardInstance) {
+          window.wizardInstance.exportToJSON();
+        }
+
+        if (window.wizardInstance?.showToast) {
+          window.wizardInstance.showToast(
+            "Sauvegarde téléchargée !",
+            "success",
+          );
+        }
+
+        wizardShowModal("resetModal");
+      };
+
+      // =============================================
+      // ACCÈS PAR MOT DE PASSE
+      // =============================================
+      import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+
+      window.checkPassword = function () {
+        const input = document.getElementById("passwordInput");
+        const error = document.getElementById("errorMessage");
+        const overlay = document.getElementById("passwordOverlay");
+        const main = document.querySelector("main.wizard");
+
+        if (input.value === CORRECT_PASSWORD) {
+          overlay.style.display = "none";
+          main.classList.remove("is-locked");
+          error.style.display = "none";
+          window.wizardInstance?.init();
+        } else {
+          error.style.display = "block";
+          input.value = "";
+          input.focus();
+        }
+      };
+
+      document
+        .getElementById("passwordInput")
+        ?.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            checkPassword();
+          }
+        });
+    </script>
+  </body>
+</html>

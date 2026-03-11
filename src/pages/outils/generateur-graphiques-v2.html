@@ -1,0 +1,1143 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Générateur de graphiques v2 | TechnoDocs</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Nunito:wght@400;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../../css/tools.css" />
+    <style>
+      /* ─── SECTION PRINCIPALE ─── */
+      .chart-container {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        gap: 32px;
+        padding: 0;
+      }
+
+      @media (max-width: 768px) {
+        .chart-container {
+          grid-template-columns: 1fr;
+          gap: 24px;
+        }
+      }
+
+      /* ─── FORMULAIRE ─── */
+      .chart-form {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 16px;
+      }
+
+      .chart-form h2 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-bright);
+        margin-bottom: 8px;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .form-group label {
+        font-size: 0.85rem;
+        color: var(--text-dim);
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+
+      .form-group input {
+        background: var(--bg-input);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        color: var(--text);
+        font-family: inherit;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+      }
+
+      .form-group input:focus {
+        outline: none;
+        border-color: var(--accent);
+        box-shadow: 0 0 0 3px var(--accent-glow);
+      }
+
+      /* ─── BOUTONS ─── */
+      .form-actions {
+        display: flex;
+        gap: 12px;
+        margin-top: 8px;
+      }
+
+      .btn {
+        padding: 10px 16px;
+        border: none;
+        border-radius: var(--radius-sm);
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        font-family: inherit;
+      }
+
+      .btn-primary {
+        background: var(--accent);
+        color: #000;
+        flex: 1;
+      }
+
+      .btn-primary:hover {
+        background: var(--accent-dim);
+        transform: translateY(-2px);
+      }
+
+      .btn-danger {
+        background: rgba(255, 95, 107, 0.15);
+        color: var(--red);
+        border: 1px solid rgba(255, 95, 107, 0.3);
+        width: 100%;
+      }
+
+      .btn-danger:hover {
+        background: rgba(255, 95, 107, 0.25);
+      }
+
+      /* ─── TYPE DE GRAPHIQUE ─── */
+      .chart-type-section {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+      }
+
+      .chart-type-section h2 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-bright);
+        margin-bottom: 16px;
+      }
+
+      .chart-type-toggle {
+        display: flex;
+        gap: 12px;
+      }
+
+      .btn-toggle {
+        flex: 1;
+        padding: 12px 16px;
+        border: 2px solid var(--border);
+        background: transparent;
+        color: var(--text);
+        border-radius: var(--radius-sm);
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.2s ease;
+        font-family: inherit;
+      }
+
+      .btn-toggle.active {
+        border-color: var(--accent);
+        background: var(--accent-glow);
+        color: var(--text-bright);
+      }
+
+      .btn-toggle:hover:not(.active) {
+        border-color: var(--accent-dim);
+      }
+
+      /* ─── LISTE DES DONNÉES ─── */
+      .chart-data-section {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+      }
+
+      .chart-data-section h2 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-bright);
+        margin-bottom: 16px;
+      }
+
+      .chart-data-list {
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
+        max-height: 400px;
+        overflow-y: auto;
+        padding-right: 8px;
+      }
+
+      .chart-data-list::-webkit-scrollbar {
+        width: 6px;
+      }
+
+      .chart-data-list::-webkit-scrollbar-track {
+        background: transparent;
+      }
+
+      .chart-data-list::-webkit-scrollbar-thumb {
+        background: var(--border);
+        border-radius: 3px;
+      }
+
+      .chart-data-list::-webkit-scrollbar-thumb:hover {
+        background: var(--border-accent);
+      }
+
+      .data-item {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: var(--bg-input);
+        border: 1px solid var(--border);
+        border-radius: var(--radius-sm);
+        padding: 12px;
+        font-size: 0.9rem;
+      }
+
+      .data-item-content {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        flex: 1;
+      }
+
+      .data-item-label {
+        color: var(--text);
+        font-weight: 600;
+      }
+
+      .data-item-value {
+        color: var(--accent);
+        font-weight: 700;
+      }
+
+      .btn-item-delete {
+        background: rgba(255, 95, 107, 0.15);
+        color: var(--red);
+        border: none;
+        padding: 6px 10px;
+        border-radius: 6px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        font-weight: 600;
+        transition: all 0.2s ease;
+      }
+
+      .btn-item-delete:hover {
+        background: rgba(255, 95, 107, 0.3);
+      }
+
+      .empty-state {
+        text-align: center;
+        padding: 32px 16px;
+        color: var(--text-dim);
+      }
+
+      .empty-state p {
+        font-size: 0.9rem;
+      }
+
+      /* ─── GRAPHIQUE ─── */
+      .chart-canvas-wrapper {
+        background: var(--bg-card);
+        border: 1px solid var(--border);
+        border-radius: var(--radius);
+        padding: 24px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .chart-canvas-wrapper h2 {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: var(--text-bright);
+        margin-bottom: 16px;
+      }
+
+      .chart-wrapper {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        position: relative;
+      }
+
+      #chartCanvas {
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      .chart-empty {
+        text-align: center;
+        color: var(--text-dim);
+        padding: 40px 20px;
+      }
+
+      .chart-empty p {
+        font-size: 0.95rem;
+        margin-bottom: 12px;
+      }
+
+      .chart-empty .emoji {
+        font-size: 3rem;
+        margin-bottom: 12px;
+        display: block;
+        opacity: 0.5;
+      }
+
+      /* ─── BARRE D'ACTIONS ─── */
+      .chart-actions {
+        display: flex;
+        gap: var(--space-3, 0.75rem);
+        margin-top: var(--space-4, 1rem);
+        flex-wrap: wrap;
+      }
+
+      .chart-actions__btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        padding: var(--space-2, 0.5rem) var(--space-4, 1rem);
+        background: var(--color-gray-100, #374151);
+        color: var(--color-gray-700, #d1d5db);
+        border: 1px solid var(--color-gray-200, #4b5563);
+        border-radius: var(--radius-md, 6px);
+        font-size: 0.85rem;
+        font-weight: 500;
+        cursor: pointer;
+        transition: background 0.15s;
+        font-family: inherit;
+      }
+
+      .chart-actions__btn:hover {
+        background: var(--color-gray-200, #4b5563);
+      }
+
+      .chart-actions__btn--compare {
+        border-color: rgba(54, 162, 235, 0.5);
+        color: rgb(147, 197, 253);
+      }
+
+      .chart-actions__btn--compare:hover {
+        background: rgba(54, 162, 235, 0.15);
+        border-color: rgb(54, 162, 235);
+      }
+
+      /* ─── MODE COMPARATIF ─── */
+      .comparison-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        background: rgba(54, 162, 235, 0.1);
+        border: 1px solid rgba(54, 162, 235, 0.3);
+        border-radius: var(--radius-sm);
+        padding: 10px 12px;
+        margin-bottom: 4px;
+      }
+
+      .comparison-badge {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: rgb(147, 197, 253);
+      }
+
+      .btn-exit-comparison {
+        font-size: 0.75rem;
+        font-weight: 600;
+        color: var(--text-dim);
+        background: transparent;
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 3px 8px;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.15s;
+      }
+
+      .btn-exit-comparison:hover {
+        color: var(--red);
+        border-color: rgba(255, 95, 107, 0.4);
+      }
+
+      .data-item--comparison {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+
+      .data-item-values {
+        display: flex;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      .data-item-series {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--text-dim);
+      }
+
+      .series-dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 2px;
+        flex-shrink: 0;
+      }
+
+      /* ─── VEILLE (poste critique) ─── */
+      .data-item--veille {
+        border-color: rgba(251, 146, 60, 0.45);
+        background: rgba(251, 146, 60, 0.06);
+      }
+
+      .data-item--veille .data-item-value {
+        color: rgb(251, 146, 60);
+      }
+
+      /* ─── ANIMATIONS ─── */
+      @keyframes slideDown {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .data-item {
+        animation: slideDown 0.2s ease-out;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app-header"></div>
+
+    <main class="app">
+      <!-- SECTION HÉRO -->
+      <div class="app-header">
+        <span class="app-header__badge">Outil Interactif · v2</span>
+        <h1>Générateur de <span class="hl">Graphiques</span></h1>
+        <p>Comparaison multi-séries et visualisation en temps réel</p>
+      </div>
+
+      <!-- CONTENEUR PRINCIPAL (2 colonnes) -->
+      <div class="chart-container">
+        <!-- COLONNE GAUCHE : Contrôles -->
+        <div>
+          <!-- FORMULAIRE (masqué en mode comparatif) -->
+          <div class="chart-form" id="formPanel">
+            <h2>Ajouter des données</h2>
+
+            <div class="form-group">
+              <label for="labelInput">Étiquette</label>
+              <input
+                type="text"
+                id="labelInput"
+                placeholder="Ex: Janvier, Ventes, etc."
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="valueInput">Valeur</label>
+              <input
+                type="number"
+                id="valueInput"
+                placeholder="Ex: 1200"
+                min="0"
+              />
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary" id="addBtn">Ajouter</button>
+            </div>
+
+            <button class="btn btn-danger" id="clearAllBtn">Tout effacer</button>
+          </div>
+
+          <!-- TYPE DE GRAPHIQUE -->
+          <div class="chart-type-section">
+            <h2>Type de graphique</h2>
+            <div class="chart-type-toggle">
+              <button class="btn-toggle active" id="chartTypeBar">
+                📊 Barres
+              </button>
+              <button class="btn-toggle" id="chartTypeLine">📈 Courbe</button>
+            </div>
+          </div>
+
+          <!-- AFFICHAGE -->
+          <div class="chart-type-section" id="displayPanel">
+            <h2>Affichage</h2>
+            <div class="chart-type-toggle">
+              <button class="btn-toggle active" id="displayAbsolute">📏 kWh</button>
+              <button class="btn-toggle" id="displayPercent">% Part</button>
+            </div>
+          </div>
+
+          <!-- LISTE DES DONNÉES -->
+          <div class="chart-data-section">
+            <h2>Données</h2>
+            <div class="chart-data-list" id="dataList">
+              <div class="empty-state">
+                <p>Aucune donnée pour le moment</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLONNE DROITE : Graphique -->
+        <div class="chart-canvas-wrapper">
+          <h2>Aperçu</h2>
+          <div class="chart-wrapper">
+            <canvas id="chartCanvas"></canvas>
+          </div>
+          <div class="chart-actions">
+            <button id="chartExport" class="chart-actions__btn">
+              💾 Exporter JSON
+            </button>
+            <label class="chart-actions__btn">
+              📂 Importer JSON
+              <input type="file" accept=".json" id="chartImport" style="display: none;" />
+            </label>
+            <button id="chartComparative" class="chart-actions__btn chart-actions__btn--compare">
+              📊 Comparatif 2017-2026
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div id="app-footer"></div>
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Composants dynamiques (Header/Footer) -->
+    <script type="module" src="../../js/components.js"></script>
+
+    <!-- Générateur de graphiques v2 -->
+    <script type="module">
+      const STORAGE_KEY = "technodocs_chart_generator_v2";
+
+      const COMPARATIVE_DATA = {
+        labels: [
+          "Chauffage", "Froid et lavage", "Multimédia", "Eau chaude",
+          "Cuisson", "Éclairage", "Autres", "Ventilation", "Recharge VE",
+        ],
+        datasets: [
+          {
+            label: "2017",
+            data: [27.6, 18.5, 13.5, 12.8, 7.8, 5.6, 12.1, 1.7, 0],
+            backgroundColor: "rgba(54, 162, 235, 0.7)",
+            borderColor: "rgb(54, 162, 235)",
+          },
+          {
+            label: "2026 (Projetée)",
+            data: [24.0, 17.0, 16.0, 12.0, 7.5, 4.0, 10.0, 1.5, 8.0],
+            backgroundColor: "rgba(255, 99, 132, 0.7)",
+            borderColor: "rgb(255, 99, 132)",
+          },
+        ],
+      };
+
+      class ChartGeneratorV2 {
+        constructor() {
+          this.mode = "single"; // 'single' | 'comparison'
+          this.entries = [];
+          this.labels = [];
+          this.datasets = [];
+          this.chartType = "bar";
+          this.displayMode = "absolute"; // 'absolute' | 'percent'
+          this.chart = null;
+
+          this.canvasElement = null;
+          this.labelInput = null;
+          this.valueInput = null;
+          this.addBtn = null;
+          this.clearAllBtn = null;
+          this.chartTypeBarBtn = null;
+          this.chartTypeLineBtn = null;
+          this.dataListElement = null;
+          this.formPanel = null;
+          this.displayPanel = null;
+          this.displayAbsoluteBtn = null;
+          this.displayPercentBtn = null;
+
+          this.init();
+        }
+
+        init() {
+          this.cacheElements();
+          this.bindEvents();
+          this.loadFromStorage();
+          this.renderAll();
+        }
+
+        cacheElements() {
+          this.canvasElement = document.getElementById("chartCanvas");
+          this.labelInput = document.getElementById("labelInput");
+          this.valueInput = document.getElementById("valueInput");
+          this.addBtn = document.getElementById("addBtn");
+          this.clearAllBtn = document.getElementById("clearAllBtn");
+          this.chartTypeBarBtn = document.getElementById("chartTypeBar");
+          this.chartTypeLineBtn = document.getElementById("chartTypeLine");
+          this.dataListElement = document.getElementById("dataList");
+          this.formPanel = document.getElementById("formPanel");
+          this.displayPanel = document.getElementById("displayPanel");
+          this.displayAbsoluteBtn = document.getElementById("displayAbsolute");
+          this.displayPercentBtn = document.getElementById("displayPercent");
+        }
+
+        bindEvents() {
+          this.addBtn.addEventListener("click", () => this.handleAddEntry());
+          this.clearAllBtn.addEventListener("click", () => this.handleClearAll());
+          this.chartTypeBarBtn.addEventListener("click", () => this.setChartType("bar"));
+          this.chartTypeLineBtn.addEventListener("click", () => this.setChartType("line"));
+
+          this.labelInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") this.valueInput.focus();
+          });
+          this.valueInput.addEventListener("keypress", (e) => {
+            if (e.key === "Enter") this.handleAddEntry();
+          });
+
+          document.getElementById("chartExport")
+            ?.addEventListener("click", () => this.exportToJSON());
+
+          document.getElementById("chartImport")
+            ?.addEventListener("change", (e) => {
+              if (e.target.files[0]) {
+                this.importFromJSON(e.target.files[0]);
+                e.target.value = "";
+              }
+            });
+
+          document.getElementById("chartComparative")
+            ?.addEventListener("click", () => this.loadComparative());
+
+          document.getElementById("displayAbsolute")
+            ?.addEventListener("click", () => this.setDisplayMode("absolute"));
+          document.getElementById("displayPercent")
+            ?.addEventListener("click", () => this.setDisplayMode("percent"));
+        }
+
+        renderAll() {
+          this.updateFormVisibility();
+          this.renderChart();
+          this.renderDataList();
+          this.updateTypeToggle();
+          this.updateDisplayToggle();
+        }
+
+        updateFormVisibility() {
+          const hidden = this.mode === "comparison";
+          if (this.formPanel) this.formPanel.style.display = hidden ? "none" : "";
+          if (this.displayPanel) this.displayPanel.style.display = hidden ? "none" : "";
+        }
+
+        handleAddEntry() {
+          if (this.mode === "comparison") return;
+
+          const label = this.labelInput.value.trim();
+          const value = parseFloat(this.valueInput.value);
+
+          if (!label) {
+            alert("Veuillez entrer une étiquette");
+            this.labelInput.focus();
+            return;
+          }
+          if (isNaN(value) || value < 0) {
+            alert("Veuillez entrer une valeur numérique positive");
+            this.valueInput.focus();
+            return;
+          }
+
+          this.entries.push({ label, value });
+          this.labelInput.value = "";
+          this.valueInput.value = "";
+          this.labelInput.focus();
+          this.saveToStorage();
+          this.renderChart();
+          this.renderDataList();
+        }
+
+        removeEntry(index) {
+          this.entries.splice(index, 1);
+          this.saveToStorage();
+          this.renderChart();
+          this.renderDataList();
+        }
+
+        handleClearAll() {
+          const hasData = this.mode === "comparison"
+            ? this.labels.length > 0
+            : this.entries.length > 0;
+          if (!hasData) return;
+
+          if (confirm("Êtes-vous sûr de vouloir effacer toutes les données ?")) {
+            this.mode = "single";
+            this.entries = [];
+            this.labels = [];
+            this.datasets = [];
+            localStorage.removeItem(STORAGE_KEY);
+            this.renderAll();
+          }
+        }
+
+        loadComparative() {
+          this.mode = "comparison";
+          this.labels = [...COMPARATIVE_DATA.labels];
+          this.datasets = COMPARATIVE_DATA.datasets.map((ds) => ({
+            ...ds,
+            data: [...ds.data],
+          }));
+          this.saveToStorage();
+          this.renderAll();
+        }
+
+        exitComparison() {
+          this.mode = "single";
+          this.entries = [];
+          this.labels = [];
+          this.datasets = [];
+          localStorage.removeItem(STORAGE_KEY);
+          this.renderAll();
+        }
+
+        setChartType(type) {
+          if (type === this.chartType) return;
+          this.chartType = type;
+          this.updateTypeToggle();
+          this.renderChart();
+          this.saveToStorage();
+        }
+
+        updateTypeToggle() {
+          if (this.chartType === "bar") {
+            this.chartTypeBarBtn.classList.add("active");
+            this.chartTypeLineBtn.classList.remove("active");
+          } else {
+            this.chartTypeLineBtn.classList.add("active");
+            this.chartTypeBarBtn.classList.remove("active");
+          }
+        }
+
+        renderChart() {
+          if (this.chart) {
+            this.chart.destroy();
+            this.chart = null;
+          }
+
+          if (this.mode === "comparison") {
+            if (this.labels.length > 0) this.renderComparisonChart();
+          } else {
+            if (this.entries.length > 0) this.renderSingleChart();
+          }
+        }
+
+        renderSingleChart() {
+          const ctx = this.canvasElement.getContext("2d");
+          const gridColor = "rgba(156, 163, 175, 0.15)";
+          const tickColor = "#9ca3af";
+          const unit = this.getUnit();
+          const displayValues = this.getDisplayValues();
+
+          // Couleur par barre : orange pour "Veille", indigo sinon
+          const bgColors = this.entries.map((e) =>
+            e.label === "Veille" ? "rgba(251, 146, 60, 0.75)" : "rgba(99, 102, 241, 0.7)"
+          );
+          const borderColors = this.entries.map((e) =>
+            e.label === "Veille" ? "rgb(251, 146, 60)" : "rgb(99, 102, 241)"
+          );
+
+          this.chart = new Chart(ctx, {
+            type: this.chartType,
+            data: {
+              labels: this.entries.map((e) => e.label),
+              datasets: [
+                {
+                  label: unit,
+                  data: displayValues,
+                  backgroundColor: bgColors,
+                  borderColor: borderColors,
+                  borderWidth: 2,
+                  borderRadius: 8,
+                  tension: 0.3,
+                  pointRadius: 6,
+                  pointBackgroundColor: borderColors,
+                  pointBorderColor: "#fff",
+                  pointBorderWidth: 2,
+                  pointHoverRadius: 8,
+                },
+              ],
+            },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: { display: false },
+                tooltip: {
+                  backgroundColor: "#1f2937",
+                  titleColor: "#f9fafb",
+                  bodyColor: "#f9fafb",
+                  borderColor: "rgba(156, 163, 175, 0.3)",
+                  borderWidth: 1,
+                  cornerRadius: 8,
+                  padding: 12,
+                  displayColors: false,
+                  callbacks: {
+                    label: (ctx) => ` ${ctx.parsed.y} ${unit}`,
+                  },
+                },
+              },
+              scales: {
+                x: { ticks: { color: tickColor }, grid: { color: gridColor } },
+                y: {
+                  beginAtZero: true,
+                  title: {
+                    display: true,
+                    text: unit,
+                    color: tickColor,
+                    font: { size: 12 },
+                  },
+                  ticks: {
+                    color: tickColor,
+                    callback: (v) => `${v} ${unit}`,
+                  },
+                  grid: { color: gridColor },
+                },
+              },
+            },
+          });
+        }
+
+        renderComparisonChart() {
+          const ctx = this.canvasElement.getContext("2d");
+          const gridColor = "rgba(156, 163, 175, 0.15)";
+          const tickColor = "#9ca3af";
+
+          const chartDatasets = this.datasets.map((ds) => ({
+            label: ds.label,
+            data: ds.data,
+            backgroundColor: ds.backgroundColor,
+            borderColor: ds.borderColor,
+            borderWidth: 2,
+            borderRadius: this.chartType === "bar" ? 6 : 0,
+            tension: 0.3,
+            pointRadius: 5,
+            pointBackgroundColor: ds.borderColor,
+            pointBorderColor: "#fff",
+            pointBorderWidth: 2,
+            pointHoverRadius: 8,
+          }));
+
+          this.chart = new Chart(ctx, {
+            type: this.chartType,
+            data: { labels: this.labels, datasets: chartDatasets },
+            options: {
+              responsive: true,
+              maintainAspectRatio: false,
+              plugins: {
+                legend: {
+                  display: true,
+                  position: "top",
+                  labels: {
+                    color: "#d1d5db",
+                    font: { size: 13, weight: "600" },
+                    padding: 16,
+                    usePointStyle: true,
+                  },
+                },
+                tooltip: {
+                  backgroundColor: "#1f2937",
+                  titleColor: "#f9fafb",
+                  bodyColor: "#f9fafb",
+                  borderColor: "rgba(156, 163, 175, 0.3)",
+                  borderWidth: 1,
+                  cornerRadius: 8,
+                  padding: 12,
+                  callbacks: {
+                    title: (items) => items[0].label,
+                    label: (ctx) => `  ${ctx.dataset.label} : ${ctx.parsed.y}%`,
+                  },
+                },
+              },
+              scales: {
+                x: { ticks: { color: tickColor }, grid: { color: gridColor } },
+                y: {
+                  beginAtZero: true,
+                  ticks: {
+                    color: tickColor,
+                    callback: (v) => `${v}%`,
+                  },
+                  grid: { color: gridColor },
+                },
+              },
+            },
+          });
+        }
+
+        renderDataList() {
+          this.dataListElement.textContent = "";
+
+          if (this.mode === "comparison") {
+            this.renderComparisonDataList();
+          } else {
+            this.renderSingleDataList();
+          }
+        }
+
+        renderSingleDataList() {
+          if (this.entries.length === 0) {
+            const empty = document.createElement("div");
+            empty.className = "empty-state";
+            const p = document.createElement("p");
+            p.textContent = "Aucune donnée pour le moment";
+            empty.appendChild(p);
+            this.dataListElement.appendChild(empty);
+            return;
+          }
+
+          const displayValues = this.getDisplayValues();
+          const unit = this.getUnit();
+
+          this.entries.forEach((entry, index) => {
+            const item = document.createElement("div");
+            item.className = "data-item" + (entry.label === "Veille" ? " data-item--veille" : "");
+
+            const content = document.createElement("div");
+            content.className = "data-item-content";
+
+            const labelEl = document.createElement("span");
+            labelEl.className = "data-item-label";
+            labelEl.textContent = entry.label;
+
+            const valueEl = document.createElement("span");
+            valueEl.className = "data-item-value";
+            valueEl.textContent = `${displayValues[index]} ${unit}`;
+
+            content.appendChild(labelEl);
+            content.appendChild(valueEl);
+
+            const deleteBtn = document.createElement("button");
+            deleteBtn.className = "btn-item-delete";
+            deleteBtn.textContent = "Supprimer";
+            deleteBtn.addEventListener("click", () => this.removeEntry(index));
+
+            item.appendChild(content);
+            item.appendChild(deleteBtn);
+            this.dataListElement.appendChild(item);
+          });
+        }
+
+        renderComparisonDataList() {
+          // Bandeau "mode comparatif actif"
+          const header = document.createElement("div");
+          header.className = "comparison-header";
+
+          const badge = document.createElement("span");
+          badge.className = "comparison-badge";
+          badge.textContent = "📊 Mode comparatif actif";
+
+          const exitBtn = document.createElement("button");
+          exitBtn.className = "btn-exit-comparison";
+          exitBtn.textContent = "✕ Mode libre";
+          exitBtn.addEventListener("click", () => this.exitComparison());
+
+          header.appendChild(badge);
+          header.appendChild(exitBtn);
+          this.dataListElement.appendChild(header);
+
+          // Un item par catégorie avec les deux valeurs
+          this.labels.forEach((label, i) => {
+            const item = document.createElement("div");
+            item.className = "data-item data-item--comparison";
+
+            const labelEl = document.createElement("span");
+            labelEl.className = "data-item-label";
+            labelEl.textContent = label;
+
+            const values = document.createElement("div");
+            values.className = "data-item-values";
+
+            this.datasets.forEach((ds) => {
+              const seriesEl = document.createElement("span");
+              seriesEl.className = "data-item-series";
+
+              const dot = document.createElement("span");
+              dot.className = "series-dot";
+              dot.style.background = ds.borderColor;
+
+              seriesEl.appendChild(dot);
+              seriesEl.appendChild(
+                document.createTextNode(`${ds.label} : ${ds.data[i]}%`)
+              );
+              values.appendChild(seriesEl);
+            });
+
+            item.appendChild(labelEl);
+            item.appendChild(values);
+            this.dataListElement.appendChild(item);
+          });
+        }
+
+        saveToStorage() {
+          const data =
+            this.mode === "comparison"
+              ? {
+                  mode: "comparison",
+                  labels: this.labels,
+                  datasets: this.datasets,
+                  chartType: this.chartType,
+                  displayMode: this.displayMode,
+                }
+              : {
+                  mode: "single",
+                  entries: this.entries,
+                  chartType: this.chartType,
+                  displayMode: this.displayMode,
+                };
+          localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+        }
+
+        loadFromStorage() {
+          try {
+            const saved = localStorage.getItem(STORAGE_KEY);
+            if (!saved) return;
+            const data = JSON.parse(saved);
+            this.chartType = data.chartType || "bar";
+            this.displayMode = data.displayMode || "absolute";
+            if (data.mode === "comparison" && data.labels && data.datasets) {
+              this.mode = "comparison";
+              this.labels = data.labels;
+              this.datasets = data.datasets;
+            } else {
+              this.mode = "single";
+              this.entries = data.entries || [];
+            }
+          } catch (e) {
+            // Données corrompues, on repart de zéro
+          }
+        }
+
+        exportToJSON() {
+          const data =
+            this.mode === "comparison"
+              ? {
+                  mode: "comparison",
+                  labels: this.labels,
+                  datasets: this.datasets,
+                  chartType: this.chartType,
+                  exportedAt: new Date().toISOString(),
+                }
+              : {
+                  mode: "single",
+                  chartType: this.chartType,
+                  entries: this.entries,
+                  exportedAt: new Date().toISOString(),
+                };
+
+          const blob = new Blob([JSON.stringify(data, null, 2)], {
+            type: "application/json",
+          });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement("a");
+          a.href = url;
+          a.download = `graphique_${new Date().toISOString().slice(0, 10)}.json`;
+          a.click();
+          URL.revokeObjectURL(url);
+        }
+
+        importFromJSON(file) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            try {
+              const data = JSON.parse(e.target.result);
+              if (data.mode === "comparison") {
+                if (!Array.isArray(data.labels) || !Array.isArray(data.datasets))
+                  throw new Error("Format invalide");
+                this.mode = "comparison";
+                this.labels = data.labels;
+                this.datasets = data.datasets;
+                this.chartType = data.chartType || "bar";
+              } else {
+                if (!Array.isArray(data.entries)) throw new Error("Format invalide");
+                this.mode = "single";
+                this.entries = data.entries.filter(
+                  (entry) => entry.label && typeof entry.value === "number"
+                );
+                this.chartType = data.chartType || "bar";
+              }
+              this.displayMode = data.displayMode || "absolute";
+              this.saveToStorage();
+              this.renderAll();
+            } catch (err) {
+              alert("Fichier invalide. Vérifiez le format JSON.");
+            }
+          };
+          reader.readAsText(file);
+        }
+        // ─── AFFICHAGE kWh / % ──────────────────────────────────────
+
+        getDisplayValues() {
+          if (this.displayMode === "absolute") {
+            return this.entries.map((e) => e.value);
+          }
+          const total = this.entries.reduce((sum, e) => sum + e.value, 0);
+          if (total === 0) return this.entries.map(() => 0);
+          return this.entries.map((e) => Math.round((e.value / total) * 1000) / 10);
+        }
+
+        getUnit() {
+          return this.displayMode === "absolute" ? "kWh" : "%";
+        }
+
+        setDisplayMode(mode) {
+          if (mode === this.displayMode) return;
+          this.displayMode = mode;
+          this.updateDisplayToggle();
+          this.renderChart();
+          this.renderDataList();
+          this.saveToStorage();
+        }
+
+        updateDisplayToggle() {
+          if (!this.displayAbsoluteBtn || !this.displayPercentBtn) return;
+          if (this.displayMode === "absolute") {
+            this.displayAbsoluteBtn.classList.add("active");
+            this.displayPercentBtn.classList.remove("active");
+          } else {
+            this.displayPercentBtn.classList.add("active");
+            this.displayAbsoluteBtn.classList.remove("active");
+          }
+        }
+      }
+
+      new ChartGeneratorV2();
+    </script>
+  </body>
+</html>

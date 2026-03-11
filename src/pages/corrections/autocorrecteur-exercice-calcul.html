@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto-correction - Exercices de Technologie | TechnoDocs</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="stylesheet" href="/src/css/wizard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Styles spécifiques à l'auto-correction */
+        .correction-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: var(--space-8) var(--space-4);
+        }
+
+        .correction-header {
+            text-align: center;
+            margin-bottom: var(--space-8);
+        }
+
+        .correction-title {
+            font-family: var(--font-display);
+            font-size: var(--text-3xl);
+            color: var(--color-gray-900);
+            margin-bottom: var(--space-2);
+        }
+
+        .correction-subtitle {
+            color: var(--color-gray-500);
+            font-size: var(--text-lg);
+        }
+
+        /* Zone d'importation */
+        .import-zone {
+            background: var(--color-gray-50);
+            border: 2px dashed var(--color-gray-300);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            text-align: center;
+            margin-bottom: var(--space-8);
+            transition: var(--transition-base);
+        }
+
+        .import-zone:hover {
+            border-color: var(--color-primary);
+            background: var(--color-gray-100);
+        }
+
+        .import-zone__icon {
+            font-size: 3rem;
+            margin-bottom: var(--space-4);
+        }
+
+        .import-zone__title {
+            font-size: var(--text-xl);
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+            color: var(--color-gray-900);
+        }
+
+        .import-zone__text {
+            color: var(--color-gray-500);
+            margin-bottom: var(--space-4);
+        }
+
+        /* Résultats */
+        .results-card {
+            background: var(--color-white);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            box-shadow: var(--shadow-lg);
+            margin-bottom: var(--space-6);
+            display: none;
+        }
+
+        .results-card.show {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .results-header {
+            text-align: center;
+            padding: var(--space-6);
+            background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+            border-radius: var(--radius-lg);
+            color: white;
+            margin-bottom: var(--space-6);
+        }
+
+        .results-score {
+            font-size: 4rem;
+            font-weight: 700;
+            font-family: var(--font-display);
+            margin-bottom: var(--space-2);
+        }
+
+        .results-label {
+            font-size: var(--text-lg);
+            opacity: 0.9;
+        }
+
+        .student-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--space-4);
+            margin-bottom: var(--space-6);
+            padding: var(--space-4);
+            background: var(--color-gray-50);
+            border-radius: var(--radius-lg);
+        }
+
+        .student-info__item {
+            text-align: center;
+        }
+
+        .student-info__label {
+            font-size: var(--text-sm);
+            color: var(--color-gray-500);
+            margin-bottom: var(--space-1);
+        }
+
+        .student-info__value {
+            font-weight: 600;
+            color: var(--color-gray-900);
+        }
+
+        /* Détails par exercice */
+        .exercise-result {
+            margin-bottom: var(--space-6);
+            border: 1px solid var(--color-gray-200);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .exercise-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--space-4);
+            background: var(--color-gray-50);
+            cursor: pointer;
+            transition: var(--transition-fast);
+        }
+
+        .exercise-header:hover {
+            background: var(--color-gray-100);
+        }
+
+        .exercise-title {
+            font-weight: 600;
+            color: var(--color-gray-900);
+        }
+
+        .exercise-score {
+            font-weight: 700;
+            font-size: var(--text-lg);
+        }
+
+        .exercise-score.perfect {
+            color: var(--color-success);
+        }
+
+        .exercise-score.partial {
+            color: var(--color-accent);
+        }
+
+        .exercise-score.failed {
+            color: var(--color-error);
+        }
+
+        .exercise-details {
+            display: none;
+            padding: var(--space-4);
+        }
+
+        .exercise-details.show {
+            display: block;
+        }
+
+        .question-result {
+            padding: var(--space-3);
+            margin-bottom: var(--space-3);
+            border-radius: var(--radius-md);
+            border-left: 4px solid;
+        }
+
+        .question-result.correct {
+            background: #d1fae5;
+            border-color: var(--color-success);
+        }
+
+        .question-result.incorrect {
+            background: #fee2e2;
+            border-color: var(--color-error);
+        }
+
+        .question-result.partial {
+            background: #fef3c7;
+            border-color: var(--color-accent);
+        }
+
+        .question-number {
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+
+        .answer-comparison {
+            display: grid;
+            gap: var(--space-2);
+            font-size: var(--text-sm);
+        }
+
+        .answer-row {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        .answer-label {
+            font-weight: 500;
+            min-width: 100px;
+        }
+
+        .answer-value {
+            flex: 1;
+        }
+
+        /* Feedback général */
+        .feedback-section {
+            padding: var(--space-6);
+            background: var(--color-gray-50);
+            border-radius: var(--radius-lg);
+            margin-top: var(--space-6);
+        }
+
+        .feedback-title {
+            font-size: var(--text-xl);
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+            color: var(--color-gray-900);
+        }
+
+        .feedback-message {
+            line-height: 1.6;
+            color: var(--color-gray-700);
+        }
+
+        /* Actions */
+        .correction-actions {
+            display: flex;
+            gap: var(--space-3);
+            justify-content: center;
+            margin-top: var(--space-6);
+            flex-wrap: wrap;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div id="header-placeholder"></div>
+
+    <main class="correction-container">
+        <!-- En-tête -->
+        <div class="correction-header">
+            <h1 class="correction-title">🎯 Auto-correction</h1>
+            <p class="correction-subtitle">Importe ton fichier JSON pour obtenir ta note</p>
+        </div>
+
+        <!-- Zone d'importation -->
+        <div class="import-zone">
+            <div class="import-zone__icon">📂</div>
+            <h2 class="import-zone__title">Importe ton travail</h2>
+            <p class="import-zone__text">
+                Sélectionne le fichier JSON exporté depuis le formulaire d'exercices
+            </p>
+            <label class="btn btn--primary" style="cursor: pointer;">
+                📤 Choisir un fichier
+                <input type="file" accept=".json" id="fileInput" style="display: none;">
+            </label>
+        </div>
+
+        <!-- Résultats (masqués par défaut) -->
+        <div id="resultsCard" class="results-card">
+            <!-- En-tête avec note -->
+            <div class="results-header">
+                <div class="results-score" id="finalScore">--/20</div>
+                <div class="results-label">Note finale</div>
+            </div>
+
+            <!-- Infos élève -->
+            <div class="student-info">
+                <div class="student-info__item">
+                    <div class="student-info__label">Élève</div>
+                    <div class="student-info__value" id="studentName">--</div>
+                </div>
+                <div class="student-info__item">
+                    <div class="student-info__label">Classe</div>
+                    <div class="student-info__value" id="studentClass">--</div>
+                </div>
+                <div class="student-info__item">
+                    <div class="student-info__label">Date</div>
+                    <div class="student-info__value" id="projectDate">--</div>
+                </div>
+                <div class="student-info__item">
+                    <div class="student-info__label">Progression</div>
+                    <div class="student-info__value" id="progressValue">--</div>
+                </div>
+            </div>
+
+            <!-- Détails par exercice -->
+            <div id="exercisesResults"></div>
+
+            <!-- Feedback général -->
+            <div class="feedback-section">
+                <h3 class="feedback-title">💬 Commentaire général</h3>
+                <div class="feedback-message" id="feedbackMessage"></div>
+            </div>
+
+            <!-- Actions -->
+            <div class="correction-actions">
+                <button class="btn btn--secondary" onclick="printResults()">
+                    🖨️ Imprimer
+                </button>
+                <button class="btn btn--secondary" onclick="resetCorrection()">
+                    🔄 Nouvelle correction
+                </button>
+                <a href="/src/pages/corrections/correction-exercices-technologie.html" class="btn btn--primary">
+                    📖 Voir le corrigé détaillé
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script type="module" src="/src/js/main.js"></script>
+    <script type="module">
+        // Barème de correction (sur 20 points, 4 points par exercice)
+        const CORRECTION_KEY = {
+            // Exercice 1 : Téléchargement (4 points)
+            ex1_q1: { answer: 1500, tolerance: 0, points: 1.5, unit: 'Mo' },
+            ex1_q2: { answer: 75, tolerance: 0, points: 1.5, unit: 's' },
+            ex1_q3: { keywords: ['1', '15', 'minute', 'seconde'], points: 1, unit: '' },
+
+            // Exercice 2 : Électricité (4 points)
+            ex2_q1: { answer: 2250, tolerance: 0, points: 1.5, unit: 'Wh' },
+            ex2_q2: { answer: 2.25, tolerance: 0.01, points: 1.5, unit: 'kWh' },
+            ex2_q3: { answer: 0.34, tolerance: 0.01, points: 1, unit: '€' },
+
+            // Exercice 3 : Résolution (4 points)
+            ex3_q1: { answer: 2073600, tolerance: 0, points: 1.5, unit: 'pixels' },
+            ex3_q2: { answer: 5.93, tolerance: 0.1, points: 1.5, unit: 'Mo' },
+            ex3_q3: { keywords: ['2.25', '2,25', 'fois'], points: 1, unit: '' },
+
+            // Exercice 4 : Impression 3D (4 points)
+            ex4_q1: { answer: 3.75, tolerance: 0.01, points: 1.5, unit: '€' },
+            ex4_q2: { answer: 150, tolerance: 0, points: 1.5, unit: 'g' },
+            ex4_q3: { answer: 3, tolerance: 0, points: 1, unit: 'h' },
+
+            // Exercice 5 : Stockage (4 points)
+            ex5_q1: { answer: 8000, tolerance: 0, points: 1.5, unit: 'photos' },
+            ex5_q2: { keywords: ['oui', '700', '8000'], points: 1, unit: '' },
+            ex5_q3: { answer: 4, tolerance: 0, points: 1.5, unit: 'Go' }
+        };
+
+        const EXERCISE_TITLES = {
+            ex1: '📥 Exercice 1 : Vitesse de téléchargement',
+            ex2: '⚡ Exercice 2 : Consommation électrique',
+            ex3: '🖥️ Exercice 3 : Résolution d\'écran',
+            ex4: '🖨️ Exercice 4 : Impression 3D',
+            ex5: '📸 Exercice 5 : Stockage de photos'
+        };
+
+        // Fonction de vérification de réponse numérique
+        function checkNumericAnswer(studentAnswer, correctAnswer, tolerance) {
+            const student = parseFloat(studentAnswer);
+            const correct = parseFloat(correctAnswer);
+            
+            if (isNaN(student)) return { correct: false, partial: false };
+            
+            const diff = Math.abs(student - correct);
+            
+            if (diff === 0) return { correct: true, partial: false };
+            if (diff <= tolerance) return { correct: false, partial: true };
+            return { correct: false, partial: false };
+        }
+
+        // Fonction de vérification de réponse textuelle
+        function checkTextAnswer(studentAnswer, keywords) {
+            if (!studentAnswer || studentAnswer.trim() === '') {
+                return { correct: false, partial: false, foundKeywords: [] };
+            }
+
+            const normalized = studentAnswer.toLowerCase().trim();
+            const foundKeywords = keywords.filter(kw => 
+                normalized.includes(kw.toLowerCase())
+            );
+
+            const ratio = foundKeywords.length / keywords.length;
+            
+            if (ratio >= 0.8) return { correct: true, partial: false, foundKeywords };
+            if (ratio >= 0.5) return { correct: false, partial: true, foundKeywords };
+            return { correct: false, partial: false, foundKeywords };
+        }
+
+        // Fonction principale de correction
+        function correctExercises(formData) {
+            let totalScore = 0;
+            const results = {};
+            const exerciseScores = {};
+
+            // Parcourir toutes les questions
+            for (const [field, criteria] of Object.entries(CORRECTION_KEY)) {
+                const studentAnswer = formData[field];
+                let result;
+
+                if (criteria.answer !== undefined) {
+                    // Question numérique
+                    result = checkNumericAnswer(studentAnswer, criteria.answer, criteria.tolerance);
+                } else if (criteria.keywords) {
+                    // Question textuelle
+                    result = checkTextAnswer(studentAnswer, criteria.keywords);
+                }
+
+                // Calculer les points
+                let earnedPoints = 0;
+                if (result.correct) {
+                    earnedPoints = criteria.points;
+                } else if (result.partial) {
+                    earnedPoints = criteria.points * 0.5; // 50% des points en cas de réponse partielle
+                }
+
+                totalScore += earnedPoints;
+
+                // Stocker le résultat
+                results[field] = {
+                    studentAnswer: studentAnswer || 'Pas de réponse',
+                    correctAnswer: criteria.answer !== undefined 
+                        ? `${criteria.answer} ${criteria.unit}` 
+                        : `Mots-clés : ${criteria.keywords.join(', ')}`,
+                    earnedPoints,
+                    maxPoints: criteria.points,
+                    status: result.correct ? 'correct' : (result.partial ? 'partial' : 'incorrect'),
+                    foundKeywords: result.foundKeywords || []
+                };
+
+                // Calculer le score par exercice
+                const exNum = field.substring(0, 3); // ex1, ex2, etc.
+                if (!exerciseScores[exNum]) {
+                    exerciseScores[exNum] = { earned: 0, max: 0 };
+                }
+                exerciseScores[exNum].earned += earnedPoints;
+                exerciseScores[exNum].max += criteria.points;
+            }
+
+            // Arrondir la note finale sur 20
+            const finalScore = Math.round((totalScore / 20) * 20 * 10) / 10;
+
+            return {
+                finalScore,
+                totalScore,
+                maxScore: 20,
+                results,
+                exerciseScores
+            };
+        }
+
+        // Fonction d'affichage des résultats
+        function displayResults(correction, metadata) {
+            // Afficher la note
+            document.getElementById('finalScore').textContent = `${correction.finalScore}/20`;
+
+            // Afficher les infos élève
+            document.getElementById('studentName').textContent = metadata.studentName || 'Non renseigné';
+            document.getElementById('studentClass').textContent = metadata.studentClass || 'Non renseigné';
+            document.getElementById('projectDate').textContent = metadata.projectDate || 'Non renseigné';
+            document.getElementById('progressValue').textContent = `${metadata.progress || 0}%`;
+
+            // Afficher les détails par exercice
+            const exercisesContainer = document.getElementById('exercisesResults');
+            exercisesContainer.innerHTML = '';
+
+            for (const [exNum, scores] of Object.entries(correction.exerciseScores)) {
+                const exDiv = document.createElement('div');
+                exDiv.className = 'exercise-result';
+
+                const percentage = (scores.earned / scores.max) * 100;
+                let scoreClass = 'failed';
+                if (percentage === 100) scoreClass = 'perfect';
+                else if (percentage >= 50) scoreClass = 'partial';
+
+                exDiv.innerHTML = `
+                    <div class="exercise-header" onclick="toggleExerciseDetails('${exNum}')">
+                        <span class="exercise-title">${EXERCISE_TITLES[exNum]}</span>
+                        <span class="exercise-score ${scoreClass}">
+                            ${scores.earned.toFixed(1)}/${scores.max} pts
+                        </span>
+                    </div>
+                    <div class="exercise-details" id="details-${exNum}">
+                        ${generateExerciseDetails(exNum, correction.results)}
+                    </div>
+                `;
+
+                exercisesContainer.appendChild(exDiv);
+            }
+
+            // Feedback général
+            const feedbackMsg = getFeedbackMessage(correction.finalScore);
+            document.getElementById('feedbackMessage').textContent = feedbackMsg;
+
+            // Afficher la carte de résultats
+            document.getElementById('resultsCard').classList.add('show');
+
+            // Scroll vers les résultats
+            document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // Générer les détails d'un exercice
+        function generateExerciseDetails(exNum, results) {
+            let html = '';
+            const questions = Object.keys(results).filter(k => k.startsWith(exNum));
+
+            questions.forEach((field, index) => {
+                const result = results[field];
+                html += `
+                    <div class="question-result ${result.status}">
+                        <div class="question-number">Question ${index + 1}</div>
+                        <div class="answer-comparison">
+                            <div class="answer-row">
+                                <span class="answer-label">Ta réponse :</span>
+                                <span class="answer-value">${result.studentAnswer}</span>
+                            </div>
+                            <div class="answer-row">
+                                <span class="answer-label">Attendu :</span>
+                                <span class="answer-value">${result.correctAnswer}</span>
+                            </div>
+                            <div class="answer-row">
+                                <span class="answer-label">Points :</span>
+                                <span class="answer-value">${result.earnedPoints.toFixed(1)}/${result.maxPoints}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+
+            return html;
+        }
+
+        // Toggle des détails d'exercice
+        window.toggleExerciseDetails = function(exNum) {
+            const details = document.getElementById(`details-${exNum}`);
+            details.classList.toggle('show');
+        };
+
+        // Message de feedback selon la note
+        function getFeedbackMessage(score) {
+            if (score >= 18) {
+                return '🎉 Excellent travail ! Tu maîtrises parfaitement ces notions. Continue comme ça !';
+            } else if (score >= 15) {
+                return '👍 Très bien ! Tu as une bonne compréhension des exercices. Quelques petites erreurs à corriger.';
+            } else if (score >= 12) {
+                return '👌 Bien ! Tu as compris les principales notions, mais il y a encore des points à améliorer. Consulte le corrigé détaillé.';
+            } else if (score >= 10) {
+                return '💪 Travail moyen. Tu as des bases, mais il faut revoir certaines formules et méthodes. N\'hésite pas à demander de l\'aide.';
+            } else {
+                return '📚 Il faut encore travailler ces notions. Consulte attentivement le corrigé détaillé et refais les exercices. N\'hésite pas à poser des questions au professeur.';
+            }
+        }
+
+        // Gestion de l'import de fichier
+        document.getElementById('fileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(event) {
+                try {
+                    const data = JSON.parse(event.target.result);
+                    
+                    // Vérifier que c'est bien un fichier d'exercices
+                    if (!data.formData) {
+                        alert('❌ Fichier invalide. Assure-toi d\'importer le bon fichier JSON.');
+                        return;
+                    }
+
+                    // Corriger les exercices
+                    const correction = correctExercises(data.formData);
+                    
+                    // Afficher les résultats
+                    displayResults(correction, {
+                        studentName: data.studentName,
+                        studentClass: data.studentClass,
+                        projectDate: data.projectDate,
+                        progress: data.progress
+                    });
+
+                } catch (error) {
+                    console.error('Erreur lors de la lecture du fichier:', error);
+                    alert('❌ Erreur lors de la lecture du fichier. Format invalide.');
+                }
+            };
+
+            reader.readAsText(file);
+        });
+
+        // Fonction d'impression
+        window.printResults = function() {
+            window.print();
+        };
+
+        // Fonction de réinitialisation
+        window.resetCorrection = function() {
+            document.getElementById('resultsCard').classList.remove('show');
+            document.getElementById('fileInput').value = '';
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        };
+    </script>
+
+    <!-- Style pour l'impression -->
+    <style media="print">
+        .import-zone,
+        .correction-actions,
+        .header,
+        .footer {
+            display: none !important;
+        }
+
+        .results-card {
+            box-shadow: none !important;
+        }
+
+        .exercise-details {
+            display: block !important;
+        }
+    </style>
+</body>
+</html>

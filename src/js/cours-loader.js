@@ -31,6 +31,39 @@ export async function initCoursPage(configPath) {
     // Rendre le hero
     renderHero(config);
 
+    // Peuplement conditionnel du bandeau métadonnées (fiches d'activité)
+    const metaFields = {
+      ficheNiveau: config.niveau,
+      ficheSequence: config.sequence,
+      ficheSeance: config.seance,
+      ficheDuree: config.duree,
+      ficheCompetences: config.competences?.join(", "),
+    };
+
+    Object.entries(metaFields).forEach(([id, value]) => {
+      const el = document.getElementById(id);
+      if (el && value) el.textContent = value;
+    });
+
+    // Masquer le bandeau si aucun champ meta n'est présent (ex : fiches de révision)
+    const metaSection = document.getElementById("ficheMeta");
+    if (metaSection && !config.niveau) metaSection.style.display = "none";
+
+    // Peuplement conditionnel du header print (fiches d'activité)
+    const printFields = {
+      printNiveau: config.niveau,
+      printSequence: config.sequence,
+      printSeance: config.seance,
+      printDuree: config.duree,
+      printCompetences: config.competences?.join(", "),
+      printTitre: config.title,
+    };
+
+    Object.entries(printFields).forEach(([id, value]) => {
+      const el = document.getElementById(id);
+      if (el && value) el.textContent = value;
+    });
+
     // Rendre le carousel
     renderCarousel(config.slides);
 
@@ -407,6 +440,20 @@ async function loadMarkdownContent(path) {
 
       const htmlContent = marked.parse(markdownText);
 
+      // Debug: log whether the rendered HTML contains the fiche-img marker
+      try {
+        console.debug(
+          "[cours-loader] rendered HTML contains 'fiche-img':",
+          htmlContent.includes("fiche-img"),
+        );
+        console.debug(
+          "[cours-loader] rendered HTML preview:\n",
+          htmlContent.slice(0, 1200),
+        );
+      } catch (e) {
+        console.debug("[cours-loader] debug log error:", e);
+      }
+
       // Rendu sécurisé via DOMParser
       const parser = new DOMParser();
       const doc = parser.parseFromString(htmlContent, "text/html");
@@ -474,7 +521,7 @@ function generateTableOfContents(content) {
 
   const title = document.createElement("h2");
   title.className = "md-toc__title";
-  title.textContent = "📑 Sommaire";
+  title.textContent = "Sommaire";
   nav.appendChild(title);
 
   const list = document.createElement("ul");
