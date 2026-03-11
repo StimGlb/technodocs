@@ -25,7 +25,7 @@
 
 Le tableau ci-dessous présente la répartition de la consommation électrique annuelle d'un foyer français moyen.
 
-| Poste de consommation | Consommation annuelle (kWh) | Part (%) |
+| Poste de consommation | Consommation annuelle en kilo Watt Heure (kWh) | Part (%) |
 |---|---|---|
 | Chauffage électrique | 2 800 | 45 % |
 | Eau chaude sanitaire | 1 000 | 16 % |
@@ -46,7 +46,7 @@ Le tableau ci-dessous présente la répartition de la consommation électrique a
 
 <div class="zone-reponse zone-reponse--compact zone-reponse--lignes"></div>
 
-**1.3** Calcule le **coût annuel** de la veille électrique (380 kWh × 0,25 €/kWh).
+**1.3** Calcule le **coût annuel** de la veille électrique (tarif moyen du kiloWattHeure en France : 0,25 €/kWh).
 
 <div class="zone-reponse zone-reponse--compact zone-reponse--lignes"></div>
 

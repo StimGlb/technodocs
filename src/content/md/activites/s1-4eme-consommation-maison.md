@@ -65,7 +65,7 @@ Réalise le graphique dans l'espace ci-dessous ou sur papier millimétré.
 
 <div class="zone-reponse zone-reponse--large zone-reponse--lignes"></div>
 
-**1.3** La famille Kiagi reçoit une facture EDF de **186 €** pour 2 mois de consommation.
+**1.3** La famille Kiagi reçoit une facture EDF de **313,11 €** pour 2 mois de consommation.
 
 - Quel est leur prix au kWh ? *(voir document facture fourni)* → Prix = **………… €/kWh**
 - Quelle est leur consommation sur ces 2 mois ? → Consommation = **………… kWh**
