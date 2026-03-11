@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -15,7 +15,6 @@
     />
   </head>
   <body>
-
     <!-- ============================================================
          1. PASSWORD OVERLAY
          ============================================================ -->
@@ -40,7 +39,6 @@
          2. WIZARD PRINCIPAL
          ============================================================ -->
     <main class="wizard is-locked" id="wizardMain">
-
       <!-- 2.1 BANNER -->
       <div class="wizard__banner">
         <div class="wizard__banner-icon">⚡</div>
@@ -71,14 +69,12 @@
             <label for="studentClass">Classe</label>
             <select id="studentClass" data-field="studentClass" required>
               <option value="">— Sélectionner —</option>
-              <optgroup label="3ème">
-                <option value="302">3ème 2</option>
-                <option value="303">3ème 3</option>
-                <option value="304">3ème 4</option>
-                <option value="305">3ème 5</option>
-                <option value="306">3ème 6</option>
-                <option value="307">3ème 7</option>
-                <option value="308">3ème 8</option>
+              <optgroup label="4ème">
+                <option value="401">4ème 1</option>
+                <option value="402">4ème 2</option>
+                <option value="403">4ème 3</option>
+                <option value="404">4ème 4</option>
+                <option value="405">4ème 5</option>
               </optgroup>
             </select>
           </div>
@@ -101,7 +97,9 @@
             <span class="wizard__save-dot"></span>
             <span class="wizard__save-text">Auto-save</span>
           </div>
-          <span class="wizard__progress-percentage" id="progressPercentage">0%</span>
+          <span class="wizard__progress-percentage" id="progressPercentage"
+            >0%</span
+          >
         </div>
         <div class="wizard__progress-bar">
           <div
@@ -132,7 +130,6 @@
 
       <!-- 2.4 CONTAINER DES PHASES -->
       <div class="wizard__container">
-
         <!-- ============================================================
              PHASE 1 — Activité 1 : Identifier les usages
              ============================================================ -->
@@ -163,8 +160,8 @@
               Q1.1 — Usages et sources d'énergie
             </h3>
             <p class="wizard__question-text">
-              Citez quatre usages de l'énergie dans un logement et indiquez
-              la source d'énergie associée à chacun.
+              Citez quatre usages de l'énergie dans un logement et indiquez la
+              source d'énergie associée à chacun.
             </p>
             <div class="wizard__table-wrapper">
               <table class="wizard__table">
@@ -234,9 +231,7 @@
               <span class="wizard__question-badge">Réponse rédigée</span>
               <span class="wizard__question-points">3 points</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q1.2 — Usage principal
-            </h3>
+            <h3 class="wizard__question-title">Q1.2 — Usage principal</h3>
             <p class="wizard__question-text">
               Quel usage représente généralement la plus grande part de la
               consommation d'énergie dans un logement français ? Justifiez.
@@ -254,10 +249,7 @@
 
           <div class="wizard__phase-nav">
             <span></span>
-            <button
-              class="btn btn--primary"
-              onclick="wizardGoToPhase(2)"
-            >
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
               Activité suivante →
             </button>
           </div>
@@ -288,11 +280,10 @@
               <span class="wizard__question-badge">Relevé</span>
               <span class="wizard__question-points">2 points</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q2.1 — Relevé de la facture
-            </h3>
+            <h3 class="wizard__question-title">Q2.1 — Relevé de la facture</h3>
             <p class="wizard__question-text">
-              Relevez les informations suivantes sur la facture fournie par votre enseignant(e).
+              Relevez les informations suivantes sur la facture fournie par
+              votre enseignant(e).
             </p>
             <!-- VÉRIFIER : image de la facture à insérer — src non disponible -->
             <div class="wizard__table-wrapper">
@@ -392,9 +383,7 @@
               <span class="wizard__question-badge">Calcul</span>
               <span class="wizard__question-points">2 points</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q2.2 — Coût moyen du kWh
-            </h3>
+            <h3 class="wizard__question-title">Q2.2 — Coût moyen du kWh</h3>
             <p class="wizard__question-text">
               Calculez le coût moyen du kWh TTC à partir des données relevées.
               Montrez votre calcul.
@@ -416,9 +405,7 @@
               <span class="wizard__question-badge">Réponse rédigée</span>
               <span class="wizard__question-points">2 points</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q2.3 — L'abonnement
-            </h3>
+            <h3 class="wizard__question-title">Q2.3 — L'abonnement</h3>
             <p class="wizard__question-text">
               Que représente l'abonnement sur la facture ? En quoi est-il
               différent de la consommation facturée ?
@@ -435,16 +422,10 @@
           </div>
 
           <div class="wizard__phase-nav">
-            <button
-              class="btn btn--secondary"
-              onclick="wizardGoToPhase(1)"
-            >
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
               ← Activité précédente
             </button>
-            <button
-              class="btn btn--primary"
-              onclick="wizardGoToPhase(3)"
-            >
+            <button class="btn btn--primary" onclick="wizardGoToPhase(3)">
               Activité suivante →
             </button>
           </div>
@@ -633,12 +614,10 @@
               <span class="wizard__question-badge">Réponse rédigée</span>
               <span class="wizard__question-points">1 point</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q3.3 — Poste prioritaire
-            </h3>
+            <h3 class="wizard__question-title">Q3.3 — Poste prioritaire</h3>
             <p class="wizard__question-text">
-              Quel poste conseilleriez-vous à la famille de réduire en priorité ?
-              Justifiez en vous appuyant sur les données du tableau.
+              Quel poste conseilleriez-vous à la famille de réduire en priorité
+              ? Justifiez en vous appuyant sur les données du tableau.
             </p>
             <textarea
               class="wizard__textarea"
@@ -652,16 +631,10 @@
           </div>
 
           <div class="wizard__phase-nav">
-            <button
-              class="btn btn--secondary"
-              onclick="wizardGoToPhase(2)"
-            >
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
               ← Activité précédente
             </button>
-            <button
-              class="btn btn--primary"
-              onclick="wizardGoToPhase(4)"
-            >
+            <button class="btn btn--primary" onclick="wizardGoToPhase(4)">
               Conclusion →
             </button>
           </div>
@@ -693,12 +666,10 @@
               <span class="wizard__question-badge">Synthèse</span>
               <span class="wizard__question-points">2 points</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q4.1 — Bilan synthétique
-            </h3>
+            <h3 class="wizard__question-title">Q4.1 — Bilan synthétique</h3>
             <p class="wizard__question-text">
-              Rédigez un bilan synthétique des consommations de la famille
-              (6 à 8 lignes).
+              Rédigez un bilan synthétique des consommations de la famille (6 à
+              8 lignes).
             </p>
             <textarea
               class="wizard__textarea"
@@ -717,9 +688,7 @@
               <span class="wizard__question-badge">Préconisations</span>
               <span class="wizard__question-points">1 point</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q4.2 — Actions concrètes
-            </h3>
+            <h3 class="wizard__question-title">Q4.2 — Actions concrètes</h3>
             <p class="wizard__question-text">
               Proposez deux actions concrètes et argumentées pour réduire la
               consommation d'énergie du logement.
@@ -736,24 +705,16 @@
           </div>
 
           <div class="wizard__phase-nav">
-            <button
-              class="btn btn--secondary"
-              onclick="wizardGoToPhase(3)"
-            >
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(3)">
               ← Activité précédente
             </button>
-            <button
-              class="btn btn--success"
-              onclick="wizardComplete()"
-            >
+            <button class="btn btn--success" onclick="wizardComplete()">
               ✔ Envoyer mon devoir
             </button>
           </div>
         </section>
-
       </div>
       <!-- /.wizard__container -->
-
     </main>
     <!-- /.wizard -->
 
@@ -767,10 +728,10 @@
       import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
 
       window.checkPassword = function () {
-        const input   = document.getElementById("passwordInput");
-        const error   = document.getElementById("errorMessage");
+        const input = document.getElementById("passwordInput");
+        const error = document.getElementById("errorMessage");
         const overlay = document.getElementById("passwordOverlay");
-        const main    = document.querySelector("main.wizard");
+        const main = document.querySelector("main.wizard");
 
         if (!input || !error || !overlay || !main) return;
 
@@ -786,7 +747,8 @@
         }
       };
 
-      document.getElementById("passwordInput")
+      document
+        .getElementById("passwordInput")
         ?.addEventListener("keypress", (e) => {
           if (e.key === "Enter") {
             e.preventDefault();
@@ -799,6 +761,5 @@
       type="module"
       src="/src/js/wizard-consommation-maison.js"
     ></script>
-
   </body>
 </html>
