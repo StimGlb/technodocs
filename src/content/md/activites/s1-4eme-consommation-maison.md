@@ -16,21 +16,20 @@
         La famille Kiagi vient d'emménager dans une nouvelle maison. Ils souhaitent équiper leur logement d'appareils connectés pour réduire leur consommation électrique : ampoules intelligentes, prises programmables, thermostat connecté…
         Avant d'investir, ils voudraient une analyse complète de leur consommation et des recommandations argumentées.
     </div>
-    <div class="fiche-img fiche-img--16-9">
-        <img src="/src/assets/fiches/maison-consommation.png"
+    <div class="fiche-img">
+        <img src="/src/assets/fiches/4e-maison-consommation.png"
                 alt="Utilisation de l'électricité dans une maison"
                 loading="lazy"
                 decoding="async">
-            <span class="fiche-img__caption">Utilisation de l'électricité dans une maison</span>
+            <span class="fiche-img__caption">Données : Répartition de la consommation électrique annuelle d'un foyer français moyen.</span>
     </div>
 </div>
 
-**Travail demandé :**
+**Travail demandé : <strong>Collecter des données, les analyser et produire un bilan de consommation pour conseiller la famille Kiagi.</strong> Choisir une représentation graphique adaptée et la réaliser. Comparer des OST en prenant en compte les incidences environnementales. Argumenter un choix d'équipement.**
 
-- <strong>Collecter des données, les analyser et produire un bilan de consommation pour conseiller la famille Kiagi.</strong>
-- Choisir une représentation graphique adaptée et la réaliser
-- Comparer des OST en prenant en compte les incidences environnementales
-- Crgumenter un choix d'équipement
+<!-- ════════════════════════════════════════ -->
+<!-- ACTIVITÉ 1                              -->
+<!-- ════════════════════════════════════════ -->
 
 <div class="fiche-activite">
 <div class="fiche-activite__titre">Activité 1 : Collecter et représenter les données de consommation <span class="fiche-ordi">Sur ordinateur</span></div>
@@ -56,28 +55,16 @@
 **1.2** Avant d'utiliser le générateur de graphiques, choisis le type de représentation graphique le plus adapté pour présenter ces données. Justifie ton choix.
 
 Type de graphique choisi :
-<div class="zone-reponse zone-reponse--lignes"></div>
+<div class="zone-reponse zone-reponse--compact"></div>
 
 Justification :
-<div class="zone-reponse zone-reponse--lignes"></div>
+<div class="zone-reponse zzone-reponse--compact"></div>
 
-Réalise le graphique dans l'espace ci-dessous ou sur papier millimétré.
-
-<div class="zone-reponse zone-reponse--large zone-reponse--lignes"></div>
-
-**1.3** La famille Kiagi reçoit une facture EDF de **186 €** pour 2 mois de consommation.
+**1.3** La famille Kiagi reçoit une facture EDF de **313,11 €** pour 2 mois de consommation.
 
 - Quel est leur prix au kWh ? *(voir document facture fourni)* → Prix = **………… €/kWh**
 - Quelle est leur consommation sur ces 2 mois ? → Consommation = **………… kWh**
 - Estime leur consommation annuelle et compare-la à la moyenne nationale : **………… kWh/an**
-
-</div>
-<div class="fiche-deux-colonnes__droite">
-
-<div class="zone-illustration">(Facture EDF fictive — famille Kiagi)</div>
-
-</div>
-</div>
 
 </div>
 
@@ -117,7 +104,7 @@ Recommandation :
 <div class="zone-reponse zone-reponse--lignes"></div>
 
 Argumentaire :
-<div class="zone-reponse zone-reponse--medium zone-reponse--lignes"></div>
+<div class="zone-reponse zone-reponse--lignes"></div>
 
 </div>
 
@@ -149,6 +136,6 @@ Source :
 
 En **5 à 8 lignes**, rédige un conseil global à la famille Kiagi sur les équipements à privilégier pour réduire leur consommation électrique. Tu dois mentionner au moins **deux critères de choix** différents et **une limite** des équipements connectés.
 
-<div class="zone-reponse zone-reponse--large zone-reponse--lignes"></div>
+<div class="zone-reponse zone-reponse--medium zone-reponse--lignes"></div>
 
 </div>
