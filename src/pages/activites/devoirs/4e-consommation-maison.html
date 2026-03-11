@@ -1,0 +1,1488 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Maison connectée — Consommation électrique | 4ème</title>
+  <link rel="stylesheet" href="/src/css/style.css" />
+  <link rel="stylesheet" href="/src/css/wizard.css" />
+</head>
+
+<!--
+  ╔══════════════════════════════════════════════════════════════════╗
+  ║  POINTS À VÉRIFIER AVANT MISE EN LIGNE                         ║
+  ╠══════════════════════════════════════════════════════════════════╣
+  ║  VÉRIFIER 1 : Chemin image                                      ║
+  ║    - Fiche source      : /src/assets/fiches/4e-maison-          ║
+  ║                          consommation.png                       ║
+  ║    - Paramètre fourni  : /src/assets/fiches/maison-             ║
+  ║                          consommation.png                       ║
+  ║    → Les deux chemins sont utilisés ci-dessous avec commentaire ║
+  ║      Conserver le bon, supprimer l'autre.                       ║
+  ║                                                                  ║
+  ║  VÉRIFIER 2 : Document "facture EDF" (Act. 1.3)                 ║
+  ║    - La fiche mentionne "document facture fourni"               ║
+  ║    - Aucun fichier facture n'est référencé dans les paramètres  ║
+  ║    - À ajouter comme ressource liée ou image supplémentaire     ║
+  ║                                                                  ║
+  ║  VÉRIFIER 3 : "Fiches techniques à disposition" (Act. 2.1)      ║
+  ║    - La fiche mentionne des fiches techniques pour le           ║
+  ║      tableau comparatif ampoules                                ║
+  ║    - Aucun fichier source n'est référencé dans les paramètres   ║
+  ║    - À ajouter comme ressource liée                             ║
+  ║                                                                  ║
+  ║  VÉRIFIER 4 : Barème par phase                                  ║
+  ║    - Non précisé dans la fiche source ni dans les paramètres    ║
+  ║    - Sous-titre banner affiche uniquement "Niveau 4ème •        ║
+  ║      Séquence 1" sans barème                                    ║
+  ╚══════════════════════════════════════════════════════════════════╝
+-->
+
+<body>
+
+  <!-- ============================================================ -->
+  <!-- 1. PASSWORD OVERLAY                                          -->
+  <!-- ============================================================ -->
+  <div id="passwordOverlay" class="password-overlay">
+    <div class="password-overlay__card">
+      <h2 class="password-overlay__title">Accès au devoir</h2>
+      <p class="password-overlay__desc">
+        Saisis le mot de passe fourni par ton professeur pour commencer.
+      </p>
+      <div class="password-overlay__field">
+        <label for="passwordInput" class="password-overlay__label">
+          Mot de passe
+        </label>
+        <input
+          type="password"
+          id="passwordInput"
+          class="password-overlay__input"
+          placeholder="Mot de passe…"
+          autocomplete="off"
+        />
+      </div>
+      <p id="passwordError" class="password-overlay__error" aria-live="polite"></p>
+      <button id="passwordSubmit" class="password-overlay__btn">
+        Accéder au devoir
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================================ -->
+  <!-- 2. WIZARD PRINCIPAL                                          -->
+  <!-- ============================================================ -->
+  <main class="wizard is-locked" id="wizardMain">
+
+    <!-- 2.1 BANNER ------------------------------------------------ -->
+    <header class="wizard__banner">
+      <div class="wizard__banner-content">
+        <h1 class="wizard__banner-title">Maison connectée — Consommation électrique</h1>
+        <p class="wizard__banner-subtitle">Niveau 4ème • Séquence 1</p>
+      </div>
+    </header>
+
+    <!-- 2.2 INFORMATIONS ÉLÈVE ------------------------------------ -->
+    <section class="wizard__student-info">
+      <div class="wizard__student-info-inner">
+
+        <div class="wizard__field">
+          <label for="studentName" class="wizard__label">Nom et prénom</label>
+          <input
+            type="text"
+            id="studentName"
+            class="wizard__input"
+            data-field="studentName"
+            placeholder="Ton nom et prénom"
+            maxlength="100"
+            autocomplete="name"
+          />
+        </div>
+
+        <div class="wizard__field">
+          <label for="studentClass" class="wizard__label">Classe</label>
+          <select
+            id="studentClass"
+            class="wizard__input wizard__select"
+            data-field="studentClass"
+          >
+            <option value="">— Sélectionne ta classe —</option>
+            <optgroup label="4ème">
+              <option value="4A">4ème A</option>
+              <option value="4B">4ème B</option>
+              <option value="4C">4ème C</option>
+              <option value="4D">4ème D</option>
+              <option value="4E">4ème E</option>
+              <option value="4F">4ème F</option>
+            </optgroup>
+          </select>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- 2.3 BARRE DE PROGRESSION + NAVIGATION -------------------- -->
+    <nav class="wizard__progress" aria-label="Navigation entre les phases">
+      <div class="wizard__nav">
+        <button
+          class="wizard__nav-btn is-active"
+          onclick="wizardGoToPhase(1)"
+          data-phase-btn="1"
+          aria-label="Aller à la phase 1"
+        >
+          <span class="wizard__nav-num">1</span>
+          <span class="wizard__nav-label">Collecte et représentation</span>
+        </button>
+        <button
+          class="wizard__nav-btn"
+          onclick="wizardGoToPhase(2)"
+          data-phase-btn="2"
+          aria-label="Aller à la phase 2"
+        >
+          <span class="wizard__nav-num">2</span>
+          <span class="wizard__nav-label">Comparaison des équipements</span>
+        </button>
+        <button
+          class="wizard__nav-btn"
+          onclick="wizardGoToPhase(3)"
+          data-phase-btn="3"
+          aria-label="Aller à la phase 3"
+        >
+          <span class="wizard__nav-num">3</span>
+          <span class="wizard__nav-label">Cycle de vie et éco-conception</span>
+        </button>
+        <button
+          class="wizard__nav-btn"
+          onclick="wizardGoToPhase(4)"
+          data-phase-btn="4"
+          aria-label="Aller à la phase 4"
+        >
+          <span class="wizard__nav-num">4</span>
+          <span class="wizard__nav-label">Bilan</span>
+        </button>
+      </div>
+    </nav>
+
+    <!-- 2.4 CONTENEUR DES PHASES ---------------------------------- -->
+    <div class="wizard__container">
+
+      <!-- ======================================================== -->
+      <!-- PHASE 1 — Collecte et représentation                     -->
+      <!-- ======================================================== -->
+      <section class="wizard__phase" data-phase="1">
+
+        <!-- Mise en situation -->
+        <div class="wizard__situation">
+          <h2 class="wizard__situation-title">
+            Activité 1 — Collecter et représenter les données de consommation
+            <span class="wizard__situation-badge">Sur ordinateur</span>
+          </h2>
+          <div class="wizard__situation-body">
+            <p>
+              La famille Kiagi vient d'emménager dans une nouvelle maison. Ils souhaitent équiper
+              leur logement d'appareils connectés pour réduire leur consommation électrique :
+              ampoules intelligentes, prises programmables, thermostat connecté…
+              Avant d'investir, ils voudraient une analyse complète de leur consommation
+              et des recommandations argumentées.
+            </p>
+            <p>
+              <strong>Travail demandé :</strong> Collecter des données, les analyser et produire
+              un bilan de consommation pour conseiller la famille Kiagi. Choisir une représentation
+              graphique adaptée et la réaliser. Comparer des OST en prenant en compte les incidences
+              environnementales. Argumenter un choix d'équipement.
+            </p>
+          </div>
+
+          <!-- Image de la fiche source -->
+          <figure class="wizard__visual">
+            <!--
+              VÉRIFIER 1 : deux chemins d'image possibles.
+              Chemin fiche source  → /src/assets/fiches/4e-maison-consommation.png
+              Chemin paramètre     → /src/assets/fiches/maison-consommation.png
+              Conserver le bon et supprimer l'attribut src incorrect.
+            -->
+            <img
+              src="/src/assets/fiches/4e-maison-consommation.png"
+              alt="Utilisation de l'électricité dans une maison"
+              class="wizard__visual-img"
+              loading="lazy"
+              decoding="async"
+            />
+            <figcaption class="wizard__visual-caption">
+              Données : Répartition de la consommation électrique annuelle d'un foyer français moyen.
+            </figcaption>
+          </figure>
+        </div>
+
+        <!-- ── Question 1.1 ── -->
+        <div class="wizard__question">
+          <h3 class="wizard__question-title">
+            <span class="wizard__question-num">1.1</span>
+            Recherche de la consommation annuelle par poste
+          </h3>
+          <p class="wizard__question-body">
+            À partir des sites suivants (ou de toute source fiable), recherche la consommation
+            annuelle moyenne en kWh des postes listés ci-dessous pour un foyer français.
+          </p>
+          <p class="wizard__question-hint">
+            <em>Sources suggérées : ademe.fr, edf.fr, ecologie.gouv.fr</em>
+          </p>
+
+          <!-- Tableau interactif 1.1 -->
+          <div class="wizard__table-wrapper">
+            <table class="wizard__table">
+              <thead>
+                <tr>
+                  <th class="wizard__table-label" scope="col">Poste de consommation</th>
+                  <th scope="col">Consommation annuelle (kWh)</th>
+                  <th scope="col">Source utilisée</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr>
+                  <td class="wizard__table-label">Chauffage électrique</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_chauffage_kwh"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Chauffage électrique — Consommation annuelle (kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_chauffage_source"
+                      placeholder="Source"
+                      maxlength="80"
+                      aria-label="Chauffage électrique — Source utilisée"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">Eau chaude sanitaire</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_eauchaude_kwh"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Eau chaude sanitaire — Consommation annuelle (kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_eauchaude_source"
+                      placeholder="Source"
+                      maxlength="80"
+                      aria-label="Eau chaude sanitaire — Source utilisée"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">Électroménager</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_electromenager_kwh"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Électroménager — Consommation annuelle (kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_electromenager_source"
+                      placeholder="Source"
+                      maxlength="80"
+                      aria-label="Électroménager — Source utilisée"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">Éclairage</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_eclairage_kwh"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Éclairage — Consommation annuelle (kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_eclairage_source"
+                      placeholder="Source"
+                      maxlength="80"
+                      aria-label="Éclairage — Source utilisée"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">Audiovisuel</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_audiovisuel_kwh"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Audiovisuel — Consommation annuelle (kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_audiovisuel_source"
+                      placeholder="Source"
+                      maxlength="80"
+                      aria-label="Audiovisuel — Source utilisée"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">Cuisson</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_cuisson_kwh"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Cuisson — Consommation annuelle (kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_cuisson_source"
+                      placeholder="Source"
+                      maxlength="80"
+                      aria-label="Cuisson — Source utilisée"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">Veille des appareils</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_veille_kwh"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Veille des appareils — Consommation annuelle (kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_veille_source"
+                      placeholder="Source"
+                      maxlength="80"
+                      aria-label="Veille des appareils — Source utilisée"
+                    />
+                  </td>
+                </tr>
+
+                <!-- Ligne Total -->
+                <tr class="wizard__table-row--total">
+                  <td class="wizard__table-label"><strong>Total</strong></td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q1_total_kwh"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Total — Consommation annuelle (kWh)"
+                    />
+                  </td>
+                  <td class="wizard__table-label">—</td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <!-- fin tableau 1.1 -->
+        </div>
+
+        <!-- ── Question 1.2 ── -->
+        <div class="wizard__question">
+          <h3 class="wizard__question-title">
+            <span class="wizard__question-num">1.2</span>
+            Choix de la représentation graphique
+          </h3>
+          <p class="wizard__question-body">
+            Avant d'utiliser le générateur de graphiques, choisis le type de représentation
+            graphique le plus adapté pour présenter ces données. Justifie ton choix.
+          </p>
+
+          <div class="wizard__field">
+            <label for="q1_graphique_type" class="wizard__label">
+              Type de graphique choisi :
+            </label>
+            <textarea
+              id="q1_graphique_type"
+              class="wizard__textarea"
+              data-field="q1_graphique_type"
+              rows="2"
+              maxlength="200"
+              placeholder="Ex. : diagramme circulaire, histogramme…"
+            ></textarea>
+            <span class="wizard__char-hint">200 caractères max.</span>
+          </div>
+
+          <div class="wizard__field">
+            <label for="q1_graphique_justif" class="wizard__label">
+              Justification :
+            </label>
+            <textarea
+              id="q1_graphique_justif"
+              class="wizard__textarea"
+              data-field="q1_graphique_justif"
+              rows="3"
+              maxlength="300"
+              placeholder="Explique pourquoi ce type de graphique est le plus adapté…"
+            ></textarea>
+            <span class="wizard__char-hint">300 caractères max.</span>
+          </div>
+        </div>
+
+        <!-- ── Question 1.3 ── -->
+        <div class="wizard__question">
+          <h3 class="wizard__question-title">
+            <span class="wizard__question-num">1.3</span>
+            Analyse de la facture EDF de la famille Kiagi
+          </h3>
+          <p class="wizard__question-body">
+            La famille Kiagi reçoit une facture EDF de <strong>313,11 €</strong>
+            pour 2 mois de consommation.
+          </p>
+          <!--
+            VÉRIFIER 2 : La fiche mentionne "voir document facture fourni".
+            Aucune ressource facture n'est référencée dans les paramètres de conversion.
+            Ajouter le lien ou l'image de la facture ici si disponible.
+          -->
+          <p class="wizard__question-hint">
+            <em>Consulte le document facture fourni par ton professeur.</em>
+          </p>
+
+          <div class="wizard__field">
+            <label for="q1_prix_kwh" class="wizard__label">
+              Quel est leur prix au kWh ?
+              <span class="wizard__label-hint">(voir document facture fourni)</span>
+            </label>
+            <div class="wizard__inline-field">
+              <span class="wizard__inline-prefix">Prix =</span>
+              <input
+                type="text"
+                id="q1_prix_kwh"
+                class="wizard__input wizard__input--inline"
+                data-field="q1_prix_kwh"
+                placeholder="0,00"
+                maxlength="20"
+                aria-label="Prix au kWh en euros"
+              />
+              <span class="wizard__inline-suffix">€/kWh</span>
+            </div>
+          </div>
+
+          <div class="wizard__field">
+            <label for="q1_conso_2mois" class="wizard__label">
+              Quelle est leur consommation sur ces 2 mois ?
+            </label>
+            <div class="wizard__inline-field">
+              <span class="wizard__inline-prefix">Consommation =</span>
+              <input
+                type="text"
+                id="q1_conso_2mois"
+                class="wizard__input wizard__input--inline"
+                data-field="q1_conso_2mois"
+                placeholder="0"
+                maxlength="20"
+                aria-label="Consommation sur 2 mois en kWh"
+              />
+              <span class="wizard__inline-suffix">kWh</span>
+            </div>
+          </div>
+
+          <div class="wizard__field">
+            <label for="q1_conso_annuelle" class="wizard__label">
+              Estime leur consommation annuelle et compare-la à la moyenne nationale :
+            </label>
+            <textarea
+              id="q1_conso_annuelle"
+              class="wizard__textarea"
+              data-field="q1_conso_annuelle"
+              rows="2"
+              maxlength="200"
+              placeholder="Ex. : … kWh/an — la famille Kiagi consomme … par rapport à la moyenne nationale de … kWh/an…"
+            ></textarea>
+            <span class="wizard__char-hint">200 caractères max.</span>
+          </div>
+        </div>
+
+        <!-- Bouton phase suivante -->
+        <div class="wizard__actions">
+          <button
+            class="wizard__btn wizard__btn--next"
+            onclick="wizardGoToPhase(2)"
+          >
+            Phase suivante →
+          </button>
+        </div>
+
+      </section>
+      <!-- fin phase 1 -->
+
+      <!-- ======================================================== -->
+      <!-- PHASE 2 — Comparaison des équipements connectés          -->
+      <!-- ======================================================== -->
+      <section class="wizard__phase" data-phase="2" hidden>
+
+        <!-- Mise en situation -->
+        <div class="wizard__situation">
+          <h2 class="wizard__situation-title">
+            Activité 2 — Comparer des équipements connectés
+          </h2>
+          <div class="wizard__situation-body">
+            <p>
+              La famille Kiagi hésite entre plusieurs équipements pour l'éclairage de leur salon.
+            </p>
+          </div>
+        </div>
+
+        <!-- ── Question 2.1 ── -->
+        <div class="wizard__question">
+          <h3 class="wizard__question-title">
+            <span class="wizard__question-num">2.1</span>
+            Tableau comparatif des types d'ampoules
+          </h3>
+          <p class="wizard__question-body">
+            Complète le tableau comparatif suivant en utilisant les fiches techniques à disposition.
+          </p>
+          <!--
+            VÉRIFIER 3 : La fiche mentionne "fiches techniques à disposition".
+            Aucune ressource n'est référencée dans les paramètres de conversion.
+            Ajouter le lien ou les images des fiches techniques ici si disponibles.
+          -->
+
+          <!-- Tableau interactif 2.1 -->
+          <div class="wizard__table-wrapper">
+            <table class="wizard__table wizard__table--wide">
+              <thead>
+                <tr>
+                  <th class="wizard__table-label" scope="col">Critère</th>
+                  <th scope="col">Ampoule incandescente</th>
+                  <th scope="col">Ampoule fluocompacte</th>
+                  <th scope="col">Ampoule LED</th>
+                  <th scope="col">LED connectée</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <!-- Puissance -->
+                <tr>
+                  <td class="wizard__table-label">Puissance (W)</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_puissance_incan"
+                      placeholder="W"
+                      maxlength="80"
+                      aria-label="Ampoule incandescente — Puissance (W)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_puissance_fluo"
+                      placeholder="W"
+                      maxlength="80"
+                      aria-label="Ampoule fluocompacte — Puissance (W)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_puissance_led"
+                      placeholder="W"
+                      maxlength="80"
+                      aria-label="Ampoule LED — Puissance (W)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_puissance_led_connect"
+                      placeholder="W"
+                      maxlength="80"
+                      aria-label="LED connectée — Puissance (W)"
+                    />
+                  </td>
+                </tr>
+
+                <!-- Durée de vie -->
+                <tr>
+                  <td class="wizard__table-label">Durée de vie (h)</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_duree_vie_incan"
+                      placeholder="h"
+                      maxlength="80"
+                      aria-label="Ampoule incandescente — Durée de vie (h)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_duree_vie_fluo"
+                      placeholder="h"
+                      maxlength="80"
+                      aria-label="Ampoule fluocompacte — Durée de vie (h)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_duree_vie_led"
+                      placeholder="h"
+                      maxlength="80"
+                      aria-label="Ampoule LED — Durée de vie (h)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_duree_vie_led_connect"
+                      placeholder="h"
+                      maxlength="80"
+                      aria-label="LED connectée — Durée de vie (h)"
+                    />
+                  </td>
+                </tr>
+
+                <!-- Prix unitaire -->
+                <tr>
+                  <td class="wizard__table-label">Prix unitaire (€)</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_prix_incan"
+                      placeholder="€"
+                      maxlength="80"
+                      aria-label="Ampoule incandescente — Prix unitaire (€)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_prix_fluo"
+                      placeholder="€"
+                      maxlength="80"
+                      aria-label="Ampoule fluocompacte — Prix unitaire (€)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_prix_led"
+                      placeholder="€"
+                      maxlength="80"
+                      aria-label="Ampoule LED — Prix unitaire (€)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_prix_led_connect"
+                      placeholder="€"
+                      maxlength="80"
+                      aria-label="LED connectée — Prix unitaire (€)"
+                    />
+                  </td>
+                </tr>
+
+                <!-- Consommation sur 10 ans -->
+                <tr>
+                  <td class="wizard__table-label">Consommation sur 10 ans (kWh)</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_conso_10ans_incan"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Ampoule incandescente — Consommation sur 10 ans (kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_conso_10ans_fluo"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Ampoule fluocompacte — Consommation sur 10 ans (kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_conso_10ans_led"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Ampoule LED — Consommation sur 10 ans (kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_conso_10ans_led_connect"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="LED connectée — Consommation sur 10 ans (kWh)"
+                    />
+                  </td>
+                </tr>
+
+                <!-- Coût total sur 10 ans -->
+                <tr>
+                  <td class="wizard__table-label">Coût total sur 10 ans (achat + conso)</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_cout_total_incan"
+                      placeholder="€"
+                      maxlength="80"
+                      aria-label="Ampoule incandescente — Coût total sur 10 ans"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_cout_total_fluo"
+                      placeholder="€"
+                      maxlength="80"
+                      aria-label="Ampoule fluocompacte — Coût total sur 10 ans"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_cout_total_led"
+                      placeholder="€"
+                      maxlength="80"
+                      aria-label="Ampoule LED — Coût total sur 10 ans"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_cout_total_led_connect"
+                      placeholder="€"
+                      maxlength="80"
+                      aria-label="LED connectée — Coût total sur 10 ans"
+                    />
+                  </td>
+                </tr>
+
+                <!-- Recyclage -->
+                <tr>
+                  <td class="wizard__table-label">Recyclage</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_recyclage_incan"
+                      placeholder="Oui / Non / Partiel…"
+                      maxlength="80"
+                      aria-label="Ampoule incandescente — Recyclage"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_recyclage_fluo"
+                      placeholder="Oui / Non / Partiel…"
+                      maxlength="80"
+                      aria-label="Ampoule fluocompacte — Recyclage"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_recyclage_led"
+                      placeholder="Oui / Non / Partiel…"
+                      maxlength="80"
+                      aria-label="Ampoule LED — Recyclage"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_recyclage_led_connect"
+                      placeholder="Oui / Non / Partiel…"
+                      maxlength="80"
+                      aria-label="LED connectée — Recyclage"
+                    />
+                  </td>
+                </tr>
+
+                <!-- Bilan carbone -->
+                <tr>
+                  <td class="wizard__table-label">Bilan carbone (g CO₂/kWh)</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_co2_incan"
+                      placeholder="g CO₂/kWh"
+                      maxlength="80"
+                      aria-label="Ampoule incandescente — Bilan carbone (g CO₂/kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_co2_fluo"
+                      placeholder="g CO₂/kWh"
+                      maxlength="80"
+                      aria-label="Ampoule fluocompacte — Bilan carbone (g CO₂/kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_co2_led"
+                      placeholder="g CO₂/kWh"
+                      maxlength="80"
+                      aria-label="Ampoule LED — Bilan carbone (g CO₂/kWh)"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_crit_co2_led_connect"
+                      placeholder="g CO₂/kWh"
+                      maxlength="80"
+                      aria-label="LED connectée — Bilan carbone (g CO₂/kWh)"
+                    />
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <!-- fin tableau 2.1 -->
+        </div>
+
+        <!-- ── Question 2.2 ── -->
+        <div class="wizard__question">
+          <h3 class="wizard__question-title">
+            <span class="wizard__question-num">2.2</span>
+            Calcul de la consommation sur 10 ans
+          </h3>
+          <p class="wizard__question-body">
+            Calcule la consommation sur 10 ans pour chaque type d'ampoule,
+            en supposant <strong>4h d'utilisation par jour</strong>.
+          </p>
+          <div class="wizard__callout">
+            <p>
+              <strong>Rappel :</strong> Consommation (kWh) = Puissance (kW) × Durée (h)
+            </p>
+          </div>
+          <p class="wizard__question-hint">Montre tes calculs :</p>
+
+          <!-- Tableau interactif 2.2 -->
+          <div class="wizard__table-wrapper">
+            <table class="wizard__table">
+              <thead>
+                <tr>
+                  <th class="wizard__table-label" scope="col">Ampoule</th>
+                  <th scope="col">Calcul</th>
+                  <th scope="col">Résultat</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr>
+                  <td class="wizard__table-label">Incandescente</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_calc_incan_calcul"
+                      placeholder="Détaille ton calcul…"
+                      maxlength="80"
+                      aria-label="Incandescente — Calcul"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_calc_incan_resultat"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Incandescente — Résultat"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">Fluocompacte</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_calc_fluo_calcul"
+                      placeholder="Détaille ton calcul…"
+                      maxlength="80"
+                      aria-label="Fluocompacte — Calcul"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_calc_fluo_resultat"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="Fluocompacte — Résultat"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">LED</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_calc_led_calcul"
+                      placeholder="Détaille ton calcul…"
+                      maxlength="80"
+                      aria-label="LED — Calcul"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_calc_led_resultat"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="LED — Résultat"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">LED connectée</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_calc_ledco_calcul"
+                      placeholder="Détaille ton calcul…"
+                      maxlength="80"
+                      aria-label="LED connectée — Calcul"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q2_calc_ledco_resultat"
+                      placeholder="kWh"
+                      maxlength="80"
+                      aria-label="LED connectée — Résultat"
+                    />
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <!-- fin tableau 2.2 -->
+        </div>
+
+        <!-- ── Question 2.3 ── -->
+        <div class="wizard__question">
+          <h3 class="wizard__question-title">
+            <span class="wizard__question-num">2.3</span>
+            Recommandation à la famille Kiagi
+          </h3>
+          <p class="wizard__question-body">
+            En tenant compte des critères <strong>environnementaux</strong>
+            (bilan carbone, recyclage, durée de vie) et <strong>économiques</strong>
+            (coût total sur 10 ans), quelle ampoule recommandes-tu à la famille Kiagi ?
+          </p>
+
+          <div class="wizard__field">
+            <label for="q2_recommandation" class="wizard__label">
+              Recommandation :
+            </label>
+            <textarea
+              id="q2_recommandation"
+              class="wizard__textarea"
+              data-field="q2_recommandation"
+              rows="2"
+              maxlength="300"
+              placeholder="Indique l'ampoule que tu recommandes…"
+            ></textarea>
+            <span class="wizard__char-hint">300 caractères max.</span>
+          </div>
+
+          <div class="wizard__field">
+            <label for="q2_argumentaire" class="wizard__label">
+              Argumentaire :
+            </label>
+            <textarea
+              id="q2_argumentaire"
+              class="wizard__textarea"
+              data-field="q2_argumentaire"
+              rows="4"
+              maxlength="400"
+              placeholder="Développe ton argumentation en mentionnant au moins un critère environnemental et un critère économique…"
+            ></textarea>
+            <span class="wizard__char-hint">400 caractères max.</span>
+          </div>
+        </div>
+
+        <!-- Bouton phase suivante -->
+        <div class="wizard__actions">
+          <button
+            class="wizard__btn wizard__btn--next"
+            onclick="wizardGoToPhase(3)"
+          >
+            Phase suivante →
+          </button>
+        </div>
+
+      </section>
+      <!-- fin phase 2 -->
+
+      <!-- ======================================================== -->
+      <!-- PHASE 3 — Cycle de vie et éco-conception                 -->
+      <!-- ======================================================== -->
+      <section class="wizard__phase" data-phase="3" hidden>
+
+        <!-- Mise en situation -->
+        <div class="wizard__situation">
+          <h2 class="wizard__situation-title">
+            Activité 3 — Cycle de vie et éco-conception
+          </h2>
+        </div>
+
+        <!-- ── Question 3.1 ── -->
+        <div class="wizard__question">
+          <h3 class="wizard__question-title">
+            <span class="wizard__question-num">3.1</span>
+            Analyse du cycle de vie de l'ampoule recommandée
+          </h3>
+          <p class="wizard__question-body">
+            Pour l'ampoule que tu as recommandée, identifie les étapes de son cycle de vie
+            qui ont le plus d'impact environnemental. Complète le tableau.
+          </p>
+
+          <!-- Tableau interactif 3.1 -->
+          <div class="wizard__table-wrapper">
+            <table class="wizard__table">
+              <thead>
+                <tr>
+                  <th class="wizard__table-label" scope="col">Étape du cycle de vie</th>
+                  <th scope="col">Impact environnemental</th>
+                  <th scope="col">Moyen de le réduire</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr>
+                  <td class="wizard__table-label">Extraction des matières premières</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q3_cdv_extraction_impact"
+                      placeholder="Décris l'impact…"
+                      maxlength="80"
+                      aria-label="Extraction des matières premières — Impact environnemental"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q3_cdv_extraction_reduction"
+                      placeholder="Comment le réduire…"
+                      maxlength="80"
+                      aria-label="Extraction des matières premières — Moyen de le réduire"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">Fabrication</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q3_cdv_fabrication_impact"
+                      placeholder="Décris l'impact…"
+                      maxlength="80"
+                      aria-label="Fabrication — Impact environnemental"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q3_cdv_fabrication_reduction"
+                      placeholder="Comment le réduire…"
+                      maxlength="80"
+                      aria-label="Fabrication — Moyen de le réduire"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">Transport</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q3_cdv_transport_impact"
+                      placeholder="Décris l'impact…"
+                      maxlength="80"
+                      aria-label="Transport — Impact environnemental"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q3_cdv_transport_reduction"
+                      placeholder="Comment le réduire…"
+                      maxlength="80"
+                      aria-label="Transport — Moyen de le réduire"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">Utilisation</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q3_cdv_utilisation_impact"
+                      placeholder="Décris l'impact…"
+                      maxlength="80"
+                      aria-label="Utilisation — Impact environnemental"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q3_cdv_utilisation_reduction"
+                      placeholder="Comment le réduire…"
+                      maxlength="80"
+                      aria-label="Utilisation — Moyen de le réduire"
+                    />
+                  </td>
+                </tr>
+
+                <tr>
+                  <td class="wizard__table-label">Fin de vie</td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q3_cdv_findvie_impact"
+                      placeholder="Décris l'impact…"
+                      maxlength="80"
+                      aria-label="Fin de vie — Impact environnemental"
+                    />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      class="wizard__input wizard__input--table"
+                      data-field="q3_cdv_findvie_reduction"
+                      placeholder="Comment le réduire…"
+                      maxlength="80"
+                      aria-label="Fin de vie — Moyen de le réduire"
+                    />
+                  </td>
+                </tr>
+
+              </tbody>
+            </table>
+          </div>
+          <!-- fin tableau 3.1 -->
+        </div>
+
+        <!-- ── Question 3.2 ── -->
+        <div class="wizard__question">
+          <h3 class="wizard__question-title">
+            <span class="wizard__question-num">3.2</span>
+            Le thermostat connecté — estimation des économies
+          </h3>
+          <p class="wizard__question-body">
+            La famille Kiagi envisage d'installer un <strong>thermostat connecté</strong>.
+            À partir de tes recherches, estime les économies annuelles possibles en kWh et en euros.
+          </p>
+
+          <div class="wizard__field">
+            <label for="q3_economies_thermostat" class="wizard__label">
+              Économies estimées :
+            </label>
+            <textarea
+              id="q3_economies_thermostat"
+              class="wizard__textarea"
+              data-field="q3_economies_thermostat"
+              rows="4"
+              maxlength="400"
+              placeholder="Indique les économies estimées en kWh et en euros, et explique comment tu es arrivé à ce chiffre…"
+            ></textarea>
+            <span class="wizard__char-hint">400 caractères max.</span>
+          </div>
+
+          <div class="wizard__field">
+            <label for="q3_source_thermostat" class="wizard__label">
+              Source :
+            </label>
+            <textarea
+              id="q3_source_thermostat"
+              class="wizard__textarea"
+              data-field="q3_source_thermostat"
+              rows="2"
+              maxlength="200"
+              placeholder="Indique la source utilisée pour cette estimation…"
+            ></textarea>
+            <span class="wizard__char-hint">200 caractères max.</span>
+          </div>
+        </div>
+
+        <!-- Bouton phase suivante -->
+        <div class="wizard__actions">
+          <button
+            class="wizard__btn wizard__btn--next"
+            onclick="wizardGoToPhase(4)"
+          >
+            Phase suivante →
+          </button>
+        </div>
+
+      </section>
+      <!-- fin phase 3 -->
+
+      <!-- ======================================================== -->
+      <!-- PHASE 4 — Bilan (Ce que je retiens)                      -->
+      <!-- ======================================================== -->
+      <section class="wizard__phase" data-phase="4" hidden>
+
+        <!-- En-tête conclusion -->
+        <div class="wizard__situation">
+          <h2 class="wizard__situation-title">Bilan — Ce que je retiens</h2>
+          <div class="wizard__situation-body">
+            <p>
+              Cette dernière phase est un bilan personnel. Tu dois rédiger un conseil global
+              à la famille Kiagi en mobilisant ce que tu as appris dans les activités précédentes.
+            </p>
+          </div>
+        </div>
+
+        <!-- ── Question 4 — Conseil global ── -->
+        <div class="wizard__question">
+          <h3 class="wizard__question-title">
+            <span class="wizard__question-num">4</span>
+            Conseil global à la famille Kiagi
+          </h3>
+          <p class="wizard__question-body">
+            En <strong>5 à 8 lignes</strong>, rédige un conseil global à la famille Kiagi
+            sur les équipements à privilégier pour réduire leur consommation électrique.
+            Tu dois mentionner au moins <strong>deux critères de choix</strong> différents
+            et <strong>une limite</strong> des équipements connectés.
+          </p>
+
+          <div class="wizard__field">
+            <label for="q4_conseil_global" class="wizard__label">
+              Mon conseil global :
+            </label>
+            <textarea
+              id="q4_conseil_global"
+              class="wizard__textarea"
+              data-field="q4_conseil_global"
+              rows="6"
+              maxlength="600"
+              placeholder="Rédige ton conseil en mentionnant au moins deux critères de choix et une limite des équipements connectés…"
+            ></textarea>
+            <span class="wizard__char-hint">600 caractères max.</span>
+          </div>
+        </div>
+
+        <!-- Bouton de soumission finale -->
+        <div class="wizard__actions">
+          <button
+            class="wizard__btn wizard__btn--complete"
+            onclick="wizardComplete()"
+          >
+            ✓ Soumettre mon devoir
+          </button>
+        </div>
+
+      </section>
+      <!-- fin phase 4 -->
+
+    </div>
+    <!-- fin wizard__container -->
+
+  </main>
+  <!-- fin wizard principal -->
+
+  <!-- ============================================================ -->
+  <!-- 3. TOAST DE NOTIFICATION                                     -->
+  <!-- ============================================================ -->
+  <div id="wizardToast" class="wizard-toast" role="alert" aria-live="polite"></div>
+
+  <!-- ============================================================ -->
+  <!-- 4. INITIALISATION JAVASCRIPT (module ES6)                   -->
+  <!-- ============================================================ -->
+  <script type="module">
+    import { WizardFirebase } from "/src/js/wizard-firebase.js";
+    import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+
+    /* ── Instanciation du wizard ─────────────────────────────── */
+    const wizard = new WizardFirebase({
+
+      /* Identifiant unique de la collection Firestore */
+      collectionName: "s1_4eme_consommation_maison",
+
+      /* Ne pas démarrer automatiquement — attendre la saisie du mot de passe */
+      autoInit: false,
+
+      /* Mot de passe importé depuis la configuration centrale */
+      password: CORRECT_PASSWORD,
+
+      /* Identifiants des éléments du DOM */
+      overlayId:       "passwordOverlay",
+      passwordInputId: "passwordInput",
+      passwordBtnId:   "passwordSubmit",
+      passwordErrorId: "passwordError",
+      mainId:          "wizardMain",
+      toastId:         "wizardToast",
+
+      /* Champs obligatoires par phase ──────────────────────── */
+      requiredFields: {
+
+        /* Phase 1 — Collecte et représentation */
+        1: [
+          "studentName",
+          "studentClass",
+          "q1_chauffage_kwh",
+          "q1_eauchaude_kwh",
+          "q1_electromenager_kwh",
+          "q1_eclairage_kwh",
+          "q1_audiovisuel_kwh",
+          "q1_cuisson_kwh",
+          "q1_veille_kwh",
+          "q1_total_kwh",
+          "q1_graphique_type",
+          "q1_graphique_justif",
+          "q1_prix_kwh",
+          "q1_conso_2mois",
+          "q1_conso_annuelle"
+        ],
+
+        /* Phase 2 — Comparaison des équipements */
+        2: [
+          "q2_crit_puissance_incan",
+          "q2_crit_puissance_led",
+          "q2_crit_puissance_led_connect",
+          "q2_calc_incan_resultat",
+          "q2_calc_fluo_resultat",
+          "q2_calc_led_resultat",
+          "q2_calc_ledco_resultat",
+          "q2_recommandation",
+          "q2_argumentaire"
+        ],
+
+        /* Phase 3 — Cycle de vie et éco-conception */
+        3: [
+          "q3_cdv_utilisation_impact",
+          "q3_cdv_findvie_impact",
+          "q3_economies_thermostat",
+          "q3_source_thermostat"
+        ],
+
+        /* Phase 4 — Bilan */
+        4: [
+          "q4_conseil_global"
+        ]
+
+      }
+
+    });
+
+    /* ── Exposition des fonctions de navigation au DOM ────────── */
+    window.wizardGoToPhase = (n) => wizard.goToPhase(n);
+    window.wizardComplete  = ()  => wizard.complete();
+
+    /* ── Initialisation différée (déclenchée par le mot de passe) */
+    wizard.init();
+  </script>
+
+</body>
+</html>

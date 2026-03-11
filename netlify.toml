@@ -97,5 +97,11 @@
   to = "/index.html"
   status = 404
 
+[context.deploy-preview]
+  [[context.deploy-preview.redirects]]
+    from = "/"
+    to = "/_dev.html"
+    status = 302
+
 [[plugins]]
   package = "@netlify/plugin-lighthouse"
