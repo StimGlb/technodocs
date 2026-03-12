@@ -45,13 +45,14 @@
 <!-- ════════════════════════════════════════ -->
 
 <div class="fiche-activite">
-<div class="fiche-activite__titre">🔵 Classe de 5ème — Découverte · Création · Première manipulation</div>
+
+<h2 data-toc-label="🔵 5ème">🔵 Classe de 5ème — Découverte · Création · Première manipulation</h2>
 
 > **Fil rouge** : Concevoir et fabriquer un objet simple — comprendre un système programmé
 
 <!-- OST 5ème -->
 
-**Thème OST — Usages &amp; Interactions**
+<h3 class="fiche-theme fiche-theme--ost" data-toc-label="OST">Thème OST — Usages &amp; Interactions</h3>
 
 | Code | Compétence | Grandes notions | Transversalités |
 |------|-----------|-----------------|-----------------|
@@ -65,7 +66,7 @@
 
 <!-- SFC 5ème -->
 
-**Thème SFC — Structure &amp; Fonctionnement**
+<h3 class="fiche-theme fiche-theme--sfc" data-toc-label="SFC">Thème SFC — Structure &amp; Fonctionnement</h3>
 
 | Code | Compétence | Grandes notions | Transversalités |
 |------|-----------|-----------------|-----------------|
@@ -81,7 +82,7 @@
 
 <!-- CCRI 5ème -->
 
-**Thème CCRI — Création &amp; Innovation**
+<h3 class="fiche-theme fiche-theme--ccri" data-toc-label="CCRI">Thème CCRI — Création &amp; Innovation</h3>
 
 | Code | Compétence | Grandes notions | Transversalités |
 |------|-----------|-----------------|-----------------|
@@ -104,13 +105,14 @@
 <!-- ════════════════════════════════════════ -->
 
 <div class="fiche-activite">
-<div class="fiche-activite__titre">🟠 Classe de 4ème — Approfondissement · Réparabilité · Autonomie croissante</div>
+
+<h2 data-toc-label="🟠 4ème">🟠 Classe de 4ème — Approfondissement · Réparabilité · Autonomie croissante</h2>
 
 > **Fil rouge** : Diagnostiquer, réparer, modéliser — comprendre et modifier un système
 
 <!-- OST 4ème -->
 
-**Thème OST — Usages &amp; Interactions**
+<h3 class="fiche-theme fiche-theme--ost" data-toc-label="OST">Thème OST — Usages &amp; Interactions</h3>
 
 | Code | Compétence | Grandes notions | Transversalités |
 |------|-----------|-----------------|-----------------|
@@ -123,7 +125,7 @@
 
 <!-- SFC 4ème -->
 
-**Thème SFC — Structure &amp; Fonctionnement**
+<h3 class="fiche-theme fiche-theme--sfc" data-toc-label="SFC">Thème SFC — Structure &amp; Fonctionnement</h3>
 
 | Code | Compétence | Grandes notions | Transversalités |
 |------|-----------|-----------------|-----------------|
@@ -139,7 +141,7 @@
 
 <!-- CCRI 4ème -->
 
-**Thème CCRI — Création &amp; Innovation**
+<h3 class="fiche-theme fiche-theme--ccri" data-toc-label="CCRI">Thème CCRI — Création &amp; Innovation</h3>
 
 | Code | Compétence | Grandes notions | Transversalités |
 |------|-----------|-----------------|-----------------|
@@ -162,13 +164,14 @@
 <!-- ════════════════════════════════════════ -->
 
 <div class="fiche-activite">
-<div class="fiche-activite__titre">🟢 Classe de 3ème — Autonomie · Réseaux · Programmation structurée · Projet global</div>
+
+<h2 data-toc-label="🟢 3ème">🟢 Classe de 3ème — Autonomie · Réseaux · Programmation structurée · Projet global</h2>
 
 > **Fil rouge** : Concevoir de manière autonome — programmer — comprendre Internet
 
 <!-- OST 3ème -->
 
-**Thème OST — Usages &amp; Interactions**
+<h3 class="fiche-theme fiche-theme--ost" data-toc-label="OST">Thème OST — Usages &amp; Interactions</h3>
 
 | Code | Compétence | Grandes notions | Transversalités |
 |------|-----------|-----------------|-----------------|
@@ -181,7 +184,7 @@
 
 <!-- SFC 3ème -->
 
-**Thème SFC — Structure &amp; Fonctionnement**
+<h3 class="fiche-theme fiche-theme--sfc" data-toc-label="SFC">Thème SFC — Structure &amp; Fonctionnement</h3>
 
 | Code | Compétence | Grandes notions | Transversalités |
 |------|-----------|-----------------|-----------------|
@@ -197,7 +200,7 @@
 
 <!-- CCRI 3ème -->
 
-**Thème CCRI — Création &amp; Innovation**
+<h3 class="fiche-theme fiche-theme--ccri" data-toc-label="CCRI">Thème CCRI — Création &amp; Innovation</h3>
 
 | Code | Compétence | Grandes notions | Transversalités |
 |------|-----------|-----------------|-----------------|
@@ -221,7 +224,8 @@
 <!-- ════════════════════════════════════════ -->
 
 <div class="fiche-activite">
-<div class="fiche-activite__titre">Tableau de synthèse — Progressivité sur le cycle</div>
+
+<h2 data-toc-label="Synthèse">Tableau de synthèse — Progressivité sur le cycle</h2>
 
 | Compétence | 5ème | 4ème | 3ème |
 |------------|------|------|------|
@@ -239,7 +243,8 @@
 ---
 
 <div class="fiche-activite">
-<div class="fiche-activite__titre">Couverture du Socle Commun en fin de Cycle 4</div>
+
+<h2 data-toc-label="Socle Commun">Couverture du Socle Commun en fin de Cycle 4</h2>
 
 | Domaine | Compétences technologie mobilisées | Niveau attendu |
 |---------|------------------------------------|----------------|

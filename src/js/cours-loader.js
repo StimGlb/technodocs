@@ -1,3 +1,5 @@
+/* global marked */
+
 /**
  * Cours Loader - TechnoDocs
  * Module pour charger les pages de cours avec carousel hero + contenu Markdown
@@ -37,7 +39,9 @@ export async function initCoursPage(configPath) {
       ficheSequence: config.sequence,
       ficheSeance: config.seance,
       ficheDuree: config.duree,
-      ficheCompetences: config.competences?.join(", "),
+      ficheCompetences: Array.isArray(config.competences)
+        ? config.competences.join(", ")
+        : config.competences ?? "—",
     };
 
     Object.entries(metaFields).forEach(([id, value]) => {
@@ -55,7 +59,9 @@ export async function initCoursPage(configPath) {
       printSequence: config.sequence,
       printSeance: config.seance,
       printDuree: config.duree,
-      printCompetences: config.competences?.join(", "),
+      printCompetences: Array.isArray(config.competences)
+        ? config.competences.join(", ")
+        : config.competences ?? "—",
       printTitre: config.title,
     };
 
@@ -536,7 +542,7 @@ function generateTableOfContents(content) {
 
     const link = document.createElement("a");
     link.href = `#${id}`;
-    link.textContent = heading.textContent;
+    link.textContent = heading.dataset.tocLabel || heading.textContent;
     link.className = "md-toc__link";
 
     li.appendChild(link);
