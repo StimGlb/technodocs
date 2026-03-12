@@ -15,6 +15,13 @@
         La famille Kiagi vient d'emménager dans une nouvelle maison. Ils souhaitent équiper leur logement d'appareils connectés pour réduire leur consommation électrique : ampoules intelligentes, prises programmables, thermostat connecté…
     </div>
     <div class="fiche-img">
+        <img src="/src/assets/fiches/maison-de-la-famille-kiagi.png"
+                alt="Utilisation de l'électricité dans une maison"
+                loading="lazy"
+                decoding="async">
+            <span class="fiche-img__caption">La nouvelle maison de la famille Kiagi et ses gaspillages d'énergie électrique</span>
+    </div>
+    <div class="fiche-img">
         <img src="/src/assets/fiches/maison-consommation.png"
                 alt="Utilisation de l'électricité dans une maison"
                 loading="lazy"

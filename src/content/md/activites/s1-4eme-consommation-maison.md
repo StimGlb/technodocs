@@ -17,6 +17,13 @@
         Avant d'investir, ils voudraient une analyse complète de leur consommation et des recommandations argumentées.
     </div>
     <div class="fiche-img">
+        <img src="/src/assets/fiches/maison-de-la-famille-kiagi.png"
+                alt="Utilisation de l'électricité dans une maison"
+                loading="lazy"
+                decoding="async">
+            <span class="fiche-img__caption">La nouvelle maison de la famille Kiagi et ses gaspillages d'énergie électrique</span>
+    </div>
+    <div class="fiche-img">
         <img src="/src/assets/fiches/4e-maison-consommation.png"
                 alt="Utilisation de l'électricité dans une maison"
                 loading="lazy"

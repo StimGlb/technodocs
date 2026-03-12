@@ -155,12 +155,13 @@
 
     <!-- Scripts -->
     <script type="module">
-      // Génération dynamique des cartes "Cours" depuis src/data/navigation.json
-      (async function () {
+      // Génération dynamique des cartes depuis navigation.json
+      // Import ?raw bundlé par Vite : pas de fetch, fonctionne en production Netlify
+      import navRaw from './src/data/navigation.json?raw';
+
+      (function () {
         try {
-          const res = await fetch("/data/navigation.json");
-          if (!res.ok) return;
-          const nav = await res.json();
+          const nav = JSON.parse(navRaw);
           const courses = nav.cours || [];
           const container = document.getElementById("flashcard-category-grid");
           if (!container) return;

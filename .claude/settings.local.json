@@ -44,7 +44,11 @@
       "Bash(cp e:/Dev/technodocs-vanilla/src/content/md/cours/*.md e:/Dev/technodocs-vanilla/public/src/content/md/cours/)",
       "Bash(mkdir -p e:/Dev/technodocs-vanilla/public/src/content/md/activites)",
       "Bash(cp e:/Dev/technodocs-vanilla/src/content/md/activites/s1-5eme-consommation-maison.md e:/Dev/technodocs-vanilla/public/src/content/md/activites/)",
-      "Bash(node scripts/setup-hooks.js)"
+      "Bash(node scripts/setup-hooks.js)",
+      "Bash(grep -o 'navigation.json' dist/assets/index-*.js)",
+      "Bash(ls dist/assets/index-*.js)",
+      "Bash(sort -k5 -n)",
+      "Bash(node:*)"
     ],
     "deny": [],
     "ask": []
