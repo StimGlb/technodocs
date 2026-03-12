@@ -1,8 +1,6 @@
 // TechnoDocs - Application principale
 // Gestion de la navigation, animations et interactions
 
-import { loadLinks } from './links-loader.js';
-
 // ===========================
 // 1. Gestion de la navigation mobile
 // ===========================
@@ -178,9 +176,6 @@ document.addEventListener('DOMContentLoaded', async () => {
         setTimeout(() => {
             initHeaderScroll();
         }, 100);
-
-        // Charger les liens dynamiques
-        await loadLinks();
 
         // Log de succès en dev uniquement
         if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
