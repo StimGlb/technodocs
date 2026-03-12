@@ -48,7 +48,8 @@
       "Bash(grep -o 'navigation.json' dist/assets/index-*.js)",
       "Bash(ls dist/assets/index-*.js)",
       "Bash(sort -k5 -n)",
-      "Bash(node:*)"
+      "Bash(node:*)",
+      "Bash(ls -la /e/Dev/technodocs-vanilla/*.toml)"
     ],
     "deny": [],
     "ask": []
