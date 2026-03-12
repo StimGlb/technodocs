@@ -1,8 +1,40 @@
 import { defineConfig } from "vite";
 import { resolve, relative, join } from "path";
-import { readdirSync, statSync, existsSync } from "fs";
+import { readdirSync, statSync, existsSync, mkdirSync, copyFileSync } from "fs";
+
+// Plugin : copie les assets non-bundlables vers dist en préservant les chemins
+// nécessaire pour : marked.min.js (script sans type=module) + JSON d'activités (fetch dynamique)
+function copyStaticAssets() {
+  return {
+    name: "copy-static-assets",
+    writeBundle() {
+      const copies = [
+        // marked.min.js → les pages HTML y accèdent via chemin relatif ../../js/libs/
+        {
+          src: resolve(__dirname, "src/js/libs"),
+          dst: resolve(__dirname, "dist/src/js/libs"),
+        },
+        // JSON activités → fetchés dynamiquement via chemin relatif ../../data/activites/
+        {
+          src: resolve(__dirname, "src/data/activites"),
+          dst: resolve(__dirname, "dist/src/data/activites"),
+        },
+      ];
+
+      for (const { src, dst } of copies) {
+        if (!existsSync(src)) continue;
+        mkdirSync(dst, { recursive: true });
+        for (const file of readdirSync(src)) {
+          copyFileSync(join(src, file), join(dst, file));
+        }
+      }
+    },
+  };
+}
 
 export default defineConfig({
+  plugins: [copyStaticAssets()],
+
   root: ".",
   base: "/",
 
