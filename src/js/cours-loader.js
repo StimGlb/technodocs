@@ -41,7 +41,7 @@ export async function initCoursPage(configPath) {
       ficheDuree: config.duree,
       ficheCompetences: Array.isArray(config.competences)
         ? config.competences.join(", ")
-        : config.competences ?? "—",
+        : (config.competences ?? "—"),
     };
 
     Object.entries(metaFields).forEach(([id, value]) => {
@@ -61,7 +61,7 @@ export async function initCoursPage(configPath) {
       printDuree: config.duree,
       printCompetences: Array.isArray(config.competences)
         ? config.competences.join(", ")
-        : config.competences ?? "—",
+        : (config.competences ?? "—"),
       printTitre: config.title,
     };
 

@@ -424,7 +424,6 @@
 
 .md-toc__item {
   margin-bottom: 2px;
-  list-style: none;
 }
 
 .md-toc__link {
@@ -448,21 +447,11 @@
   font-weight: 700;
   font-size: 0.9375rem;
   color: #e5e7eb;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
-/* Niveau 2 (h3) — sous-entrées indentées, sans puce */
-.md-toc__item--h3 {
-  list-style: none;
-}
-
+/* Niveau 2 (h3) — sous-entrées indentées */
 .md-toc__item--h3 .md-toc__link {
   padding-left: 20px;
   font-size: 0.8125rem;
   opacity: 0.75;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
