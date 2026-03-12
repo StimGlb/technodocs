@@ -58,7 +58,7 @@ Type de graphique choisi :
 <div class="zone-reponse zone-reponse--compact"></div>
 
 Justification :
-<div class="zone-reponse zzone-reponse--compact"></div>
+<div class="zone-reponse zone-reponse--compact"></div>
 
 **1.3** La famille Kiagi reçoit une facture EDF de **313,11 €** pour 2 mois de consommation.
 
@@ -67,6 +67,10 @@ Justification :
 - Estime leur consommation annuelle et compare-la à la moyenne nationale : **………… kWh/an**
 
 </div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- ACTIVITÉ 2                              -->
+<!-- ════════════════════════════════════════ -->
 
 <div class="fiche-activite">
 <div class="fiche-activite__titre">Activité 2 : Comparer des équipements connectés</div>
@@ -98,20 +102,30 @@ Montre tes calculs :
 | LED | | |
 | LED connectée | | |
 
-**2.3** En tenant compte des critères **environnementaux** (bilan carbone, recyclage, durée de vie) et **économiques** (coût total sur 10 ans), quelle ampoule recommandes-tu à la famille Kiagi ?
+**2.3** En t'appuyant sur tes résultats, complète le tableau de décision ci-dessous, puis indique ton choix.
 
-Recommandation :
-<div class="zone-reponse zone-reponse--lignes"></div>
+| Critère | Ampoule retenue | Pourquoi ? |
+|---------|----------------|------------|
+| Critère économique (coût total sur 10 ans) | | |
+| Critère environnemental (bilan carbone + recyclage) | | |
+| Critère pratique (durée de vie) | | |
 
-Argumentaire :
-<div class="zone-reponse zone-reponse--lignes"></div>
+Mon choix pour la famille Kiagi :
+<div class="zone-reponse zone-reponse--compact"></div>
+
+Car :
+<div class="zone-reponse zone-reponse--compact"></div>
 
 </div>
+
+<!-- ════════════════════════════════════════ -->
+<!-- ACTIVITÉ 3                              -->
+<!-- ════════════════════════════════════════ -->
 
 <div class="fiche-activite">
 <div class="fiche-activite__titre">Activité 3 : Cycle de vie et éco-conception</div>
 
-**3.1** Pour l'ampoule que tu as recommandée, identifie les étapes de son cycle de vie qui ont le plus d'impact environnemental. Complète le tableau.
+**3.1** Pour l'ampoule que tu as choisie, identifie les étapes de son cycle de vie qui ont le plus d'impact environnemental. Complète le tableau.
 
 | Étape du cycle de vie | Impact environnemental | Moyen de le réduire |
 |----------------------|----------------------|---------------------|
@@ -131,11 +145,22 @@ Source :
 
 </div>
 
+<!-- ════════════════════════════════════════ -->
+<!-- CONCLUSION                              -->
+<!-- ════════════════════════════════════════ -->
+
 <div class="fiche-conclusion">
 <div class="fiche-conclusion__titre">Ce que je retiens</div>
 
-En **5 à 8 lignes**, rédige un conseil global à la famille Kiagi sur les équipements à privilégier pour réduire leur consommation électrique. Tu dois mentionner au moins **deux critères de choix** différents et **une limite** des équipements connectés.
+Complète les phrases suivantes pour conseiller la famille Kiagi.
 
-<div class="zone-reponse zone-reponse--medium zone-reponse--lignes"></div>
+Pour réduire leur consommation électrique, je recommande d'investir en priorité dans **………………………………**
+car sur le plan économique, **………………………………………………………………………………………………**
+
+Sur le plan environnemental, il faut aussi penser à **………………………………………………………………**
+
+Cependant, les équipements connectés ont une limite : **…………………………………………………………**
+
+<div class="zone-reponse zone-reponse--compact"></div>
 
 </div>
