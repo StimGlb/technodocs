@@ -1,6 +1,6 @@
 import { defineConfig } from "vite";
 import { resolve, relative, join } from "path";
-import { readdirSync, statSync, existsSync, mkdirSync, copyFileSync } from "fs";
+import { readdirSync, existsSync, mkdirSync, copyFileSync } from "fs";
 
 // Plugin : copie les assets non-bundlables vers dist en préservant les chemins src/
 // Nécessaire pour :
@@ -56,6 +56,11 @@ function copyStaticAssets() {
         {
           src: resolve(__dirname, "src/data/graphiques"),
           dst: resolve(__dirname, "dist/src/data/graphiques"),
+        },
+        // Fichiers Markdown → fetchés via ../../content/md/xxx/yyy.md
+        {
+          src: resolve(__dirname, "src/content/md"),
+          dst: resolve(__dirname, "dist/src/content/md"),
         },
       ];
 
