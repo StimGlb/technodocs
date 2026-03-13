@@ -34,6 +34,8 @@ Options:
   -p   Remote (default: origin)
   -b   Branch (default: current branch)
   -e   Exclude pattern (can be repeated, simple grep regex)
+  -c   Pre-check command to run before committing (quoted)
+  -y   Assume yes (skip interactive confirmation)
   -h   Affiche cette aide
 EOF
 }
@@ -59,11 +61,18 @@ while getopts ":hnm:p:b:e:" opt; do
     p) REMOTE="$OPTARG" ;;
     b) BRANCH="$OPTARG" ;;
     e) EXCLUDE_PATTERNS+=("$OPTARG") ;;
+    c) CHECK_CMD="$OPTARG" ;;
+    y) ASSUME_YES=1 ;;
     \?) err "Option invalide: -$OPTARG"; usage; exit 2 ;;
     :) err "L'option -$OPTARG requiert un argument"; usage; exit 2 ;;
   esac
 done
 shift $((OPTIND-1))
+
+# Pre-commit check command (optional)
+CHECK_CMD=${CHECK_CMD:-}
+# If set to 1, skip interactive confirmation
+ASSUME_YES=${ASSUME_YES:-0}
 
 # Determine repo root & current branch
 if ! git rev-parse --is-inside-work-tree >/dev/null 2>&1; then
@@ -124,8 +133,19 @@ for f in "${CHANGED_FILES[@]:-}"; do
   (( skip == 0 )) && FILTERED+=("$f")
 done
 
+
 if [[ ${#FILTERED[@]} -eq 0 ]]; then
   info "Aucun changement détecté à committer. Sortie."; exit 0
+fi
+
+# Run pre-check command if provided
+if [[ -n "$CHECK_CMD" ]]; then
+  info "Exécution du check pré-commit: $CHECK_CMD"
+  if ! bash -lc "$CHECK_CMD"; then
+    err "La commande de vérification a échoué. Commit annulé."
+    exit 5
+  fi
+  success "Check pré-commit réussi"
 fi
 
 info "Fichiers à ajouter (${#FILTERED[@]}):"
@@ -140,6 +160,10 @@ if [[ $DRY_RUN -eq 1 ]]; then
   warn "--- DRY-RUN ---"
   info "Commit message: $COMMIT_MSG"
   info "Pas de commit ni de push effectué (dry-run)."
+  # show staged diff preview
+  git add -f -- "${FILTERED[@]}" 2>/dev/null || true
+  info "Aperçu des changements stagés (diff) :"
+  git --no-pager diff --staged || true
   exit 0
 fi
 
@@ -151,6 +175,18 @@ fi
 if ! git add -f -- "${FILTERED[@]}"; then
   err "Échec lors du 'git add'"
   exit 3
+fi
+
+# Interactive confirmation before commit
+if [[ $ASSUME_YES -ne 1 ]]; then
+  info "Aperçu des changements stagés :"
+  git --no-pager diff --staged || true
+  printf "\nConfirmer le commit et push ? [y/N]: "
+  read -r PROCEED
+  if [[ ! "$PROCEED" =~ ^[Yy]$ ]]; then
+    warn "Commit annulé par l'utilisateur."
+    exit 0
+  fi
 fi
 
 # Commit
