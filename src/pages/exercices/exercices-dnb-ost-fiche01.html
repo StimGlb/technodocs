@@ -1,0 +1,1156 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Exercices type DNB : Les objets et systèmes techniques — Entraînement interactif avec correction — TechnoDocs"
+    />
+    <title>Exercices DNB — Fiche OST 1 | TechnoDocs</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Styles spécifiques à cette page d'exercices -->
+    <style>
+      /* ── Layout : supprime le margin-top hérité du header injecté ── */
+      body:has(.header) main.wizard,
+      body.has-header main.wizard {
+        margin-top: 0;
+      }
+
+      /* ── Bloc question ── */
+      .wizard__question {
+        background: var(--color-white);
+        border: 1px solid var(--color-gray-200);
+        border-left: 4px solid var(--color-primary);
+        border-radius: var(--radius-lg);
+        padding: var(--space-6);
+        margin-bottom: var(--space-6);
+      }
+
+      /* ── En-tête : badge + points ── */
+      .wizard__question-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--space-3);
+        margin-bottom: var(--space-3);
+      }
+
+      .wizard__question-badge {
+        display: inline-block;
+        padding: var(--space-1) var(--space-3);
+        background: rgba(129, 140, 248, 0.2);
+        color: #c7d2fe;
+        border-radius: var(--radius-full);
+        font-size: var(--text-xs);
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      }
+
+      .wizard__question-points {
+        font-size: var(--text-sm);
+        font-weight: 600;
+        color: var(--color-gray-500);
+        white-space: nowrap;
+      }
+
+      /* ── Titre et texte ── */
+      .wizard__question-title {
+        font-family: var(--font-display);
+        font-size: var(--text-lg);
+        font-weight: 700;
+        color: var(--color-gray-900);
+        margin: 0 0 var(--space-3) 0;
+      }
+
+      .wizard__question-text {
+        color: var(--color-gray-700);
+        line-height: 1.65;
+        margin-bottom: var(--space-4);
+      }
+
+      /* ── Bloc situation (contexte / document) ── */
+      .wizard__situation {
+        background: rgba(34, 211, 238, 0.12);
+        border-left: 4px solid #22d3ee;
+        border-radius: 0 var(--radius-md) var(--radius-md) 0;
+        padding: var(--space-4);
+        margin-bottom: var(--space-4);
+        color: var(--color-gray-700);
+        line-height: 1.65;
+      }
+
+      /* ── Tableau de données intégré ── */
+      .wizard__data-table {
+        width: 100%;
+        border-collapse: collapse;
+        border-radius: var(--radius-md);
+        overflow: hidden;
+        border: 1px solid var(--color-gray-300);
+        margin-bottom: var(--space-4);
+        font-size: var(--text-sm);
+      }
+
+      .wizard__data-table th,
+      .wizard__data-table td {
+        padding: var(--space-2) var(--space-3);
+        text-align: left;
+        border-bottom: 1px solid var(--color-gray-300);
+      }
+
+      .wizard__data-table th {
+        background: var(--color-gray-300);
+        font-weight: 700;
+        color: var(--color-gray-900);
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+        font-size: var(--text-xs);
+      }
+
+      .wizard__data-table tbody tr:nth-child(even) {
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      /* ── Boîte indicateurs de réussite ── */
+      .wizard__help-box {
+        background: rgba(52, 211, 153, 0.12);
+        border: 1px solid rgba(52, 211, 153, 0.4);
+        border-radius: var(--radius-md);
+        padding: var(--space-4);
+        margin-bottom: var(--space-4);
+        font-size: var(--text-sm);
+        color: var(--color-gray-700);
+      }
+
+      .wizard__help-box ul {
+        margin: var(--space-2) 0 0 0;
+        padding-left: var(--space-4);
+      }
+
+      .wizard__help-box li {
+        margin: var(--space-1) 0;
+      }
+
+      /* ── Compteur de caractères ── */
+      .wizard__char-counter {
+        text-align: right;
+        font-size: var(--text-xs);
+        color: var(--color-gray-400);
+        margin-top: var(--space-1);
+      }
+
+      /* ── Séparateur d'exercice ── */
+      .wizard__exercise-separator {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        margin: var(--space-8) 0 var(--space-6);
+        padding: var(--space-4) var(--space-6);
+        background: linear-gradient(
+          135deg,
+          rgba(129, 140, 248, 0.15),
+          rgba(34, 211, 238, 0.1)
+        );
+        border-radius: var(--radius-lg);
+        border: 1px solid rgba(129, 140, 248, 0.3);
+      }
+
+      .wizard__exercise-separator-icon {
+        font-size: 1.5rem;
+        line-height: 1;
+      }
+
+      .wizard__exercise-separator-content h3 {
+        font-family: var(--font-display);
+        font-size: var(--text-xl);
+        font-weight: 700;
+        color: var(--color-gray-900);
+        margin: 0 0 var(--space-1) 0;
+      }
+
+      .wizard__exercise-separator-content p {
+        font-size: var(--text-sm);
+        color: var(--color-gray-500);
+        margin: 0;
+      }
+
+      /* ══════════════════════════════════════════
+         CORRECTION AUTOMATIQUE
+         ══════════════════════════════════════════ */
+
+      /* État par défaut : corrigé masqué */
+      .wizard__correction {
+        display: none;
+        margin-top: var(--space-4);
+        padding: var(--space-4);
+        border-radius: var(--radius-md);
+        font-size: var(--text-sm);
+        line-height: 1.65;
+        animation: wizardFadeIn 0.3s ease;
+      }
+
+      /* Bonne réponse (QCM auto-corrigé) */
+      .wizard__correction--correct {
+        display: block;
+        background: rgba(52, 211, 153, 0.15);
+        border: 1px solid rgba(52, 211, 153, 0.5);
+        color: #86efac;
+      }
+
+      /* Mauvaise réponse (QCM auto-corrigé) */
+      .wizard__correction--incorrect {
+        display: block;
+        background: rgba(248, 113, 113, 0.15);
+        border: 1px solid rgba(248, 113, 113, 0.5);
+        color: #fca5a5;
+      }
+
+      /* Corrigé référence (questions ouvertes) */
+      .wizard__correction--reference {
+        display: block;
+        background: rgba(129, 140, 248, 0.12);
+        border: 1px solid rgba(129, 140, 248, 0.4);
+        color: var(--color-gray-700);
+      }
+
+      .wizard__correction strong {
+        display: block;
+        margin-bottom: var(--space-2);
+        color: var(--color-gray-900);
+      }
+
+      /* Bilan de score */
+      .wizard__score-banner {
+        display: none;
+        padding: var(--space-6);
+        margin-bottom: var(--space-6);
+        border-radius: var(--radius-xl);
+        text-align: center;
+        animation: wizardFadeIn 0.3s ease;
+      }
+
+      .wizard__score-banner.show {
+        display: block;
+      }
+
+      .wizard__score-banner--good {
+        background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(52, 211, 153, 0.1));
+        border: 2px solid rgba(52, 211, 153, 0.5);
+      }
+
+      .wizard__score-banner--average {
+        background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1));
+        border: 2px solid rgba(251, 191, 36, 0.5);
+      }
+
+      .wizard__score-banner--low {
+        background: linear-gradient(135deg, rgba(248, 113, 113, 0.2), rgba(248, 113, 113, 0.1));
+        border: 2px solid rgba(248, 113, 113, 0.5);
+      }
+
+      .wizard__score-value {
+        font-family: var(--font-display);
+        font-size: var(--text-4xl);
+        font-weight: 700;
+        color: var(--color-gray-900);
+      }
+
+      .wizard__score-label {
+        font-size: var(--text-lg);
+        color: var(--color-gray-500);
+        margin-top: var(--space-2);
+      }
+
+      /* Empêche la modification après correction */
+      .wizard--corrected .wizard__textarea,
+      .wizard--corrected .wizard__radio input,
+      .wizard--corrected .wizard__checkbox-item input {
+        pointer-events: none;
+        opacity: 0.7;
+      }
+
+      /* Radio/checkbox état correct/incorrect après correction */
+      .wizard__radio.is-correct,
+      .wizard__checkbox-item.is-correct {
+        background: rgba(52, 211, 153, 0.15);
+        border-color: #34d399;
+      }
+
+      .wizard__radio.is-incorrect,
+      .wizard__checkbox-item.is-incorrect {
+        background: rgba(248, 113, 113, 0.15);
+        border-color: #f87171;
+      }
+
+      .wizard__radio.is-expected,
+      .wizard__checkbox-item.is-expected {
+        border: 2px dashed #34d399;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header dynamique -->
+    <div id="header-placeholder"></div>
+
+    <!-- =============================================
+         CONTENU PRINCIPAL
+         ============================================= -->
+    <main class="wizard">
+      <!-- Bannière titre -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">🧪</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">
+            Exercices type DNB — Fiche OST 1
+          </h1>
+          <p
+            class="wizard__phase-subtitle"
+            style="
+              color: rgba(255, 255, 255, 0.85);
+              margin-bottom: var(--space-2);
+            "
+          >
+            Les objets et systèmes techniques • Entraînement avec correction
+          </p>
+          <div class="wizard__banner-skills">
+            <span class="wizard__skill">OST 1 · OST 11</span>
+            <span class="wizard__skill">OST 12</span>
+            <span class="wizard__skill">OST 3 · OST 31 · OST 32</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Informations élève -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="studentName">Prénom et Nom</label>
+            <input
+              type="text"
+              id="studentName"
+              data-field="studentName"
+              placeholder=""
+              required
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="studentClass">Classe</label>
+            <select id="studentClass" data-field="studentClass" required>
+              <option value="" disabled selected>—</option>
+              <option value="301">3ème 1</option>
+              <option value="302">3ème 2</option>
+              <option value="303">3ème 3</option>
+              <option value="304">3ème 4</option>
+              <option value="305">3ème 5</option>
+              <option value="306">3ème 6</option>
+              <option value="307">3ème 7</option>
+              <option value="308">3ème 8</option>
+            </select>
+          </div>
+          <div class="wizard__student-field wizard__student-field--date">
+            <label>Date</label>
+            <span
+              id="projectDate"
+              class="wizard__date-display"
+              data-field="projectDate"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barre de progression -->
+      <section class="wizard__progress">
+        <div class="wizard__progress-header">
+          <h2 class="wizard__progress-title">Progression</h2>
+          <div class="wizard__save-indicator" id="saveIndicator">
+            <span class="wizard__save-dot"></span>
+            <span class="wizard__save-text">Auto-save</span>
+          </div>
+          <span class="wizard__progress-percentage" id="progressPercentage"
+            >0%</span
+          >
+        </div>
+        <div class="wizard__progress-bar">
+          <div
+            class="wizard__progress-fill"
+            id="progressFill"
+            style="width: 0%"
+          ></div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════
+           BILAN DE SCORE (affiché après correction)
+           ══════════════════════════════════════════ -->
+      <div class="wizard__score-banner" id="scoreBanner">
+        <div class="wizard__score-value" id="scoreValue">—</div>
+        <div class="wizard__score-label" id="scoreLabel">Score QCM (questions auto-corrigées)</div>
+      </div>
+
+      <!-- =============================================
+           CONTENEUR UNIQUE (toutes les questions)
+           ============================================= -->
+      <div class="wizard__container">
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">Exercices type DNB</h2>
+            <p class="wizard__phase-subtitle">
+              9 questions • Réponds puis clique sur « Corriger » pour voir ton score
+            </p>
+          </div>
+
+          <!-- ══════════════════════════════════════════
+               EXERCICE 1 — Évolution technologique
+               ══════════════════════════════════════════ -->
+          <div class="wizard__exercise-separator">
+            <div class="wizard__exercise-separator-icon">📱</div>
+            <div class="wizard__exercise-separator-content">
+              <h3>Exercice 1 — Évolution technologique</h3>
+              <p>Compétences : OST 1 · OST 11 · OST 12</p>
+            </div>
+          </div>
+
+          <!-- Contexte partagé Exercice 1 -->
+          <div class="wizard__situation">
+            <p>On étudie l'évolution des <strong>aspirateurs domestiques</strong> :</p>
+            <ul style="margin: var(--space-2) 0 0 var(--space-4); list-style: disc;">
+              <li><strong>1901</strong> : aspirateur à essence, porté sur un chariot</li>
+              <li><strong>1950</strong> : aspirateur traîneau électrique avec sac</li>
+              <li><strong>2002</strong> : aspirateur sans sac (technologie cyclonique)</li>
+              <li><strong>2015</strong> : aspirateur robot autonome</li>
+            </ul>
+          </div>
+
+          <!-- Q1a — Fonction d'usage -->
+          <div class="wizard__question" data-question="q1a">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Question ouverte</span>
+              <span class="wizard__question-points">Q1a</span>
+            </div>
+            <h3 class="wizard__question-title">Fonction d'usage commune</h3>
+            <p class="wizard__question-text">
+              Quelle est la <strong>fonction d'usage</strong> commune à tous ces aspirateurs ?
+            </p>
+
+            <textarea
+              class="wizard__textarea"
+              data-field="q1a_fonction_usage"
+              placeholder="La fonction d'usage commune est…"
+              spellcheck="true"
+              lang="fr"
+              rows="3"
+              maxlength="300"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span class="char-count" data-for="q1a_fonction_usage">0</span> / 300
+            </div>
+
+            <div class="wizard__correction" id="correction_q1a">
+              <strong>📝 Réponse attendue :</strong>
+              La fonction d'usage est « aspirer la poussière et les saletés d'un sol » (nettoyer un sol par aspiration). Tous ces objets répondent au même besoin malgré des principes techniques différents.
+            </div>
+          </div>
+
+          <!-- Q1b — Facteurs d'évolution -->
+          <div class="wizard__question" data-question="q1b">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Question ouverte</span>
+              <span class="wizard__question-points">Q1b</span>
+            </div>
+            <h3 class="wizard__question-title">Facteurs d'évolution</h3>
+            <p class="wizard__question-text">
+              Identifie <strong>deux facteurs</strong> qui expliquent le passage de l'aspirateur à essence à l'aspirateur électrique.
+            </p>
+
+            <div class="wizard__help-box">
+              <p><strong>💡 Indicateurs de réussite :</strong></p>
+              <ul>
+                <li>✅ Deux facteurs distincts clairement identifiés</li>
+                <li>✅ Au moins un lié à une avancée scientifique ou technique</li>
+              </ul>
+            </div>
+
+            <textarea
+              class="wizard__textarea"
+              data-field="q1b_facteurs_evolution"
+              placeholder="Facteur 1 : …&#10;Facteur 2 : …"
+              spellcheck="true"
+              lang="fr"
+              rows="4"
+              maxlength="400"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span class="char-count" data-for="q1b_facteurs_evolution">0</span> / 400
+            </div>
+
+            <div class="wizard__correction" id="correction_q1b">
+              <strong>📝 Réponse attendue :</strong>
+              Deux facteurs : (1) la <strong>généralisation de l'électricité</strong> dans les foyers (nouvelle source d'énergie disponible) et (2) la <strong>miniaturisation des moteurs électriques</strong> (progrès technique permettant un appareil plus compact et silencieux).
+            </div>
+          </div>
+
+          <!-- Q1c — Domaine technologique (QCM) -->
+          <div class="wizard__question" data-question="q1c" data-correct="C">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">QCM unique</span>
+              <span class="wizard__question-points">Q1c</span>
+            </div>
+            <h3 class="wizard__question-title">Domaine technologique récent</h3>
+            <p class="wizard__question-text">
+              L'aspirateur robot utilise des <strong>capteurs</strong> et un <strong>programme</strong> pour se déplacer seul. À quel domaine technologique récent cela fait-il appel ?
+            </p>
+
+            <div class="wizard__radio-group">
+              <label class="wizard__radio">
+                <input type="radio" name="q1c_domaine" data-field="q1c_domaine" value="A" />
+                <span>A) La domotique filaire</span>
+              </label>
+              <label class="wizard__radio">
+                <input type="radio" name="q1c_domaine" data-field="q1c_domaine" value="B" />
+                <span>B) L'impression 3D</span>
+              </label>
+              <label class="wizard__radio">
+                <input type="radio" name="q1c_domaine" data-field="q1c_domaine" value="C" />
+                <span>C) L'intelligence artificielle et la robotique autonome</span>
+              </label>
+              <label class="wizard__radio">
+                <input type="radio" name="q1c_domaine" data-field="q1c_domaine" value="D" />
+                <span>D) La réalité virtuelle</span>
+              </label>
+            </div>
+
+            <div class="wizard__correction" id="correction_q1c">
+              <strong>✅ Bonne réponse : C</strong>
+              L'aspirateur utilise des capteurs pour percevoir son environnement et un algorithme pour décider de ses déplacements — c'est le principe de l'<strong>intelligence artificielle</strong> appliquée à la robotique autonome.
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════════════════
+               EXERCICE 2 — Choix responsable
+               ══════════════════════════════════════════ -->
+          <div class="wizard__exercise-separator">
+            <div class="wizard__exercise-separator-icon">🔋</div>
+            <div class="wizard__exercise-separator-content">
+              <h3>Exercice 2 — Choix responsable</h3>
+              <p>Compétences : OST 3 · OST 31 · OST 32</p>
+            </div>
+          </div>
+
+          <!-- Contexte partagé Exercice 2 -->
+          <div class="wizard__situation">
+            <p>Un collège souhaite remplacer ses <strong>vidéoprojecteurs</strong>. Deux modèles sont comparés :</p>
+          </div>
+
+          <!-- Tableau de données Exercice 2 -->
+          <table class="wizard__data-table">
+            <thead>
+              <tr>
+                <th>Critère</th>
+                <th>Modèle A</th>
+                <th>Modèle B</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>Prix d'achat</td>
+                <td>450 €</td>
+                <td>620 €</td>
+              </tr>
+              <tr>
+                <td>Consommation</td>
+                <td>280 W</td>
+                <td>180 W</td>
+              </tr>
+              <tr>
+                <td>Durée de vie lampe</td>
+                <td>5 000 h</td>
+                <td>20 000 h</td>
+              </tr>
+              <tr>
+                <td>Indice de réparabilité</td>
+                <td>4,2 / 10</td>
+                <td>7,8 / 10</td>
+              </tr>
+              <tr>
+                <td>Étiquette énergie</td>
+                <td>E</td>
+                <td>B</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Q2a — Modèle économe (QCM + justification) -->
+          <div class="wizard__question" data-question="q2a_qcm" data-correct="B">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">QCM + Justification</span>
+              <span class="wizard__question-points">Q2a</span>
+            </div>
+            <h3 class="wizard__question-title">Le modèle le plus économe</h3>
+            <p class="wizard__question-text">
+              Quel modèle est le plus <strong>économe en énergie</strong> ?
+            </p>
+
+            <div class="wizard__radio-group" style="margin-bottom: var(--space-4);">
+              <label class="wizard__radio">
+                <input type="radio" name="q2a_modele" data-field="q2a_modele" value="A" />
+                <span>A) Modèle A</span>
+              </label>
+              <label class="wizard__radio">
+                <input type="radio" name="q2a_modele" data-field="q2a_modele" value="B" />
+                <span>B) Modèle B</span>
+              </label>
+            </div>
+
+            <p class="wizard__question-text">
+              <strong>Justifie</strong> avec deux éléments du tableau :
+            </p>
+
+            <textarea
+              class="wizard__textarea"
+              data-field="q2a_justification"
+              placeholder="Le modèle … est le plus économe car…"
+              spellcheck="true"
+              lang="fr"
+              rows="3"
+              maxlength="300"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span class="char-count" data-for="q2a_justification">0</span> / 300
+            </div>
+
+            <div class="wizard__correction" id="correction_q2a_qcm">
+              <strong>✅ Bonne réponse : B (Modèle B)</strong>
+              Sa consommation est de <strong>180 W</strong> contre 280 W pour le modèle A, et son étiquette énergie est <strong>B</strong> contre E. Ces deux éléments du tableau confirment qu'il est plus économe.
+            </div>
+          </div>
+
+          <!-- Q2b — Calcul lampes -->
+          <div class="wizard__question" data-question="q2b">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Calcul</span>
+              <span class="wizard__question-points">Q2b</span>
+            </div>
+            <h3 class="wizard__question-title">Changement de lampe sur 10 ans</h3>
+            <p class="wizard__question-text">
+              Le collège utilise chaque vidéoprojecteur environ <strong>1 000 h par an</strong>. Calcule combien de fois il faudra changer la lampe du <strong>modèle A</strong> sur 10 ans. Et pour le <strong>modèle B</strong> ?
+            </p>
+
+            <div class="wizard__help-box">
+              <p><strong>💡 Indicateurs de réussite :</strong></p>
+              <ul>
+                <li>✅ Calcul du nombre total d'heures sur 10 ans</li>
+                <li>✅ Division par la durée de vie de chaque lampe</li>
+                <li>✅ Conclusion claire pour chaque modèle</li>
+              </ul>
+            </div>
+
+            <textarea
+              class="wizard__textarea"
+              data-field="q2b_calcul_lampes"
+              placeholder="Sur 10 ans, le nombre total d'heures est…&#10;Modèle A : …&#10;Modèle B : …"
+              spellcheck="true"
+              lang="fr"
+              rows="5"
+              maxlength="400"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span class="char-count" data-for="q2b_calcul_lampes">0</span> / 400
+            </div>
+
+            <div class="wizard__correction" id="correction_q2b">
+              <strong>📝 Réponse attendue :</strong>
+              Sur 10 ans = <strong>10 000 h</strong> d'utilisation.<br />
+              <strong>Modèle A</strong> : 10 000 ÷ 5 000 = 2 lampes → <strong>1 changement</strong> de lampe nécessaire.<br />
+              <strong>Modèle B</strong> : 10 000 ÷ 20 000 = 0,5 → <strong>aucun changement</strong> de lampe nécessaire sur 10 ans.
+            </div>
+          </div>
+
+          <!-- Q2c — Argumentation choix modèle B -->
+          <div class="wizard__question" data-question="q2c">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Argumentation</span>
+              <span class="wizard__question-points">Q2c</span>
+            </div>
+            <h3 class="wizard__question-title">Argumenter le choix du modèle B</h3>
+            <p class="wizard__question-text">
+              En t'appuyant sur l'<strong>indice de réparabilité</strong> et le <strong>cycle de vie</strong>, argumente le choix du modèle B malgré son prix plus élevé.
+            </p>
+
+            <div class="wizard__help-box">
+              <p><strong>💡 Indicateurs de réussite :</strong></p>
+              <ul>
+                <li>✅ Mention de l'indice de réparabilité (7,8/10)</li>
+                <li>✅ Lien avec le cycle de vie (phase d'utilisation plus longue)</li>
+                <li>✅ Au moins un argument environnemental ou économique</li>
+              </ul>
+            </div>
+
+            <textarea
+              class="wizard__textarea"
+              data-field="q2c_argumentation"
+              placeholder="Malgré son prix plus élevé, le modèle B est préférable car…"
+              spellcheck="true"
+              lang="fr"
+              rows="6"
+              maxlength="600"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span class="char-count" data-for="q2c_argumentation">0</span> / 600
+            </div>
+
+            <div class="wizard__correction" id="correction_q2c">
+              <strong>📝 Réponse attendue :</strong>
+              Le modèle B a un indice de réparabilité de <strong>7,8/10</strong> : il est facile à démonter et les pièces sont disponibles et abordables. Sur le <strong>cycle de vie</strong>, cela signifie une phase d'utilisation plus longue (moins de pannes définitives), <strong>moins de déchets électroniques</strong> en fin de vie, et un <strong>coût total de possession inférieur</strong> (pas de remplacement de lampe, moins de consommation électrique). Le surcoût à l'achat est compensé par les économies sur la durée et un impact environnemental réduit.
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════════════════
+               EXERCICE 3 — IA et biais
+               ══════════════════════════════════════════ -->
+          <div class="wizard__exercise-separator">
+            <div class="wizard__exercise-separator-icon">🤖</div>
+            <div class="wizard__exercise-separator-content">
+              <h3>Exercice 3 — IA et biais</h3>
+              <p>Compétences : OST 12</p>
+            </div>
+          </div>
+
+          <!-- Contexte partagé Exercice 3 -->
+          <div class="wizard__situation">
+            <p>
+              Une entreprise utilise une <strong>IA pour trier les CV</strong> des candidats à l'embauche. L'IA a été entraînée sur les CV des employés recrutés au cours des <strong>10 dernières années</strong>.
+            </p>
+          </div>
+
+          <!-- Q3a — Type d'apprentissage (QCM) -->
+          <div class="wizard__question" data-question="q3a" data-correct="A">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">QCM unique</span>
+              <span class="wizard__question-points">Q3a</span>
+            </div>
+            <h3 class="wizard__question-title">Type d'apprentissage</h3>
+            <p class="wizard__question-text">
+              De quel <strong>type d'apprentissage</strong> s'agit-il ?
+            </p>
+
+            <div class="wizard__radio-group">
+              <label class="wizard__radio">
+                <input type="radio" name="q3a_apprentissage" data-field="q3a_apprentissage" value="A" />
+                <span>A) Apprentissage supervisé : l'IA apprend à partir d'exemples étiquetés (recrutés / non recrutés)</span>
+              </label>
+              <label class="wizard__radio">
+                <input type="radio" name="q3a_apprentissage" data-field="q3a_apprentissage" value="B" />
+                <span>B) Apprentissage par renforcement : l'IA apprend par essais/erreurs avec récompenses</span>
+              </label>
+              <label class="wizard__radio">
+                <input type="radio" name="q3a_apprentissage" data-field="q3a_apprentissage" value="C" />
+                <span>C) Apprentissage non supervisé : l'IA classe les CV sans exemples</span>
+              </label>
+              <label class="wizard__radio">
+                <input type="radio" name="q3a_apprentissage" data-field="q3a_apprentissage" value="D" />
+                <span>D) Apprentissage génératif : l'IA crée de nouveaux CV</span>
+              </label>
+            </div>
+
+            <div class="wizard__correction" id="correction_q3a">
+              <strong>✅ Bonne réponse : A</strong>
+              C'est un <strong>apprentissage supervisé</strong> : l'IA apprend à partir d'exemples (les CV passés) qui ont été étiquetés par l'Homme (recrutés / non recrutés). Elle cherche à reproduire les critères de sélection observés dans les données.
+            </div>
+          </div>
+
+          <!-- Q3b — Risque de biais -->
+          <div class="wizard__question" data-question="q3b">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Question ouverte</span>
+              <span class="wizard__question-points">Q3b</span>
+            </div>
+            <h3 class="wizard__question-title">Risque lié aux données</h3>
+            <p class="wizard__question-text">
+              Pendant ces 10 ans, l'entreprise a recruté <strong>majoritairement des hommes</strong>. Quel risque cela représente-t-il pour l'IA ?
+            </p>
+
+            <textarea
+              class="wizard__textarea"
+              data-field="q3b_risque_biais"
+              placeholder="Le risque est que l'IA…"
+              spellcheck="true"
+              lang="fr"
+              rows="4"
+              maxlength="400"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span class="char-count" data-for="q3b_risque_biais">0</span> / 400
+            </div>
+
+            <div class="wizard__correction" id="correction_q3b">
+              <strong>📝 Réponse attendue :</strong>
+              Le risque est un <strong>biais de genre</strong> : l'IA va reproduire le déséquilibre des données d'entraînement et <strong>défavoriser les candidates femmes</strong>, même si leurs compétences sont équivalentes. L'IA n'est pas neutre — elle reflète les biais présents dans les données sur lesquelles elle a été entraînée.
+            </div>
+          </div>
+
+          <!-- Q3c — Solution -->
+          <div class="wizard__question" data-question="q3c">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Question ouverte</span>
+              <span class="wizard__question-points">Q3c</span>
+            </div>
+            <h3 class="wizard__question-title">Limiter le problème</h3>
+            <p class="wizard__question-text">
+              Propose <strong>une solution</strong> pour limiter ce problème de biais.
+            </p>
+
+            <textarea
+              class="wizard__textarea"
+              data-field="q3c_solution_biais"
+              placeholder="Pour limiter ce problème, on pourrait…"
+              spellcheck="true"
+              lang="fr"
+              rows="4"
+              maxlength="400"
+            ></textarea>
+            <div class="wizard__char-counter">
+              <span class="char-count" data-for="q3c_solution_biais">0</span> / 400
+            </div>
+
+            <div class="wizard__correction" id="correction_q3c">
+              <strong>📝 Réponse attendue (plusieurs solutions possibles) :</strong>
+              <ul style="margin: var(--space-2) 0 0 var(--space-4); list-style: disc;">
+                <li><strong>Rééquilibrer les données</strong> d'entraînement pour qu'elles soient représentatives (autant de femmes que d'hommes)</li>
+                <li><strong>Supprimer les informations de genre</strong> des CV avant analyse (anonymisation)</li>
+                <li>Faire <strong>vérifier les résultats de l'IA par un humain</strong> (supervision humaine)</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- ══════════════════════════════════════════
+               BOUTON CORRECTION
+               ══════════════════════════════════════════ -->
+          <div class="wizard__phase-nav" style="justify-content: center;">
+            <button class="btn btn--success" id="btnCorrect" onclick="handleCorrection()">
+              ✅ Corriger mes réponses
+            </button>
+            <button class="btn btn--secondary" id="btnRetry" onclick="handleRetry()" style="display: none;">
+              🔄 Recommencer
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <!-- =============================================
+           BARRE D'ACTIONS GLOBALES
+           ============================================= -->
+      <div class="wizard__actions">
+        <button class="btn btn--secondary" onclick="wizardExportJSON()">
+          💾 Exporter ma copie
+        </button>
+        <label class="btn btn--secondary">
+          📂 Importer une copie
+          <input
+            type="file"
+            accept=".json"
+            onchange="wizardImportJSON(event)"
+            style="display: none"
+          />
+        </label>
+        <button class="btn btn--secondary" onclick="handleSafeReset()">
+          🔄 Réinitialiser
+        </button>
+      </div>
+    </main>
+
+    <!-- Footer dynamique -->
+    <div id="footer-placeholder"></div>
+
+    <!-- =============================================
+         MODALES
+         ============================================= -->
+
+    <!-- Modale de complétion -->
+    <div class="wizard__modal-overlay" id="completionModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">🎉 Exercice terminé !</h3>
+        <div class="wizard__modal-content">
+          <p>
+            Tes réponses ont été sauvegardées et corrigées.<br />
+            Consulte les corrections affichées sous chaque question.
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--primary"
+            onclick="wizardCloseModal('completionModal')"
+          >
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modale de réinitialisation -->
+    <div class="wizard__modal-overlay" id="resetModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">⚠️ Réinitialiser l'exercice ?</h3>
+        <div class="wizard__modal-content">
+          <p>
+            Cette action effacera toutes tes réponses et la correction.<br />
+            <strong>Une sauvegarde a été automatiquement téléchargée.</strong>
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('resetModal')"
+          >
+            Annuler
+          </button>
+          <button
+            class="btn btn--primary"
+            style="background: var(--color-error)"
+            onclick="wizardReset(); resetCorrection();"
+          >
+            Confirmer la réinitialisation
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast notification -->
+    <div id="wizardToast" class="wizard__toast">
+      <span class="wizard__toast-icon">ℹ️</span>
+      <span class="wizard__toast-message">Message</span>
+    </div>
+
+    <!-- =============================================
+         SCRIPTS
+         ============================================= -->
+
+    <!-- Composants dynamiques (header/footer) -->
+    <script type="module" src="/src/js/components.js"></script>
+
+    <!-- Configuration et initialisation WizardFirebase -->
+    <script type="module">
+      import { WizardFirebase } from "/src/js/wizard-firebase.js";
+
+      // =============================================
+      // CONFIGURATION WIZARDFIREBASE (léger, sans mot de passe)
+      // =============================================
+      window.wizardInstance = new WizardFirebase({
+        collectionName: "exercices_dnb_ost_fiche01",
+
+        // Tous les champs dans une seule phase
+        requiredFields: {
+          1: [
+            "studentName",
+            "studentClass",
+            "q1a_fonction_usage",
+            "q1b_facteurs_evolution",
+            "q1c_domaine",
+            "q2a_modele",
+            "q2a_justification",
+            "q2b_calcul_lampes",
+            "q2c_argumentation",
+            "q3a_apprentissage",
+            "q3b_risque_biais",
+            "q3c_solution_biais",
+          ],
+        },
+
+        onComplete: (data) => {
+          console.log("🎉 Exercice terminé:", data);
+        },
+        onSaveSuccess: () => {
+          console.log("✅ Sauvegarde Firestore OK");
+        },
+        onSaveError: (error) => {
+          console.error("❌ Erreur Firestore:", error);
+        },
+
+        // Pas de mot de passe — init automatique
+        autoInit: true,
+      });
+
+      // =============================================
+      // COMPTEURS DE CARACTÈRES (générique)
+      // =============================================
+      function setupCharCounters() {
+        document.querySelectorAll(".char-count").forEach((span) => {
+          const fieldName = span.dataset.for;
+          const textarea = document.querySelector(`[data-field="${fieldName}"]`);
+          if (textarea && span) {
+            textarea.addEventListener("input", () => {
+              span.textContent = textarea.value.length;
+            });
+          }
+        });
+      }
+
+      document.addEventListener("DOMContentLoaded", setupCharCounters);
+
+      // =============================================
+      // RÉINITIALISATION SÉCURISÉE
+      // =============================================
+      window.handleSafeReset = function () {
+        if (typeof wizardExportJSON === "function") {
+          wizardExportJSON();
+        } else if (window.wizardInstance) {
+          window.wizardInstance.exportToJSON();
+        }
+
+        if (window.wizardInstance?.showToast) {
+          window.wizardInstance.showToast(
+            "Sauvegarde téléchargée !",
+            "success",
+          );
+        }
+
+        wizardShowModal("resetModal");
+      };
+
+      // =============================================
+      // CORRECTION AUTOMATIQUE
+      // =============================================
+
+      // Corrigé des QCM (data-correct sur les .wizard__question)
+      // Les questions ouvertes affichent le corrigé de référence
+
+      window.handleCorrection = function () {
+        const mainEl = document.querySelector("main.wizard");
+        let scoreQCM = 0;
+        let totalQCM = 0;
+
+        // Parcourir toutes les questions
+        document.querySelectorAll(".wizard__question[data-question]").forEach((questionEl) => {
+          const questionId = questionEl.dataset.question;
+          const correctAnswer = questionEl.dataset.correct; // undefined pour questions ouvertes
+          const correctionEl = document.getElementById(`correction_${questionId}`);
+
+          if (correctAnswer) {
+            // ── QCM : correction automatique ──
+            totalQCM++;
+            const radioName = questionEl.querySelector("input[type='radio']")?.name;
+            const selectedRadio = radioName
+              ? document.querySelector(`input[name="${radioName}"]:checked`)
+              : null;
+            const userAnswer = selectedRadio?.value || null;
+
+            // Marquer les labels
+            questionEl.querySelectorAll(".wizard__radio").forEach((label) => {
+              const input = label.querySelector("input");
+              label.classList.remove("is-correct", "is-incorrect", "is-expected");
+
+              if (input.value === correctAnswer) {
+                label.classList.add("is-expected"); // Toujours montrer la bonne réponse
+              }
+
+              if (input.checked) {
+                if (input.value === correctAnswer) {
+                  label.classList.add("is-correct");
+                } else {
+                  label.classList.add("is-incorrect");
+                }
+              }
+            });
+
+            if (userAnswer === correctAnswer) {
+              scoreQCM++;
+              correctionEl.classList.add("wizard__correction--correct");
+            } else {
+              correctionEl.classList.add("wizard__correction--incorrect");
+            }
+          } else {
+            // ── Question ouverte : afficher le corrigé de référence ──
+            correctionEl.classList.add("wizard__correction--reference");
+          }
+        });
+
+        // Afficher le score
+        const scoreBanner = document.getElementById("scoreBanner");
+        const scoreValue = document.getElementById("scoreValue");
+        scoreValue.textContent = `${scoreQCM} / ${totalQCM}`;
+
+        scoreBanner.classList.remove("wizard__score-banner--good", "wizard__score-banner--average", "wizard__score-banner--low");
+        const ratio = scoreQCM / totalQCM;
+        if (ratio >= 0.75) {
+          scoreBanner.classList.add("wizard__score-banner--good");
+        } else if (ratio >= 0.5) {
+          scoreBanner.classList.add("wizard__score-banner--average");
+        } else {
+          scoreBanner.classList.add("wizard__score-banner--low");
+        }
+        scoreBanner.classList.add("show");
+
+        // Verrouiller le formulaire
+        mainEl.classList.add("wizard--corrected");
+
+        // Basculer les boutons
+        document.getElementById("btnCorrect").style.display = "none";
+        document.getElementById("btnRetry").style.display = "inline-flex";
+
+        // Sauvegarder avec le score
+        if (window.wizardInstance) {
+          window.wizardInstance.formData._scoreQCM = scoreQCM;
+          window.wizardInstance.formData._totalQCM = totalQCM;
+          window.wizardInstance.isDirty = true;
+          window.wizardInstance.saveToFirestore();
+        }
+
+        // Scroll vers le score
+        scoreBanner.scrollIntoView({ behavior: "smooth", block: "center" });
+
+        // Toast
+        window.wizardInstance?.showToast(
+          `Score QCM : ${scoreQCM}/${totalQCM}`,
+          scoreQCM === totalQCM ? "success" : "info"
+        );
+      };
+
+      // =============================================
+      // RECOMMENCER (efface la correction visuelle)
+      // =============================================
+      window.resetCorrection = function () {
+        const mainEl = document.querySelector("main.wizard");
+        mainEl.classList.remove("wizard--corrected");
+
+        // Masquer toutes les corrections
+        document.querySelectorAll(".wizard__correction").forEach((el) => {
+          el.classList.remove(
+            "wizard__correction--correct",
+            "wizard__correction--incorrect",
+            "wizard__correction--reference"
+          );
+        });
+
+        // Retirer les classes de feedback des radios
+        document.querySelectorAll(".wizard__radio, .wizard__checkbox-item").forEach((el) => {
+          el.classList.remove("is-correct", "is-incorrect", "is-expected");
+        });
+
+        // Masquer le score
+        document.getElementById("scoreBanner").classList.remove("show");
+
+        // Basculer les boutons
+        document.getElementById("btnCorrect").style.display = "inline-flex";
+        document.getElementById("btnRetry").style.display = "none";
+      };
+
+      window.handleRetry = function () {
+        resetCorrection();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      };
+    </script>
+  </body>
+</html>
