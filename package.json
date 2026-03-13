@@ -11,15 +11,16 @@
     "deploy:preview": "netlify deploy",
     "deploy:prod": "netlify deploy --prod",
     "deploy:dev": "netlify deploy --dir=. --message='Dev preview'",
-    "security-check": "node security-check.js",
-    "security-check:prod": "node security-check.js https://technodocs.netlify.app",
+    "security-check": "node scripts/security-check.js",
+    "security-check:prod": "node scripts/security-check.js https://technodocs.netlify.app",
     "commit": "bash ./scripts/autocommit.sh",
     "dev:sync": "node scripts/sync-dev-pages.js",
     "dev:sync:dry": "node scripts/sync-dev-pages.js --dry-run",
     "hooks:install": "node scripts/setup-hooks.js",
     "export:firestore": "node scripts/export-firestore.js",
     "clean:previews": "node scripts/netlify-clean.js",
-    "clean:previews:dry": "node scripts/netlify-clean.js --dry-run"
+    "clean:previews:dry": "node scripts/netlify-clean.js --dry-run",
+    "session-check": "node scripts/session-end-check.js"
   },
   "keywords": [
     "flashcards",
