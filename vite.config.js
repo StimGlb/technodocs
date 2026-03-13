@@ -62,6 +62,11 @@ function copyStaticAssets() {
           src: resolve(__dirname, "src/content/md"),
           dst: resolve(__dirname, "dist/src/content/md"),
         },
+        // Images → référencées dans les .md et HTML via chemins relatifs
+        {
+          src: resolve(__dirname, "src/assets"),
+          dst: resolve(__dirname, "dist/src/assets"),
+        },
       ];
 
       for (const { src, dst } of copies) {
