@@ -2,31 +2,65 @@ import { defineConfig } from "vite";
 import { resolve, relative, join } from "path";
 import { readdirSync, statSync, existsSync, mkdirSync, copyFileSync } from "fs";
 
-// Plugin : copie les assets non-bundlables vers dist en préservant les chemins
-// nécessaire pour : marked.min.js (script sans type=module) + JSON d'activités (fetch dynamique)
+// Plugin : copie les assets non-bundlables vers dist en préservant les chemins src/
+// Nécessaire pour :
+//   - marked.min.js (script sans type=module, non bundlé par Vite)
+//   - JSON fetchés dynamiquement via chemin relatif ../../data/xxx/ depuis les pages HTML
 function copyStaticAssets() {
+  // Copie récursive d'un dossier src → dst
+  function copyDir(src, dst) {
+    if (!existsSync(src)) return;
+    mkdirSync(dst, { recursive: true });
+    for (const entry of readdirSync(src, { withFileTypes: true })) {
+      const srcPath = join(src, entry.name);
+      const dstPath = join(dst, entry.name);
+      if (entry.isDirectory()) {
+        copyDir(srcPath, dstPath);
+      } else {
+        copyFileSync(srcPath, dstPath);
+      }
+    }
+  }
+
   return {
     name: "copy-static-assets",
-    writeBundle() {
+    // closeBundle : appelé une seule fois après que tous les chunks sont écrits
+    closeBundle() {
       const copies = [
-        // marked.min.js → les pages HTML y accèdent via chemin relatif ../../js/libs/
+        // marked.min.js → pages HTML l'accèdent via ../../js/libs/marked.min.js
         {
           src: resolve(__dirname, "src/js/libs"),
           dst: resolve(__dirname, "dist/src/js/libs"),
         },
-        // JSON activités → fetchés dynamiquement via chemin relatif ../../data/activites/
+        // JSON cours → fetchés via ../../data/cours/xxx.json
+        {
+          src: resolve(__dirname, "src/data/cours"),
+          dst: resolve(__dirname, "dist/src/data/cours"),
+        },
+        // JSON activités → fetchés via ../../data/activites/xxx.json
         {
           src: resolve(__dirname, "src/data/activites"),
           dst: resolve(__dirname, "dist/src/data/activites"),
         },
+        // JSON révisions → fetchés via ../../data/revisions/xxx.json
+        {
+          src: resolve(__dirname, "src/data/revisions"),
+          dst: resolve(__dirname, "dist/src/data/revisions"),
+        },
+        // JSON référentiels → fetchés via ../../data/referentiels/xxx.json
+        {
+          src: resolve(__dirname, "src/data/referentiels"),
+          dst: resolve(__dirname, "dist/src/data/referentiels"),
+        },
+        // JSON graphiques → fetchés dynamiquement si nécessaire
+        {
+          src: resolve(__dirname, "src/data/graphiques"),
+          dst: resolve(__dirname, "dist/src/data/graphiques"),
+        },
       ];
 
       for (const { src, dst } of copies) {
-        if (!existsSync(src)) continue;
-        mkdirSync(dst, { recursive: true });
-        for (const file of readdirSync(src)) {
-          copyFileSync(join(src, file), join(dst, file));
-        }
+        copyDir(src, dst);
       }
     },
   };
