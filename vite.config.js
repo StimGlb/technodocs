@@ -139,8 +139,8 @@ export default defineConfig({
 
   server: {
     port: 3001,
-    // Ouvrir la page _dev.html automatiquement en local
-    open: "/_dev.html",
+    // Navigateur désactivé — lancer manuellement depuis tasks.json
+    open: false,
   },
 
   preview: {
