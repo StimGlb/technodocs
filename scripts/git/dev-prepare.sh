@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Définition de la racine du projet (un dossier au-dessus du script)
-ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+# Définition de la racine du projet (deux dossiers au-dessus du script : scripts/git/ → scripts/ → racine)
+ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 
 echo "🚀 Préparation de l'environnement de développement..."
 echo "📁 Racine du projet : $ROOT"
