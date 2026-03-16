@@ -59,12 +59,9 @@
 | Veille des appareils | | |
 | **Total** | | |
 
-
 ---
 
 **1.2** Avant d'utiliser le générateur de graphiques, choisis le type de représentation graphique le plus adapté pour présenter ces données. Justifie ton choix.
-
----
 
 Type de graphique choisi :
 <div class="zone-reponse zone-reponse--compact"></div>
