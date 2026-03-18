@@ -11,7 +11,6 @@
 // État du carousel
 let currentSlide = 0;
 let totalSlides = 0;
-let slidesData = [];
 
 /**
  * Initialise la page de cours
@@ -111,7 +110,6 @@ function renderCarousel(slides) {
 
   if (!track || !slides || slides.length === 0) return;
 
-  slidesData = slides;
   totalSlides = slides.length;
 
   // Vider le conteneur
