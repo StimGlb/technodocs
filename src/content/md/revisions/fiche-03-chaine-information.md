@@ -90,7 +90,7 @@ La fonction **Commander** fait le lien entre la chaîne d'information et la cha�
 
 ---
 
-## 4. Le lien entre les deux chaînes
+<!-- ## 4. Le lien entre les deux chaînes
 
 C'est un point essentiel à maîtriser pour le DNB : comprendre comment les deux chaînes **coopèrent** dans un système technique.
 
@@ -98,9 +98,9 @@ C'est un point essentiel à maîtriser pour le DNB : comprendre comment les deux
 
 **Règle fondamentale** : la chaîne d'information **pilote** la chaîne d'énergie. Sans information (pas de capteur, pas de programme), la chaîne d'énergie ne sait pas quand ni comment agir.
 
----
+--- -->
 
-## 5. Exemple complet — Trottinette électrique
+## 4. Exemple complet — Trottinette électrique
 
 ![Chaîne d'information — Trottinette électrique](../../assets/revisions/chaine-information-trottinette.svg)
 
@@ -119,4 +119,4 @@ C'est un point essentiel à maîtriser pour le DNB : comprendre comment les deux
 2. Un **capteur** convertit une grandeur physique en signal électrique ; il peut être **analogique** ou **numérique**.
 3. Le **microcontrôleur** (Arduino, Raspberry Pi…) exécute un programme qui décide des actions à réaliser.
 4. L'**IHM** est l'interface entre l'Homme et la machine : elle affiche des informations et reçoit des commandes.
-5. La chaîne d'information **pilote** la chaîne d'énergie : elle décide quand, comment et combien d'énergie circule.
+<!-- 5. La chaîne d'information **pilote** la chaîne d'énergie : elle décide quand, comment et combien d'énergie circule. -->

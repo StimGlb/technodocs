@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -15,7 +15,6 @@
     />
   </head>
   <body>
-
     <!-- ============================================================
          1. PASSWORD OVERLAY
          ============================================================ -->
@@ -40,7 +39,6 @@
          2. WIZARD PRINCIPAL
          ============================================================ -->
     <main class="wizard is-locked" id="wizardMain">
-
       <!-- 2.1 BANNER -->
       <div class="wizard__banner">
         <div class="wizard__banner-icon">⚡</div>
@@ -63,7 +61,6 @@
               type="text"
               id="studentName"
               data-field="studentName"
-              placeholder=""
               required
             />
           </div>
@@ -101,7 +98,9 @@
             <span class="wizard__save-dot"></span>
             <span class="wizard__save-text">Auto-save</span>
           </div>
-          <span class="wizard__progress-percentage" id="progressPercentage">0%</span>
+          <span class="wizard__progress-percentage" id="progressPercentage"
+            >0%</span
+          >
         </div>
         <div class="wizard__progress-bar">
           <div
@@ -132,7 +131,6 @@
 
       <!-- 2.4 CONTAINER DES PHASES -->
       <div class="wizard__container">
-
         <!-- ============================================================
              PHASE 1 — Activité 1 : Identifier les usages
              ============================================================ -->
@@ -163,8 +161,8 @@
               Q1.1 — Usages et sources d'énergie
             </h3>
             <p class="wizard__question-text">
-              Citez quatre usages de l'énergie dans un logement et indiquez
-              la source d'énergie associée à chacun.
+              Citez quatre usages de l'énergie dans un logement et indiquez la
+              source d'énergie associée à chacun.
             </p>
             <div class="wizard__table-wrapper">
               <table class="wizard__table">
@@ -182,7 +180,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q1_chauffage_source"
-                        placeholder="ex. gaz naturel"
                         maxlength="80"
                       />
                     </td>
@@ -194,7 +191,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q1_ecs_source"
-                        placeholder="ex. électricité"
                         maxlength="80"
                       />
                     </td>
@@ -206,7 +202,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q1_cuisson_source"
-                        placeholder="ex. gaz"
                         maxlength="80"
                       />
                     </td>
@@ -218,7 +213,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q1_eclairage_source"
-                        placeholder="ex. électricité"
                         maxlength="80"
                       />
                     </td>
@@ -234,9 +228,7 @@
               <span class="wizard__question-badge">Réponse rédigée</span>
               <span class="wizard__question-points">3 points</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q1.2 — Usage principal
-            </h3>
+            <h3 class="wizard__question-title">Q1.2 — Usage principal</h3>
             <p class="wizard__question-text">
               Quel usage représente généralement la plus grande part de la
               consommation d'énergie dans un logement français ? Justifiez.
@@ -246,7 +238,6 @@
               data-field="q1_usage_principal"
               rows="4"
               maxlength="400"
-              placeholder="Votre réponse…"
               spellcheck="true"
               lang="fr"
             ></textarea>
@@ -254,10 +245,7 @@
 
           <div class="wizard__phase-nav">
             <span></span>
-            <button
-              class="btn btn--primary"
-              onclick="wizardGoToPhase(2)"
-            >
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
               Activité suivante →
             </button>
           </div>
@@ -288,11 +276,10 @@
               <span class="wizard__question-badge">Relevé</span>
               <span class="wizard__question-points">2 points</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q2.1 — Relevé de la facture
-            </h3>
+            <h3 class="wizard__question-title">Q2.1 — Relevé de la facture</h3>
             <p class="wizard__question-text">
-              Relevez les informations suivantes sur la facture fournie par votre enseignant(e).
+              Relevez les informations suivantes sur la facture fournie par
+              votre enseignant(e).
             </p>
             <!-- VÉRIFIER : image de la facture à insérer — src non disponible -->
             <div class="wizard__table-wrapper">
@@ -312,7 +299,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q2_conso_valeur"
-                        placeholder="ex. 4 500"
                         maxlength="80"
                       />
                     </td>
@@ -321,7 +307,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q2_conso_unite"
-                        placeholder="kWh"
                         maxlength="80"
                       />
                     </td>
@@ -333,7 +318,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q2_montant_ht"
-                        placeholder="ex. 720"
                         maxlength="80"
                       />
                     </td>
@@ -342,7 +326,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q2_montant_ht_unite"
-                        placeholder="€"
                         maxlength="80"
                       />
                     </td>
@@ -354,7 +337,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q2_montant_ttc"
-                        placeholder="ex. 810"
                         maxlength="80"
                       />
                     </td>
@@ -363,7 +345,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q2_montant_ttc_unite"
-                        placeholder="€"
                         maxlength="80"
                       />
                     </td>
@@ -375,7 +356,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q2_periode"
-                        placeholder="ex. jan. – déc. 2024"
                         maxlength="80"
                       />
                     </td>
@@ -392,9 +372,7 @@
               <span class="wizard__question-badge">Calcul</span>
               <span class="wizard__question-points">2 points</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q2.2 — Coût moyen du kWh
-            </h3>
+            <h3 class="wizard__question-title">Q2.2 — Coût moyen du kWh</h3>
             <p class="wizard__question-text">
               Calculez le coût moyen du kWh TTC à partir des données relevées.
               Montrez votre calcul.
@@ -404,7 +382,6 @@
               data-field="q2_calcul_kwh"
               rows="4"
               maxlength="400"
-              placeholder="Formule et calcul…"
               spellcheck="true"
               lang="fr"
             ></textarea>
@@ -416,9 +393,7 @@
               <span class="wizard__question-badge">Réponse rédigée</span>
               <span class="wizard__question-points">2 points</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q2.3 — L'abonnement
-            </h3>
+            <h3 class="wizard__question-title">Q2.3 — L'abonnement</h3>
             <p class="wizard__question-text">
               Que représente l'abonnement sur la facture ? En quoi est-il
               différent de la consommation facturée ?
@@ -428,23 +403,16 @@
               data-field="q2_abonnement_explication"
               rows="4"
               maxlength="400"
-              placeholder="Votre réponse…"
               spellcheck="true"
               lang="fr"
             ></textarea>
           </div>
 
           <div class="wizard__phase-nav">
-            <button
-              class="btn btn--secondary"
-              onclick="wizardGoToPhase(1)"
-            >
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
               ← Activité précédente
             </button>
-            <button
-              class="btn btn--primary"
-              onclick="wizardGoToPhase(3)"
-            >
+            <button class="btn btn--primary" onclick="wizardGoToPhase(3)">
               Activité suivante →
             </button>
           </div>
@@ -499,7 +467,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q3_chauffage_kwh"
-                        placeholder="kWh"
                         maxlength="80"
                       />
                     </td>
@@ -508,7 +475,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q3_chauffage_pct"
-                        placeholder="%"
                         maxlength="80"
                       />
                     </td>
@@ -520,7 +486,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q3_ecs_kwh"
-                        placeholder="kWh"
                         maxlength="80"
                       />
                     </td>
@@ -529,7 +494,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q3_ecs_pct"
-                        placeholder="%"
                         maxlength="80"
                       />
                     </td>
@@ -541,7 +505,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q3_electromenager_kwh"
-                        placeholder="kWh"
                         maxlength="80"
                       />
                     </td>
@@ -550,7 +513,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q3_electromenager_pct"
-                        placeholder="%"
                         maxlength="80"
                       />
                     </td>
@@ -562,7 +524,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q3_eclairage_kwh"
-                        placeholder="kWh"
                         maxlength="80"
                       />
                     </td>
@@ -571,7 +532,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q3_eclairage_pct"
-                        placeholder="%"
                         maxlength="80"
                       />
                     </td>
@@ -583,7 +543,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q3_total_kwh"
-                        placeholder="kWh"
                         maxlength="80"
                       />
                     </td>
@@ -592,7 +551,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q3_total_pct"
-                        placeholder="%"
                         maxlength="80"
                       />
                     </td>
@@ -621,7 +579,6 @@
               data-field="q3_comparaison_nationale"
               rows="4"
               maxlength="400"
-              placeholder="Calcul et conclusion…"
               spellcheck="true"
               lang="fr"
             ></textarea>
@@ -633,35 +590,26 @@
               <span class="wizard__question-badge">Réponse rédigée</span>
               <span class="wizard__question-points">1 point</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q3.3 — Poste prioritaire
-            </h3>
+            <h3 class="wizard__question-title">Q3.3 — Poste prioritaire</h3>
             <p class="wizard__question-text">
-              Quel poste conseilleriez-vous à la famille de réduire en priorité ?
-              Justifiez en vous appuyant sur les données du tableau.
+              Quel poste conseilleriez-vous à la famille de réduire en priorité
+              ? Justifiez en vous appuyant sur les données du tableau.
             </p>
             <textarea
               class="wizard__textarea"
               data-field="q3_conseil_poste"
               rows="4"
               maxlength="400"
-              placeholder="Votre réponse…"
               spellcheck="true"
               lang="fr"
             ></textarea>
           </div>
 
           <div class="wizard__phase-nav">
-            <button
-              class="btn btn--secondary"
-              onclick="wizardGoToPhase(2)"
-            >
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
               ← Activité précédente
             </button>
-            <button
-              class="btn btn--primary"
-              onclick="wizardGoToPhase(4)"
-            >
+            <button class="btn btn--primary" onclick="wizardGoToPhase(4)">
               Conclusion →
             </button>
           </div>
@@ -693,19 +641,16 @@
               <span class="wizard__question-badge">Synthèse</span>
               <span class="wizard__question-points">2 points</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q4.1 — Bilan synthétique
-            </h3>
+            <h3 class="wizard__question-title">Q4.1 — Bilan synthétique</h3>
             <p class="wizard__question-text">
-              Rédigez un bilan synthétique des consommations de la famille
-              (6 à 8 lignes).
+              Rédigez un bilan synthétique des consommations de la famille (6 à
+              8 lignes).
             </p>
             <textarea
               class="wizard__textarea"
               data-field="q4_bilan_synthese"
               rows="6"
               maxlength="600"
-              placeholder="Votre synthèse…"
               spellcheck="true"
               lang="fr"
             ></textarea>
@@ -717,9 +662,7 @@
               <span class="wizard__question-badge">Préconisations</span>
               <span class="wizard__question-points">1 point</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q4.2 — Actions concrètes
-            </h3>
+            <h3 class="wizard__question-title">Q4.2 — Actions concrètes</h3>
             <p class="wizard__question-text">
               Proposez deux actions concrètes et argumentées pour réduire la
               consommation d'énergie du logement.
@@ -729,31 +672,22 @@
               data-field="q4_actions_proposees"
               rows="6"
               maxlength="600"
-              placeholder="Action 1 : … Action 2 : …"
               spellcheck="true"
               lang="fr"
             ></textarea>
           </div>
 
           <div class="wizard__phase-nav">
-            <button
-              class="btn btn--secondary"
-              onclick="wizardGoToPhase(3)"
-            >
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(3)">
               ← Activité précédente
             </button>
-            <button
-              class="btn btn--success"
-              onclick="wizardComplete()"
-            >
+            <button class="btn btn--success" onclick="wizardComplete()">
               ✔ Envoyer mon devoir
             </button>
           </div>
         </section>
-
       </div>
       <!-- /.wizard__container -->
-
     </main>
     <!-- /.wizard -->
 
@@ -767,10 +701,10 @@
       import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
 
       window.checkPassword = function () {
-        const input   = document.getElementById("passwordInput");
-        const error   = document.getElementById("errorMessage");
+        const input = document.getElementById("passwordInput");
+        const error = document.getElementById("errorMessage");
         const overlay = document.getElementById("passwordOverlay");
-        const main    = document.querySelector("main.wizard");
+        const main = document.querySelector("main.wizard");
 
         if (!input || !error || !overlay || !main) return;
 
@@ -786,7 +720,8 @@
         }
       };
 
-      document.getElementById("passwordInput")
+      document
+        .getElementById("passwordInput")
         ?.addEventListener("keypress", (e) => {
           if (e.key === "Enter") {
             e.preventDefault();
@@ -795,10 +730,6 @@
         });
     </script>
 
-    <script
-      type="module"
-      src="/src/js/wizard-consommation-maison.js"
-    ></script>
-
+    <script type="module" src="/src/js/wizard-consommation-maison.js"></script>
   </body>
 </html>

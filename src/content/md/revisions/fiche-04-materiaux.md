@@ -59,7 +59,7 @@ Pour choisir un matériau adapté, on étudie ses **propriétés** :
 
 ---
 
-## 4. Choisir un matériau (CCRI 13)
+## 4. Choisir un matériau
 
 Le choix d'un matériau est toujours un **compromis** entre plusieurs critères :
 
@@ -127,7 +127,7 @@ L'impression 3D par **dépôt de fil fondu** (FDM) est le procédé utilisé en 
 
 ---
 
-## 6. La modélisation numérique (CCRI 16)
+## 6. La modélisation numérique
 
 Avant de fabriquer, on **modélise** la pièce sur ordinateur. La modélisation permet de :
 

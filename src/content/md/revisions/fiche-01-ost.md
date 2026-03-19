@@ -1,6 +1,6 @@
 # Fiche 1 — Les objets et systèmes techniques
 
-## 1. Qu'est-ce qu'un objet technique ? (OST 1)
+## 1. Qu'est-ce qu'un objet technique ?
 
 Un **objet technique** (OT) est un objet fabriqué par l'Homme pour répondre à un **besoin**. Il se distingue d'un objet naturel (caillou, branche) par le fait qu'il a été conçu et réalisé intentionnellement.
 
@@ -17,7 +17,7 @@ Un **système technique** (ST) est un ensemble d'objets techniques qui fonctionn
 
 ---
 
-## 2. Évolution des objets techniques (OST 11)
+## 2. Évolution des objets techniques
 
 Les objets techniques **évoluent dans le temps** en fonction des découvertes scientifiques, des innovations technologiques et des besoins de la société.
 
@@ -47,7 +47,7 @@ Les objets techniques **évoluent dans le temps** en fonction des découvertes s
 
 ---
 
-## 3. Usages et impacts du numérique (OST 12)
+<!-- ## 3. Usages et impacts du numérique
 
 Le numérique transforme nos usages quotidiens. Il faut savoir identifier ses **apports** et ses **impacts négatifs**.
 
@@ -64,7 +64,7 @@ Le numérique transforme nos usages quotidiens. Il faut savoir identifier ses **
 - **Sociétaux** : fracture numérique, dépendance aux écrans, cyberharcèlement
 - **Sécurité** : vol de données, usurpation d'identité, virus
 
-### L'Intelligence Artificielle (IA)
+### L'Intelligence Artificielle
 
 L'IA est un programme capable de réaliser des tâches qui nécessitent normalement l'intelligence humaine (reconnaissance d'images, traduction, prise de décision).
 
@@ -84,9 +84,9 @@ L'IA est un programme capable de réaliser des tâches qui nécessitent normalem
 | **Logiciel malveillant** | Programme qui infecte l'ordinateur | Antivirus à jour, ne pas télécharger n'importe quoi |
 | **Usurpation d'identité** | Quelqu'un se fait passer pour toi | Ne pas partager ses identifiants, double authentification |
 
----
+--- -->
 
-## 4. L'objet technique dans son environnement (OST 2 · OST 21)
+## 3. L'objet technique dans son environnement
 
 Un objet technique n'existe pas seul : il **interagit** avec son environnement et ses utilisateurs.
 
@@ -99,9 +99,7 @@ Un objet technique n'existe pas seul : il **interagit** avec son environnement e
 
 Ces interactions se représentent avec un **diagramme pieuvre** (ou diagramme des interactions) qui montre l'objet au centre et les éléments extérieurs avec lesquels il est en relation.
 
----
-
-## 5. Choisir un objet technique (OST 3 · OST 31 · OST 32)
+<!-- ## 4. Choisir un objet technique
 
 ### Critères de choix
 
@@ -135,7 +133,7 @@ Plus la note est élevée, plus l'objet est réparable → lutte contre l'**obso
 
 ### L'indice énergétique (étiquette énergie)
 
-L'étiquette énergie classe les appareils de **A** (très économe) à **G** (très énergivore). Elle permet de comparer la **performance énergétique** de produits similaires et d'orienter un choix responsable.
+L'étiquette énergie classe les appareils de **A** (très économe) à **G** (très énergivore). Elle permet de comparer la **performance énergétique** de produits similaires et d'orienter un choix responsable. -->
 
 ---
 
@@ -143,6 +141,6 @@ L'étiquette énergie classe les appareils de **A** (très économe) à **G** (t
 
 1. Un **objet technique** répond à un besoin humain ; il a une **fonction d'usage** et une **fonction d'estime**.
 2. Les objets évoluent grâce aux découvertes scientifiques, nouveaux matériaux et nouvelles sources d'énergie — on les classe en **familles** et **lignées**.
-3. Le numérique apporte des services mais génère des **impacts environnementaux et sociétaux** ; l'IA peut contenir des **biais** qu'il faut connaître.
-4. Un objet interagit avec son **utilisateur** et son **environnement** — on le représente par un **diagramme pieuvre**.
-5. Pour choisir un objet de manière responsable, on utilise le **cycle de vie**, l'**indice de réparabilité** et l'**étiquette énergie**.
+<!-- 3. Le numérique apporte des services mais génère des **impacts environnementaux et sociétaux** ; l'IA peut contenir des **biais** qu'il faut connaître. -->
+3. Un objet interagit avec son **utilisateur** et son **environnement** — on le représente par un **diagramme pieuvre**.
+<!-- 4. Pour choisir un objet de manière responsable, on utilise le **cycle de vie**, l'**indice de réparabilité** et l'**étiquette énergie**. -->

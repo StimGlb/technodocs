@@ -25,44 +25,37 @@
     </div>
 </div>
 
-**Travail demandé : <strong>Collecter des données, les analyser et produire un bilan de consommation pour conseiller la famille Kiagi.</strong> Choisir une représentation graphique adaptée et la réaliser. Comparer des OST en prenant en compte les incidences environnementales. Argumenter un choix d'équipement.**
+**Travail demandé : <strong>Calculer les consommations électriques de chaque poste, les analyser et produire un bilan de consommation pour conseiller la famille Kiagi.</strong> Choisir une représentation graphique adaptée et la réaliser. Comparer des OST en prenant en compte les incidences environnementales. Argumenter un choix d'équipement.**
 
 <!-- ════════════════════════════════════════ -->
 <!-- ACTIVITÉ 1                              -->
 <!-- ════════════════════════════════════════ -->
 
 <div class="fiche-activite">
-<div class="fiche-activite__titre">Activité 1 : Collecter et représenter les données de consommation <span class="fiche-ordi">Sur ordinateur</span></div>
+<div class="fiche-activite__titre">Activité 1 : Calculer et représenter les données de consommation <span 
 
 <div class="fiche-une-colonnes">
 <div class="fiche-une-colonnes__gauche">
 
-**1.1** À partir des sites suivants (ou de toute source fiable), recherche la consommation annuelle moyenne en kWh des postes listés ci-dessous pour un foyer français.
+**1.1** À partir des données ci-dessus, calcule la consommation annuelle moyenne en kWh de chaque poste.
 
-*Sources suggérées : ademe.fr, edf.fr, ecologie.gouv.fr*
 
-| Poste de consommation | Consommation annuelle (kWh) | Source utilisée |
-|----------------------|----------------------------|-----------------|
-| Chauffage électrique | | |
-| Eau chaude sanitaire | | |
-| Électroménager | | |
-| Éclairage | | |
-| Audiovisuel | | |
+| Poste de consommation | Consommation annuelle (kWh) |
+|----------------------|----------------------------|
+| Chauffage électrique | |
+| Eau chaude sanitaire | |
+| Électroménager | |
+| Éclairage | |
+| Audiovisuel | |
 | Cuisson | | |
-| Veille des appareils | | |
-| **Total** | | |
-
+| Veille des appareils | |
+| **Total** | |
 
 ---
 
 **1.2** Avant d'utiliser le générateur de graphiques, choisis le type de représentation graphique le plus adapté pour présenter ces données. Justifie ton choix.
 
----
-
-Type de graphique choisi :
-<div class="zone-reponse zone-reponse--compact"></div>
-
-Justification :
+Type de graphique choisi et justification :
 <div class="zone-reponse zone-reponse--compact"></div>
 
 **1.3** La famille Kiagi reçoit une facture EDF de **313,11 €** pour 2 mois de consommation.
@@ -82,7 +75,7 @@ Justification :
 
 La famille Kiagi hésite entre plusieurs équipements pour l'éclairage de leur salon.
 
-**2.1** Complète le tableau comparatif suivant en utilisant les fiches techniques à disposition.
+**2.1** Complète le tableau comparatif suivant à partir de recherches sur Internet.
 
 | Critère | Ampoule incandescente | Ampoule fluocompacte | Ampoule LED | LED connectée |
 |---------|----------------------|---------------------|-------------|---------------|

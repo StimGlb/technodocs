@@ -29,7 +29,7 @@
 <!-- ════════════════════════════════════════ --> 
 
 
-**Travail demandée : <strong>Analyser la consommation électrique d'une maison</strong> et proposer des solutions pour permettre à la fammile Kiagi d'économiser l'énergie.**  
+**Travail demandé : <strong>Analyser la consommation électrique d'une maison</strong> et proposer des solutions pour permettre à la famille Kiagi d'économiser de l'électricité.**  
 
 <div class="fiche-activite">
 <div class="fiche-activite__titre">Activité 1 : Où va l'électricité ?</div>

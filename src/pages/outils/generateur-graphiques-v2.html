@@ -63,6 +63,16 @@
               />
             </div>
 
+            <div class="form-group" id="fixedTotalGroup" style="display: none">
+              <label for="fixedTotalInput">Total fixe (optionnel)</label>
+              <input
+                type="number"
+                id="fixedTotalInput"
+                placeholder="Laisser vide = somme auto"
+                min="0"
+              />
+            </div>
+
             <div class="form-error" id="formError" role="alert" hidden></div>
 
             <div class="form-actions">
@@ -84,6 +94,9 @@
               <button class="btn-toggle" id="chartTypeLine">
                 <span aria-hidden="true">📈</span> Courbe
               </button>
+              <button class="btn-toggle" id="chartTypePie">
+                <span aria-hidden="true">🥧</span> Camembert
+              </button>
             </div>
           </div>
 
@@ -94,8 +107,14 @@
               <button class="btn-toggle active" id="displayAbsolute">
                 📏 Unité
               </button>
-              <button class="btn-toggle" id="displayPercent">% Part</button>
+              <button class="btn-toggle" id="displayPercent">📊 Pourcentage</button>
             </div>
+          </div>
+
+          <!-- STATISTIQUES -->
+          <div class="chart-panel" id="statsPanel" style="display: none">
+            <h2>Statistiques</h2>
+            <div id="statsContent"></div>
           </div>
 
           <!-- LISTE DES DONNÉES -->
@@ -132,11 +151,8 @@
                 style="display: none"
               />
             </label>
-            <button
-              id="chartComparative"
-              class="chart-actions__btn chart-actions__btn--compare"
-            >
-              📊 Comparatif 2017-2026
+            <button id="chartExportPNG" class="chart-actions__btn">
+              📸 Exporter PNG
             </button>
           </div>
         </div>
@@ -152,6 +168,6 @@
     <script type="module" src="../../js/components.js"></script>
 
     <!-- Générateur de graphiques v2 -->
-    <script type="module" src="../../js/chart-generator-v2.js"></script>
+    <script type="module" src="../../js/chart-generator.js"></script>
   </body>
 </html>

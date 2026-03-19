@@ -1,6 +1,6 @@
 # Fiche 03 — La Programmation
 
-## 1. L'algorithme et les variables (SFC 31)
+## 1. L'algorithme et les variables
 
 Un programme informatique repose sur un **algorithme** : une suite d'instructions précises et ordonnées qui permet de résoudre un problème. Avant d'écrire un programme, on rédige l'algorithme en **langage naturel** pour décrire ce que la machine doit faire, étape par étape.
 
@@ -21,7 +21,7 @@ Une **variable** est une case mémoire qui stocke une information utilisée ou m
 
 ---
 
-## 2. Les structures de contrôle (SFC 31)
+## 2. Les structures de contrôle
 
 Un programme ne s'exécute pas toujours en ligne droite. Les **structures de contrôle** permettent de prendre des décisions ou de répéter des actions.
 
@@ -60,7 +60,7 @@ En 3ème, tu dois être capable de :
 
 ---
 
-<!-- ## 3. Les listes, les événements et les données (SFC 31)
+<!-- ## 3. Les listes, les événements et les données
 
 Un programme interagit avec son environnement grâce aux **entrées/sorties**, et peut stocker plusieurs valeurs dans une **liste**.
 
@@ -91,7 +91,7 @@ FIN POUR
 
 ---
 
-## 4. Les sous-programmes et les fonctions (CCRI 31)
+## 4. Les sous-programmes et les fonctions
 
 En 3ème, la nouveauté majeure est la **programmation structurée** : on organise un programme complexe en blocs réutilisables appelés **sous-programmes** ou **fonctions**.
 
@@ -127,7 +127,7 @@ Un programme bien structuré doit contenir :
 
 --- -->
 
-## 3. De la programmation par blocs à la programmation textuelle (SFC 31 · CCRI 31)
+## 3. De la programmation par blocs à la programmation textuelle
 
 Tout au long du cycle 4, on passe progressivement d'une représentation visuelle (blocs) à une écriture textuelle du code.
 

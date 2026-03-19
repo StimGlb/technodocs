@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -28,7 +28,9 @@
         font-size: var(--text-sm);
         text-decoration: none;
         margin-bottom: var(--space-4);
-        transition: background 0.15s, border-color 0.15s;
+        transition:
+          background 0.15s,
+          border-color 0.15s;
       }
 
       .wizard__tool-link:hover {
@@ -43,7 +45,9 @@
         padding: var(--space-5);
         text-align: center;
         margin-bottom: var(--space-4);
-        transition: border-color 0.15s, background 0.15s;
+        transition:
+          border-color 0.15s,
+          background 0.15s;
       }
 
       .wizard__import-zone:hover {
@@ -189,7 +193,6 @@
               type="text"
               id="studentName"
               data-field="studentName"
-              placeholder=""
               required
             />
           </div>
@@ -273,34 +276,34 @@
                 </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>Chauffage</td>
-                <td style="text-align: right">2 800</td>
-              </tr>
-              <tr>
-                <td>Eau chaude sanitaire</td>
-                <td style="text-align: right">1 000</td>
-              </tr>
-              <tr>
-                <td>Électroménager</td>
-                <td style="text-align: right">750</td>
-              </tr>
-              <tr>
-                <td>Éclairage</td>
-                <td style="text-align: right">500</td>
-              </tr>
-              <tr>
-                <td>Audiovisuel</td>
-                <td style="text-align: right">450</td>
-              </tr>
-              <tr>
-                <td>Cuisson</td>
-                <td style="text-align: right">380</td>
-              </tr>
-              <tr>
-                <td>Veille</td>
-                <td style="text-align: right">380</td>
-              </tr>
+                <tr>
+                  <td>Chauffage</td>
+                  <td style="text-align: right">2 800</td>
+                </tr>
+                <tr>
+                  <td>Eau chaude sanitaire</td>
+                  <td style="text-align: right">1 000</td>
+                </tr>
+                <tr>
+                  <td>Électroménager</td>
+                  <td style="text-align: right">750</td>
+                </tr>
+                <tr>
+                  <td>Éclairage</td>
+                  <td style="text-align: right">500</td>
+                </tr>
+                <tr>
+                  <td>Audiovisuel</td>
+                  <td style="text-align: right">450</td>
+                </tr>
+                <tr>
+                  <td>Cuisson</td>
+                  <td style="text-align: right">380</td>
+                </tr>
+                <tr>
+                  <td>Veille</td>
+                  <td style="text-align: right">380</td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -311,19 +314,21 @@
               <span class="wizard__question-badge">Diagramme</span>
               <span class="wizard__question-points">3 points</span>
             </div>
-            <h3 class="wizard__question-title">
-              Q1.1 — Diagramme en bâtons
-            </h3>
+            <h3 class="wizard__question-title">Q1.1 — Diagramme en bâtons</h3>
             <p class="wizard__question-text">
-              À l'aide du tableau de données ci-dessus, crée un <strong>diagramme en bâtons</strong>
-              avec le générateur de graphiques, puis importe ton fichier JSON ici.
+              À l'aide du tableau de données ci-dessus, crée un
+              <strong>diagramme en bâtons</strong>
+              avec le générateur de graphiques, puis importe ton fichier JSON
+              ici.
             </p>
 
             <!-- Lien vers le générateur -->
-            <a href="/src/pages/outils/generateur-graphiques-v3.html"
-               target="_blank"
-               class="wizard__tool-link"
-               id="chartGeneratorLink">
+            <a
+              href="/src/pages/outils/generateur-graphiques-v3.html"
+              target="_blank"
+              class="wizard__tool-link"
+              id="chartGeneratorLink"
+            >
               📊 Ouvrir le Générateur de graphiques →
             </a>
 
@@ -331,18 +336,34 @@
             <div class="wizard__import-zone" id="chartImportZone">
               <label class="wizard__import-btn" id="chartImportLabel">
                 📂 Importer mon fichier JSON
-                <input type="file" accept=".json" id="chartFileInput" style="display: none;">
+                <input
+                  type="file"
+                  accept=".json"
+                  id="chartFileInput"
+                  style="display: none"
+                />
               </label>
               <p class="wizard__import-hint">
-                Exporte ton graphique depuis le générateur (bouton 💾), puis importe le fichier ici.
+                Exporte ton graphique depuis le générateur (bouton 💾), puis
+                importe le fichier ici.
               </p>
             </div>
 
             <!-- Résumé des données importées (masqué par défaut) -->
-            <div class="wizard__chart-preview" id="chartPreview" style="display: none;">
+            <div
+              class="wizard__chart-preview"
+              id="chartPreview"
+              style="display: none"
+            >
               <div class="wizard__chart-preview-header">
-                <span class="wizard__chart-preview-status">✅ Données importées</span>
-                <button type="button" class="wizard__chart-preview-reset" id="chartResetBtn">
+                <span class="wizard__chart-preview-status"
+                  >✅ Données importées</span
+                >
+                <button
+                  type="button"
+                  class="wizard__chart-preview-reset"
+                  id="chartResetBtn"
+                >
                   ✕ Supprimer
                 </button>
               </div>
@@ -359,7 +380,7 @@
               class="wizard__textarea"
               data-field="q1_diagramme_batons"
               id="chartDataField"
-              style="display: none;"
+              style="display: none"
             ></textarea>
           </div>
 
@@ -379,7 +400,6 @@
             <textarea
               class="wizard__textarea"
               data-field="q2_postes_consommateurs"
-              placeholder="1. ... 2. ..."
               maxlength="200"
               rows="3"
               spellcheck="true"
@@ -405,7 +425,6 @@
             <textarea
               class="wizard__textarea"
               data-field="q3_cout_veille"
-              placeholder="Coût = consommation × prix = ... × ... = ... €/an"
               maxlength="200"
               rows="3"
               spellcheck="true"
@@ -462,14 +481,16 @@
                 💡 Éclairage
               </h4>
               <div
-                style="
-                  display: grid;
-                  grid-template-columns: 1fr 1fr;
-                  gap: 1rem;
-                "
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem"
               >
                 <div>
-                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                  <label
+                    style="
+                      font-size: 0.85rem;
+                      color: #666;
+                      display: block;
+                      margin-bottom: 0.5rem;
+                    "
                     >Éco-geste</label
                   >
                   <textarea
@@ -481,7 +502,13 @@
                   ></textarea>
                 </div>
                 <div>
-                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                  <label
+                    style="
+                      font-size: 0.85rem;
+                      color: #666;
+                      display: block;
+                      margin-bottom: 0.5rem;
+                    "
                     >Équipement connecté</label
                   >
                   <textarea
@@ -504,18 +531,18 @@
                 border-radius: 6px;
               "
             >
-              <h4 style="margin-bottom: 0.75rem; font-size: 1rem">
-                ⏻ Veille
-              </h4>
+              <h4 style="margin-bottom: 0.75rem; font-size: 1rem">⏻ Veille</h4>
               <div
-                style="
-                  display: grid;
-                  grid-template-columns: 1fr 1fr;
-                  gap: 1rem;
-                "
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem"
               >
                 <div>
-                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                  <label
+                    style="
+                      font-size: 0.85rem;
+                      color: #666;
+                      display: block;
+                      margin-bottom: 0.5rem;
+                    "
                     >Éco-geste</label
                   >
                   <textarea
@@ -527,7 +554,13 @@
                   ></textarea>
                 </div>
                 <div>
-                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                  <label
+                    style="
+                      font-size: 0.85rem;
+                      color: #666;
+                      display: block;
+                      margin-bottom: 0.5rem;
+                    "
                     >Équipement connecté</label
                   >
                   <textarea
@@ -554,14 +587,16 @@
                 🔥 Chauffage
               </h4>
               <div
-                style="
-                  display: grid;
-                  grid-template-columns: 1fr 1fr;
-                  gap: 1rem;
-                "
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem"
               >
                 <div>
-                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                  <label
+                    style="
+                      font-size: 0.85rem;
+                      color: #666;
+                      display: block;
+                      margin-bottom: 0.5rem;
+                    "
                     >Éco-geste</label
                   >
                   <textarea
@@ -573,7 +608,13 @@
                   ></textarea>
                 </div>
                 <div>
-                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                  <label
+                    style="
+                      font-size: 0.85rem;
+                      color: #666;
+                      display: block;
+                      margin-bottom: 0.5rem;
+                    "
                     >Équipement connecté</label
                   >
                   <textarea
@@ -600,14 +641,16 @@
                 📺 Audiovisuel
               </h4>
               <div
-                style="
-                  display: grid;
-                  grid-template-columns: 1fr 1fr;
-                  gap: 1rem;
-                "
+                style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem"
               >
                 <div>
-                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                  <label
+                    style="
+                      font-size: 0.85rem;
+                      color: #666;
+                      display: block;
+                      margin-bottom: 0.5rem;
+                    "
                     >Éco-geste</label
                   >
                   <textarea
@@ -619,7 +662,13 @@
                   ></textarea>
                 </div>
                 <div>
-                  <label style="font-size: 0.85rem; color: #666; display: block; margin-bottom: 0.5rem"
+                  <label
+                    style="
+                      font-size: 0.85rem;
+                      color: #666;
+                      display: block;
+                      margin-bottom: 0.5rem;
+                    "
                     >Équipement connecté</label
                   >
                   <textarea
@@ -695,34 +744,40 @@
                 </tr>
               </thead>
               <tbody>
-              <tr>
-                <td>Durée de vie</td>
-                <td>1 000 h</td>
-                <td>25 000 h</td>
-              </tr>
-              <tr>
-                <td>Puissance</td>
-                <td>60 W</td>
-                <td>9 W</td>
-              </tr>
-              <tr>
-                <td>Matériaux</td>
-                <td>Verre, tungstène</td>
-                <td>Verre, électronique</td>
-              </tr>
-              <tr>
-                <td>Recyclage</td>
-                <td>Poubelle ordinaire</td>
-                <td>Point de collecte</td>
-              </tr>
-              <tr>
-                <td>Prix</td>
-                <td>1 €</td>
-                <td>6 €</td>
-              </tr>
+                <tr>
+                  <td>Durée de vie</td>
+                  <td>1 000 h</td>
+                  <td>25 000 h</td>
+                </tr>
+                <tr>
+                  <td>Puissance</td>
+                  <td>60 W</td>
+                  <td>9 W</td>
+                </tr>
+                <tr>
+                  <td>Matériaux</td>
+                  <td>Verre, tungstène</td>
+                  <td>Verre, électronique</td>
+                </tr>
+                <tr>
+                  <td>Recyclage</td>
+                  <td>Poubelle ordinaire</td>
+                  <td>Point de collecte</td>
+                </tr>
+                <tr>
+                  <td>Prix</td>
+                  <td>1 €</td>
+                  <td>6 €</td>
+                </tr>
               </tbody>
             </table>
-            <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--color-gray-500)">
+            <p
+              style="
+                margin-top: 1rem;
+                font-size: 0.9rem;
+                color: var(--color-gray-500);
+              "
+            >
               <strong>Cycle de vie :</strong> Extraction → Fabrication →
               Transport → Utilisation → Fin de vie
             </p>
@@ -797,9 +852,7 @@
               <span class="wizard__question-points">2 points</span>
             </div>
             <h3 class="wizard__question-title">Q3.2 — Recommandation</h3>
-            <p class="wizard__question-text">
-              Quelle ampoule recommandes-tu ?
-            </p>
+            <p class="wizard__question-text">Quelle ampoule recommandes-tu ?</p>
             <div class="wizard__radio-group">
               <label class="wizard__radio">
                 <input
@@ -853,7 +906,6 @@
                 <input
                   type="text"
                   data-field="q11_synthese_poste"
-                  placeholder=""
                   style="
                     width: 150px;
                     border-bottom: 2px solid #999;
@@ -870,7 +922,6 @@
                 <input
                   type="text"
                   data-field="q12_synthese_ratio"
-                  placeholder=""
                   style="
                     width: 100px;
                     border-bottom: 2px solid #999;
@@ -882,12 +933,11 @@
               </label>
 
               <label style="display: block; margin-bottom: 0">
-                <span style="font-weight: 600">3.</span> Les étapes du cycle
-                de vie : extraction →
+                <span style="font-weight: 600">3.</span> Les étapes du cycle de
+                vie : extraction →
                 <input
                   type="text"
                   data-field="q13_synthese_cycle"
-                  placeholder=""
                   style="
                     width: 180px;
                     border-bottom: 2px solid #999;
@@ -939,10 +989,7 @@
           >
             Recommencer
           </button>
-          <button
-            class="btn btn--primary"
-            onclick="wizardExportJSON()"
-          >
+          <button class="btn btn--primary" onclick="wizardExportJSON()">
             Télécharger mes réponses
           </button>
         </div>
@@ -956,9 +1003,7 @@
           <h2>⚠️ Réinitialiser l'activité ?</h2>
         </div>
         <div class="wizard__modal-body">
-          <p>
-            Êtes-vous sûr ? Vos réponses seront perdues après cette action.
-          </p>
+          <p>Êtes-vous sûr ? Vos réponses seront perdues après cette action.</p>
           <p style="margin-top: 1rem; font-size: 0.9rem; color: #666">
             Une copie de vos réponses sera téléchargée automatiquement comme
             sauvegarde.
@@ -992,7 +1037,7 @@
             "studentClass",
             "q1_diagramme_batons",
             "q2_postes_consommateurs",
-            "q3_cout_veille"
+            "q3_cout_veille",
           ],
           2: [
             "q4_ecogeste_eclairage",
@@ -1003,7 +1048,7 @@
             "q6_connecte_chauffage",
             "q7_ecogeste_audiovisuel",
             "q7_connecte_audiovisuel",
-            "q8_poste_economies"
+            "q8_poste_economies",
           ],
           3: [
             "q9_etapes_cycle_vie",
@@ -1011,8 +1056,8 @@
             "q10_justification",
             "q11_synthese_poste",
             "q12_synthese_ratio",
-            "q13_synthese_cycle"
-          ]
+            "q13_synthese_cycle",
+          ],
         },
         onComplete: (data) => {
           console.log("🎉 Activité terminée:", data);
@@ -1024,11 +1069,11 @@
         onSaveError: (error) => {
           console.error("❌ Erreur Firestore:", error);
         },
-        autoInit: false
+        autoInit: false,
       });
 
       // Password check
-      window.checkPassword = function() {
+      window.checkPassword = function () {
         const input = document.getElementById("passwordInput");
         const error = document.getElementById("errorMessage");
         const overlay = document.getElementById("passwordOverlay");
@@ -1061,7 +1106,7 @@
         { field: "q2_postes_consommateurs", counter: "q2_count" },
         { field: "q3_cout_veille", counter: "q3_count" },
         { field: "q8_poste_economies", counter: "q8_count" },
-        { field: "q10_justification", counter: "q10_count" }
+        { field: "q10_justification", counter: "q10_count" },
       ];
 
       counters.forEach(({ field, counter }) => {
@@ -1078,18 +1123,18 @@
       // IMPORT JSON DIAGRAMME (Q1.1)
       // =============================================
       function setupChartImport() {
-        const fileInput = document.getElementById('chartFileInput');
-        const importZone = document.getElementById('chartImportZone');
-        const preview = document.getElementById('chartPreview');
-        const previewData = document.getElementById('chartPreviewData');
-        const previewMeta = document.getElementById('chartPreviewMeta');
-        const dataField = document.getElementById('chartDataField');
-        const resetBtn = document.getElementById('chartResetBtn');
+        const fileInput = document.getElementById("chartFileInput");
+        const importZone = document.getElementById("chartImportZone");
+        const preview = document.getElementById("chartPreview");
+        const previewData = document.getElementById("chartPreviewData");
+        const previewMeta = document.getElementById("chartPreviewMeta");
+        const dataField = document.getElementById("chartDataField");
+        const resetBtn = document.getElementById("chartResetBtn");
 
         if (!fileInput) return;
 
         // Import du fichier
-        fileInput.addEventListener('change', (e) => {
+        fileInput.addEventListener("change", (e) => {
           const file = e.target.files[0];
           if (!file) return;
 
@@ -1100,63 +1145,62 @@
 
               // Validation
               if (!Array.isArray(data.entries) || data.entries.length === 0) {
-                throw new Error('Aucune donnée trouvée');
+                throw new Error("Aucune donnée trouvée");
               }
 
               // Valider que chaque entrée a label + value
               const validEntries = data.entries.filter(
-                e => e.label && typeof e.value === 'number'
+                (e) => e.label && typeof e.value === "number",
               );
 
               if (validEntries.length === 0) {
-                throw new Error('Format de données invalide');
+                throw new Error("Format de données invalide");
               }
 
               // Stocker le JSON complet dans le champ caché
               dataField.value = JSON.stringify(data, null, 2);
 
               // Déclencher un événement input pour que WizardFirebase détecte le changement
-              dataField.dispatchEvent(new Event('input', { bubbles: true }));
+              dataField.dispatchEvent(new Event("input", { bubbles: true }));
 
               // Afficher le résumé
               renderChartPreview(validEntries, data);
 
               // Masquer la zone d'import, afficher le preview
-              importZone.classList.add('has-data');
-              preview.style.display = 'block';
+              importZone.classList.add("has-data");
+              preview.style.display = "block";
 
               // Toast de confirmation
               if (window.wizardInstance?.showToast) {
                 window.wizardInstance.showToast(
                   `${validEntries.length} valeurs importées avec succès`,
-                  'success'
+                  "success",
                 );
               }
-
             } catch (err) {
               if (window.wizardInstance?.showToast) {
                 window.wizardInstance.showToast(
-                  'Fichier invalide — vérifie que tu as exporté depuis le générateur de graphiques.',
-                  'error'
+                  "Fichier invalide — vérifie que tu as exporté depuis le générateur de graphiques.",
+                  "error",
                 );
               }
             }
 
             // Reset l'input pour permettre re-import du même fichier
-            e.target.value = '';
+            e.target.value = "";
           };
 
           reader.readAsText(file);
         });
 
         // Suppression des données
-        resetBtn.addEventListener('click', () => {
-          dataField.value = '';
-          dataField.dispatchEvent(new Event('input', { bubbles: true }));
-          previewData.innerHTML = '';
-          previewMeta.innerHTML = '';
-          preview.style.display = 'none';
-          importZone.classList.remove('has-data');
+        resetBtn.addEventListener("click", () => {
+          dataField.value = "";
+          dataField.dispatchEvent(new Event("input", { bubbles: true }));
+          previewData.innerHTML = "";
+          previewMeta.innerHTML = "";
+          preview.style.display = "none";
+          importZone.classList.remove("has-data");
         });
 
         // Restauration au chargement (si le champ a déjà des données — ex: autosave)
@@ -1164,12 +1208,12 @@
           try {
             const data = JSON.parse(dataField.value);
             const validEntries = data.entries.filter(
-              e => e.label && typeof e.value === 'number'
+              (e) => e.label && typeof e.value === "number",
             );
             if (validEntries.length > 0) {
               renderChartPreview(validEntries, data);
-              importZone.classList.add('has-data');
-              preview.style.display = 'block';
+              importZone.classList.add("has-data");
+              preview.style.display = "block";
             }
           } catch (e) {
             // Données corrompues — on ignore silencieusement
@@ -1178,41 +1222,47 @@
       }
 
       function renderChartPreview(entries, data) {
-        const previewData = document.getElementById('chartPreviewData');
-        const previewMeta = document.getElementById('chartPreviewMeta');
+        const previewData = document.getElementById("chartPreviewData");
+        const previewMeta = document.getElementById("chartPreviewMeta");
 
         // Grille des valeurs
-        previewData.innerHTML = entries.map(e => `
+        previewData.innerHTML = entries
+          .map(
+            (e) => `
           <div class="wizard__chart-preview-item">
             <span class="wizard__chart-preview-item-label">${e.label}</span>
-            <span class="wizard__chart-preview-item-value">${e.value.toLocaleString('fr-FR')}</span>
+            <span class="wizard__chart-preview-item-value">${e.value.toLocaleString("fr-FR")}</span>
           </div>
-        `).join('');
+        `,
+          )
+          .join("");
 
         // Métadonnées
-        const chartTypeLabel = data.chartType === 'bar' ? 'Barres' : 'Courbe';
+        const chartTypeLabel = data.chartType === "bar" ? "Barres" : "Courbe";
         const exportDate = data.exportedAt
-          ? new Date(data.exportedAt).toLocaleString('fr-FR')
-          : '—';
+          ? new Date(data.exportedAt).toLocaleString("fr-FR")
+          : "—";
         previewMeta.innerHTML = `Type : ${chartTypeLabel} • Exporté le ${exportDate} • ${entries.length} valeurs`;
       }
 
       // Initialiser après le DOM
-      document.addEventListener('DOMContentLoaded', setupChartImport);
+      document.addEventListener("DOMContentLoaded", setupChartImport);
 
       // Restauration différée (attend que WizardFirebase ait rempli les champs)
       setTimeout(() => {
-        const dataField = document.getElementById('chartDataField');
+        const dataField = document.getElementById("chartDataField");
         if (dataField?.value) {
           try {
             const data = JSON.parse(dataField.value);
             const validEntries = data.entries?.filter(
-              e => e.label && typeof e.value === 'number'
+              (e) => e.label && typeof e.value === "number",
             );
             if (validEntries?.length > 0) {
               renderChartPreview(validEntries, data);
-              document.getElementById('chartImportZone')?.classList.add('has-data');
-              document.getElementById('chartPreview').style.display = 'block';
+              document
+                .getElementById("chartImportZone")
+                ?.classList.add("has-data");
+              document.getElementById("chartPreview").style.display = "block";
             }
           } catch (e) {}
         }
@@ -1223,14 +1273,10 @@
         window.wizardInstance?.goToPhase(phase);
       window.wizardComplete = () => window.wizardInstance?.complete();
       window.wizardReset = () => window.wizardInstance?.reset();
-      window.wizardExportJSON = () =>
-        window.wizardInstance?.exportJSON();
-      window.wizardImportJSON = (e) =>
-        window.wizardInstance?.importJSON(e);
-      window.wizardShowModal = (id) =>
-        window.wizardInstance?.showModal(id);
-      window.wizardCloseModal = (id) =>
-        window.wizardInstance?.closeModal(id);
+      window.wizardExportJSON = () => window.wizardInstance?.exportJSON();
+      window.wizardImportJSON = (e) => window.wizardInstance?.importJSON(e);
+      window.wizardShowModal = (id) => window.wizardInstance?.showModal(id);
+      window.wizardCloseModal = (id) => window.wizardInstance?.closeModal(id);
     </script>
 
     <!-- Anti-paste protection -->
@@ -1239,10 +1285,10 @@
         window.articleEditor = new module.ArticleEditor({
           protectedFields: [
             '[data-field="q8_poste_economies"]',
-            '[data-field="q10_justification"]'
+            '[data-field="q10_justification"]',
           ],
           onPasteBlocked: (msg) =>
-            window.wizardInstance?.showToast(msg, "warning")
+            window.wizardInstance?.showToast(msg, "warning"),
         });
       });
     </script>
