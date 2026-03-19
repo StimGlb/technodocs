@@ -5,7 +5,7 @@
     </div>
     <div class="fiche-ost__item">
         <span class="fiche-ost__label">Problématique</span>
-        <span class="fiche-ost__value">Quels appareils consomment le plus dans une maison connectée ?</span>
+        <span class="fiche-ost__value">Quels appareils consomment le plus d'électricité dans une maison ?</span>
     </div>
 </div>
 
@@ -89,8 +89,7 @@ La famille Kiagi hésite entre plusieurs équipements pour l'éclairage de leur 
 
 **2.2** Calcule la consommation sur 10 ans pour chaque type d'ampoule, en supposant **4h d'utilisation par jour**.
 
-> Rappel : Consommation (kWh) = Puissance (kW) × Durée (h)
-
+- Rappel : Consommation (kWh) = Puissance (kW) × Durée (h)
 Montre tes calculs :
 
 | Ampoule | Calcul | Résultat |
@@ -108,9 +107,9 @@ Montre tes calculs :
 | Critère environnemental (bilan carbone + recyclage) | | |
 | Critère pratique (durée de vie) | | |
 
+<div class="fiche-ost__item">
 Mon choix pour la famille Kiagi :
-<div class="zone-reponse zone-reponse--compact"></div>
-
+</div>
 
 <!-- ════════════════════════════════════════ -->
 <!-- ACTIVITÉ 3                              -->
