@@ -11,7 +11,8 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, "..");
+// scripts/dev -> repo root
+const ROOT = path.resolve(__dirname, "..", "..");
 const DEV_FILE = path.join(ROOT, "_dev.html");
 
 function escapeRegExp(value) {

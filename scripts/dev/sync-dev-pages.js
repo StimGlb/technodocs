@@ -22,7 +22,8 @@ import {
 } from "./register-page.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const ROOT = path.resolve(__dirname, "..");
+// scripts/dev -> repo root
+const ROOT = path.resolve(__dirname, "..", "..");
 const DEV_FILE = path.join(ROOT, "_dev.html");
 const args = process.argv.slice(2);
 const DRY_RUN = args.includes("--dry-run") || args.includes("-n");
