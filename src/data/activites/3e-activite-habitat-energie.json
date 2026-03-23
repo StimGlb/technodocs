@@ -1,0 +1,11 @@
+{
+  "title": "Préparation DNB — Habitat et énergie",
+  "subtitle": "Sujet DNB simulé sur la maison connectée et les économies d'énergie",
+  "niveau": "3ème",
+  "sequence": "Habitat & énergie",
+  "seance": "DNB",
+  "duree": "2h",
+  "competences": ["OST 31", "OST 32", "SFC 11", "SFC 13"],
+  "wizardPath": "../pages/activites/devoirs/3e-habitat-energie.html",
+  "type": "wizard"
+}

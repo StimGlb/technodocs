@@ -1,0 +1,187 @@
+<!--
+  Phase 3 — Chaîne d'énergie (version 4ème)
+  Fichier : 4e-habitat-energie.html
+  Source  : dnb-p3-chaine-energie-4e.md
+
+  data-field présents dans ce bloc :
+    - energie-entree
+    - energie-utile
+    - energie-perdue
+    - rendement-calcul-4e
+
+  requiredFields phase 3 :
+    ['energie-entree', 'energie-utile', 'energie-perdue', 'rendement-calcul-4e']
+
+  Navigation : ← phase 2 | phase 4 →
+-->
+
+<section class="wizard__phase" data-phase="3">
+  <div class="wizard__phase-header">
+    <div class="wizard__phase-icon">⚡</div>
+    <h2 class="wizard__phase-title">Phase 3 : Chaîne d'énergie</h2>
+    <p class="wizard__phase-subtitle">
+      Comprendre les transformations d'énergie
+    </p>
+  </div>
+
+  <!-- Contexte -->
+  <div class="fiche-ost">
+    <h3>⚡ Comprendre les transformations d'énergie</h3>
+    <p>
+      Une ampoule ne produit pas que de la lumière. Pour comprendre pourquoi
+      certaines ampoules consomment moins que d'autres, il faut analyser comment
+      elles transforment l'énergie électrique — c'est la
+      <strong>chaîne d'énergie</strong>.
+    </p>
+  </div>
+
+  <!-- Document 4 — Schéma bloc -->
+  <div class="fiche-travail">
+    <h3>Document 4 — Schéma bloc d'une ampoule</h3>
+    <pre
+      class="wizard__code-block"
+    ><code>┌─────────────────┐       ┌──────────────────┐       ┌─────────────────────┐
+│   ALIMENTATION  │       │   CONVERTISSEUR   │       │   ÉNERGIE PRODUITE  │
+│                 │──────▶│                  │──────▶│                     │
+│ Énergie         │       │  (filament ou    │       │  Utile :            │
+│ électrique      │       │   diode LED)     │       │  → Lumineuse        │
+│                 │       │                  │       │                     │
+└─────────────────┘       └──────────────────┘       │  Perdue :           │
+                                                      │  → Thermique        │
+                                                      └─────────────────────┘</code></pre>
+
+    <!-- Document 5 — Données de performance -->
+    <h3>Document 5 — Données de performance</h3>
+    <table class="wizard__table">
+      <thead>
+        <tr>
+          <th></th>
+          <th>Ampoule incandescente</th>
+          <th>Ampoule LED</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Puissance absorbée</td>
+          <td>60 W</td>
+          <td>9 W</td>
+        </tr>
+        <tr>
+          <td>Puissance lumineuse produite</td>
+          <td>6 W</td>
+          <td>7,2 W</td>
+        </tr>
+        <tr>
+          <td>Puissance thermique dissipée</td>
+          <td>54 W</td>
+          <td>1,8 W</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>
+      <strong>Rappel :</strong> Rendement (%) = (Puissance utile ÷ Puissance
+      absorbée) × 100
+    </p>
+  </div>
+
+  <!-- Question 1 — Identifier les formes d'énergie -->
+  <div class="fiche-activite">
+    <h3>Question 1 — Identifier les formes d'énergie</h3>
+
+    <div class="wizard__group">
+      <label class="wizard__label required"
+        >Dans la chaîne d'énergie d'une ampoule, quelle est la forme d'énergie
+        en entrée ?</label
+      >
+      <input
+        type="text"
+        class="wizard__input"
+        data-field="energie-entree"
+        placeholder="Ex: Énergie électrique"
+        spellcheck="true"
+        lang="fr"
+      />
+    </div>
+
+    <div class="wizard__group">
+      <label class="wizard__label required"
+        >Quelle est la forme d'énergie utile produite par une ampoule ?</label
+      >
+      <input
+        type="text"
+        class="wizard__input"
+        data-field="energie-utile"
+        placeholder="Ex: Énergie lumineuse"
+        spellcheck="true"
+        lang="fr"
+      />
+    </div>
+
+    <div class="wizard__group">
+      <label class="wizard__label required"
+        >Quelle est la forme d'énergie perdue ?</label
+      >
+      <input
+        type="text"
+        class="wizard__input"
+        data-field="energie-perdue"
+        placeholder="Ex: Énergie thermique (chaleur)"
+        spellcheck="true"
+        lang="fr"
+      />
+    </div>
+  </div>
+
+  <!-- Question 2 — Calculer et comparer les rendements -->
+  <div class="fiche-activite">
+    <h3>Question 2 — Calculer et comparer les rendements</h3>
+
+    <div class="wizard__tips">
+      <p class="wizard__tips-title">💡 Rappel</p>
+      <div class="wizard__tips-content">
+        <p>Rendement (%) = (Puissance utile ÷ Puissance absorbée) × 100</p>
+        <p>Un rendement élevé signifie que l'appareil perd peu d'énergie.</p>
+      </div>
+    </div>
+
+    <div class="wizard__group">
+      <label class="wizard__label required"
+        >Calcule le rendement de l'ampoule incandescente et celui de l'ampoule
+        LED. Montre tes calculs et indique quelle ampoule est la plus
+        efficace.</label
+      >
+      <p class="wizard__hint">
+        Incandescente : (6 ÷ 60) × 100 = ? % LED : (7,2 ÷ 9) × 100 = ? %
+        Conclure en une phrase.
+      </p>
+      <textarea
+        class="wizard__textarea"
+        data-field="rendement-calcul-4e"
+        placeholder="Incandescente : (6 ÷ 60) × 100 = 10 %&#10;LED : (7,2 ÷ 9) × 100 = 80 %&#10;L'ampoule LED est plus efficace car..."
+        spellcheck="true"
+        lang="fr"
+        autocorrect="on"
+        autocapitalize="sentences"
+      ></textarea>
+    </div>
+  </div>
+
+  <!-- Conclusion -->
+  <div class="fiche-conclusion">
+    <p>
+      Tu sais maintenant repérer les transformations d'énergie et calculer un
+      rendement. Dans la phase suivante, tu vas analyser la chaîne d'information
+      du détecteur de présence installé par les Kiagi.
+    </p>
+  </div>
+
+  <!-- Navigation -->
+  <div class="wizard__phase-nav">
+    <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
+      ← Précédent
+    </button>
+    <button class="btn btn--primary" onclick="wizardGoToPhase(4)">
+      Suivant →
+    </button>
+  </div>
+</section>
