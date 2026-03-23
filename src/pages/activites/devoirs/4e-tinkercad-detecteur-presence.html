@@ -1,0 +1,1232 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tinkercad — Simuler un éclairage automatique | TechnoDocs</title>
+    <meta
+      name="description"
+      content="Simuler un détecteur de présence avec Tinkercad Circuits — 4ème"
+    />
+    <meta name="robots" content="noindex" />
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- ============================================================
+         1. PASSWORD OVERLAY
+         ============================================================ -->
+    <div id="passwordOverlay" class="password-overlay">
+      <div class="password-prompt">
+        <h2>🔒 Accès sécurisé</h2>
+        <p>Cette activité est réservée.<br />Saisissez le mot de passe.</p>
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="••••"
+          autocomplete="off"
+        />
+        <button onclick="checkPassword()">Déverrouiller</button>
+        <p id="errorMessage" class="error-message" style="display: none">
+          ❌ Mot de passe incorrect
+        </p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         2. WIZARD PRINCIPAL
+         ============================================================ -->
+    <main class="wizard is-locked" id="wizardMain">
+      <!-- 2.1 BANNER -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">🏠</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">
+            Tinkercad Circuits — Simuler un éclairage automatique
+          </h1>
+          <div class="wizard__banner-skills">
+            <span class="wizard__skill">SFC 11</span>
+            <span class="wizard__skill">SFC 13</span>
+            <span class="wizard__skill">SFC 31</span>
+            <span class="wizard__skill">CCRI 31</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.2 STUDENT INFO -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="studentName">Prénom et Nom</label>
+            <input
+              type="text"
+              id="studentName"
+              data-field="studentName"
+              required
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="studentClass">Classe</label>
+            <select id="studentClass" data-field="studentClass" required>
+              <option value="">— Sélectionner —</option>
+              <optgroup label="4ème">
+                <option value="401">4ème 1</option>
+                <option value="402">4ème 2</option>
+                <option value="403">4ème 3</option>
+                <option value="404">4ème 4</option>
+                <option value="405">4ème 5</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="wizard__student-field wizard__student-field--date">
+            <label>Date</label>
+            <span
+              id="projectDate"
+              class="wizard__date-display"
+              data-field="projectDate"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.3 PROGRESS + NAV -->
+      <section class="wizard__progress">
+        <div class="wizard__progress-header">
+          <h2 class="wizard__progress-title">Progression</h2>
+          <div class="wizard__save-indicator" id="saveIndicator">
+            <span class="wizard__save-dot"></span>
+            <span class="wizard__save-text">Auto-save</span>
+          </div>
+          <span class="wizard__progress-percentage" id="progressPercentage"
+            >0%</span
+          >
+        </div>
+        <div class="wizard__progress-bar">
+          <div
+            class="wizard__progress-fill"
+            id="progressFill"
+            style="width: 0%"
+          ></div>
+        </div>
+        <nav class="wizard__nav" id="phaseNav">
+          <button class="wizard__nav-btn active" data-phase="1">
+            <span class="wizard__nav-number">1</span>
+            <span>Montage</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="2">
+            <span class="wizard__nav-number">2</span>
+            <span>Programme</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="3">
+            <span class="wizard__nav-number">3</span>
+            <span>Modifications</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="4">
+            <span class="wizard__nav-number">4</span>
+            <span>Bilan</span>
+          </button>
+        </nav>
+      </section>
+
+      <!-- 2.4 CONTAINER DES PHASES -->
+      <div class="wizard__container">
+
+        <!-- ============================================================
+             PHASE 1 — Découvrir le montage
+             ============================================================ -->
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">1</span>
+              Partie 1 — Découvrir le montage
+            </h2>
+            <p class="wizard__phase-subtitle">Identifier les composants et la chaîne d'information</p>
+          </div>
+
+          <!-- Mise en situation -->
+          <div class="wizard__situation">
+            <p>
+              La famille Kiagi veut installer un <strong>éclairage automatique</strong>
+              dans leur entrée : la lumière s'allume quand quelqu'un arrive, et
+              s'éteint toute seule après quelques secondes. Plus personne n'oublie
+              d'éteindre !
+            </p>
+            <p style="margin-top: 0.75rem">
+              <strong>Ta mission :</strong> Simuler ce système dans Tinkercad
+              Circuits, comprendre comment il fonctionne, puis modifier son
+              comportement en complétant le programme.
+            </p>
+          </div>
+
+          <!-- Critères de réussite -->
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">✅ L'activité sera réussie si…</p>
+            <div class="wizard__tips-content">
+              <ul>
+                <li>Je sais identifier les constituants de la chaîne d'information du montage</li>
+                <li>Je sais associer chaque composant à sa fonction dans la chaîne d'énergie</li>
+                <li>Je sais compléter un programme Arduino pour modifier le comportement du système</li>
+                <li>Je sais tester et valider mon programme dans le simulateur</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Schéma du montage -->
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">📐 Schéma du montage</p>
+            <div class="wizard__tips-content">
+              <p>Ouvre Tinkercad et charge le circuit partagé par ton professeur.</p>
+              <pre class="wizard__code-block"><code>        ┌─────────────────────────────────────┐
+        │           ARDUINO UNO               │
+        │                                     │
+        │  ~9 ──────────────── Trig (HC-SR04) │
+        │  ~10 ─────────────── Echo (HC-SR04) │
+        │  ~11 ──── R 220Ω ──── LED (+)       │
+        │  GND ──────────────── LED (-)        │
+        │  5V  ──────────────── VCC (HC-SR04) │
+        │  GND ──────────────── GND (HC-SR04) │
+        └─────────────────────────────────────┘</code></pre>
+              <p style="margin-top: 0.5rem">
+                💡 Le <strong>HC-SR04</strong> est un capteur ultrason : il envoie
+                une impulsion sonore et mesure le temps qu'elle met à revenir
+                après avoir rebondi sur un obstacle. Il calcule ainsi une
+                <strong>distance</strong>.
+              </p>
+            </div>
+          </div>
+
+          <!-- Q1.1 — Identifier les composants -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Tableau</span>
+            </div>
+            <h3 class="wizard__question-title">
+              1.1 — Identifier les composants
+            </h3>
+            <p class="wizard__question-text">
+              Complète le tableau en associant chaque composant à sa fonction
+              dans le système.
+            </p>
+
+            <div class="wizard__table-wrapper">
+              <table class="wizard__table">
+                <thead>
+                  <tr>
+                    <th>Composant</th>
+                    <th>Rôle dans le système</th>
+                    <th>Appartient à la chaîne…</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="wizard__table-label">Arduino Uno</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="p1_arduino_role"
+                        placeholder="Ex: Traite les informations…"
+                        spellcheck="true"
+                        lang="fr"
+                      />
+                    </td>
+                    <td>
+                      <select
+                        class="wizard__input wizard__input--table"
+                        data-field="p1_arduino_chaine"
+                      >
+                        <option value="">— Choisir —</option>
+                        <option value="energie">Énergie</option>
+                        <option value="information">Information</option>
+                        <option value="les-deux">Les deux</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label">Capteur HC-SR04</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="p1_capteur_role"
+                        placeholder="Ex: Détecte…"
+                        spellcheck="true"
+                        lang="fr"
+                      />
+                    </td>
+                    <td>
+                      <select
+                        class="wizard__input wizard__input--table"
+                        data-field="p1_capteur_chaine"
+                      >
+                        <option value="">— Choisir —</option>
+                        <option value="energie">Énergie</option>
+                        <option value="information">Information</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label">LED</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="p1_led_role"
+                        placeholder="Ex: Éclaire…"
+                        spellcheck="true"
+                        lang="fr"
+                      />
+                    </td>
+                    <td>
+                      <select
+                        class="wizard__input wizard__input--table"
+                        data-field="p1_led_chaine"
+                      >
+                        <option value="">— Choisir —</option>
+                        <option value="energie">Énergie</option>
+                        <option value="information">Information</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label">Résistance 220Ω</td>
+                    <td class="wizard__table-label" style="font-style: italic; color: var(--color-gray-500)">
+                      Protège la LED contre un excès de courant
+                    </td>
+                    <td>
+                      <select
+                        class="wizard__input wizard__input--table"
+                        data-field="p1_resistance_chaine"
+                      >
+                        <option value="">— Choisir —</option>
+                        <option value="energie">Énergie</option>
+                        <option value="information">Information</option>
+                      </select>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Q1.2 — Chaîne d'information -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Schéma bloc</span>
+            </div>
+            <h3 class="wizard__question-title">
+              1.2 — Chaîne d'information du système
+            </h3>
+            <p class="wizard__question-text">
+              Complète le schéma bloc de la chaîne d'information en remplissant
+              les cases vides.
+            </p>
+
+            <pre class="wizard__code-block"><code>┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
+│   CAPTEUR    │───▶│  TRAITEMENT  │───▶│   DÉCISION   │───▶│  ACTIONNEUR  │
+│              │    │              │    │              │    │              │
+│  HC-SR04 :   │    │  Arduino :   │    │ Si distance  │    │    LED :     │
+│  mesure la   │    │    ???       │    │    ???       │    │     ???      │
+│  ???         │    │              │    │              │    │              │
+└──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘</code></pre>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                CAPTEUR — HC-SR04 : mesure la…
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p1_chaine_capteur"
+                placeholder="Ex: mesure la …"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                TRAITEMENT — Arduino : …
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p1_chaine_traitement"
+                placeholder="Ex: calcule la …"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                DÉCISION — Si distance…
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p1_chaine_decision"
+                placeholder="Ex: Si distance est inférieure à …"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                ACTIONNEUR — LED : …
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p1_chaine_actionneur"
+                placeholder="Ex: s'allume / …"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- ============================================================
+             PHASE 2 — Comprendre le programme
+             ============================================================ -->
+        <section class="wizard__phase" data-phase="2">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">2</span>
+              Partie 2 — Comprendre le programme
+            </h2>
+            <p class="wizard__phase-subtitle">Lire le code Arduino et tester dans le simulateur</p>
+          </div>
+
+          <!-- Code Arduino -->
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">💻 Programme Arduino chargé dans le simulateur</p>
+            <div class="wizard__tips-content">
+              <pre class="wizard__code-block"><code>// --- Déclaration des broches ---
+int brocheEcho = 10;
+int brocheTrig = 9;
+int brocheLED  = 11;
+
+// --- Déclaration des variables ---
+long duree;
+int distance;
+int seuilPresence = 50;    // distance en cm
+int tempsAllumage = 5000;  // durée d'allumage en ms
+
+void setup() {
+  pinMode(brocheTrig, OUTPUT);
+  pinMode(brocheEcho, INPUT);
+  pinMode(brocheLED, OUTPUT);
+  Serial.begin(9600);
+}
+
+void loop() {
+  // Étape 1 : envoyer une impulsion ultrason
+  digitalWrite(brocheTrig, LOW);
+  delayMicroseconds(2);
+  digitalWrite(brocheTrig, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(brocheTrig, LOW);
+
+  // Étape 2 : mesurer le temps de retour
+  duree = pulseIn(brocheEcho, HIGH);
+
+  // Étape 3 : calculer la distance
+  distance = duree * 0.034 / 2;
+  Serial.print("Distance : ");
+  Serial.println(distance);
+
+  // Étape 4 : décision
+  if (distance &lt; seuilPresence) {
+    digitalWrite(brocheLED, HIGH);   // allumer
+    delay(tempsAllumage);            // attendre
+    digitalWrite(brocheLED, LOW);    // éteindre
+  }
+}</code></pre>
+            </div>
+          </div>
+
+          <!-- Q2.1 — Lire et comprendre -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Questions</span>
+            </div>
+            <h3 class="wizard__question-title">
+              2.1 — Lire et comprendre le programme
+            </h3>
+            <p class="wizard__question-text">
+              Réponds aux questions suivantes <strong>sans modifier</strong> le
+              programme.
+            </p>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                a) Quelle variable contient la distance mesurée par le capteur ?
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p2_variable_distance"
+                placeholder="Nom de la variable…"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                b) À quelle distance (en cm) la LED s'allume-t-elle ?
+              </label>
+              <p class="wizard__hint">
+                La LED s'allume quand la distance est inférieure à … cm.
+              </p>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p2_seuil_cm"
+                placeholder="… cm"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                c) Combien de temps la LED reste-t-elle allumée ? (Convertis en secondes)
+              </label>
+              <p class="wizard__hint">
+                tempsAllumage = 5000 millisecondes = … secondes
+              </p>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p2_temps_secondes"
+                placeholder="… secondes"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                d) Que se passe-t-il si personne ne passe devant le capteur ?
+                La LED reste-t-elle allumée ?
+              </label>
+              <textarea
+                class="wizard__textarea"
+                data-field="p2_pas_de_presence"
+                rows="3"
+                placeholder="Explique ce qui se passe…"
+                spellcheck="true"
+                lang="fr"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Q2.2 — Tester dans le simulateur -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Simulation</span>
+            </div>
+            <h3 class="wizard__question-title">
+              2.2 — Tester le programme dans le simulateur
+            </h3>
+            <p class="wizard__question-text">
+              Clique sur <strong>« Démarrer la simulation »</strong> dans
+              Tinkercad, fais varier la distance du capteur et note tes
+              observations.
+            </p>
+
+            <div class="wizard__table-wrapper">
+              <table class="wizard__table">
+                <thead>
+                  <tr>
+                    <th>Distance simulée</th>
+                    <th>LED allumée ?</th>
+                    <th>Correspond à ce que tu attendais ?</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="wizard__table-label">20 cm</td>
+                    <td>
+                      <select
+                        class="wizard__input wizard__input--table"
+                        data-field="p2_test_20cm_led"
+                      >
+                        <option value="">—</option>
+                        <option value="oui">Oui</option>
+                        <option value="non">Non</option>
+                      </select>
+                    </td>
+                    <td>
+                      <select
+                        class="wizard__input wizard__input--table"
+                        data-field="p2_test_20cm_attendu"
+                      >
+                        <option value="">—</option>
+                        <option value="oui">Oui</option>
+                        <option value="non">Non</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label">50 cm</td>
+                    <td>
+                      <select
+                        class="wizard__input wizard__input--table"
+                        data-field="p2_test_50cm_led"
+                      >
+                        <option value="">—</option>
+                        <option value="oui">Oui</option>
+                        <option value="non">Non</option>
+                      </select>
+                    </td>
+                    <td>
+                      <select
+                        class="wizard__input wizard__input--table"
+                        data-field="p2_test_50cm_attendu"
+                      >
+                        <option value="">—</option>
+                        <option value="oui">Oui</option>
+                        <option value="non">Non</option>
+                      </select>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label">80 cm</td>
+                    <td>
+                      <select
+                        class="wizard__input wizard__input--table"
+                        data-field="p2_test_80cm_led"
+                      >
+                        <option value="">—</option>
+                        <option value="oui">Oui</option>
+                        <option value="non">Non</option>
+                      </select>
+                    </td>
+                    <td>
+                      <select
+                        class="wizard__input wizard__input--table"
+                        data-field="p2_test_80cm_attendu"
+                      >
+                        <option value="">—</option>
+                        <option value="oui">Oui</option>
+                        <option value="non">Non</option>
+                      </select>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
+              ← Précédent
+            </button>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(3)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- ============================================================
+             PHASE 3 — Compléter et modifier le programme
+             ============================================================ -->
+        <section class="wizard__phase" data-phase="3">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">3</span>
+              Partie 3 — Compléter et modifier le programme
+            </h2>
+            <p class="wizard__phase-subtitle">Modifier le code pour changer le comportement du système</p>
+          </div>
+
+          <div class="wizard__situation">
+            <p>
+              La famille Kiagi a deux demandes supplémentaires. Pour chacune,
+              <strong>complète le code à trous</strong> correspondant.
+            </p>
+          </div>
+
+          <!-- Modification 1 — Seuil de détection -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Modification 1</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Changer le seuil de détection
+            </h3>
+            <p class="wizard__question-text">
+              La famille veut que la lumière s'allume dès que quelqu'un est à
+              <strong>moins de 80 cm</strong> (et non 50 cm), pour anticiper
+              l'arrivée dans le couloir.
+            </p>
+
+            <pre class="wizard__code-block"><code>// Ligne à modifier :
+int seuilPresence = __________ ;  // nouvelle valeur en cm</code></pre>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                Valeur saisie pour seuilPresence :
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p3_nouveau_seuil"
+                placeholder="Ex: 80"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                Teste dans le simulateur et note ce qui change :
+              </label>
+              <textarea
+                class="wizard__textarea"
+                data-field="p3_observation_seuil"
+                rows="3"
+                placeholder="Décris ce que tu observes après la modification…"
+                spellcheck="true"
+                lang="fr"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Modification 2 — Durée d'allumage -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Modification 2</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Réduire la durée d'allumage
+            </h3>
+            <p class="wizard__question-text">
+              Pour économiser encore plus d'énergie, la LED ne doit rester
+              allumée que <strong>3 secondes</strong> (au lieu de 5).
+            </p>
+
+            <pre class="wizard__code-block"><code>// Ligne à modifier :
+int tempsAllumage = __________ ;  // en millisecondes (1 s = 1000 ms)</code></pre>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                Valeur saisie pour tempsAllumage :
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p3_nouveau_temps"
+                placeholder="Ex: 3000"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+          </div>
+
+          <!-- Modification 3 — Message série (défi) -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Défi</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Modification 3 — Ajouter un message dans le moniteur série
+            </h3>
+            <p class="wizard__question-text">
+              Complète le bloc <code>if</code> pour qu'un message s'affiche dans
+              le moniteur série quand la LED s'allume et s'éteint.
+            </p>
+
+            <pre class="wizard__code-block"><code>if (distance &lt; seuilPresence) {
+  digitalWrite(brocheLED, HIGH);
+  Serial.println( __________ );  // message à l'allumage
+  delay(tempsAllumage);
+  digitalWrite(brocheLED, LOW);
+  Serial.println( __________ );  // message à l'extinction
+}</code></pre>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                Message choisi à l'allumage :
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p3_message_allumage"
+                placeholder="Ex: &quot;Présence détectée — LED ON&quot;"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                Message choisi à l'extinction :
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p3_message_extinction"
+                placeholder="Ex: &quot;LED OFF&quot;"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
+              ← Précédent
+            </button>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(4)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- ============================================================
+             PHASE 4 — Lien avec la séquence + Bilan
+             ============================================================ -->
+        <section class="wizard__phase" data-phase="4">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">4</span>
+              Partie 4 — Lien avec la séquence
+            </h2>
+            <p class="wizard__phase-subtitle">Réfléchir au rôle du système dans l'habitat</p>
+          </div>
+
+          <!-- Q4.1 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Réflexion</span>
+            </div>
+            <h3 class="wizard__question-title">
+              4.1 — Consommation en l'absence de présence
+            </h3>
+            <p class="wizard__question-text">
+              Ce système utilise-t-il de l'énergie quand personne n'est présent ?
+              Compare avec une lampe classique toujours allumée.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="p4_energie_absence"
+              rows="4"
+              placeholder="Compare les deux situations…"
+              spellcheck="true"
+              lang="fr"
+            ></textarea>
+          </div>
+
+          <!-- Q4.2 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Analyse</span>
+            </div>
+            <h3 class="wizard__question-title">
+              4.2 — Poste de consommation réduit
+            </h3>
+            <p class="wizard__question-text">
+              Dans le tableau de consommation de la famille Kiagi (séance 1),
+              quel poste ce système permet-il de réduire principalement ?
+            </p>
+            <input
+              type="text"
+              class="wizard__input"
+              data-field="p4_poste_reduit"
+              placeholder="Ex: L'éclairage…"
+              spellcheck="true"
+              lang="fr"
+            />
+          </div>
+
+          <!-- Q4.3 — Comparaison -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Comparaison</span>
+            </div>
+            <h3 class="wizard__question-title">
+              4.3 — Détecteur de présence vs minuterie mécanique
+            </h3>
+            <p class="wizard__question-text">
+              Nomme <strong>un avantage</strong> et <strong>une limite</strong>
+              de ce système par rapport à une simple minuterie mécanique.
+            </p>
+
+            <div class="wizard__table-wrapper">
+              <table class="wizard__table">
+                <thead>
+                  <tr>
+                    <th></th>
+                    <th>Détecteur de présence (HC-SR04)</th>
+                    <th>Minuterie mécanique</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="wizard__table-label">Avantage</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="p4_avantage_detecteur"
+                        spellcheck="true"
+                        lang="fr"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="p4_avantage_minuterie"
+                        spellcheck="true"
+                        lang="fr"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label">Limite</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="p4_limite_detecteur"
+                        spellcheck="true"
+                        lang="fr"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="p4_limite_minuterie"
+                        spellcheck="true"
+                        lang="fr"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Ce que je retiens -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Bilan</span>
+            </div>
+            <h3 class="wizard__question-title">
+              🔑 Ce que je retiens
+            </h3>
+            <p class="wizard__question-text">
+              Complète les phrases suivantes.
+            </p>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                Dans ce système, le capteur HC-SR04 appartient à la chaîne d'…
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p4_retiens_chaine_info"
+                placeholder="…"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                La LED appartient à la chaîne d'…
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p4_retiens_chaine_energie"
+                placeholder="…"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                L'Arduino joue le rôle de… : il reçoit une information du capteur
+                et décide d'allumer ou d'éteindre la LED.
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p4_retiens_role_arduino"
+                placeholder="…"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                Ce type de système permet de réduire la consommation électrique
+                en évitant la… des appareils.
+              </label>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="p4_retiens_gaspillage"
+                placeholder="…"
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(3)">
+              ← Précédent
+            </button>
+            <button class="btn btn--success" onclick="wizardComplete()">
+              ✔ Envoyer mon devoir
+            </button>
+          </div>
+        </section>
+
+      </div>
+      <!-- /.wizard__container -->
+
+      <!-- BARRE D'ACTIONS -->
+      <div class="wizard__actions">
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="wizardExportJSON()"
+        >
+          📤 Exporter JSON
+        </button>
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="document.getElementById('importInput').click()"
+        >
+          📥 Importer JSON
+        </button>
+        <input
+          type="file"
+          id="importInput"
+          accept=".json"
+          style="display: none"
+          onchange="wizardImportJSON(event)"
+        />
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="handleSafeReset()"
+        >
+          🗑️ Réinitialiser
+        </button>
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="window.print()"
+        >
+          🖨️ Imprimer
+        </button>
+      </div>
+    </main>
+
+    <!-- 3. MODALES -->
+    <div class="wizard__modal-overlay" id="completionModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
+        <div class="wizard__modal-content">
+          <p>Tu as terminé ton travail !</p>
+          <p style="margin-top: 1rem">
+            Tes réponses ont été
+            <strong>sauvegardées automatiquement</strong> dans la base de
+            données.
+          </p>
+          <p
+            style="
+              margin-top: 0.75rem;
+              font-size: 0.875rem;
+              color: var(--color-gray-500);
+            "
+          >
+            Tu peux aussi exporter une copie locale en JSON.
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('completionModal')"
+          >
+            Fermer
+          </button>
+          <button
+            class="btn btn--primary"
+            onclick="wizardExportJSON();wizardCloseModal('completionModal')"
+          >
+            📤 Exporter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wizard__modal-overlay" id="resetModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
+        <div class="wizard__modal-content">
+          <p>
+            Une <strong>sauvegarde</strong> a été téléchargée automatiquement.
+          </p>
+          <p>
+            Voulez-vous <strong>recommencer</strong> avec un formulaire vide ?
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('resetModal')"
+          >
+            Annuler
+          </button>
+          <button
+            class="btn btn--primary"
+            style="background: var(--color-error)"
+            onclick="wizardReset()"
+          >
+            🗑️ Réinitialiser
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="wizardToast" class="wizard__toast" aria-live="polite">
+      <span class="wizard__toast-icon"></span>
+      <span class="wizard__toast-message"></span>
+    </div>
+
+    <!-- ============================================================
+         4. SCRIPTS
+         ============================================================ -->
+    <script type="module">
+      import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+
+      window.checkPassword = function () {
+        const input = document.getElementById("passwordInput");
+        const error = document.getElementById("errorMessage");
+        const overlay = document.getElementById("passwordOverlay");
+        const main = document.querySelector("main.wizard");
+
+        if (!input || !error || !overlay || !main) return;
+
+        if (input.value === CORRECT_PASSWORD) {
+          overlay.style.display = "none";
+          main.classList.remove("is-locked");
+          error.style.display = "none";
+          window.wizardInstance?.init();
+        } else {
+          error.style.display = "block";
+          input.value = "";
+          input.focus();
+        }
+      };
+
+      document
+        .getElementById("passwordInput")
+        ?.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            window.checkPassword();
+          }
+        });
+
+      window.handleSafeReset = function () {
+        if (typeof wizardExportJSON === "function") {
+          wizardExportJSON();
+        } else if (window.wizardInstance) {
+          window.wizardInstance.exportToJSON();
+        }
+        if (window.wizardInstance?.showToast) {
+          window.wizardInstance.showToast(
+            "Sauvegarde de secours téléchargée !",
+            "success",
+          );
+        }
+        wizardShowModal("resetModal");
+      };
+    </script>
+
+    <script type="module">
+      import { WizardFirebase } from "/src/js/new-wizard-firebase.js";
+
+      const wizardInstance = new WizardFirebase({
+        collectionName: "s2_4eme_tinkercad_detecteur_presence",
+        autoInit: false,
+        requiredFields: {
+          1: [
+            "p1_arduino_role",
+            "p1_arduino_chaine",
+            "p1_capteur_role",
+            "p1_capteur_chaine",
+            "p1_led_role",
+            "p1_led_chaine",
+            "p1_resistance_chaine",
+            "p1_chaine_capteur",
+            "p1_chaine_traitement",
+            "p1_chaine_decision",
+            "p1_chaine_actionneur",
+          ],
+          2: [
+            "p2_variable_distance",
+            "p2_seuil_cm",
+            "p2_temps_secondes",
+            "p2_pas_de_presence",
+            "p2_test_20cm_led",
+            "p2_test_20cm_attendu",
+            "p2_test_50cm_led",
+            "p2_test_50cm_attendu",
+            "p2_test_80cm_led",
+            "p2_test_80cm_attendu",
+          ],
+          3: [
+            "p3_nouveau_seuil",
+            "p3_observation_seuil",
+            "p3_nouveau_temps",
+            "p3_message_allumage",
+            "p3_message_extinction",
+          ],
+          4: [
+            "p4_energie_absence",
+            "p4_poste_reduit",
+            "p4_avantage_detecteur",
+            "p4_avantage_minuterie",
+            "p4_limite_detecteur",
+            "p4_limite_minuterie",
+            "p4_retiens_chaine_info",
+            "p4_retiens_chaine_energie",
+            "p4_retiens_role_arduino",
+            "p4_retiens_gaspillage",
+          ],
+        },
+      });
+
+      window.wizardInstance = wizardInstance;
+    </script>
+  </body>
+</html>
