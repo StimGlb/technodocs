@@ -248,17 +248,29 @@
       }
 
       .wizard__score-banner--good {
-        background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(52, 211, 153, 0.1));
+        background: linear-gradient(
+          135deg,
+          rgba(52, 211, 153, 0.2),
+          rgba(52, 211, 153, 0.1)
+        );
         border: 2px solid rgba(52, 211, 153, 0.5);
       }
 
       .wizard__score-banner--average {
-        background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(251, 191, 36, 0.1));
+        background: linear-gradient(
+          135deg,
+          rgba(251, 191, 36, 0.2),
+          rgba(251, 191, 36, 0.1)
+        );
         border: 2px solid rgba(251, 191, 36, 0.5);
       }
 
       .wizard__score-banner--low {
-        background: linear-gradient(135deg, rgba(248, 113, 113, 0.2), rgba(248, 113, 113, 0.1));
+        background: linear-gradient(
+          135deg,
+          rgba(248, 113, 113, 0.2),
+          rgba(248, 113, 113, 0.1)
+        );
         border: 2px solid rgba(248, 113, 113, 0.5);
       }
 
@@ -314,9 +326,7 @@
       <div class="wizard__banner">
         <div class="wizard__banner-icon">🧪</div>
         <div class="wizard__banner-content">
-          <h1 class="wizard__banner-title">
-            Exercices type DNB — Fiche OST 1
-          </h1>
+          <h1 class="wizard__banner-title">Exercices type DNB — Fiche OST 1</h1>
           <p
             class="wizard__phase-subtitle"
             style="
@@ -398,7 +408,9 @@
            ══════════════════════════════════════════ -->
       <div class="wizard__score-banner" id="scoreBanner">
         <div class="wizard__score-value" id="scoreValue">—</div>
-        <div class="wizard__score-label" id="scoreLabel">Score QCM (questions auto-corrigées)</div>
+        <div class="wizard__score-label" id="scoreLabel">
+          Score QCM (questions auto-corrigées)
+        </div>
       </div>
 
       <!-- =============================================
@@ -409,7 +421,8 @@
           <div class="wizard__phase-header">
             <h2 class="wizard__phase-title">Exercices type DNB</h2>
             <p class="wizard__phase-subtitle">
-              9 questions • Réponds puis clique sur « Corriger » pour voir ton score
+              9 questions • Réponds puis clique sur « Corriger » pour voir ton
+              score
             </p>
           </div>
 
@@ -426,11 +439,27 @@
 
           <!-- Contexte partagé Exercice 1 -->
           <div class="wizard__situation">
-            <p>On étudie l'évolution des <strong>aspirateurs domestiques</strong> :</p>
-            <ul style="margin: var(--space-2) 0 0 var(--space-4); list-style: disc;">
-              <li><strong>1901</strong> : aspirateur à essence, porté sur un chariot</li>
-              <li><strong>1950</strong> : aspirateur traîneau électrique avec sac</li>
-              <li><strong>2002</strong> : aspirateur sans sac (technologie cyclonique)</li>
+            <p>
+              On étudie l'évolution des
+              <strong>aspirateurs domestiques</strong> :
+            </p>
+            <ul
+              style="
+                margin: var(--space-2) 0 0 var(--space-4);
+                list-style: disc;
+              "
+            >
+              <li>
+                <strong>1901</strong> : aspirateur à essence, porté sur un
+                chariot
+              </li>
+              <li>
+                <strong>1950</strong> : aspirateur traîneau électrique avec sac
+              </li>
+              <li>
+                <strong>2002</strong> : aspirateur sans sac (technologie
+                cyclonique)
+              </li>
               <li><strong>2015</strong> : aspirateur robot autonome</li>
             </ul>
           </div>
@@ -443,7 +472,8 @@
             </div>
             <h3 class="wizard__question-title">Fonction d'usage commune</h3>
             <p class="wizard__question-text">
-              Quelle est la <strong>fonction d'usage</strong> commune à tous ces aspirateurs ?
+              Quelle est la <strong>fonction d'usage</strong> commune à tous ces
+              aspirateurs ?
             </p>
 
             <textarea
@@ -456,12 +486,15 @@
               maxlength="300"
             ></textarea>
             <div class="wizard__char-counter">
-              <span class="char-count" data-for="q1a_fonction_usage">0</span> / 300
+              <span class="char-count" data-for="q1a_fonction_usage">0</span> /
+              300
             </div>
 
             <div class="wizard__correction" id="correction_q1a">
               <strong>📝 Réponse attendue :</strong>
-              La fonction d'usage est « aspirer la poussière et les saletés d'un sol » (nettoyer un sol par aspiration). Tous ces objets répondent au même besoin malgré des principes techniques différents.
+              La fonction d'usage est « aspirer la poussière et les saletés d'un
+              sol » (nettoyer un sol par aspiration). Tous ces objets répondent
+              au même besoin malgré des principes techniques différents.
             </div>
           </div>
 
@@ -473,14 +506,17 @@
             </div>
             <h3 class="wizard__question-title">Facteurs d'évolution</h3>
             <p class="wizard__question-text">
-              Identifie <strong>deux facteurs</strong> qui expliquent le passage de l'aspirateur à essence à l'aspirateur électrique.
+              Identifie <strong>deux facteurs</strong> qui expliquent le passage
+              de l'aspirateur à essence à l'aspirateur électrique.
             </p>
 
             <div class="wizard__help-box">
               <p><strong>💡 Indicateurs de réussite :</strong></p>
               <ul>
                 <li>✅ Deux facteurs distincts clairement identifiés</li>
-                <li>✅ Au moins un lié à une avancée scientifique ou technique</li>
+                <li>
+                  ✅ Au moins un lié à une avancée scientifique ou technique
+                </li>
               </ul>
             </div>
 
@@ -494,12 +530,19 @@
               maxlength="400"
             ></textarea>
             <div class="wizard__char-counter">
-              <span class="char-count" data-for="q1b_facteurs_evolution">0</span> / 400
+              <span class="char-count" data-for="q1b_facteurs_evolution"
+                >0</span
+              >
+              / 400
             </div>
 
             <div class="wizard__correction" id="correction_q1b">
               <strong>📝 Réponse attendue :</strong>
-              Deux facteurs : (1) la <strong>généralisation de l'électricité</strong> dans les foyers (nouvelle source d'énergie disponible) et (2) la <strong>miniaturisation des moteurs électriques</strong> (progrès technique permettant un appareil plus compact et silencieux).
+              Deux facteurs : (1) la
+              <strong>généralisation de l'électricité</strong> dans les foyers
+              (nouvelle source d'énergie disponible) et (2) la
+              <strong>miniaturisation des moteurs électriques</strong> (progrès
+              technique permettant un appareil plus compact et silencieux).
             </div>
           </div>
 
@@ -511,31 +554,58 @@
             </div>
             <h3 class="wizard__question-title">Domaine technologique récent</h3>
             <p class="wizard__question-text">
-              L'aspirateur robot utilise des <strong>capteurs</strong> et un <strong>programme</strong> pour se déplacer seul. À quel domaine technologique récent cela fait-il appel ?
+              L'aspirateur robot utilise des <strong>capteurs</strong> et un
+              <strong>programme</strong> pour se déplacer seul. À quel domaine
+              technologique récent cela fait-il appel ?
             </p>
 
             <div class="wizard__radio-group">
               <label class="wizard__radio">
-                <input type="radio" name="q1c_domaine" data-field="q1c_domaine" value="A" />
+                <input
+                  type="radio"
+                  name="q1c_domaine"
+                  data-field="q1c_domaine"
+                  value="A"
+                />
                 <span>A) La domotique filaire</span>
               </label>
               <label class="wizard__radio">
-                <input type="radio" name="q1c_domaine" data-field="q1c_domaine" value="B" />
+                <input
+                  type="radio"
+                  name="q1c_domaine"
+                  data-field="q1c_domaine"
+                  value="B"
+                />
                 <span>B) L'impression 3D</span>
               </label>
               <label class="wizard__radio">
-                <input type="radio" name="q1c_domaine" data-field="q1c_domaine" value="C" />
-                <span>C) L'intelligence artificielle et la robotique autonome</span>
+                <input
+                  type="radio"
+                  name="q1c_domaine"
+                  data-field="q1c_domaine"
+                  value="C"
+                />
+                <span
+                  >C) L'intelligence artificielle et la robotique autonome</span
+                >
               </label>
               <label class="wizard__radio">
-                <input type="radio" name="q1c_domaine" data-field="q1c_domaine" value="D" />
+                <input
+                  type="radio"
+                  name="q1c_domaine"
+                  data-field="q1c_domaine"
+                  value="D"
+                />
                 <span>D) La réalité virtuelle</span>
               </label>
             </div>
 
             <div class="wizard__correction" id="correction_q1c">
               <strong>✅ Bonne réponse : C</strong>
-              L'aspirateur utilise des capteurs pour percevoir son environnement et un algorithme pour décider de ses déplacements — c'est le principe de l'<strong>intelligence artificielle</strong> appliquée à la robotique autonome.
+              L'aspirateur utilise des capteurs pour percevoir son environnement
+              et un algorithme pour décider de ses déplacements — c'est le
+              principe de l'<strong>intelligence artificielle</strong> appliquée
+              à la robotique autonome.
             </div>
           </div>
 
@@ -552,7 +622,10 @@
 
           <!-- Contexte partagé Exercice 2 -->
           <div class="wizard__situation">
-            <p>Un collège souhaite remplacer ses <strong>vidéoprojecteurs</strong>. Deux modèles sont comparés :</p>
+            <p>
+              Un collège souhaite remplacer ses
+              <strong>vidéoprojecteurs</strong>. Deux modèles sont comparés :
+            </p>
           </div>
 
           <!-- Tableau de données Exercice 2 -->
@@ -594,7 +667,11 @@
           </table>
 
           <!-- Q2a — Modèle économe (QCM + justification) -->
-          <div class="wizard__question" data-question="q2a_qcm" data-correct="B">
+          <div
+            class="wizard__question"
+            data-question="q2a_qcm"
+            data-correct="B"
+          >
             <div class="wizard__question-header">
               <span class="wizard__question-badge">QCM + Justification</span>
               <span class="wizard__question-points">Q2a</span>
@@ -604,13 +681,26 @@
               Quel modèle est le plus <strong>économe en énergie</strong> ?
             </p>
 
-            <div class="wizard__radio-group" style="margin-bottom: var(--space-4);">
+            <div
+              class="wizard__radio-group"
+              style="margin-bottom: var(--space-4)"
+            >
               <label class="wizard__radio">
-                <input type="radio" name="q2a_modele" data-field="q2a_modele" value="A" />
+                <input
+                  type="radio"
+                  name="q2a_modele"
+                  data-field="q2a_modele"
+                  value="A"
+                />
                 <span>A) Modèle A</span>
               </label>
               <label class="wizard__radio">
-                <input type="radio" name="q2a_modele" data-field="q2a_modele" value="B" />
+                <input
+                  type="radio"
+                  name="q2a_modele"
+                  data-field="q2a_modele"
+                  value="B"
+                />
                 <span>B) Modèle B</span>
               </label>
             </div>
@@ -629,12 +719,15 @@
               maxlength="300"
             ></textarea>
             <div class="wizard__char-counter">
-              <span class="char-count" data-for="q2a_justification">0</span> / 300
+              <span class="char-count" data-for="q2a_justification">0</span> /
+              300
             </div>
 
             <div class="wizard__correction" id="correction_q2a_qcm">
               <strong>✅ Bonne réponse : B (Modèle B)</strong>
-              Sa consommation est de <strong>180 W</strong> contre 280 W pour le modèle A, et son étiquette énergie est <strong>B</strong> contre E. Ces deux éléments du tableau confirment qu'il est plus économe.
+              Sa consommation est de <strong>180 W</strong> contre 280 W pour le
+              modèle A, et son étiquette énergie est <strong>B</strong> contre
+              E. Ces deux éléments du tableau confirment qu'il est plus économe.
             </div>
           </div>
 
@@ -644,9 +737,14 @@
               <span class="wizard__question-badge">Calcul</span>
               <span class="wizard__question-points">Q2b</span>
             </div>
-            <h3 class="wizard__question-title">Changement de lampe sur 10 ans</h3>
+            <h3 class="wizard__question-title">
+              Changement de lampe sur 10 ans
+            </h3>
             <p class="wizard__question-text">
-              Le collège utilise chaque vidéoprojecteur environ <strong>1 000 h par an</strong>. Calcule combien de fois il faudra changer la lampe du <strong>modèle A</strong> sur 10 ans. Et pour le <strong>modèle B</strong> ?
+              Le collège utilise chaque vidéoprojecteur environ
+              <strong>1 000 h par an</strong>. Calcule combien de fois il faudra
+              changer la lampe du <strong>modèle A</strong> sur 10 ans. Et pour
+              le <strong>modèle B</strong> ?
             </p>
 
             <div class="wizard__help-box">
@@ -668,14 +766,17 @@
               maxlength="400"
             ></textarea>
             <div class="wizard__char-counter">
-              <span class="char-count" data-for="q2b_calcul_lampes">0</span> / 400
+              <span class="char-count" data-for="q2b_calcul_lampes">0</span> /
+              400
             </div>
 
             <div class="wizard__correction" id="correction_q2b">
               <strong>📝 Réponse attendue :</strong>
               Sur 10 ans = <strong>10 000 h</strong> d'utilisation.<br />
-              <strong>Modèle A</strong> : 10 000 ÷ 5 000 = 2 lampes → <strong>1 changement</strong> de lampe nécessaire.<br />
-              <strong>Modèle B</strong> : 10 000 ÷ 20 000 = 0,5 → <strong>aucun changement</strong> de lampe nécessaire sur 10 ans.
+              <strong>Modèle A</strong> : 10 000 ÷ 5 000 = 2 lampes →
+              <strong>1 changement</strong> de lampe nécessaire.<br />
+              <strong>Modèle B</strong> : 10 000 ÷ 20 000 = 0,5 →
+              <strong>aucun changement</strong> de lampe nécessaire sur 10 ans.
             </div>
           </div>
 
@@ -685,16 +786,22 @@
               <span class="wizard__question-badge">Argumentation</span>
               <span class="wizard__question-points">Q2c</span>
             </div>
-            <h3 class="wizard__question-title">Argumenter le choix du modèle B</h3>
+            <h3 class="wizard__question-title">
+              Argumenter le choix du modèle B
+            </h3>
             <p class="wizard__question-text">
-              En t'appuyant sur l'<strong>indice de réparabilité</strong> et le <strong>cycle de vie</strong>, argumente le choix du modèle B malgré son prix plus élevé.
+              En t'appuyant sur l'<strong>indice de réparabilité</strong> et le
+              <strong>cycle de vie</strong>, argumente le choix du modèle B
+              malgré son prix plus élevé.
             </p>
 
             <div class="wizard__help-box">
               <p><strong>💡 Indicateurs de réussite :</strong></p>
               <ul>
                 <li>✅ Mention de l'indice de réparabilité (7,8/10)</li>
-                <li>✅ Lien avec le cycle de vie (phase d'utilisation plus longue)</li>
+                <li>
+                  ✅ Lien avec le cycle de vie (phase d'utilisation plus longue)
+                </li>
                 <li>✅ Au moins un argument environnemental ou économique</li>
               </ul>
             </div>
@@ -709,141 +816,42 @@
               maxlength="600"
             ></textarea>
             <div class="wizard__char-counter">
-              <span class="char-count" data-for="q2c_argumentation">0</span> / 600
+              <span class="char-count" data-for="q2c_argumentation">0</span> /
+              600
             </div>
 
             <div class="wizard__correction" id="correction_q2c">
               <strong>📝 Réponse attendue :</strong>
-              Le modèle B a un indice de réparabilité de <strong>7,8/10</strong> : il est facile à démonter et les pièces sont disponibles et abordables. Sur le <strong>cycle de vie</strong>, cela signifie une phase d'utilisation plus longue (moins de pannes définitives), <strong>moins de déchets électroniques</strong> en fin de vie, et un <strong>coût total de possession inférieur</strong> (pas de remplacement de lampe, moins de consommation électrique). Le surcoût à l'achat est compensé par les économies sur la durée et un impact environnemental réduit.
-            </div>
-          </div>
-
-          <!-- ══════════════════════════════════════════
-               EXERCICE 3 — IA et biais
-               ══════════════════════════════════════════ -->
-          <div class="wizard__exercise-separator">
-            <div class="wizard__exercise-separator-icon">🤖</div>
-            <div class="wizard__exercise-separator-content">
-              <h3>Exercice 3 — IA et biais</h3>
-              <p>Compétences : OST 12</p>
-            </div>
-          </div>
-
-          <!-- Contexte partagé Exercice 3 -->
-          <div class="wizard__situation">
-            <p>
-              Une entreprise utilise une <strong>IA pour trier les CV</strong> des candidats à l'embauche. L'IA a été entraînée sur les CV des employés recrutés au cours des <strong>10 dernières années</strong>.
-            </p>
-          </div>
-
-          <!-- Q3a — Type d'apprentissage (QCM) -->
-          <div class="wizard__question" data-question="q3a" data-correct="A">
-            <div class="wizard__question-header">
-              <span class="wizard__question-badge">QCM unique</span>
-              <span class="wizard__question-points">Q3a</span>
-            </div>
-            <h3 class="wizard__question-title">Type d'apprentissage</h3>
-            <p class="wizard__question-text">
-              De quel <strong>type d'apprentissage</strong> s'agit-il ?
-            </p>
-
-            <div class="wizard__radio-group">
-              <label class="wizard__radio">
-                <input type="radio" name="q3a_apprentissage" data-field="q3a_apprentissage" value="A" />
-                <span>A) Apprentissage supervisé : l'IA apprend à partir d'exemples étiquetés (recrutés / non recrutés)</span>
-              </label>
-              <label class="wizard__radio">
-                <input type="radio" name="q3a_apprentissage" data-field="q3a_apprentissage" value="B" />
-                <span>B) Apprentissage par renforcement : l'IA apprend par essais/erreurs avec récompenses</span>
-              </label>
-              <label class="wizard__radio">
-                <input type="radio" name="q3a_apprentissage" data-field="q3a_apprentissage" value="C" />
-                <span>C) Apprentissage non supervisé : l'IA classe les CV sans exemples</span>
-              </label>
-              <label class="wizard__radio">
-                <input type="radio" name="q3a_apprentissage" data-field="q3a_apprentissage" value="D" />
-                <span>D) Apprentissage génératif : l'IA crée de nouveaux CV</span>
-              </label>
-            </div>
-
-            <div class="wizard__correction" id="correction_q3a">
-              <strong>✅ Bonne réponse : A</strong>
-              C'est un <strong>apprentissage supervisé</strong> : l'IA apprend à partir d'exemples (les CV passés) qui ont été étiquetés par l'Homme (recrutés / non recrutés). Elle cherche à reproduire les critères de sélection observés dans les données.
-            </div>
-          </div>
-
-          <!-- Q3b — Risque de biais -->
-          <div class="wizard__question" data-question="q3b">
-            <div class="wizard__question-header">
-              <span class="wizard__question-badge">Question ouverte</span>
-              <span class="wizard__question-points">Q3b</span>
-            </div>
-            <h3 class="wizard__question-title">Risque lié aux données</h3>
-            <p class="wizard__question-text">
-              Pendant ces 10 ans, l'entreprise a recruté <strong>majoritairement des hommes</strong>. Quel risque cela représente-t-il pour l'IA ?
-            </p>
-
-            <textarea
-              class="wizard__textarea"
-              data-field="q3b_risque_biais"
-              placeholder="Le risque est que l'IA…"
-              spellcheck="true"
-              lang="fr"
-              rows="4"
-              maxlength="400"
-            ></textarea>
-            <div class="wizard__char-counter">
-              <span class="char-count" data-for="q3b_risque_biais">0</span> / 400
-            </div>
-
-            <div class="wizard__correction" id="correction_q3b">
-              <strong>📝 Réponse attendue :</strong>
-              Le risque est un <strong>biais de genre</strong> : l'IA va reproduire le déséquilibre des données d'entraînement et <strong>défavoriser les candidates femmes</strong>, même si leurs compétences sont équivalentes. L'IA n'est pas neutre — elle reflète les biais présents dans les données sur lesquelles elle a été entraînée.
-            </div>
-          </div>
-
-          <!-- Q3c — Solution -->
-          <div class="wizard__question" data-question="q3c">
-            <div class="wizard__question-header">
-              <span class="wizard__question-badge">Question ouverte</span>
-              <span class="wizard__question-points">Q3c</span>
-            </div>
-            <h3 class="wizard__question-title">Limiter le problème</h3>
-            <p class="wizard__question-text">
-              Propose <strong>une solution</strong> pour limiter ce problème de biais.
-            </p>
-
-            <textarea
-              class="wizard__textarea"
-              data-field="q3c_solution_biais"
-              placeholder="Pour limiter ce problème, on pourrait…"
-              spellcheck="true"
-              lang="fr"
-              rows="4"
-              maxlength="400"
-            ></textarea>
-            <div class="wizard__char-counter">
-              <span class="char-count" data-for="q3c_solution_biais">0</span> / 400
-            </div>
-
-            <div class="wizard__correction" id="correction_q3c">
-              <strong>📝 Réponse attendue (plusieurs solutions possibles) :</strong>
-              <ul style="margin: var(--space-2) 0 0 var(--space-4); list-style: disc;">
-                <li><strong>Rééquilibrer les données</strong> d'entraînement pour qu'elles soient représentatives (autant de femmes que d'hommes)</li>
-                <li><strong>Supprimer les informations de genre</strong> des CV avant analyse (anonymisation)</li>
-                <li>Faire <strong>vérifier les résultats de l'IA par un humain</strong> (supervision humaine)</li>
-              </ul>
+              Le modèle B a un indice de réparabilité de
+              <strong>7,8/10</strong> : il est facile à démonter et les pièces
+              sont disponibles et abordables. Sur le
+              <strong>cycle de vie</strong>, cela signifie une phase
+              d'utilisation plus longue (moins de pannes définitives),
+              <strong>moins de déchets électroniques</strong> en fin de vie, et
+              un <strong>coût total de possession inférieur</strong> (pas de
+              remplacement de lampe, moins de consommation électrique). Le
+              surcoût à l'achat est compensé par les économies sur la durée et
+              un impact environnemental réduit.
             </div>
           </div>
 
           <!-- ══════════════════════════════════════════
                BOUTON CORRECTION
                ══════════════════════════════════════════ -->
-          <div class="wizard__phase-nav" style="justify-content: center;">
-            <button class="btn btn--success" id="btnCorrect" onclick="handleCorrection()">
+          <div class="wizard__phase-nav" style="justify-content: center">
+            <button
+              class="btn btn--success"
+              id="btnCorrect"
+              onclick="handleCorrection()"
+            >
               ✅ Corriger mes réponses
             </button>
-            <button class="btn btn--secondary" id="btnRetry" onclick="handleRetry()" style="display: none;">
+            <button
+              class="btn btn--secondary"
+              id="btnRetry"
+              onclick="handleRetry()"
+              style="display: none"
+            >
               🔄 Recommencer
             </button>
           </div>
@@ -920,7 +928,10 @@
           <button
             class="btn btn--primary"
             style="background: var(--color-error)"
-            onclick="wizardReset(); resetCorrection();"
+            onclick="
+              wizardReset();
+              resetCorrection();
+            "
           >
             Confirmer la réinitialisation
           </button>
@@ -963,9 +974,6 @@
             "q2a_justification",
             "q2b_calcul_lampes",
             "q2c_argumentation",
-            "q3a_apprentissage",
-            "q3b_risque_biais",
-            "q3c_solution_biais",
           ],
         },
 
@@ -989,7 +997,9 @@
       function setupCharCounters() {
         document.querySelectorAll(".char-count").forEach((span) => {
           const fieldName = span.dataset.for;
-          const textarea = document.querySelector(`[data-field="${fieldName}"]`);
+          const textarea = document.querySelector(
+            `[data-field="${fieldName}"]`,
+          );
           if (textarea && span) {
             textarea.addEventListener("input", () => {
               span.textContent = textarea.value.length;
@@ -1033,56 +1043,70 @@
         let totalQCM = 0;
 
         // Parcourir toutes les questions
-        document.querySelectorAll(".wizard__question[data-question]").forEach((questionEl) => {
-          const questionId = questionEl.dataset.question;
-          const correctAnswer = questionEl.dataset.correct; // undefined pour questions ouvertes
-          const correctionEl = document.getElementById(`correction_${questionId}`);
+        document
+          .querySelectorAll(".wizard__question[data-question]")
+          .forEach((questionEl) => {
+            const questionId = questionEl.dataset.question;
+            const correctAnswer = questionEl.dataset.correct; // undefined pour questions ouvertes
+            const correctionEl = document.getElementById(
+              `correction_${questionId}`,
+            );
 
-          if (correctAnswer) {
-            // ── QCM : correction automatique ──
-            totalQCM++;
-            const radioName = questionEl.querySelector("input[type='radio']")?.name;
-            const selectedRadio = radioName
-              ? document.querySelector(`input[name="${radioName}"]:checked`)
-              : null;
-            const userAnswer = selectedRadio?.value || null;
+            if (correctAnswer) {
+              // ── QCM : correction automatique ──
+              totalQCM++;
+              const radioName = questionEl.querySelector(
+                "input[type='radio']",
+              )?.name;
+              const selectedRadio = radioName
+                ? document.querySelector(`input[name="${radioName}"]:checked`)
+                : null;
+              const userAnswer = selectedRadio?.value || null;
 
-            // Marquer les labels
-            questionEl.querySelectorAll(".wizard__radio").forEach((label) => {
-              const input = label.querySelector("input");
-              label.classList.remove("is-correct", "is-incorrect", "is-expected");
+              // Marquer les labels
+              questionEl.querySelectorAll(".wizard__radio").forEach((label) => {
+                const input = label.querySelector("input");
+                label.classList.remove(
+                  "is-correct",
+                  "is-incorrect",
+                  "is-expected",
+                );
 
-              if (input.value === correctAnswer) {
-                label.classList.add("is-expected"); // Toujours montrer la bonne réponse
-              }
-
-              if (input.checked) {
                 if (input.value === correctAnswer) {
-                  label.classList.add("is-correct");
-                } else {
-                  label.classList.add("is-incorrect");
+                  label.classList.add("is-expected"); // Toujours montrer la bonne réponse
                 }
-              }
-            });
 
-            if (userAnswer === correctAnswer) {
-              scoreQCM++;
-              correctionEl.classList.add("wizard__correction--correct");
+                if (input.checked) {
+                  if (input.value === correctAnswer) {
+                    label.classList.add("is-correct");
+                  } else {
+                    label.classList.add("is-incorrect");
+                  }
+                }
+              });
+
+              if (userAnswer === correctAnswer) {
+                scoreQCM++;
+                correctionEl.classList.add("wizard__correction--correct");
+              } else {
+                correctionEl.classList.add("wizard__correction--incorrect");
+              }
             } else {
-              correctionEl.classList.add("wizard__correction--incorrect");
+              // ── Question ouverte : afficher le corrigé de référence ──
+              correctionEl.classList.add("wizard__correction--reference");
             }
-          } else {
-            // ── Question ouverte : afficher le corrigé de référence ──
-            correctionEl.classList.add("wizard__correction--reference");
-          }
-        });
+          });
 
         // Afficher le score
         const scoreBanner = document.getElementById("scoreBanner");
         const scoreValue = document.getElementById("scoreValue");
         scoreValue.textContent = `${scoreQCM} / ${totalQCM}`;
 
-        scoreBanner.classList.remove("wizard__score-banner--good", "wizard__score-banner--average", "wizard__score-banner--low");
+        scoreBanner.classList.remove(
+          "wizard__score-banner--good",
+          "wizard__score-banner--average",
+          "wizard__score-banner--low",
+        );
         const ratio = scoreQCM / totalQCM;
         if (ratio >= 0.75) {
           scoreBanner.classList.add("wizard__score-banner--good");
@@ -1114,7 +1138,7 @@
         // Toast
         window.wizardInstance?.showToast(
           `Score QCM : ${scoreQCM}/${totalQCM}`,
-          scoreQCM === totalQCM ? "success" : "info"
+          scoreQCM === totalQCM ? "success" : "info",
         );
       };
 
@@ -1130,14 +1154,16 @@
           el.classList.remove(
             "wizard__correction--correct",
             "wizard__correction--incorrect",
-            "wizard__correction--reference"
+            "wizard__correction--reference",
           );
         });
 
         // Retirer les classes de feedback des radios
-        document.querySelectorAll(".wizard__radio, .wizard__checkbox-item").forEach((el) => {
-          el.classList.remove("is-correct", "is-incorrect", "is-expected");
-        });
+        document
+          .querySelectorAll(".wizard__radio, .wizard__checkbox-item")
+          .forEach((el) => {
+            el.classList.remove("is-correct", "is-incorrect", "is-expected");
+          });
 
         // Masquer le score
         document.getElementById("scoreBanner").classList.remove("show");

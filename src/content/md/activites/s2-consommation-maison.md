@@ -91,7 +91,7 @@ techniques des équipements disponibles.
     type="text"
     class="wizard__input"
     data-field="doc-puissance-led"
-    placeholder="Ex: 9 W"
+    placeholder=""
     spellcheck="true"
     lang="fr"
   />
@@ -104,7 +104,7 @@ techniques des équipements disponibles.
     type="text"
     class="wizard__input"
     data-field="doc-duree-vie-led"
-    placeholder="Ex: 25 000 h"
+    placeholder=""
     spellcheck="true"
     lang="fr"
   />
@@ -129,7 +129,7 @@ techniques des équipements disponibles.
 
 <div class="wizard__group">
   <label class="wizard__label required">En te basant sur les Documents 2 et 3, cite deux critères qui justifient le choix de l'ampoule LED plutôt que l'ampoule incandescente pour la famille Kiagi.</label>
-  <p class="wizard__hint">Appuie-toi sur des valeurs chiffrées du tableau. Ex: "La durée de vie est 25 fois plus longue..."</p>
+  <p class="wizard__hint">Appuie-toi sur des valeurs chiffrées du tableau.</p>
   <textarea
     class="wizard__textarea"
     data-field="doc-critere-choix"
@@ -155,7 +155,7 @@ techniques des équipements disponibles.
   <textarea
     class="wizard__textarea"
     data-field="doc-indice-rep"
-    placeholder="Ex: Un indice de 6,2/10 signifie que cet appareil est moyennement réparable..."
+    placeholder=""
     spellcheck="true"
     lang="fr"
     autocorrect="on"
