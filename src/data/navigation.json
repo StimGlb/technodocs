@@ -41,14 +41,16 @@
       "name": "Correction Réparabilité",
       "path": "src/pages/corrections/correction-reparabilite.html",
       "icon": { "type": "emoji", "value": "♻️" },
-      "description": "Correction détaillée de l'activité Réparabilité"
+      "description": "Correction détaillée de l'activité Réparabilité",
+      "variant": "fiches"
     },
     {
       "id": "correction-impression3d",
       "name": "Correction Impression 3D",
       "path": "src/pages/corrections/correction-impression3d.html",
       "icon": { "type": "emoji", "value": "🏗️" },
-      "description": "Correction de l'activité Impression 3D"
+      "description": "Correction de l'activité Impression 3D",
+      "variant": "eval"
     }
   ],
   "outils": [

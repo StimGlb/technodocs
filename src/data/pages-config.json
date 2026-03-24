@@ -1,0 +1,18 @@
+{
+  "conception-3d": { "visible": true, "featured": false },
+  "reparabilite": { "visible": true, "featured": false },
+  "conception3d": { "visible": true, "featured": false },
+  "modelisation3d": { "visible": true, "featured": false },
+  "correction-reparabilite": { "visible": true, "featured": false },
+  "correction-impression3d": { "visible": true, "featured": false },
+  "generateur-graphiques": { "visible": true, "featured": false },
+  "task-manager": { "visible": true, "featured": false },
+  "tinkercad-classes": { "visible": true, "featured": false },
+  "scratch": { "visible": true, "featured": false },
+  "mblock": { "visible": true, "featured": false },
+  "vittascience": { "visible": true, "featured": false },
+  "trinket": { "visible": true, "featured": false },
+  "flashcards-index": { "visible": true, "featured": false },
+  "flash-reparabilite": { "visible": true, "featured": false },
+  "activites-index": { "visible": true, "featured": false }
+}

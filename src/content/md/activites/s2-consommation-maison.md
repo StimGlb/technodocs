@@ -133,7 +133,7 @@ techniques des équipements disponibles.
   <textarea
     class="wizard__textarea"
     data-field="doc-critere-choix"
-    placeholder="Critère 1 : ...&#10;Critère 2 : ..."
+    placeholder=""
     spellcheck="true"
     lang="fr"
     autocorrect="on"

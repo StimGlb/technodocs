@@ -133,7 +133,6 @@
 
       <!-- 2.4 CONTAINER DES PHASES -->
       <div class="wizard__container">
-
         <!-- ============================================================
              PHASE 1 — Documents techniques + Extraction de données
              ============================================================ -->
@@ -143,7 +142,9 @@
               <span class="wizard__phase-number">1</span>
               Analyser les équipements
             </h2>
-            <p class="wizard__phase-subtitle">Lire les documents et extraire les données clés</p>
+            <p class="wizard__phase-subtitle">
+              Lire les documents et extraire les données clés
+            </p>
           </div>
 
           <!-- Mise en situation -->
@@ -157,7 +158,9 @@
 
           <!-- Document 2 — Comparatif des ampoules -->
           <div class="wizard__tips">
-            <p class="wizard__tips-title">📄 Document 2 — Comparatif des ampoules</p>
+            <p class="wizard__tips-title">
+              📄 Document 1 — Comparatif des ampoules
+            </p>
             <div class="wizard__tips-content">
               <div class="wizard__table-wrapper">
                 <table class="wizard__table">
@@ -214,7 +217,9 @@
 
           <!-- Document 3 — Fiche technique thermostat -->
           <div class="wizard__tips">
-            <p class="wizard__tips-title">📄 Document 3 — Fiche technique thermostat connecté</p>
+            <p class="wizard__tips-title">
+              📄 Document 2 — Fiche technique thermostat connecté
+            </p>
             <div class="wizard__tips-content">
               <div class="wizard__table-wrapper">
                 <table class="wizard__table">
@@ -278,14 +283,17 @@
 
             <div class="wizard__group">
               <label class="wizard__label required">
-                D'après le Document 2, quelle est la puissance de l'ampoule LED ?
+                D'après le Document 1, quelle est la puissance de l'ampoule LED
+                ?
               </label>
-              <p class="wizard__hint">Reporte la valeur exacte avec son unité.</p>
+              <p class="wizard__hint">
+                Reporte la valeur exacte avec son unité.
+              </p>
               <input
                 type="text"
                 class="wizard__input"
                 data-field="doc-puissance-led"
-                placeholder="Ex: 9 W"
+                placeholder=""
                 spellcheck="true"
                 lang="fr"
               />
@@ -295,12 +303,14 @@
               <label class="wizard__label required">
                 Quelle est la durée de vie de l'ampoule LED ?
               </label>
-              <p class="wizard__hint">Reporte la valeur exacte avec son unité.</p>
+              <p class="wizard__hint">
+                Reporte la valeur exacte avec son unité.
+              </p>
               <input
                 type="text"
                 class="wizard__input"
                 data-field="doc-duree-vie-led"
-                placeholder="Ex: 25 000 h"
+                placeholder=""
                 spellcheck="true"
                 lang="fr"
               />
@@ -324,7 +334,9 @@
               <span class="wizard__phase-number">2</span>
               Comparer et argumenter
             </h2>
-            <p class="wizard__phase-subtitle">Utiliser les documents pour justifier un choix technique</p>
+            <p class="wizard__phase-subtitle">
+              Utiliser les documents pour justifier un choix technique
+            </p>
           </div>
 
           <!-- Question 2 — Comparer et argumenter -->
@@ -341,16 +353,16 @@
               <div class="wizard__tips-content">
                 <p>
                   Pour comparer des OST, on prend en compte plusieurs critères :
-                  économique (prix, coût d'usage), environnemental (cycle de vie,
-                  recyclage, indice de réparabilité) et technique (performances,
-                  durée de vie).
+                  économique (prix, coût d'usage), environnemental (cycle de
+                  vie, recyclage, indice de réparabilité) et technique
+                  (performances, durée de vie).
                 </p>
               </div>
             </div>
 
             <div class="wizard__group">
               <label class="wizard__label required">
-                En te basant sur les Documents 2 et 3, cite deux critères qui
+                En te basant sur les Documents 1 et 2, cite deux critères qui
                 justifient le choix de l'ampoule LED plutôt que l'ampoule
                 incandescente pour la famille Kiagi.
               </label>
@@ -362,7 +374,7 @@
                 class="wizard__textarea"
                 data-field="doc-critere-choix"
                 rows="5"
-                placeholder="Critère 1 : ...&#10;Critère 2 : ..."
+                placeholder=""
                 spellcheck="true"
                 lang="fr"
                 autocorrect="on"
@@ -394,7 +406,7 @@
                 class="wizard__textarea"
                 data-field="doc-indice-rep"
                 rows="5"
-                placeholder="Ex: Un indice de 6,2/10 signifie que cet appareil est moyennement réparable..."
+                placeholder=""
                 spellcheck="true"
                 lang="fr"
                 autocorrect="on"
@@ -424,7 +436,6 @@
             </button>
           </div>
         </section>
-
       </div>
       <!-- /.wizard__container -->
 
@@ -455,10 +466,7 @@
         >
           🗑️ Réinitialiser
         </button>
-        <button
-          class="btn btn--secondary btn--small"
-          onclick="window.print()"
-        >
+        <button class="btn btn--secondary btn--small" onclick="window.print()">
           🖨️ Imprimer
         </button>
       </div>
@@ -494,7 +502,10 @@
           </button>
           <button
             class="btn btn--primary"
-            onclick="wizardExportJSON();wizardCloseModal('completionModal')"
+            onclick="
+              wizardExportJSON();
+              wizardCloseModal('completionModal');
+            "
           >
             📤 Exporter
           </button>
@@ -595,13 +606,8 @@
         collectionName: "s2_docs_techniques_habitat",
         autoInit: false,
         requiredFields: {
-          1: [
-            "doc-puissance-led",
-            "doc-duree-vie-led",
-          ],
-          2: [
-            "doc-critere-choix",
-          ],
+          1: ["doc-puissance-led", "doc-duree-vie-led"],
+          2: ["doc-critere-choix"],
         },
       });
 
