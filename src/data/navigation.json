@@ -59,7 +59,7 @@
       "name": "Générateur de Graphiques",
       "path": "src/pages/outils/generateur-graphiques.html",
       "icon": { "type": "emoji", "value": "📈" },
-      "description": "Créez des graphiques interactifs à partir de vos données (CSV / manuelles)",
+      "description": "Créez des graphiques interactifs",
       "status": "ready",
       "visible": true
     },
@@ -72,7 +72,7 @@
     },
     {
       "id": "tinkercad-classes",
-      "name": "Tinkercad — Classes",
+      "name": "Tinkercad",
       "path": "src/pages/outils/tinkercad-classes.html",
       "icon": { "type": "emoji", "value": "🛠️" },
       "description": "Connexion aux classes Tinkercad"

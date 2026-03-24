@@ -3,7 +3,7 @@
   "reparabilite": { "visible": true, "featured": false },
   "conception3d": { "visible": true, "featured": false },
   "modelisation3d": { "visible": true, "featured": false },
-  "correction-reparabilite": { "visible": true, "featured": false },
+  "correction-reparabilite": { "visible": false, "featured": false },
   "correction-impression3d": { "visible": true, "featured": false },
   "generateur-graphiques": { "visible": true, "featured": false },
   "task-manager": { "visible": true, "featured": false },
