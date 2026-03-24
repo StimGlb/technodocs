@@ -76,11 +76,17 @@
             <select id="studentClass" data-field="studentClass" required>
               <option value="">— Sélectionner —</option>
               <optgroup label="4ème">
-                <option value="401">4ème 1</option>
                 <option value="402">4ème 2</option>
                 <option value="403">4ème 3</option>
                 <option value="404">4ème 4</option>
                 <option value="405">4ème 5</option>
+              </optgroup>
+              <optgroup label="3ème">
+                <option value="302">3ème 2</option>
+                <option value="303">3ème 3</option>
+                <option value="304">3ème 4</option>
+                <option value="305">3ème 5</option>
+                <option value="306">3ème 6</option>
               </optgroup>
             </select>
           </div>
@@ -188,7 +194,7 @@
         │  ~9 ──────────────── Trig (HC-SR04) │
         │  ~10 ─────────────── Echo (HC-SR04) │
         │  ~11 ──── R 220Ω ──── LED (+)       │
-        │  GND ──────────────── LED (-)        │
+        │  GND ──────────────── LED (-)       │
         │  5V  ──────────────── VCC (HC-SR04) │
         │  GND ──────────────── GND (HC-SR04) │
         └─────────────────────────────────────┘</code></pre>
@@ -329,7 +335,7 @@
             </p>
 
             <pre class="wizard__code-block"><code>┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
-│   CAPTEUR    │───▶│  TRAITEMENT  │───▶│   DÉCISION   │───▶│  ACTIONNEUR  │
+│   CAPTEUR    │ ─▶│  TRAITEMENT  │──▶│   DÉCISION   │──▶│  ACTIONNEUR  │
 │              │    │              │    │              │    │              │
 │  HC-SR04 :   │    │  Arduino :   │    │ Si distance  │    │    LED :     │
 │  mesure la   │    │    ???       │    │    ???       │    │     ???      │
