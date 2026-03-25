@@ -6,5 +6,5 @@
   "seance": "Séance 1/4",
   "duree": "1h30",
   "competences": ["OST 31", "OST 11"],
-  "markdownPath": "../../content/md/activites/s1-5eme-consommation-maison.md"
+  "markdownPath": "../../../content/md/activites/s1-5eme-consommation-maison.md"
 }

@@ -137,7 +137,7 @@
     {
       "id": "activites-index",
       "name": "Activités",
-      "path": "src/pages/activites/index.html",
+      "path": "src/pages/activites/devoirs.html",
       "icon": { "type": "emoji", "value": "📋" },
       "description": "Devoirs en ligne et exercices pratiques"
     }

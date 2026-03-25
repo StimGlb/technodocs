@@ -1,0 +1,609 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Documents techniques — Habitat et énergie | TechnoDocs</title>
+    <meta
+      name="description"
+      content="Analyser les documents techniques des équipements de la maison Kiagi — 4ème / 3ème"
+    />
+    <meta name="robots" content="noindex" />
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <!-- ============================================================
+         1. PASSWORD OVERLAY
+         ============================================================ -->
+    <div id="passwordOverlay" class="password-overlay">
+      <div class="password-prompt">
+        <h2>🔒 Accès sécurisé</h2>
+        <p>Cette activité est réservée.<br />Saisissez le mot de passe.</p>
+        <input
+          type="password"
+          id="passwordInput"
+          placeholder="••••"
+          autocomplete="off"
+        />
+        <button onclick="checkPassword()">Déverrouiller</button>
+        <p id="errorMessage" class="error-message" style="display: none">
+          ❌ Mot de passe incorrect
+        </p>
+      </div>
+    </div>
+
+    <!-- ============================================================
+         2. WIZARD PRINCIPAL
+         ============================================================ -->
+    <main class="wizard is-locked" id="wizardMain">
+      <!-- 2.1 BANNER -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">📄</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">
+            Documents techniques — Habitat et énergie
+          </h1>
+          <div class="wizard__banner-skills">
+            <span class="wizard__skill">OST 31</span>
+            <span class="wizard__skill">OST 32</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.2 STUDENT INFO -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="studentName">Prénom et Nom</label>
+            <input
+              type="text"
+              id="studentName"
+              data-field="studentName"
+              required
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="studentClass">Classe</label>
+            <select id="studentClass" data-field="studentClass" required>
+              <option value="">— Sélectionner —</option>
+              <optgroup label="5ème">
+                <option value="505">5ème5</option>
+                <option value="506">5ème6</option>
+                <option value="507">5ème7</option>
+              </optgroup>
+              </optgroup>
+            </select>
+          </div>
+          <div class="wizard__student-field wizard__student-field--date">
+            <label>Date</label>
+            <span
+              id="projectDate"
+              class="wizard__date-display"
+              data-field="projectDate"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2.3 PROGRESS + NAV -->
+      <section class="wizard__progress">
+        <div class="wizard__progress-header">
+          <h2 class="wizard__progress-title">Progression</h2>
+          <div class="wizard__save-indicator" id="saveIndicator">
+            <span class="wizard__save-dot"></span>
+            <span class="wizard__save-text">Auto-save</span>
+          </div>
+          <span class="wizard__progress-percentage" id="progressPercentage"
+            >0%</span
+          >
+        </div>
+        <div class="wizard__progress-bar">
+          <div
+            class="wizard__progress-fill"
+            id="progressFill"
+            style="width: 0%"
+          ></div>
+        </div>
+        <nav class="wizard__nav" id="phaseNav">
+          <button class="wizard__nav-btn active" data-phase="1">
+            <span class="wizard__nav-number">1</span>
+            <span>Documents</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="2">
+            <span class="wizard__nav-number">2</span>
+            <span>Analyse</span>
+          </button>
+        </nav>
+      </section>
+
+      <!-- 2.4 CONTAINER DES PHASES -->
+      <div class="wizard__container">
+        <!-- ============================================================
+             PHASE 1 — Documents techniques + Extraction de données
+             ============================================================ -->
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">1</span>
+              Analyser les équipements
+            </h2>
+            <p class="wizard__phase-subtitle">
+              Lire les documents et extraire les données clés
+            </p>
+          </div>
+
+          <!-- Mise en situation -->
+          <div class="wizard__situation">
+            <p>
+              La famille Kiagi envisage de remplacer tous ses éclairages et
+              d'installer un thermostat connecté. Avant d'acheter, ils comparent
+              les caractéristiques techniques des équipements disponibles.
+            </p>
+          </div>
+
+          <!-- Document 2 — Comparatif des ampoules -->
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">
+              📄 Document 1 — Comparatif des ampoules
+            </p>
+            <div class="wizard__tips-content">
+              <div class="wizard__table-wrapper">
+                <table class="wizard__table">
+                  <thead>
+                    <tr>
+                      <th>Caractéristique</th>
+                      <th>Incandescente</th>
+                      <th>Fluocompacte</th>
+                      <th>LED</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Puissance (W)</td>
+                      <td>60</td>
+                      <td>15</td>
+                      <td>9</td>
+                    </tr>
+                    <tr>
+                      <td>Flux lumineux (lm)</td>
+                      <td>800</td>
+                      <td>800</td>
+                      <td>800</td>
+                    </tr>
+                    <tr>
+                      <td>Durée de vie (h)</td>
+                      <td>1 000</td>
+                      <td>8 000</td>
+                      <td>25 000</td>
+                    </tr>
+                    <tr>
+                      <td>Prix unitaire (€)</td>
+                      <td>1</td>
+                      <td>4</td>
+                      <td>6</td>
+                    </tr>
+                    <tr>
+                      <td>Recyclage</td>
+                      <td>Poubelle ordinaire</td>
+                      <td>Point collecte DEEE</td>
+                      <td>Point collecte DEEE</td>
+                    </tr>
+                    <tr>
+                      <td>Indice de réparabilité</td>
+                      <td>—</td>
+                      <td>—</td>
+                      <td>—</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Document 3 — Fiche technique thermostat -->
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">
+              📄 Document 2 — Fiche technique thermostat connecté
+            </p>
+            <div class="wizard__tips-content">
+              <div class="wizard__table-wrapper">
+                <table class="wizard__table">
+                  <thead>
+                    <tr>
+                      <th>Caractéristique</th>
+                      <th>Valeur</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Marque / modèle</td>
+                      <td>ThermoPilot Connect</td>
+                    </tr>
+                    <tr>
+                      <td>Alimentation</td>
+                      <td>230 V — 50 Hz</td>
+                    </tr>
+                    <tr>
+                      <td>Consommation propre</td>
+                      <td>2 W</td>
+                    </tr>
+                    <tr>
+                      <td>Économies estimées</td>
+                      <td>20 à 30 % sur le chauffage</td>
+                    </tr>
+                    <tr>
+                      <td>Connectivité</td>
+                      <td>WiFi 2,4 GHz</td>
+                    </tr>
+                    <tr>
+                      <td>Durée de vie annoncée</td>
+                      <td>10 ans</td>
+                    </tr>
+                    <tr>
+                      <td>Indice de réparabilité</td>
+                      <td>6,2 / 10</td>
+                    </tr>
+                    <tr>
+                      <td>Matériaux principaux</td>
+                      <td>ABS, PCB, cuivre</td>
+                    </tr>
+                    <tr>
+                      <td>Fin de vie</td>
+                      <td>Collecte DEEE obligatoire</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Question 1 — Extraire des données -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Extraction</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 1 — Extraire des données
+            </h3>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                D'après le Document 1, quelle est la puissance de l'ampoule LED
+                ?
+              </label>
+              <p class="wizard__hint">
+                Reporte la valeur exacte avec son unité.
+              </p>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="doc-puissance-led"
+                placeholder=""
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                Quelle est la durée de vie de l'ampoule LED ?
+              </label>
+              <p class="wizard__hint">
+                Reporte la valeur exacte avec son unité.
+              </p>
+              <input
+                type="text"
+                class="wizard__input"
+                data-field="doc-duree-vie-led"
+                placeholder=""
+                spellcheck="true"
+                lang="fr"
+              />
+            </div>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- ============================================================
+             PHASE 2 — Comparer, argumenter, réparabilité
+             ============================================================ -->
+        <section class="wizard__phase" data-phase="2">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">2</span>
+              Comparer et argumenter
+            </h2>
+            <p class="wizard__phase-subtitle">
+              Utiliser les documents pour justifier un choix technique
+            </p>
+          </div>
+
+          <!-- Question 2 — Comparer et argumenter -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Argumentation</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 2 — Comparer et argumenter
+            </h3>
+
+            <div class="wizard__tips">
+              <p class="wizard__tips-title">💡 Méthode</p>
+              <div class="wizard__tips-content">
+                <p>
+                  Pour comparer des OST, on prend en compte plusieurs critères :
+                  économique (prix, coût d'usage), environnemental (cycle de
+                  vie, recyclage, indice de réparabilité) et technique
+                  (performances, durée de vie).
+                </p>
+              </div>
+            </div>
+
+            <div class="wizard__group">
+              <label class="wizard__label required">
+                En te basant sur les Documents 1 et 2, cite deux critères qui
+                justifient le choix de l'ampoule LED plutôt que l'ampoule
+                incandescente pour la famille Kiagi.
+              </label>
+              <p class="wizard__hint">
+                Appuie-toi sur des valeurs chiffrées du tableau. Ex : « La durée
+                de vie est 25 fois plus longue… »
+              </p>
+              <textarea
+                class="wizard__textarea"
+                data-field="doc-critere-choix"
+                rows="5"
+                placeholder=""
+                spellcheck="true"
+                lang="fr"
+                autocorrect="on"
+                autocapitalize="sentences"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Question 3 — Indice de réparabilité -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Réparabilité</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Question 3 — Indice de réparabilité
+            </h3>
+
+            <div class="wizard__group">
+              <label class="wizard__label">
+                Le thermostat ThermoPilot Connect a un indice de réparabilité de
+                6,2/10. Qu'est-ce que cela signifie concrètement pour la famille
+                Kiagi ?
+              </label>
+              <p class="wizard__hint">
+                L'indice va de 0 (irréparable) à 10 (très facilement réparable).
+                Que dit-il sur la durée de vie et l'impact environnemental ?
+              </p>
+              <textarea
+                class="wizard__textarea"
+                data-field="doc-indice-rep"
+                rows="5"
+                placeholder=""
+                spellcheck="true"
+                lang="fr"
+                autocorrect="on"
+                autocapitalize="sentences"
+              ></textarea>
+            </div>
+          </div>
+
+          <!-- Conclusion -->
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">📌 Pour conclure</p>
+            <div class="wizard__tips-content">
+              <p>
+                Tu sais maintenant extraire et comparer des données techniques
+                issues de documents. Dans la phase suivante, tu vas analyser
+                comment ces équipements transforment l'énergie électrique.
+              </p>
+            </div>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
+              ← Précédent
+            </button>
+            <button class="btn btn--success" onclick="wizardComplete()">
+              ✔ Envoyer mon devoir
+            </button>
+          </div>
+        </section>
+      </div>
+      <!-- /.wizard__container -->
+
+      <!-- BARRE D'ACTIONS -->
+      <div class="wizard__actions">
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="wizardExportJSON()"
+        >
+          📤 Exporter JSON
+        </button>
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="document.getElementById('importInput').click()"
+        >
+          📥 Importer JSON
+        </button>
+        <input
+          type="file"
+          id="importInput"
+          accept=".json"
+          style="display: none"
+          onchange="wizardImportJSON(event)"
+        />
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="handleSafeReset()"
+        >
+          🗑️ Réinitialiser
+        </button>
+        <button class="btn btn--secondary btn--small" onclick="window.print()">
+          🖨️ Imprimer
+        </button>
+      </div>
+    </main>
+
+    <!-- 3. MODALES -->
+    <div class="wizard__modal-overlay" id="completionModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
+        <div class="wizard__modal-content">
+          <p>Tu as terminé ton travail !</p>
+          <p style="margin-top: 1rem">
+            Tes réponses ont été
+            <strong>sauvegardées automatiquement</strong> dans la base de
+            données.
+          </p>
+          <p
+            style="
+              margin-top: 0.75rem;
+              font-size: 0.875rem;
+              color: var(--color-gray-500);
+            "
+          >
+            Tu peux aussi exporter une copie locale en JSON.
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('completionModal')"
+          >
+            Fermer
+          </button>
+          <button
+            class="btn btn--primary"
+            onclick="
+              wizardExportJSON();
+              wizardCloseModal('completionModal');
+            "
+          >
+            📤 Exporter
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="wizard__modal-overlay" id="resetModal">
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
+        <div class="wizard__modal-content">
+          <p>
+            Une <strong>sauvegarde</strong> a été téléchargée automatiquement.
+          </p>
+          <p>
+            Voulez-vous <strong>recommencer</strong> avec un formulaire vide ?
+          </p>
+        </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('resetModal')"
+          >
+            Annuler
+          </button>
+          <button
+            class="btn btn--primary"
+            style="background: var(--color-error)"
+            onclick="wizardReset()"
+          >
+            🗑️ Réinitialiser
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOAST -->
+    <div id="wizardToast" class="wizard__toast" aria-live="polite">
+      <span class="wizard__toast-icon"></span>
+      <span class="wizard__toast-message"></span>
+    </div>
+
+    <!-- ============================================================
+         4. SCRIPTS
+         ============================================================ -->
+    <script type="module">
+      import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+
+      window.checkPassword = function () {
+        const input = document.getElementById("passwordInput");
+        const error = document.getElementById("errorMessage");
+        const overlay = document.getElementById("passwordOverlay");
+        const main = document.querySelector("main.wizard");
+
+        if (!input || !error || !overlay || !main) return;
+
+        if (input.value === CORRECT_PASSWORD) {
+          overlay.style.display = "none";
+          main.classList.remove("is-locked");
+          error.style.display = "none";
+          window.wizardInstance?.init();
+        } else {
+          error.style.display = "block";
+          input.value = "";
+          input.focus();
+        }
+      };
+
+      document
+        .getElementById("passwordInput")
+        ?.addEventListener("keypress", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            window.checkPassword();
+          }
+        });
+
+      window.handleSafeReset = function () {
+        if (typeof wizardExportJSON === "function") {
+          wizardExportJSON();
+        } else if (window.wizardInstance) {
+          window.wizardInstance.exportToJSON();
+        }
+        if (window.wizardInstance?.showToast) {
+          window.wizardInstance.showToast(
+            "Sauvegarde de secours téléchargée !",
+            "success",
+          );
+        }
+        wizardShowModal("resetModal");
+      };
+    </script>
+
+    <script type="module">
+      import { WizardFirebase } from "/src/js/new-wizard-firebase.js";
+
+      const wizardInstance = new WizardFirebase({
+        collectionName: "s2_docs_techniques_habitat",
+        autoInit: false,
+        requiredFields: {
+          1: ["doc-puissance-led", "doc-duree-vie-led"],
+          2: ["doc-critere-choix"],
+        },
+      });
+
+      window.wizardInstance = wizardInstance;
+    </script>
+  </body>
+</html>
