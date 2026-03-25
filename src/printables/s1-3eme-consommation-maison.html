@@ -9,11 +9,11 @@
       content="Fiche d'activité 5ème — Analyser la consommation électrique d'une maison et proposer des solutions pour économiser l'énergie."
     />
 
-    <link rel="stylesheet" href="../../../css/style.css" />
-    <link rel="stylesheet" href="../../../css/markdown.css" />
-    <link rel="stylesheet" href="../../../css/cours.css" />
-    <link rel="stylesheet" href="../../../css/activite.css" />
-    <link rel="stylesheet" href="../../../css/print.css" media="print" />
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/markdown.css" />
+    <link rel="stylesheet" href="../css/cours.css" />
+    <link rel="stylesheet" href="../css/activite.css" />
+    <link rel="stylesheet" href="../css/print.css" media="print" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -121,15 +121,15 @@
     <div id="footer-placeholder"></div>
 
     <!-- Marked.js en local (sécurité CSP) -->
-    <script src="../../../js/libs/marked.min.js"></script>
+    <script src="../js/libs/marked.min.js"></script>
 
     <!-- Scripts modules -->
-    <script type="module" src="../../../js/components.js"></script>
+    <script type="module" src="../js/components.js"></script>
     <script type="module">
-      import { initCoursPage } from "../../../js/cours-loader.js";
+      import { initCoursPage } from "../js/cours-loader.js";
 
       await initCoursPage(
-        "../../../data/activites/3e-activite-consommation-maison.json",
+        "../data/activites/3e-activite-consommation-maison.json",
       );
 
       // Détection robuste des images insérées via Markdown

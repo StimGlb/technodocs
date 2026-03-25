@@ -15,7 +15,7 @@
   # Port for the Netlify CLI proxy
   port = 8888
   # Port where Vite dev server runs (see vite.config.js server.port)
-  targetPort = 3000
+  targetPort = 3001
   # Publish directory for local dev
   publish = "."
   # Auto-open browser
