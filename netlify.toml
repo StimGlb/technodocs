@@ -24,30 +24,17 @@
 # Headers for caching and security
 [[headers]]
   for = "/*"
-      Content-Security-Policy = """
-      default-src 'self';
-      script-src 'self' https://www.gstatic.com;
-      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-      font-src 'self' https://fonts.gstatic.com;
-      img-src 'self' data: https:;
-      connect-src 'self' 
-        https://*.firebaseio.com 
-        https://*.googleapis.com 
-        https://firestore.googleapis.com 
-        https://identitytoolkit.googleapis.com;
-      frame-src https://*.firebaseapp.com;
-    """
-
   [headers.values]
+    # Content Security Policy (CSP) - Protection contre XSS
+    # Note: 'unsafe-inline' temporairement ajouté pour style-src pour permettre les styles inline dynamiques
+    # Firebase: scripts et data access from gstatic.com and googleapis.com
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com; frame-src https://*.firebaseapp.com;"
+
     # Security headers renforcés pour la production
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
-
-    # Content Security Policy (CSP) - Protection contre XSS
-    # Note: 'unsafe-inline' temporairement ajouté pour style-src pour permettre les styles inline dynamiques
-    # Firebase: scripts et data access from gstatic.com and googleapis.com
 
     # HTTP Strict Transport Security (HSTS) - Force HTTPS
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
