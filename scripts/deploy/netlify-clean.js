@@ -30,7 +30,7 @@ import { homedir } from 'os';
 import { spawnSync } from 'child_process';
 import { fileURLToPath } from 'url';
 
-const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '..');
+const ROOT = join(fileURLToPath(new URL('.', import.meta.url)), '../..');
 
 // ─── Chargement du .env projet (sans dépendance externe) ─────────────────────
 
