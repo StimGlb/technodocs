@@ -1,4 +1,4 @@
-# Fiche 2 — La chaîne d'énergie
+# La chaîne d'énergie
 
 ## 1. Les formes d'énergie
 

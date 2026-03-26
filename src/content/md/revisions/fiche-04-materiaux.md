@@ -1,4 +1,4 @@
-# Fiche 4 — Matériaux et procédés
+# Matériaux et procédés
 
 ## 1. Qu'est-ce qu'un matériau ?
 

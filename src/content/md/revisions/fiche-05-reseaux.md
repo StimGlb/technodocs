@@ -1,4 +1,4 @@
-# Fiche 5 — Les réseaux informatiques
+# Les réseaux informatiques
 ## 1. Qu'est-ce qu'un réseau informatique ?
 
 Un **réseau informatique** est un ensemble d'équipements (ordinateurs, imprimantes, serveurs, smartphones…) **reliés entre eux** pour échanger des données.

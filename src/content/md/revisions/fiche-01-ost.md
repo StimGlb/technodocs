@@ -1,4 +1,4 @@
-# Fiche 1 — Les objets et systèmes techniques
+# Les objets et systèmes techniques
 
 ## 1. Qu'est-ce qu'un objet technique ?
 

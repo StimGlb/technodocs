@@ -1,4 +1,4 @@
-# Fiche 3 — La chaîne d'information
+# La chaîne d'information
 ## 1. Le rôle de la chaîne d'information
 
 Dans un système technique automatisé, **deux chaînes coexistent** :

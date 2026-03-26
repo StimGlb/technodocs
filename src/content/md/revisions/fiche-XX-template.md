@@ -1,4 +1,4 @@
-# Fiche XX — [Titre de la fiche]
+# [Titre de la fiche]
 
 ## 1. [Titre de la première section] ([CODE 1])
 

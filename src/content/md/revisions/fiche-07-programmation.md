@@ -1,4 +1,4 @@
-# Fiche 03 — La Programmation
+# La Programmation
 
 ## 1. L'algorithme et les variables
 
