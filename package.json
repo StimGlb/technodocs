@@ -20,7 +20,8 @@
     "export:firestore": "node scripts/firestore/export-firestore.js",
     "clean:previews": "node scripts/deploy/netlify-clean.js",
     "clean:previews:dry": "node scripts/deploy/netlify-clean.js --dry-run",
-    "session-check": "node scripts/dev/session-end-check.js"
+    "session-check": "node scripts/dev/session-end-check.js",
+    "ui:restore": "node scripts/editor/restore-ui-settings.js"
   },
   "keywords": [
     "flashcards",

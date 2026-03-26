@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Consommation d'énergie à la maison — 3ème | TechnoDocs</title>
+    <title>Consommation d'énergie à la maison — 4ème | TechnoDocs</title>
     <meta name="robots" content="noindex" />
     <link rel="stylesheet" href="/src/css/style.css" />
     <link rel="stylesheet" href="/src/css/wizard.css" />
@@ -28,7 +28,7 @@
           placeholder="••••"
           autocomplete="off"
         />
-        <button onclick="checkPassword()">Déverrouiller</button>
+        <button id="unlockButton">Déverrouiller</button>
         <p id="errorMessage" class="error-message" style="display: none">
           ❌ Mot de passe incorrect
         </p>
@@ -129,7 +129,6 @@
         <section class="wizard__phase" data-phase="1">
           <div class="wizard__phase-header">
             <h2 class="wizard__phase-title">
-              <span class="wizard__phase-number">1</span>
               Activité 1 — Analyser une facture d'énergie
             </h2>
             <p class="wizard__phase-subtitle">/ 6 pts</p>
@@ -160,7 +159,7 @@
               <span class="wizard__question-badge">Relevé</span>
               <span class="wizard__question-points">2 points</span>
             </div>
-            <h3 class="wizard__question-title">Q2.1 — Relevé de la facture</h3>
+            <h3 class="wizard__question-title">Q1.1 — Relevé de la facture</h3>
             <p class="wizard__question-text">
               Relevez les informations suivantes sur la facture fournie.
             </p>
@@ -190,25 +189,6 @@
                         type="text"
                         class="wizard__input wizard__input--table"
                         data-field="q2_conso_unite"
-                        maxlength="80"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="wizard__table-label">Montant total HT</td>
-                    <td>
-                      <input
-                        type="text"
-                        class="wizard__input wizard__input--table"
-                        data-field="q2_montant_ht"
-                        maxlength="80"
-                      />
-                    </td>
-                    <td>
-                      <input
-                        type="text"
-                        class="wizard__input wizard__input--table"
-                        data-field="q2_montant_ht_unite"
                         maxlength="80"
                       />
                     </td>
@@ -255,9 +235,9 @@
               <span class="wizard__question-badge">Calcul</span>
               <span class="wizard__question-points">2 points</span>
             </div>
-            <h3 class="wizard__question-title">Q2.2 — Coût moyen du kWh</h3>
+            <h3 class="wizard__question-title">Q1.2 — Coût moyen du kWh</h3>
             <p class="wizard__question-text">
-              Calculez le coût moyen du kWh TTC à partir des données relevées.
+              Calculez le coût moyen du kWh TTC à partir des données de la facture.
               Montrez votre calcul.
             </p>
             <textarea
@@ -265,6 +245,7 @@
               data-field="q2_calcul_kwh"
               rows="4"
               maxlength="400"
+              placeholder="Aide : Comparez le tarif heures pleines et heures creuses et calculez le coût moyen du kWh."
               spellcheck="true"
               lang="fr"
             ></textarea>
@@ -276,7 +257,7 @@
               <span class="wizard__question-badge">Réponse rédigée</span>
               <span class="wizard__question-points">2 points</span>
             </div>
-            <h3 class="wizard__question-title">Q2.3 — L'abonnement</h3>
+            <h3 class="wizard__question-title">Q1.3 — L'abonnement</h3>
             <p class="wizard__question-text">
               Que représente l'abonnement sur la facture ? En quoi est-il
               différent de la consommation facturée ?
@@ -305,7 +286,6 @@
         <section class="wizard__phase" data-phase="2">
           <div class="wizard__phase-header">
             <h2 class="wizard__phase-title">
-              <span class="wizard__phase-number">2</span>
               Activité 2 — Calculer et comparer les consommations
             </h2>
             <p class="wizard__phase-subtitle">/ 6 pts</p>
@@ -379,7 +359,6 @@
         <section class="wizard__phase" data-phase="3">
           <div class="wizard__phase-header">
             <h2 class="wizard__phase-title">
-              <span class="wizard__phase-number">3</span>
               Conclusion — Bilan et préconisations
             </h2>
             <p class="wizard__phase-subtitle">/ 3 pts</p>
@@ -455,39 +434,6 @@
     <!-- ============================================================
          4. SCRIPTS
          ============================================================ -->
-    <script type="module">
-      import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
-
-      window.checkPassword = function () {
-        const input = document.getElementById("passwordInput");
-        const error = document.getElementById("errorMessage");
-        const overlay = document.getElementById("passwordOverlay");
-        const main = document.querySelector("main.wizard");
-
-        if (!input || !error || !overlay || !main) return;
-
-        if (input.value === CORRECT_PASSWORD) {
-          overlay.style.display = "none";
-          main.classList.remove("is-locked");
-          error.style.display = "none";
-          window.wizardInstance?.init();
-        } else {
-          error.style.display = "block";
-          input.value = "";
-          input.focus();
-        }
-      };
-
-      document
-        .getElementById("passwordInput")
-        ?.addEventListener("keypress", (e) => {
-          if (e.key === "Enter") {
-            e.preventDefault();
-            window.checkPassword();
-          }
-        });
-    </script>
-
     <script type="module" src="/src/js/wizard-consommation-maison.js"></script>
   </body>
 </html>

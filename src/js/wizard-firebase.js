@@ -103,6 +103,9 @@ export class WizardFirebase {
     // Mettre à jour l'affichage
     this.updateProgress();
 
+    // Afficher la phase courante (phase 1 par défaut)
+    await this.goToPhase(this.currentPhase);
+
     console.log("🔥 WizardFirebase initialisé - DocID:", this.docId);
   }
 

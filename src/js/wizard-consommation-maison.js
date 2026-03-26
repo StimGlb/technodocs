@@ -2,14 +2,12 @@ import { WizardFirebase } from "/src/js/wizard-firebase.js";
 import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
 
 const wizardInstance = new WizardFirebase({
-  collectionName: "s1_3eme_consommation_maison",
+  collectionName: "s1_4eme_consommation_maison",
   autoInit: false,
   requiredFields: {
     1: [
       "q2_conso_valeur",
       "q2_conso_unite",
-      "q2_montant_ht",
-      "q2_montant_ht_unite",
       "q2_montant_ttc",
       "q2_montant_ttc_unite",
       "q2_periode",
