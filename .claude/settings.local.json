@@ -54,7 +54,8 @@
       "Bash(grep -n import.*from e:/Dev/technodocs-vanilla/src/js/app.js e:/Dev/technodocs-vanilla/src/js/components.js)",
       "Bash(grep -rn \"src/assets\" src/*.html src/**/*.html)",
       "Bash(grep -rn \"data/cours\\\\|data/revisions\\\\|data/referentiels\\\\|data/graphiques\" dist/assets/*.js)",
-      "Bash(node -e \":*)"
+      "Bash(node -e \":*)",
+      "Bash(xargs grep:*)"
     ],
     "deny": [],
     "ask": []

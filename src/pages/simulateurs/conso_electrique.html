@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Simulateur Consommation Électrique — TechnoDocs</title>
+  <meta name="description" content="Simulez la consommation électrique de la famille Kiagi et trouvez des pistes pour réduire la facture d'électricité." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/css/style.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+  <style>
+    .simulator__hero {
+      background: linear-gradient(135deg, var(--color-primary-dark) 0%, #1a237e 100%);
+      padding: var(--space-12) var(--space-4);
+      text-align: center;
+      color: #fff;
+    }
+    .simulator__hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3);
+      border-radius: var(--radius-full);
+      padding: var(--space-1) var(--space-4);
+      font-size: var(--text-sm);
+      font-family: var(--font-display);
+      margin-bottom: var(--space-4);
+    }
+    .simulator__hero-title {
+      font-family: var(--font-display);
+      font-size: var(--text-3xl);
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+    }
+    .simulator__hero-subtitle {
+      font-size: var(--text-base);
+      opacity: 0.85;
+      max-width: 540px;
+      margin: 0 auto;
+    }
+
+    .simulator__container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: var(--space-8) var(--space-4);
+    }
+
+    .simulator__metrics {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+    .simulator__metric-card {
+      background: var(--color-gray-100);
+      border: 1px solid var(--color-gray-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4) var(--space-6);
+      text-align: center;
+    }
+    .simulator__metric-label {
+      font-size: var(--text-sm);
+      color: var(--color-gray-500);
+      margin-bottom: var(--space-2);
+    }
+    .simulator__metric-value {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: 700;
+      color: var(--color-primary);
+    }
+    .simulator__metric-value--success {
+      color: #1D9E75;
+    }
+
+    .simulator__sliders {
+      background: var(--color-gray-100);
+      border: 1px solid var(--color-gray-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+    .simulator__sliders-title {
+      font-family: var(--font-display);
+      font-size: var(--text-lg);
+      font-weight: 600;
+      margin-bottom: var(--space-6);
+    }
+    .simulator__slider-row {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      margin-bottom: var(--space-4);
+    }
+    .simulator__slider-row:last-of-type {
+      margin-bottom: 0;
+    }
+    .simulator__label {
+      min-width: 150px;
+      font-size: var(--text-sm);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+    .simulator__slider {
+      flex: 1;
+      accent-color: var(--color-primary);
+      cursor: pointer;
+    }
+    .simulator__value {
+      min-width: 70px;
+      text-align: right;
+      font-size: var(--text-sm);
+      font-weight: 600;
+      color: var(--color-gray-700);
+    }
+
+    .simulator__charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+    .simulator__chart-card {
+      background: var(--color-gray-100);
+      border: 1px solid var(--color-gray-200);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+    }
+    .simulator__chart-title {
+      font-size: var(--text-sm);
+      font-weight: 600;
+      text-align: center;
+      margin-bottom: var(--space-3);
+      color: var(--color-gray-700);
+    }
+
+    .simulator__tips {
+      background: var(--color-gray-100);
+      border: 1px solid var(--color-gray-200);
+      border-left: 4px solid var(--color-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4) var(--space-6);
+      margin-bottom: var(--space-8);
+    }
+    .simulator__tips-title {
+      font-family: var(--font-display);
+      font-size: var(--text-base);
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+    }
+    .simulator__tips-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .simulator__tips-list li {
+      font-size: var(--text-sm);
+      color: var(--color-gray-700);
+      padding-left: var(--space-4);
+      position: relative;
+    }
+    .simulator__tips-list li::before {
+      content: "→";
+      position: absolute;
+      left: 0;
+      color: var(--color-primary);
+    }
+
+    .simulator__actions {
+      text-align: center;
+      margin-bottom: var(--space-8);
+    }
+    .simulator__reset-btn {
+      background: var(--color-gray-200);
+      color: var(--color-gray-700);
+      border: 1px solid var(--color-gray-300);
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-8);
+      font-size: var(--text-base);
+      font-family: var(--font-main);
+      font-weight: 500;
+      cursor: pointer;
+      transition: background var(--transition-fast);
+    }
+    .simulator__reset-btn:hover {
+      background: var(--color-gray-300);
+    }
+
+    @media (max-width: 600px) {
+      .simulator__charts {
+        grid-template-columns: 1fr;
+      }
+      .simulator__label {
+        min-width: 100px;
+      }
+      .simulator__hero-title {
+        font-size: var(--text-2xl);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="header-placeholder"></div>
+
+  <section class="simulator__hero">
+    <span class="simulator__hero-badge">⚡ Simulateur — Habitat et Énergie</span>
+    <h1 class="simulator__hero-title">Consommation Électrique</h1>
+    <p class="simulator__hero-subtitle">
+      Simulez la consommation de la famille Kiagi et trouvez des pistes pour réduire leur facture d'électricité.
+    </p>
+  </section>
+
+  <main class="simulator__container">
+
+    <div class="simulator__metrics">
+      <div class="simulator__metric-card">
+        <p class="simulator__metric-label">Consommation / an</p>
+        <p class="simulator__metric-value" id="totalKwh">—</p>
+      </div>
+      <div class="simulator__metric-card">
+        <p class="simulator__metric-label">Facture estimée / an</p>
+        <p class="simulator__metric-value" id="totalEur">—</p>
+      </div>
+      <div class="simulator__metric-card">
+        <p class="simulator__metric-label">Économie réalisée</p>
+        <p class="simulator__metric-value simulator__metric-value--success" id="economie">—</p>
+      </div>
+    </div>
+
+    <div class="simulator__sliders">
+      <p class="simulator__sliders-title">Déplacez les curseurs pour simuler des économies</p>
+
+      <div class="simulator__slider-row">
+        <label class="simulator__label" for="sliderChauffage">🔥 Chauffage</label>
+        <input class="simulator__slider" type="range" id="sliderChauffage" />
+        <span class="simulator__value" id="valChauffage">—</span>
+      </div>
+
+      <div class="simulator__slider-row">
+        <label class="simulator__label" for="sliderEclairage">💡 Éclairage</label>
+        <input class="simulator__slider" type="range" id="sliderEclairage" />
+        <span class="simulator__value" id="valEclairage">—</span>
+      </div>
+
+      <div class="simulator__slider-row">
+        <label class="simulator__label" for="sliderVeille">🔌 Veille</label>
+        <input class="simulator__slider" type="range" id="sliderVeille" />
+        <span class="simulator__value" id="valVeille">—</span>
+      </div>
+    </div>
+
+    <div class="simulator__charts">
+      <div class="simulator__chart-card">
+        <p class="simulator__chart-title">Répartition des postes</p>
+        <canvas id="chartPie"></canvas>
+      </div>
+      <div class="simulator__chart-card">
+        <p class="simulator__chart-title">Initial vs Simulé (kWh/an)</p>
+        <canvas id="chartBar"></canvas>
+      </div>
+    </div>
+
+    <div class="simulator__tips">
+      <p class="simulator__tips-title">💡 Pistes d'économies</p>
+      <ul class="simulator__tips-list" id="tipsContainer">
+        <li>Déplacez les curseurs pour simuler des économies d'énergie.</li>
+      </ul>
+    </div>
+
+    <div class="simulator__actions">
+      <button class="simulator__reset-btn" id="resetBtn">↺ Réinitialiser</button>
+    </div>
+
+  </main>
+
+  <div id="footer-placeholder"></div>
+  <script type="module" src="/src/js/main.js"></script>
+
+  <script type="module">
+    const COLORS = {
+      chauffage: '#D85A30',
+      eclairage: '#378ADD',
+      veille: '#1D9E75'
+    };
+
+    function prixAnnuel(kwhTotal, tarif) {
+      const coutHP = kwhTotal * tarif.ratioHP * tarif.prixHP;
+      const coutHC = kwhTotal * tarif.ratioHC * tarif.prixHC;
+      const consoHT = coutHP + coutHC;
+      const aboAnnuel = tarif.abonnementMois * 12;
+      const cspe = kwhTotal * tarif.cspeParKwh;
+      const ctaAnnuel = tarif.ctaMois * 12;
+      const tcfeAnnuel = tarif.tcfeMois * 12;
+      const baseReduit = aboAnnuel + ctaAnnuel;
+      const baseNormal = consoHT + cspe + tcfeAnnuel;
+      const tvaR = baseReduit * tarif.tvaReduit;
+      const tvaN = baseNormal * tarif.tvaNormal;
+      return Math.round(baseReduit + baseNormal + tvaR + tvaN);
+    }
+
+    const data = await fetch('/src/data/postes-conso-elect.json').then(r => r.json());
+    const { postes, tarif } = data;
+
+    const initialValues = Object.fromEntries(postes.map(p => [p.id, p.value]));
+    const initialTotal = postes.reduce((s, p) => s + p.value, 0);
+    const initialPrix = prixAnnuel(initialTotal, tarif);
+
+    const sliderIds = { chauffage: 'sliderChauffage', eclairage: 'sliderEclairage', veille: 'sliderVeille' };
+    const valIds = { chauffage: 'valChauffage', eclairage: 'valEclairage', veille: 'valVeille' };
+
+    postes.forEach(p => {
+      const slider = document.getElementById(sliderIds[p.id]);
+      slider.min = 0;
+      slider.max = p.maxSlider;
+      slider.step = p.step;
+      slider.value = p.value;
+      document.getElementById(valIds[p.id]).textContent = p.value + ' kWh';
+    });
+
+    const pieCtx = document.getElementById('chartPie').getContext('2d');
+    const barCtx = document.getElementById('chartBar').getContext('2d');
+
+    const pieChart = new Chart(pieCtx, {
+      type: 'doughnut',
+      data: {
+        labels: postes.map(p => p.label),
+        datasets: [{
+          data: postes.map(p => p.value),
+          backgroundColor: postes.map(p => COLORS[p.id]),
+          borderWidth: 2,
+          borderColor: '#1f2937'
+        }]
+      },
+      options: {
+        plugins: { legend: { position: 'bottom', labels: { font: { size: 11 }, color: '#d1d5db' } } },
+        responsive: true
+      }
+    });
+
+    const barChart = new Chart(barCtx, {
+      type: 'bar',
+      data: {
+        labels: postes.map(p => p.label),
+        datasets: [
+          {
+            label: 'Initial',
+            data: postes.map(p => p.value),
+            backgroundColor: postes.map(p => COLORS[p.id] + 'aa'),
+            borderColor: postes.map(p => COLORS[p.id]),
+            borderWidth: 1
+          },
+          {
+            label: 'Simulé',
+            data: postes.map(p => p.value),
+            backgroundColor: postes.map(p => COLORS[p.id]),
+            borderColor: postes.map(p => COLORS[p.id]),
+            borderWidth: 1
+          }
+        ]
+      },
+      options: {
+        responsive: true,
+        plugins: { legend: { labels: { font: { size: 11 }, color: '#d1d5db' } } },
+        scales: {
+          x: { ticks: { color: '#9ca3af', font: { size: 10 } }, grid: { color: '#2d3748' } },
+          y: { ticks: { color: '#9ca3af' }, grid: { color: '#2d3748' } }
+        }
+      }
+    });
+
+    function getValues() {
+      return {
+        chauffage: +document.getElementById('sliderChauffage').value,
+        eclairage: +document.getElementById('sliderEclairage').value,
+        veille: +document.getElementById('sliderVeille').value
+      };
+    }
+
+    function updateUI() {
+      const vals = getValues();
+      const total = vals.chauffage + vals.eclairage + vals.veille;
+      const prix = prixAnnuel(total, tarif);
+      const eco = initialPrix - prix;
+
+      document.getElementById('totalKwh').textContent = total.toLocaleString('fr-FR') + ' kWh';
+      document.getElementById('totalEur').textContent = prix.toLocaleString('fr-FR') + ' €';
+      document.getElementById('economie').textContent = eco > 0
+        ? '+' + eco.toLocaleString('fr-FR') + ' €'
+        : eco === 0 ? '0 €' : eco.toLocaleString('fr-FR') + ' €';
+
+      document.getElementById('valChauffage').textContent = vals.chauffage + ' kWh';
+      document.getElementById('valEclairage').textContent = vals.eclairage + ' kWh';
+      document.getElementById('valVeille').textContent = vals.veille + ' kWh';
+
+      pieChart.data.datasets[0].data = [vals.chauffage, vals.eclairage, vals.veille];
+      pieChart.update();
+      barChart.data.datasets[1].data = [vals.chauffage, vals.eclairage, vals.veille];
+      barChart.update();
+
+      const tips = [];
+      if (vals.chauffage < initialValues.chauffage) tips.push("Baisser le thermostat de 1°C = environ 7% d'économie sur le chauffage.");
+      if (vals.eclairage < initialValues.eclairage) tips.push("Remplacer les ampoules classiques par des LED divise la consommation d'éclairage par 5.");
+      if (vals.veille < initialValues.veille) tips.push("Utiliser des multiprises à interrupteur supprime les consommations de veille.");
+
+      const tipsEl = document.getElementById('tipsContainer');
+      if (tips.length === 0 && eco <= 0) {
+        tipsEl.innerHTML = "<li>Déplacez les curseurs pour simuler des économies d'énergie.</li>";
+      } else {
+        const lines = [...tips];
+        if (eco > 0) {
+          const ecoMois = Math.round(eco / 12);
+          lines.push("Économie estimée\u00a0: " + eco.toLocaleString('fr-FR') + "\u00a0€/an, soit " + ecoMois + "\u00a0€/mois");
+        }
+        tipsEl.innerHTML = lines.map(t => "<li>" + t + "</li>").join('');
+      }
+    }
+
+    ['sliderChauffage', 'sliderEclairage', 'sliderVeille'].forEach(id => {
+      document.getElementById(id).addEventListener('input', updateUI);
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+      postes.forEach(p => {
+        document.getElementById(sliderIds[p.id]).value = p.value;
+      });
+      updateUI();
+    });
+
+    updateUI();
+  </script>
+</body>
+</html>

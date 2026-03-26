@@ -1,0 +1,27 @@
+{
+  "postes": [
+    { "id": "chauffage", "label": "Chauffage électrique", "value": 2800, "unit": "kWh", "icon": "🔥", "maxSlider": 5000, "step": 50 },
+    { "id": "eclairage", "label": "Éclairage", "value": 500, "unit": "kWh", "icon": "💡", "maxSlider": 1500, "step": 10 },
+    { "id": "veille", "label": "Veille des appareils", "value": 380, "unit": "kWh", "icon": "🔌", "maxSlider": 800, "step": 10 }
+  ],
+  "tarif": {
+    "label": "Tarif Bleu Résidentiel — Heures Pleines / Creuses — 9 kVA",
+    "prixHP": 0.1841,
+    "prixHC": 0.1470,
+    "ratioHP": 0.7083,
+    "ratioHC": 0.2917,
+    "abonnementMois": 13.01,
+    "cspeParKwh": 0.0225,
+    "ctaMois": 1.56,
+    "tcfeMois": 0.60,
+    "tvaReduit": 0.055,
+    "tvaNormal": 0.20
+  },
+  "client": {
+    "nom": "Famille Kiagi",
+    "adresse": "12 rue des Connectés, 95000 Cergy",
+    "periode": "01/01/2026 — 28/02/2026",
+    "consoTotale2mois": 1200,
+    "montantTTC2mois": 313.11
+  }
+}
