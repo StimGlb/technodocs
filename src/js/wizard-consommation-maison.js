@@ -6,13 +6,6 @@ const wizardInstance = new WizardFirebase({
   autoInit: false,
   requiredFields: {
     1: [
-      "q1_chauffage_source",
-      "q1_ecs_source",
-      "q1_cuisson_source",
-      "q1_eclairage_source",
-      "q1_usage_principal",
-    ],
-    2: [
       "q2_conso_valeur",
       "q2_conso_unite",
       "q2_montant_ht",
@@ -23,21 +16,8 @@ const wizardInstance = new WizardFirebase({
       "q2_calcul_kwh",
       "q2_abonnement_explication",
     ],
-    3: [
-      "q3_chauffage_kwh",
-      "q3_chauffage_pct",
-      "q3_ecs_kwh",
-      "q3_ecs_pct",
-      "q3_electromenager_kwh",
-      "q3_electromenager_pct",
-      "q3_eclairage_kwh",
-      "q3_eclairage_pct",
-      "q3_total_kwh",
-      "q3_total_pct",
-      "q3_comparaison_nationale",
-      "q3_conseil_poste",
-    ],
-    4: ["q4_bilan_synthese", "q4_actions_proposees"],
+    2: ["q3_comparaison_nationale", "q3_conseil_poste"],
+    3: ["q4_bilan_synthese", "q4_actions_proposees"],
   },
 });
 
@@ -98,5 +78,9 @@ function bindEvents() {
     });
   });
 }
+
+// Expose global functions for onclick handlers
+window.wizardGoToPhase = (phase) => window.wizardInstance?.goToPhase(phase);
+window.wizardComplete = () => window.wizardInstance?.complete();
 
 bindEvents();

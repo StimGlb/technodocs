@@ -1,0 +1,242 @@
+============================================================
+             PHASE 1 — Activité 1 : Identifier les usages
+             ============================================================ -->
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <h2 class="wizard__phase-title">
+              <span class="wizard__phase-number">1</span>
+              Activité 1 — Identifier les usages énergétiques
+            </h2>
+            <p class="wizard__phase-subtitle">/ 5 pts</p>
+          </div>
+
+          <div class="wizard__situation">
+            <p>
+              La famille Kiagi souhaite réduire sa facture d'énergie. Pour cela, elle
+              commence par recenser tous les usages énergétiques de son logement
+              et les sources d'énergie utilisées.
+            </p>
+          </div>
+
+          <!-- Q1.1 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Tableau</span>
+              <span class="wizard__question-points">2 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Q1.1 — Usages et sources d'énergie
+            </h3>
+            <p class="wizard__question-text">
+              Citez quatre usages de l'énergie dans un logement et indiquez la
+              source d'énergie associée à chacun.
+            </p>
+            <div class="wizard__table-wrapper">
+              <table class="wizard__table">
+                <thead>
+                  <tr>
+                    <th>Usage</th>
+                    <th>Source d'énergie</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="wizard__table-label">Chauffage</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q1_chauffage_source"
+                        maxlength="80"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label">Eau chaude sanitaire</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q1_ecs_source"
+                        maxlength="80"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label">Cuisson</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q1_cuisson_source"
+                        maxlength="80"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label">Éclairage</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q1_eclairage_source"
+                        maxlength="80"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Q1.2 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Réponse rédigée</span>
+              <span class="wizard__question-points">3 points</span>
+            </div>
+            <h3 class="wizard__question-title">Q1.2 — Usage principal</h3>
+            <p class="wizard__question-text">
+              Quel usage représente généralement la plus grande part de la
+              consommation d'énergie dans un logement français ? Justifiez.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="q1_usage_principal"
+              rows="4"
+              maxlength="400"
+              spellcheck="true"
+              lang="fr"
+            ></textarea>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <span></span>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+              Activité suivante →
+            </button>
+          </div>
+        </section>
+
+                  <!-- Q3.1 -->
+          <div class="wizard__question">
+            <div class="wizard__question-header">
+              <span class="wizard__question-badge">Tableau</span>
+              <span class="wizard__question-points">3 points</span>
+            </div>
+            <h3 class="wizard__question-title">
+              Q3.1 — Répartition de la consommation
+            </h3>
+            <p class="wizard__question-text">
+              Complétez le tableau de répartition de la consommation annuelle
+              par poste.
+            </p>
+            <div class="wizard__table-wrapper">
+              <table class="wizard__table">
+                <thead>
+                  <tr>
+                    <th>Poste</th>
+                    <th>Consommation (kWh)</th>
+                    <th>Part (%)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="wizard__table-label">Chauffage</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q3_chauffage_kwh"
+                        maxlength="80"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q3_chauffage_pct"
+                        maxlength="80"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label">Eau chaude sanitaire</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q3_ecs_kwh"
+                        maxlength="80"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q3_ecs_pct"
+                        maxlength="80"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label">Électroménager</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q3_electromenager_kwh"
+                        maxlength="80"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q3_electromenager_pct"
+                        maxlength="80"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label">Éclairage</td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q3_eclairage_kwh"
+                        maxlength="80"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q3_eclairage_pct"
+                        maxlength="80"
+                      />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wizard__table-label"><strong>Total</strong></td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q3_total_kwh"
+                        maxlength="80"
+                      />
+                    </td>
+                    <td>
+                      <input
+                        type="text"
+                        class="wizard__input wizard__input--table"
+                        data-field="q3_total_pct"
+                        maxlength="80"
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
