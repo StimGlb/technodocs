@@ -292,35 +292,38 @@
     function prixAnnuel(kwhTotal, tarif) {
       const coutHP = kwhTotal * tarif.ratioHP * tarif.prixHP;
       const coutHC = kwhTotal * tarif.ratioHC * tarif.prixHC;
-      const consoHT = coutHP + coutHC;
+      const coutConsoHT = coutHP + coutHC;
       const aboAnnuel = tarif.abonnementMois * 12;
       const cspe = kwhTotal * tarif.cspeParKwh;
       const ctaAnnuel = tarif.ctaMois * 12;
       const tcfeAnnuel = tarif.tcfeMois * 12;
       const baseReduit = aboAnnuel + ctaAnnuel;
-      const baseNormal = consoHT + cspe + tcfeAnnuel;
+      const baseNormal = coutConsoHT + cspe + tcfeAnnuel;
       const tvaR = baseReduit * tarif.tvaReduit;
       const tvaN = baseNormal * tarif.tvaNormal;
       return Math.round(baseReduit + baseNormal + tvaR + tvaN);
     }
 
-    const data = await fetch('/src/data/postes-conso-elect.json').then(r => r.json());
+    const resp = await fetch('/src/data/postes-conso-elect.json');
+    if (!resp.ok) throw new Error('Impossible de charger les données');
+    const data = await resp.json();
     const { postes, tarif } = data;
+
+    const capitalize = s => s[0].toUpperCase() + s.slice(1);
+    const sliderId = id => 'slider' + capitalize(id);
+    const valId = id => 'val' + capitalize(id);
 
     const initialValues = Object.fromEntries(postes.map(p => [p.id, p.value]));
     const initialTotal = postes.reduce((s, p) => s + p.value, 0);
     const initialPrix = prixAnnuel(initialTotal, tarif);
 
-    const sliderIds = { chauffage: 'sliderChauffage', eclairage: 'sliderEclairage', veille: 'sliderVeille' };
-    const valIds = { chauffage: 'valChauffage', eclairage: 'valEclairage', veille: 'valVeille' };
-
     postes.forEach(p => {
-      const slider = document.getElementById(sliderIds[p.id]);
+      const slider = document.getElementById(sliderId(p.id));
       slider.min = 0;
       slider.max = p.maxSlider;
       slider.step = p.step;
       slider.value = p.value;
-      document.getElementById(valIds[p.id]).textContent = p.value + ' kWh';
+      document.getElementById(valId(p.id)).textContent = p.value.toLocaleString('fr-FR') + ' kWh';
     });
 
     const pieCtx = document.getElementById('chartPie').getContext('2d');
@@ -375,16 +378,12 @@
     });
 
     function getValues() {
-      return {
-        chauffage: +document.getElementById('sliderChauffage').value,
-        eclairage: +document.getElementById('sliderEclairage').value,
-        veille: +document.getElementById('sliderVeille').value
-      };
+      return Object.fromEntries(postes.map(p => [p.id, +document.getElementById(sliderId(p.id)).value]));
     }
 
     function updateUI() {
       const vals = getValues();
-      const total = vals.chauffage + vals.eclairage + vals.veille;
+      const total = postes.reduce((s, p) => s + vals[p.id], 0);
       const prix = prixAnnuel(total, tarif);
       const eco = initialPrix - prix;
 
@@ -394,13 +393,13 @@
         ? '+' + eco.toLocaleString('fr-FR') + ' €'
         : eco === 0 ? '0 €' : eco.toLocaleString('fr-FR') + ' €';
 
-      document.getElementById('valChauffage').textContent = vals.chauffage + ' kWh';
-      document.getElementById('valEclairage').textContent = vals.eclairage + ' kWh';
-      document.getElementById('valVeille').textContent = vals.veille + ' kWh';
+      postes.forEach(p => {
+        document.getElementById(valId(p.id)).textContent = vals[p.id].toLocaleString('fr-FR') + ' kWh';
+      });
 
-      pieChart.data.datasets[0].data = [vals.chauffage, vals.eclairage, vals.veille];
+      pieChart.data.datasets[0].data = postes.map(p => vals[p.id]);
       pieChart.update();
-      barChart.data.datasets[1].data = [vals.chauffage, vals.eclairage, vals.veille];
+      barChart.data.datasets[1].data = postes.map(p => vals[p.id]);
       barChart.update();
 
       const tips = [];
@@ -408,26 +407,32 @@
       if (vals.eclairage < initialValues.eclairage) tips.push("Remplacer les ampoules classiques par des LED divise la consommation d'éclairage par 5.");
       if (vals.veille < initialValues.veille) tips.push("Utiliser des multiprises à interrupteur supprime les consommations de veille.");
 
+      if (eco > 0) {
+        const ecoMois = Math.round(eco / 12);
+        tips.push("Économie estimée\u00a0: " + eco.toLocaleString('fr-FR') + "\u00a0€/an, soit " + ecoMois + "\u00a0€/mois");
+      }
+
       const tipsEl = document.getElementById('tipsContainer');
-      if (tips.length === 0 && eco <= 0) {
-        tipsEl.innerHTML = "<li>Déplacez les curseurs pour simuler des économies d'énergie.</li>";
+      if (tips.length === 0) {
+        const li = document.createElement('li');
+        li.textContent = "Déplacez les curseurs pour simuler des économies d'énergie.";
+        tipsEl.replaceChildren(li);
       } else {
-        const lines = [...tips];
-        if (eco > 0) {
-          const ecoMois = Math.round(eco / 12);
-          lines.push("Économie estimée\u00a0: " + eco.toLocaleString('fr-FR') + "\u00a0€/an, soit " + ecoMois + "\u00a0€/mois");
-        }
-        tipsEl.innerHTML = lines.map(t => "<li>" + t + "</li>").join('');
+        tipsEl.replaceChildren(...tips.map(t => {
+          const li = document.createElement('li');
+          li.textContent = t;
+          return li;
+        }));
       }
     }
 
-    ['sliderChauffage', 'sliderEclairage', 'sliderVeille'].forEach(id => {
-      document.getElementById(id).addEventListener('input', updateUI);
+    postes.forEach(p => {
+      document.getElementById(sliderId(p.id)).addEventListener('input', updateUI);
     });
 
     document.getElementById('resetBtn').addEventListener('click', () => {
       postes.forEach(p => {
-        document.getElementById(sliderIds[p.id]).value = p.value;
+        document.getElementById(sliderId(p.id)).value = p.value;
       });
       updateUI();
     });

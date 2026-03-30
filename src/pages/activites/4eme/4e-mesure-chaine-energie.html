@@ -1,0 +1,1237 @@
+<!--
+╔══════════════════════════════════════════════════════════════════╗
+║  WIZARD — Séance 2 · Mesure & Chaîne d'énergie · 4ème          ║
+║  Séquence : Habitat & Énergie · Famille Kiagi                   ║
+║  Compétences : OST 32 · SFC 11                                  ║
+║  4 phases : Identité · Instruments · Simulateur · Chaîne        ║
+║  Phase 2 : simulateur banc de test via API Claude               ║
+╚══════════════════════════════════════════════════════════════════╝
+-->
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Séance 2 — Mesure et chaîne d'énergie 4ème — TechnoDocs">
+    <title>Éclairage · Mesures & Énergie | TechnoDocs</title>
+
+    <link rel="stylesheet" href="/src/css/style.css">
+    <link rel="stylesheet" href="/src/css/wizard.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<style>
+    /* ── Overlay mot de passe ── */
+    .password-overlay {
+        position: fixed; top:0; left:0; width:100%; height:100%;
+        background: rgba(0,0,0,0.8);
+        display: flex; justify-content: center; align-items: center;
+        z-index: 1000;
+    }
+    .password-prompt {
+        background: var(--color-white); padding: 2rem; border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        text-align: center; max-width: 400px; width: 90%;
+    }
+    .password-prompt h2 { color: var(--color-primary-700); margin-bottom: 1.5rem; font-size: 1.8rem; }
+    .password-prompt input[type="password"] {
+        width: calc(100% - 2rem); padding: 0.75rem 1rem; margin-bottom: 1rem;
+        border: 1px solid var(--color-gray-300); border-radius: 4px; font-size: 1rem;
+    }
+    .password-prompt button {
+        background: var(--color-primary-500); color: #fff; border: none;
+        padding: 0.75rem 1.5rem; border-radius: 4px; cursor: pointer; font-size: 1rem;
+    }
+    .password-prompt button:hover { background: var(--color-primary-600); }
+    .password-prompt .error-message { color: var(--color-error); margin-top: 0.5rem; font-size: 0.9rem; }
+
+    /* ── Numéro de question ── */
+    .wizard__question-number {
+        display: inline-block;
+        background: var(--color-primary-100, #ede9fe);
+        color: var(--color-primary-700, #4c3f9e);
+        font-weight: 700; font-size: 0.8rem;
+        padding: 0.15rem 0.5rem; border-radius: 4px; margin-bottom: 0.4rem;
+    }
+
+    /* ── Tableau wizard ── */
+    .wizard__table {
+        width: 100%; border-collapse: collapse;
+        margin: 0.75rem 0 1rem; font-size: 0.9rem;
+    }
+    .wizard__table th {
+        background: var(--color-primary-100, #ede9fe);
+        color: var(--color-primary-800, #3730a3);
+        padding: 0.5rem 0.75rem; text-align: left;
+        font-weight: 600; border: 1px solid var(--color-gray-200, #e5e7eb);
+    }
+    .wizard__table td {
+        padding: 0.4rem 0.6rem;
+        border: 1px solid var(--color-gray-200, #e5e7eb);
+        vertical-align: middle;
+    }
+    .wizard__table tr:nth-child(even) td { background: var(--color-gray-50, #f9fafb); }
+    .wizard__table td input[type="text"],
+    .wizard__table td select,
+    .wizard__table td input[type="number"] {
+        width: 100%; border: 1px solid var(--color-gray-300, #d1d5db);
+        border-radius: 4px; padding: 0.3rem 0.5rem; font-size: 0.88rem;
+        background: #fff;
+    }
+    .wizard__table td.readonly {
+        background: var(--color-gray-100, #f3f4f6);
+        color: var(--color-gray-600, #4b5563);
+        font-style: italic;
+    }
+
+    /* ── Protocole ── */
+    .wizard__protocol {
+        background: var(--color-gray-900, #1e1e2e);
+        color: var(--color-gray-100, #f0f0f0);
+        font-family: 'Courier New', monospace;
+        font-size: 0.88rem; line-height: 1.8;
+        padding: 1rem 1.25rem; border-radius: 6px;
+        border-left: 4px solid var(--color-primary-400, #7c6af7);
+        margin: 0.5rem 0 1rem;
+    }
+    .wizard__protocol .step-known  { color: #a5f3fc; }
+    .wizard__protocol .step-blank  { color: #fde68a; font-style: italic; }
+
+    /* ── Simulateur banc de test ── */
+    .sim-panel {
+        background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        border-radius: 12px; padding: 1.5rem;
+        border: 2px solid var(--color-primary-400, #7c6af7);
+        margin: 0.75rem 0 1.25rem; color: #f0f0f0;
+    }
+    .sim-panel__title {
+        font-size: 1rem; font-weight: 700; color: #a5f3fc;
+        margin-bottom: 1rem; display: flex; align-items: center; gap: 0.5rem;
+    }
+    .sim-panel__controls {
+        display: flex; flex-wrap: wrap; gap: 0.75rem;
+        align-items: flex-end; margin-bottom: 1rem;
+    }
+    .sim-panel__controls label { font-size: 0.82rem; color: #cbd5e1; margin-bottom: 0.25rem; display: block; }
+    .sim-panel__controls select, .sim-panel__controls button {
+        padding: 0.5rem 0.9rem; border-radius: 6px;
+        border: none; font-size: 0.9rem; cursor: pointer;
+    }
+    .sim-panel__controls select {
+        background: #334155; color: #f0f0f0; border: 1px solid #475569;
+    }
+    .sim-panel__controls select option { background: #1e293b; }
+    .sim-btn-mesure {
+        background: linear-gradient(135deg, #7c3aed, #4f46e5);
+        color: #fff; font-weight: 700; padding: 0.55rem 1.2rem !important;
+        transition: opacity 0.2s;
+    }
+    .sim-btn-mesure:hover { opacity: 0.85; }
+    .sim-btn-mesure:disabled { opacity: 0.45; cursor: not-allowed; }
+    .sim-display {
+        display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+        gap: 0.75rem; margin-bottom: 1rem;
+    }
+    .sim-meter {
+        background: #0f172a; border: 1px solid #334155;
+        border-radius: 8px; padding: 0.75rem; text-align: center;
+    }
+    .sim-meter__label { font-size: 0.72rem; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.3rem; }
+    .sim-meter__value { font-size: 1.5rem; font-weight: 700; color: #34d399; font-family: 'Courier New', monospace; min-height: 2rem; }
+    .sim-meter__unit  { font-size: 0.75rem; color: #64748b; }
+    .sim-meter--off .sim-meter__value { color: #475569; }
+    .sim-log {
+        background: #0f172a; border: 1px solid #334155; border-radius: 6px;
+        padding: 0.6rem 0.8rem; font-family: 'Courier New', monospace;
+        font-size: 0.8rem; color: #94a3b8; min-height: 3rem;
+        max-height: 120px; overflow-y: auto;
+    }
+    .sim-log p { margin: 0.15rem 0; }
+    .sim-log .log-ok   { color: #4ade80; }
+    .sim-log .log-info { color: #60a5fa; }
+    .sim-log .log-warn { color: #facc15; }
+    .sim-inject-btn {
+        background: #065f46; color: #6ee7b7; border: 1px solid #059669;
+        border-radius: 6px; padding: 0.4rem 0.9rem; font-size: 0.85rem;
+        font-weight: 600; cursor: pointer; margin-top: 0.75rem;
+        transition: background 0.2s;
+    }
+    .sim-inject-btn:hover { background: #047857; }
+    .sim-inject-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── Calcul auto ── */
+    .wizard__calc-hint {
+        background: var(--color-primary-50, #f5f3ff);
+        border-left: 3px solid var(--color-primary-400, #7c6af7);
+        padding: 0.5rem 0.75rem; border-radius: 0 4px 4px 0;
+        font-size: 0.85rem; color: var(--color-primary-700, #4c3f9e);
+        margin-bottom: 0.75rem;
+    }
+
+    /* ── Chaîne d'énergie visuelle ── */
+    .energy-chain {
+        display: flex; align-items: stretch; gap: 0; flex-wrap: nowrap;
+        margin: 0.75rem 0 1.25rem; overflow-x: auto;
+    }
+    .energy-box {
+        background: #f8fafc; border: 2px solid var(--color-gray-300, #d1d5db);
+        border-radius: 8px; padding: 0.6rem 0.8rem; min-width: 130px;
+        text-align: center; flex-shrink: 0;
+    }
+    .energy-box__label {
+        font-size: 0.7rem; font-weight: 700; text-transform: uppercase;
+        letter-spacing: 0.05em; color: var(--color-gray-500); margin-bottom: 0.3rem;
+    }
+    .energy-box select {
+        width: 100%; border: 1px solid var(--color-gray-300); border-radius: 4px;
+        padding: 0.25rem 0.4rem; font-size: 0.82rem; background: #fff;
+    }
+    .energy-box--converter { background: var(--color-primary-50, #f5f3ff); border-color: var(--color-primary-300, #a78bfa); }
+    .energy-box--output    { display: flex; flex-direction: column; gap: 0.4rem; }
+    .energy-box--useful    { background: #f0fdf4; border-color: #86efac; }
+    .energy-box--lost      { background: #fff7ed; border-color: #fdba74; }
+    .energy-arrow {
+        display: flex; align-items: center;
+        color: var(--color-gray-400); font-size: 1.4rem;
+        padding: 0 0.25rem; flex-shrink: 0; align-self: center;
+    }
+    .energy-chain__split {
+        display: flex; flex-direction: column; gap: 0.4rem; flex-shrink: 0;
+    }
+</style>
+
+<!-- ========== OVERLAY MOT DE PASSE ========== -->
+<div id="passwordOverlay" class="password-overlay">
+    <div class="password-prompt">
+        <h2>🔒 Accès sécurisé</h2>
+        <p>Entrez le mot de passe pour accéder à l'activité.</p>
+        <input type="password" id="passwordInput" placeholder="Mot de passe">
+        <button onclick="checkPassword()">Accéder</button>
+        <p id="errorMessage" class="error-message" style="display:none;">Mot de passe incorrect.</p>
+    </div>
+</div>
+
+<main class="wizard">
+
+    <!-- ========== BANNIÈRE ========== -->
+    <div class="wizard__banner">
+        <div class="wizard__banner-icon">💡</div>
+        <div class="wizard__banner-content">
+            <h1 class="wizard__banner-title">Comment mesurer et comparer la consommation d'un éclairage ?</h1>
+            <div class="wizard__banner-skills">
+                <span class="wizard__skill">OST 32</span>
+                <span class="wizard__skill">SFC 11</span>
+                <span class="wizard__skill">4ème · Séance 2</span>
+                <span class="wizard__skill">🏠 Famille Kiagi</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== INFO ÉLÈVE ========== -->
+    <div class="wizard__student-info">
+        <div class="wizard__student-row">
+            <div class="wizard__student-field wizard__student-field--name">
+                <label for="studentName">Prénom et Nom</label>
+                <input type="text" id="studentName" data-field="studentName" placeholder="" spellcheck="true" lang="fr">
+            </div>
+            <div class="wizard__student-field wizard__student-field--class">
+                <label for="studentClass">Classe</label>
+                <select id="studentClass" data-field="studentClass">
+                    <option value="">— Sélectionner —</option>
+                    <optgroup label="4ème">
+                        <option value="401">4ème 1</option>
+                        <option value="402">4ème 2</option>
+                        <option value="403">4ème 3</option>
+                        <option value="404">4ème 4</option>
+                        <option value="405">4ème 5</option>
+                    </optgroup>
+                </select>
+            </div>
+            <div class="wizard__student-field wizard__student-field--date">
+                <label>Date</label>
+                <span class="wizard__date-display" id="projectDate" data-field="projectDate"></span>
+            </div>
+        </div>
+    </div>
+
+    <!-- ========== PROGRESSION ========== -->
+    <section class="wizard__progress">
+        <div class="wizard__progress-header">
+            <h2 class="wizard__progress-title">Progression</h2>
+            <div class="wizard__save-indicator" id="saveIndicator">
+                <span class="wizard__save-dot"></span>
+                <span class="wizard__save-text">Auto-save</span>
+            </div>
+            <span class="wizard__progress-percentage" id="progressPercentage">0%</span>
+        </div>
+        <div class="wizard__progress-bar">
+            <div class="wizard__progress-fill" id="progressFill" style="width:0%"></div>
+        </div>
+        <nav class="wizard__nav" id="phaseNav">
+            <button class="wizard__nav-btn active" data-phase="1">
+                <span class="wizard__nav-number">0</span>
+                <span>Mise en situation</span>
+            </button>
+            <button class="wizard__nav-btn" data-phase="2">
+                <span class="wizard__nav-number">1</span>
+                <span>Instruments</span>
+            </button>
+            <button class="wizard__nav-btn" data-phase="3">
+                <span class="wizard__nav-number">2</span>
+                <span>Mesures</span>
+            </button>
+            <button class="wizard__nav-btn" data-phase="4">
+                <span class="wizard__nav-number">3</span>
+                <span>Chaîne d'énergie</span>
+            </button>
+        </nav>
+    </section>
+
+    <div class="wizard__container">
+
+        <!-- ╔══════════════════════════════════════════════════╗
+             ║  PHASE 0 — Mise en situation & critères         ║
+             ╚══════════════════════════════════════════════════╝ -->
+        <section class="wizard__phase active" data-phase="1">
+            <div class="wizard__phase-header">
+                <div class="wizard__phase-icon">🏠</div>
+                <h2 class="wizard__phase-title">Mise en situation — La famille Kiagi</h2>
+                <p class="wizard__phase-subtitle">Lis la situation, puis indique ce que tu vas apprendre.</p>
+            </div>
+
+            <div class="wizard__tips">
+                <p class="wizard__tips-title">📄 Situation</p>
+                <div class="wizard__tips-content">
+                    <p>La famille Kiagi veut comparer rigoureusement plusieurs types d'ampoules avant d'équiper leur maison. Ils ont besoin de <strong>mesures précises</strong>, pas seulement des données des fabricants.</p>
+                    <p style="margin-top:0.75rem;font-weight:600;">🎯 Ta mission : choisir les bons instruments, réaliser les mesures et produire un bilan comparatif argumenté.</p>
+                </div>
+            </div>
+
+            <!-- Critères de réussite — autoévaluation de départ -->
+            <div class="wizard__group">
+                <span class="wizard__question-number">Avant de commencer</span>
+                <label class="wizard__label">
+                    Pour chacun des objectifs de la séance, évalue honnêtement ton niveau de départ.
+                </label>
+                <p class="wizard__hint">Tu rempliras à nouveau ce tableau en fin de séance pour voir ta progression.</p>
+
+                <table class="wizard__table" style="margin-top:0.75rem;">
+                    <thead>
+                        <tr>
+                            <th style="width:55%">Objectif</th>
+                            <th>Je sais faire</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Identifier et justifier le choix des instruments de mesure</td>
+                            <td>
+                                <select data-field="cr_depart_1">
+                                    <option value="">—</option>
+                                    <option value="oui">✅ Oui</option>
+                                    <option value="partiel">⚠️ Un peu</option>
+                                    <option value="non">❌ Pas encore</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Réaliser des mesures avec rigueur</td>
+                            <td>
+                                <select data-field="cr_depart_2">
+                                    <option value="">—</option>
+                                    <option value="oui">✅ Oui</option>
+                                    <option value="partiel">⚠️ Un peu</option>
+                                    <option value="non">❌ Pas encore</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Représenter et analyser la chaîne d'énergie d'un OST</td>
+                            <td>
+                                <select data-field="cr_depart_3">
+                                    <option value="">—</option>
+                                    <option value="oui">✅ Oui</option>
+                                    <option value="partiel">⚠️ Un peu</option>
+                                    <option value="non">❌ Pas encore</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>Repérer les transformations d'énergie au sein d'un OST</td>
+                            <td>
+                                <select data-field="cr_depart_4">
+                                    <option value="">—</option>
+                                    <option value="oui">✅ Oui</option>
+                                    <option value="partiel">⚠️ Un peu</option>
+                                    <option value="non">❌ Pas encore</option>
+                                </select>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="wizard__phase-nav">
+                <div></div>
+                <button class="btn btn--primary" onclick="wizardGoToPhase(2)">Commencer →</button>
+            </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════════════════╗
+             ║  PHASE 1 — Activité 1 : Instruments & Protocole ║
+             ╚══════════════════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="2">
+            <div class="wizard__phase-header">
+                <div class="wizard__phase-icon">🔬</div>
+                <h2 class="wizard__phase-title">Activité 1 — Choisir les instruments de mesure</h2>
+                <p class="wizard__phase-subtitle">Identifie le bon instrument pour chaque grandeur, puis complète le protocole.</p>
+            </div>
+
+            <!-- 1.1 Tableau instruments -->
+            <div class="wizard__group">
+                <span class="wizard__question-number">1.1</span>
+                <label class="wizard__label required">
+                    Pour chaque grandeur à mesurer, identifie l'instrument adapté et justifie ton choix.
+                </label>
+
+                <table class="wizard__table">
+                    <thead>
+                        <tr>
+                            <th>Grandeur à mesurer</th>
+                            <th>Unité</th>
+                            <th>Instrument choisi</th>
+                            <th>Justification courte</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Puissance électrique consommée</td>
+                            <td class="readonly">W</td>
+                            <td>
+                                <select data-field="instrument_puissance">
+                                    <option value="">— choisir —</option>
+                                    <option value="multimetre">Multimètre</option>
+                                    <option value="wattmetre">Wattmètre</option>
+                                    <option value="luxmetre">Luxmètre</option>
+                                    <option value="thermometre">Thermomètre</option>
+                                </select>
+                            </td>
+                            <td><input type="text" data-field="justif_puissance" placeholder="Parce que…" /></td>
+                        </tr>
+                        <tr>
+                            <td>Éclairement lumineux</td>
+                            <td class="readonly">lux</td>
+                            <td>
+                                <select data-field="instrument_eclairage">
+                                    <option value="">— choisir —</option>
+                                    <option value="multimetre">Multimètre</option>
+                                    <option value="wattmetre">Wattmètre</option>
+                                    <option value="luxmetre">Luxmètre</option>
+                                    <option value="thermometre">Thermomètre</option>
+                                </select>
+                            </td>
+                            <td><input type="text" data-field="justif_eclairage" placeholder="Parce que…" /></td>
+                        </tr>
+                        <tr>
+                            <td>Tension aux bornes de l'ampoule</td>
+                            <td class="readonly">V</td>
+                            <td>
+                                <select data-field="instrument_tension">
+                                    <option value="">— choisir —</option>
+                                    <option value="multimetre_v">Multimètre (mode voltmètre)</option>
+                                    <option value="wattmetre">Wattmètre</option>
+                                    <option value="luxmetre">Luxmètre</option>
+                                    <option value="oscilloscope">Oscilloscope</option>
+                                </select>
+                            </td>
+                            <td><input type="text" data-field="justif_tension" placeholder="Parce que…" /></td>
+                        </tr>
+                        <tr>
+                            <td>Intensité du courant</td>
+                            <td class="readonly">A</td>
+                            <td>
+                                <select data-field="instrument_intensite">
+                                    <option value="">— choisir —</option>
+                                    <option value="multimetre_a">Multimètre (mode ampèremètre)</option>
+                                    <option value="wattmetre">Wattmètre</option>
+                                    <option value="luxmetre">Luxmètre</option>
+                                    <option value="pince_amp">Pince ampèremétrique</option>
+                                </select>
+                            </td>
+                            <td><input type="text" data-field="justif_intensite" placeholder="Parce que…" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- 1.2 Protocole à compléter -->
+            <div class="wizard__group">
+                <span class="wizard__question-number">1.2</span>
+                <label class="wizard__label required">
+                    Le protocole est incomplet. Complète les trois étapes manquantes.
+                </label>
+
+                <div class="wizard__protocol">
+                    <span class="step-known">Étape 1 : Brancher l'ampoule dans la douille de test.</span>
+                    <br><span class="step-blank">Étape 2 : ???  ← à compléter ci-dessous</span>
+                    <br><span class="step-known">Étape 3 : Relever la valeur affichée et la noter dans le tableau.</span>
+                    <br><span class="step-blank">Étape 4 : ???  ← à compléter ci-dessous</span>
+                    <br><span class="step-known">Étape 5 : Si le luxmètre est disponible, placer le capteur à 30 cm de l'ampoule et noter l'éclairement.</span>
+                    <br><span class="step-blank">Étape 6 : ???  ← à compléter ci-dessous</span>
+                </div>
+
+                <div style="display:flex; flex-direction:column; gap:0.6rem; margin-top:0.5rem;">
+                    <div>
+                        <label style="font-size:0.82rem;font-weight:600;color:var(--color-primary-700);">Étape 2 :</label>
+                        <input type="text" class="wizard__input" data-field="protocole_etape2"
+                               placeholder="Brancher le wattmètre / multimètre en…"
+                               spellcheck="true" lang="fr" />
+                    </div>
+                    <div>
+                        <label style="font-size:0.82rem;font-weight:600;color:var(--color-primary-700);">Étape 4 :</label>
+                        <input type="text" class="wizard__input" data-field="protocole_etape4"
+                               placeholder="Recommencer pour l'ampoule suivante…"
+                               spellcheck="true" lang="fr" />
+                    </div>
+                    <div>
+                        <label style="font-size:0.82rem;font-weight:600;color:var(--color-primary-700);">Étape 6 :</label>
+                        <input type="text" class="wizard__input" data-field="protocole_etape6"
+                               placeholder="Éteindre l'installation et…"
+                               spellcheck="true" lang="fr" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard__phase-nav">
+                <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">← Précédent</button>
+                <button class="btn btn--primary"   onclick="wizardGoToPhase(3)">Suivant →</button>
+            </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════════════════╗
+             ║  PHASE 2 — Activité 2 : Simulateur + Mesures    ║
+             ║  Banc de test virtuel via API Claude             ║
+             ╚══════════════════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="3">
+            <div class="wizard__phase-header">
+                <div class="wizard__phase-icon">⚗️</div>
+                <h2 class="wizard__phase-title">Activité 2 — Banc de test virtuel & Mesures</h2>
+                <p class="wizard__phase-subtitle">Utilise le simulateur pour relever les mesures, puis analyse les résultats.</p>
+            </div>
+
+            <!-- ── SIMULATEUR ── -->
+            <div class="wizard__group">
+                <span class="wizard__question-number">2.1 — Simulateur</span>
+                <label class="wizard__label">
+                    Le banc de test physique est simulé ci-dessous. Sélectionne une ampoule, lance la mesure,
+                    puis reporte les valeurs dans le tableau de résultats.
+                </label>
+
+                <div class="sim-panel">
+                    <div class="sim-panel__title">⚡ Banc de test virtuel — Station météo Kiagi</div>
+
+                    <div class="sim-panel__controls">
+                        <div>
+                            <label>Ampoule à tester</label>
+                            <select id="sim_ampoule_select">
+                                <option value="">— Choisir —</option>
+                                <option value="incandescente">A — Incandescente (60 W théorique)</option>
+                                <option value="fluocompacte">B — Fluocompacte (15 W théorique)</option>
+                                <option value="led">C — LED (9 W théorique)</option>
+                                <option value="led_connectee">D — LED connectée (8 W théorique)</option>
+                            </select>
+                        </div>
+                        <button class="sim-btn-mesure" id="sim_btn_mesure" onclick="simLancerMesure()" disabled>
+                            ▶ Lancer la mesure
+                        </button>
+                    </div>
+
+                    <!-- Afficheurs -->
+                    <div class="sim-display">
+                        <div class="sim-meter sim-meter--off" id="sim_puissance">
+                            <div class="sim-meter__label">Puissance</div>
+                            <div class="sim-meter__value" id="sim_val_puissance">—</div>
+                            <div class="sim-meter__unit">W</div>
+                        </div>
+                        <div class="sim-meter sim-meter--off" id="sim_tension">
+                            <div class="sim-meter__label">Tension</div>
+                            <div class="sim-meter__value" id="sim_val_tension">—</div>
+                            <div class="sim-meter__unit">V</div>
+                        </div>
+                        <div class="sim-meter sim-meter--off" id="sim_intensite">
+                            <div class="sim-meter__label">Intensité</div>
+                            <div class="sim-meter__value" id="sim_val_intensite">—</div>
+                            <div class="sim-meter__unit">A</div>
+                        </div>
+                        <div class="sim-meter sim-meter--off" id="sim_eclairement">
+                            <div class="sim-meter__label">Éclairement</div>
+                            <div class="sim-meter__value" id="sim_val_eclairement">—</div>
+                            <div class="sim-meter__unit">lux</div>
+                        </div>
+                    </div>
+
+                    <!-- Log -->
+                    <div class="sim-log" id="sim_log">
+                        <p class="log-info">» Simulateur prêt. Choisissez une ampoule et lancez la mesure.</p>
+                    </div>
+
+                    <!-- Bouton d'injection dans le tableau -->
+                    <button class="sim-inject-btn" id="sim_inject_btn" onclick="simInjecterDansTableau()" disabled>
+                        ↓ Reporter les valeurs dans le tableau de résultats
+                    </button>
+                </div>
+            </div>
+
+            <!-- ── TABLEAU DE RÉSULTATS 2.1 ── -->
+            <div class="wizard__group">
+                <span class="wizard__question-number">Tableau de résultats</span>
+                <label class="wizard__label required">
+                    Note les valeurs relevées pour chaque ampoule, puis calcule l'efficacité lumineuse.
+                </label>
+                <p class="wizard__calc-hint">
+                    💡 <strong>Efficacité lumineuse</strong> = Éclairement (lux) ÷ Puissance (W) · Plus ce rapport est élevé, plus l'ampoule est efficace.
+                </p>
+
+                <table class="wizard__table" id="table_resultats">
+                    <thead>
+                        <tr>
+                            <th>Ampoule</th>
+                            <th>Type</th>
+                            <th>Puissance mesurée (W)</th>
+                            <th>Éclairement (lux)</th>
+                            <th>Efficacité (lux/W)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="readonly">A</td>
+                            <td class="readonly">Incandescente</td>
+                            <td><input type="number" step="0.1" data-field="mesure_puis_A" id="m_puis_A" placeholder="W" oninput="calcEffi('A')" /></td>
+                            <td><input type="number" step="1"   data-field="mesure_lux_A"  id="m_lux_A"  placeholder="lux" oninput="calcEffi('A')" /></td>
+                            <td><input type="number" step="0.01" data-field="mesure_effi_A" id="m_effi_A" placeholder="calc." style="background:#f0fdf4;" /></td>
+                        </tr>
+                        <tr>
+                            <td class="readonly">B</td>
+                            <td class="readonly">Fluocompacte</td>
+                            <td><input type="number" step="0.1" data-field="mesure_puis_B" id="m_puis_B" placeholder="W" oninput="calcEffi('B')" /></td>
+                            <td><input type="number" step="1"   data-field="mesure_lux_B"  id="m_lux_B"  placeholder="lux" oninput="calcEffi('B')" /></td>
+                            <td><input type="number" step="0.01" data-field="mesure_effi_B" id="m_effi_B" placeholder="calc." style="background:#f0fdf4;" /></td>
+                        </tr>
+                        <tr>
+                            <td class="readonly">C</td>
+                            <td class="readonly">LED</td>
+                            <td><input type="number" step="0.1" data-field="mesure_puis_C" id="m_puis_C" placeholder="W" oninput="calcEffi('C')" /></td>
+                            <td><input type="number" step="1"   data-field="mesure_lux_C"  id="m_lux_C"  placeholder="lux" oninput="calcEffi('C')" /></td>
+                            <td><input type="number" step="0.01" data-field="mesure_effi_C" id="m_effi_C" placeholder="calc." style="background:#f0fdf4;" /></td>
+                        </tr>
+                        <tr>
+                            <td class="readonly">D</td>
+                            <td class="readonly">LED connectée</td>
+                            <td><input type="number" step="0.1" data-field="mesure_puis_D" id="m_puis_D" placeholder="W" oninput="calcEffi('D')" /></td>
+                            <td><input type="number" step="1"   data-field="mesure_lux_D"  id="m_lux_D"  placeholder="lux" oninput="calcEffi('D')" /></td>
+                            <td><input type="number" step="0.01" data-field="mesure_effi_D" id="m_effi_D" placeholder="calc." style="background:#f0fdf4;" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ── 2.2 Calculs annuels ── -->
+            <div class="wizard__group">
+                <span class="wizard__question-number">2.2</span>
+                <label class="wizard__label required">
+                    Calcule la consommation annuelle et le coût pour chaque ampoule.
+                </label>
+                <p class="wizard__calc-hint">
+                    📐 Formule : Consommation (kWh) = Puissance (W) × 3h × 365 ÷ 1000 · Coût = Consommation × 0,25 €
+                </p>
+
+                <table class="wizard__table">
+                    <thead>
+                        <tr>
+                            <th>Ampoule</th>
+                            <th>Puissance (W)</th>
+                            <th>Consommation annuelle (kWh)</th>
+                            <th>Coût annuel (€)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="readonly">A – Incandescente</td>
+                            <td><input type="number" step="0.1" data-field="calc_puis_A" placeholder="W" oninput="calcCout('A')" /></td>
+                            <td><input type="number" step="0.01" data-field="calc_conso_A" id="calc_conso_A" placeholder="kWh" style="background:#f0fdf4;" /></td>
+                            <td><input type="number" step="0.01" data-field="calc_cout_A"  id="calc_cout_A"  placeholder="€"   style="background:#f0fdf4;" /></td>
+                        </tr>
+                        <tr>
+                            <td class="readonly">B – Fluocompacte</td>
+                            <td><input type="number" step="0.1" data-field="calc_puis_B" placeholder="W" oninput="calcCout('B')" /></td>
+                            <td><input type="number" step="0.01" data-field="calc_conso_B" id="calc_conso_B" placeholder="kWh" style="background:#f0fdf4;" /></td>
+                            <td><input type="number" step="0.01" data-field="calc_cout_B"  id="calc_cout_B"  placeholder="€"   style="background:#f0fdf4;" /></td>
+                        </tr>
+                        <tr>
+                            <td class="readonly">C – LED</td>
+                            <td><input type="number" step="0.1" data-field="calc_puis_C" placeholder="W" oninput="calcCout('C')" /></td>
+                            <td><input type="number" step="0.01" data-field="calc_conso_C" id="calc_conso_C" placeholder="kWh" style="background:#f0fdf4;" /></td>
+                            <td><input type="number" step="0.01" data-field="calc_cout_C"  id="calc_cout_C"  placeholder="€"   style="background:#f0fdf4;" /></td>
+                        </tr>
+                        <tr>
+                            <td class="readonly">D – LED connectée</td>
+                            <td><input type="number" step="0.1" data-field="calc_puis_D" placeholder="W" oninput="calcCout('D')" /></td>
+                            <td><input type="number" step="0.01" data-field="calc_conso_D" id="calc_conso_D" placeholder="kWh" style="background:#f0fdf4;" /></td>
+                            <td><input type="number" step="0.01" data-field="calc_cout_D"  id="calc_cout_D"  placeholder="€"   style="background:#f0fdf4;" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- ── 2.3 Graphique ── -->
+            <div class="wizard__group">
+                <span class="wizard__question-number">2.3</span>
+                <label class="wizard__label required">
+                    Quel type de graphique choisirais-tu pour représenter la consommation annuelle des 4 ampoules ? Justifie.
+                </label>
+                <div style="display:flex; flex-wrap:wrap; gap:0.75rem; margin-top:0.5rem;">
+                    <div style="flex:1; min-width:200px;">
+                        <label style="font-size:0.82rem;font-weight:600;">Type de graphique :</label>
+                        <select class="wizard__input" data-field="graphique_type" style="margin-top:0.25rem;">
+                            <option value="">— Choisir —</option>
+                            <option value="barres">Diagramme en barres</option>
+                            <option value="camembert">Diagramme circulaire (camembert)</option>
+                            <option value="courbe">Graphique en courbe</option>
+                            <option value="nuage">Nuage de points</option>
+                        </select>
+                    </div>
+                    <div style="flex:2; min-width:250px;">
+                        <label style="font-size:0.82rem;font-weight:600;">Justification :</label>
+                        <input type="text" class="wizard__input" data-field="graphique_justif"
+                               placeholder="Je choisis ce type car…"
+                               spellcheck="true" lang="fr" style="margin-top:0.25rem;" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="wizard__phase-nav">
+                <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">← Précédent</button>
+                <button class="btn btn--primary"   onclick="wizardGoToPhase(4)">Suivant →</button>
+            </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════════════════╗
+             ║  PHASE 3 — Activité 3 : Chaîne d'énergie        ║
+             ╚══════════════════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="4">
+            <div class="wizard__phase-header">
+                <div class="wizard__phase-icon">⚡</div>
+                <h2 class="wizard__phase-title">Activité 3 — Analyser la chaîne d'énergie</h2>
+                <p class="wizard__phase-subtitle">Construis les schémas blocs, puis analyse les résultats.</p>
+            </div>
+
+            <!-- 3.1 Chaînes d'énergie interactives -->
+            <div class="wizard__group">
+                <span class="wizard__question-number">3.1</span>
+                <label class="wizard__label required">
+                    Construis le schéma bloc de la chaîne d'énergie pour les deux ampoules.
+                    Sélectionne les formes d'énergie dans chaque bloc.
+                </label>
+
+                <!-- Incandescente -->
+                <p style="font-weight:700; margin: 0.75rem 0 0.4rem; color:var(--color-primary-700);">🔴 Ampoule incandescente</p>
+                <div class="energy-chain">
+                    <div class="energy-box">
+                        <div class="energy-box__label">Énergie en entrée</div>
+                        <select data-field="chain_inc_entree">
+                            <option value="">— choisir —</option>
+                            <option value="electrique">Électrique</option>
+                            <option value="thermique">Thermique</option>
+                            <option value="lumineuse">Lumineuse</option>
+                            <option value="mecanique">Mécanique</option>
+                        </select>
+                    </div>
+                    <div class="energy-arrow">→</div>
+                    <div class="energy-box energy-box--converter">
+                        <div class="energy-box__label">Convertisseur</div>
+                        <select data-field="chain_inc_convertisseur">
+                            <option value="">— choisir —</option>
+                            <option value="filament">Filament incandescent</option>
+                            <option value="diode">Diode électroluminescente (LED)</option>
+                            <option value="gaz">Gaz fluorescent</option>
+                            <option value="moteur">Moteur électrique</option>
+                        </select>
+                    </div>
+                    <div class="energy-arrow">→</div>
+                    <div class="energy-chain__split">
+                        <div class="energy-box energy-box--useful">
+                            <div class="energy-box__label">Énergie utile</div>
+                            <select data-field="chain_inc_utile">
+                                <option value="">— choisir —</option>
+                                <option value="lumineuse">Lumineuse</option>
+                                <option value="thermique">Thermique</option>
+                                <option value="electrique">Électrique</option>
+                                <option value="sonore">Sonore</option>
+                            </select>
+                        </div>
+                        <div class="energy-box energy-box--lost">
+                            <div class="energy-box__label">Énergie perdue</div>
+                            <select data-field="chain_inc_perdue">
+                                <option value="">— choisir —</option>
+                                <option value="thermique">Thermique (chaleur)</option>
+                                <option value="lumineuse">Lumineuse</option>
+                                <option value="sonore">Sonore</option>
+                                <option value="mecanique">Mécanique</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LED -->
+                <p style="font-weight:700; margin: 1rem 0 0.4rem; color:var(--color-primary-700);">🟢 Ampoule LED</p>
+                <div class="energy-chain">
+                    <div class="energy-box">
+                        <div class="energy-box__label">Énergie en entrée</div>
+                        <select data-field="chain_led_entree">
+                            <option value="">— choisir —</option>
+                            <option value="electrique">Électrique</option>
+                            <option value="thermique">Thermique</option>
+                            <option value="lumineuse">Lumineuse</option>
+                            <option value="mecanique">Mécanique</option>
+                        </select>
+                    </div>
+                    <div class="energy-arrow">→</div>
+                    <div class="energy-box energy-box--converter">
+                        <div class="energy-box__label">Convertisseur</div>
+                        <select data-field="chain_led_convertisseur">
+                            <option value="">— choisir —</option>
+                            <option value="filament">Filament incandescent</option>
+                            <option value="diode">Diode électroluminescente (LED)</option>
+                            <option value="gaz">Gaz fluorescent</option>
+                            <option value="moteur">Moteur électrique</option>
+                        </select>
+                    </div>
+                    <div class="energy-arrow">→</div>
+                    <div class="energy-chain__split">
+                        <div class="energy-box energy-box--useful">
+                            <div class="energy-box__label">Énergie utile</div>
+                            <select data-field="chain_led_utile">
+                                <option value="">— choisir —</option>
+                                <option value="lumineuse">Lumineuse</option>
+                                <option value="thermique">Thermique</option>
+                                <option value="electrique">Électrique</option>
+                                <option value="sonore">Sonore</option>
+                            </select>
+                        </div>
+                        <div class="energy-box energy-box--lost">
+                            <div class="energy-box__label">Énergie perdue</div>
+                            <select data-field="chain_led_perdue">
+                                <option value="">— choisir —</option>
+                                <option value="thermique">Thermique (chaleur, faible)</option>
+                                <option value="lumineuse">Lumineuse</option>
+                                <option value="sonore">Sonore</option>
+                                <option value="mecanique">Mécanique</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3.2 Lien énergie perdue / efficacité -->
+            <div class="wizard__group">
+                <span class="wizard__question-number">3.2</span>
+                <label class="wizard__label required">
+                    D'après tes schémas et tes mesures, explique le lien entre la <strong>quantité d'énergie perdue</strong>
+                    et l'<strong>efficacité lumineuse</strong> d'une ampoule.
+                </label>
+                <textarea class="wizard__textarea" data-field="analyse_32"
+                          placeholder="Plus l'énergie perdue est… plus l'efficacité lumineuse est… car…"
+                          spellcheck="true" lang="fr"
+                          autocorrect="on" autocapitalize="sentences"></textarea>
+            </div>
+
+            <!-- 3.3 LED connectée -->
+            <div class="wizard__group">
+                <span class="wizard__question-number">3.3</span>
+                <label class="wizard__label required">
+                    La LED connectée permet de moduler l'intensité lumineuse depuis un smartphone.
+                    En quoi cela peut-il encore réduire la consommation d'énergie par rapport à une LED standard ?
+                </label>
+                <textarea class="wizard__textarea" data-field="analyse_33"
+                          placeholder="En modulant l'intensité, on…"
+                          spellcheck="true" lang="fr"
+                          autocorrect="on" autocapitalize="sentences"></textarea>
+            </div>
+
+            <!-- ── BILAN DE SÉANCE ── -->
+            <div class="wizard__group" style="margin-top:1.5rem;">
+                <span class="wizard__question-number">🔑 Bilan de séance</span>
+                <label class="wizard__label required">
+                    Complète le tableau de synthèse final.
+                </label>
+
+                <table class="wizard__table" style="margin-top:0.75rem;">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Ampoule incandescente</th>
+                            <th>Ampoule LED</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="readonly">Énergie utile produite</td>
+                            <td><input type="text" data-field="bilan_inc_utile" placeholder="…" /></td>
+                            <td><input type="text" data-field="bilan_led_utile" placeholder="…" /></td>
+                        </tr>
+                        <tr>
+                            <td class="readonly">Énergie perdue (forme ?)</td>
+                            <td><input type="text" data-field="bilan_inc_perdue" placeholder="…" /></td>
+                            <td><input type="text" data-field="bilan_led_perdue" placeholder="…" /></td>
+                        </tr>
+                        <tr>
+                            <td class="readonly">Efficacité</td>
+                            <td>
+                                <select data-field="bilan_inc_effi">
+                                    <option value="">—</option>
+                                    <option value="faible">Faible</option>
+                                    <option value="moyenne">Moyenne</option>
+                                    <option value="elevee">Élevée</option>
+                                </select>
+                            </td>
+                            <td>
+                                <select data-field="bilan_led_effi">
+                                    <option value="">—</option>
+                                    <option value="faible">Faible</option>
+                                    <option value="moyenne">Moyenne</option>
+                                    <option value="elevee">Élevée</option>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="readonly">Recommandation pour les Kiagi</td>
+                            <td><input type="text" data-field="bilan_inc_reco" placeholder="…" /></td>
+                            <td><input type="text" data-field="bilan_led_reco" placeholder="…" /></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="wizard__group" style="margin-top:0.75rem;">
+                    <label class="wizard__label required">
+                        En une phrase, explique pourquoi le rendement énergétique est un critère de choix
+                        important pour un équipement connecté.
+                    </label>
+                    <textarea class="wizard__textarea" data-field="bilan_phrase_finale"
+                              placeholder="Le rendement énergétique est important car…"
+                              spellcheck="true" lang="fr"
+                              autocorrect="on" autocapitalize="sentences"
+                              style="min-height:70px;"></textarea>
+                </div>
+            </div>
+
+            <div class="wizard__phase-nav">
+                <button class="btn btn--secondary" onclick="wizardGoToPhase(3)">← Précédent</button>
+                <button class="btn btn--success"   onclick="wizardComplete()">✅ Terminer</button>
+            </div>
+        </section>
+
+    </div><!-- /.wizard__container -->
+
+    <!-- ========== BARRE D'ACTIONS ========== -->
+    <div class="wizard__actions">
+        <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter JSON</button>
+        <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer JSON</button>
+        <input type="file" id="importInput" accept=".json" style="display:none" onchange="wizardImportJSON(event)">
+        <button class="btn btn--secondary btn--small" onclick="handleSafeReset()">🗑️ Réinitialiser</button>
+        <button class="btn btn--secondary btn--small" onclick="window.print()">🖨️ Imprimer</button>
+    </div>
+
+</main>
+
+<div id="footer-placeholder"></div>
+
+<!-- ========== MODALES ========== -->
+<div class="wizard__modal-overlay" id="completionModal">
+    <div class="wizard__modal">
+        <h3 class="wizard__modal-title">🎉 Séance terminée !</h3>
+        <div class="wizard__modal-content">
+            <p>Toutes les activités sont complétées. Tes réponses ont été <strong>sauvegardées automatiquement</strong>.</p>
+            <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--color-gray-500)">
+                Tu peux exporter une copie locale en JSON pour la conserver.
+            </p>
+        </div>
+        <div class="wizard__modal-actions">
+            <button class="btn btn--secondary" onclick="wizardCloseModal('completionModal')">Fermer</button>
+            <button class="btn btn--primary" onclick="wizardExportJSON();wizardCloseModal('completionModal')">📤 Exporter</button>
+        </div>
+    </div>
+</div>
+
+<div class="wizard__modal-overlay" id="resetModal">
+    <div class="wizard__modal">
+        <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
+        <div class="wizard__modal-content">
+            <p>Une <strong>sauvegarde</strong> a été téléchargée automatiquement.</p>
+            <p>Voulez-vous <strong>recommencer</strong> avec un formulaire vide ?</p>
+        </div>
+        <div class="wizard__modal-actions">
+            <button class="btn btn--secondary" onclick="wizardCloseModal('resetModal')">Annuler</button>
+            <button class="btn btn--primary" style="background:var(--color-error)" onclick="wizardReset()">🗑️ Réinitialiser</button>
+        </div>
+    </div>
+</div>
+
+<div class="wizard__toast" id="wizardToast">
+    <span class="wizard__toast-icon"></span>
+    <span class="wizard__toast-message"></span>
+</div>
+
+<!-- ========== SCRIPTS ========== -->
+<script type="module" src="/src/js/components.js"></script>
+<script type="module">
+    import { WizardFirebase } from '/src/js/new-wizard-firebase.js';
+    import { CORRECT_PASSWORD } from '/src/js/wizard-config.js';
+
+    // ── Firebase config ──────────────────────────────────────────
+    window.wizardInstance = new WizardFirebase({
+        collectionName: 'seance2-mesure-energie-4eme',
+        requiredFields: {
+            1: ['studentName', 'studentClass',
+                'cr_depart_1', 'cr_depart_2', 'cr_depart_3', 'cr_depart_4'],
+            2: ['instrument_puissance', 'instrument_eclairage',
+                'instrument_tension', 'instrument_intensite',
+                'protocole_etape2', 'protocole_etape4', 'protocole_etape6'],
+            3: ['mesure_puis_A', 'mesure_lux_A', 'mesure_effi_A',
+                'mesure_puis_C', 'mesure_lux_C', 'mesure_effi_C',
+                'graphique_type', 'graphique_justif'],
+            4: ['chain_inc_entree', 'chain_inc_convertisseur', 'chain_inc_utile', 'chain_inc_perdue',
+                'chain_led_entree', 'chain_led_convertisseur', 'chain_led_utile', 'chain_led_perdue',
+                'analyse_32', 'analyse_33',
+                'bilan_inc_effi', 'bilan_led_effi', 'bilan_phrase_finale']
+        },
+        onComplete: (data) => console.log('✅ Complété:', data),
+        onSaveSuccess: ()  => console.log('💾 Firestore OK'),
+        onSaveError:   (e) => console.error('❌ Firestore:', e)
+    });
+
+    // ── Mot de passe ─────────────────────────────────────────────
+    window.checkPassword = function() {
+        const input   = document.getElementById('passwordInput');
+        const err     = document.getElementById('errorMessage');
+        const overlay = document.getElementById('passwordOverlay');
+        const main    = document.querySelector('main.wizard');
+        if (input.value === CORRECT_PASSWORD) {
+            overlay.style.display = 'none';
+            main.style.display    = 'block';
+            err.style.display     = 'none';
+            if (window.wizardInstance) window.wizardInstance.init();
+        } else {
+            err.style.display = 'block';
+            input.value = '';
+        }
+    };
+    document.getElementById('passwordInput').addEventListener('keypress', e => {
+        if (e.key === 'Enter') { e.preventDefault(); checkPassword(); }
+    });
+
+    // ── Reset sécurisé ───────────────────────────────────────────
+    window.handleSafeReset = function() {
+        if (typeof wizardExportJSON === 'function') wizardExportJSON();
+        else if (window.wizardInstance) window.wizardInstance.exportToJSON();
+        if (window.wizardInstance?.showToast)
+            window.wizardInstance.showToast('Sauvegarde téléchargée !', 'success');
+        wizardShowModal('resetModal');
+    };
+
+    // ── Calcul auto efficacité lumineuse ─────────────────────────
+    window.calcEffi = function(lettre) {
+        const p = parseFloat(document.getElementById(`m_puis_${lettre}`)?.value);
+        const l = parseFloat(document.getElementById(`m_lux_${lettre}`)?.value);
+        const f = document.getElementById(`m_effi_${lettre}`);
+        if (f && p > 0 && l >= 0) {
+            f.value = (l / p).toFixed(2);
+            f.dispatchEvent(new Event('input'));
+        }
+    };
+
+    // ── Calcul auto coût annuel ───────────────────────────────────
+    window.calcCout = function(lettre) {
+        // L'élève entre la puissance dans calc_puis_X — id n'existe pas car dynamique
+        // On récupère via querySelectorAll sur data-field
+        const pField = document.querySelector(`[data-field="calc_puis_${lettre}"]`);
+        const p = parseFloat(pField?.value);
+        if (isNaN(p) || p <= 0) return;
+        const conso = parseFloat((p * 3 * 365 / 1000).toFixed(2));
+        const cout  = parseFloat((conso * 0.25).toFixed(2));
+        const cF = document.getElementById(`calc_conso_${lettre}`);
+        const coutF = document.getElementById(`calc_cout_${lettre}`);
+        if (cF)    { cF.value    = conso; cF.dispatchEvent(new Event('input')); }
+        if (coutF) { coutF.value = cout;  coutF.dispatchEvent(new Event('input')); }
+    };
+
+    // ────────────────────────────────────────────────────────────
+    //  SIMULATEUR BANC DE TEST — appel API Claude
+    //  Données réalistes par ampoule, avec légère variation
+    // ────────────────────────────────────────────────────────────
+
+    // Valeurs de référence par type d'ampoule
+    const SIM_REF = {
+        incandescente: { puissance: [58, 61], tension: [230, 232], intensite: [0.25, 0.27], eclairement: [380, 420] },
+        fluocompacte:  { puissance: [14, 16], tension: [229, 231], intensite: [0.06, 0.07], eclairement: [640, 700] },
+        led:           { puissance: [8.5, 9.5], tension: [229, 232], intensite: [0.037, 0.042], eclairement: [780, 860] },
+        led_connectee: { puissance: [7.8, 8.4], tension: [229, 231], intensite: [0.034, 0.037], eclairement: [800, 870] }
+    };
+
+    // Map ampoule sélect → lettre tableau
+    const SIM_LETTRE = {
+        incandescente: 'A', fluocompacte: 'B', led: 'C', led_connectee: 'D'
+    };
+
+    let simDernieresValeurs = null;
+
+    function simRandBetween(min, max) {
+        return +(min + Math.random() * (max - min)).toFixed(2);
+    }
+
+    function simLog(msg, type = 'info') {
+        const log = document.getElementById('sim_log');
+        const p = document.createElement('p');
+        p.className = `log-${type}`;
+        p.textContent = msg;
+        log.appendChild(p);
+        log.scrollTop = log.scrollHeight;
+    }
+
+    function simSetMeter(id, value, unit) {
+        const meter = document.getElementById(id);
+        if (!meter) return;
+        meter.classList.remove('sim-meter--off');
+        meter.querySelector('.sim-meter__value').textContent = value;
+    }
+
+    // Activer le bouton mesure quand une ampoule est choisie
+    document.getElementById('sim_ampoule_select').addEventListener('change', function() {
+        const btn = document.getElementById('sim_btn_mesure');
+        btn.disabled = !this.value;
+        if (!this.value) {
+            ['sim_puissance','sim_tension','sim_intensite','sim_eclairement'].forEach(id => {
+                const m = document.getElementById(id);
+                m?.classList.add('sim-meter--off');
+                const v = document.getElementById(id.replace('sim_', 'sim_val_'));
+                if (v) v.textContent = '—';
+            });
+        }
+    });
+
+    window.simLancerMesure = async function() {
+        const ampoule = document.getElementById('sim_ampoule_select').value;
+        if (!ampoule) return;
+        const btn = document.getElementById('sim_btn_mesure');
+        const injectBtn = document.getElementById('sim_inject_btn');
+        btn.disabled = true;
+        injectBtn.disabled = true;
+        simDernieresValeurs = null;
+
+        // Affichage "en cours"
+        ['sim_val_puissance','sim_val_tension','sim_val_intensite','sim_val_eclairement'].forEach(id => {
+            const el = document.getElementById(id);
+            if (el) el.textContent = '…';
+        });
+
+        simLog(`» Connexion au banc de test — ampoule ${ampoule.replace('_',' ')}…`, 'info');
+
+        // Appel API Claude pour générer des valeurs réalistes avec contexte pédagogique
+        const ref = SIM_REF[ampoule];
+        const prompt = `Tu es un banc de test de laboratoire de technologie au collège.
+Un élève de 4ème mesure une ampoule de type "${ampoule.replace('_',' ')}" dans le cadre d'une activité sur la chaîne d'énergie.
+Génère des valeurs de mesure réalistes (légèrement différentes à chaque fois, comme un vrai appareil) pour cette ampoule.
+
+Plages attendues :
+- Puissance : entre ${ref.puissance[0]} et ${ref.puissance[1]} W
+- Tension : entre ${ref.tension[0]} et ${ref.tension[1]} V  
+- Intensité : entre ${ref.intensite[0]} et ${ref.intensite[1]} A
+- Éclairement à 30 cm : entre ${ref.eclairement[0]} et ${ref.eclairement[1]} lux
+
+Réponds UNIQUEMENT avec un objet JSON valide, sans texte avant ni après, sans backticks :
+{"puissance": X.X, "tension": XXX.X, "intensite": X.XXX, "eclairement": XXX, "commentaire": "une phrase courte type log de technicien"}`;
+
+        try {
+            const response = await fetch('https://api.anthropic.com/v1/messages', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model: 'claude-sonnet-4-20250514',
+                    max_tokens: 200,
+                    messages: [{ role: 'user', content: prompt }]
+                })
+            });
+
+            const data = await response.json();
+            const raw  = data.content?.[0]?.text?.trim() || '';
+
+            let valeurs;
+            try {
+                valeurs = JSON.parse(raw);
+            } catch {
+                // Fallback : valeurs locales si parsing échoue
+                valeurs = {
+                    puissance:   simRandBetween(...ref.puissance),
+                    tension:     simRandBetween(...ref.tension),
+                    intensite:   simRandBetween(...ref.intensite),
+                    eclairement: Math.round(simRandBetween(...ref.eclairement)),
+                    commentaire: 'Mesure réalisée (mode hors-ligne).'
+                };
+            }
+
+            // Animer l'affichage (effet lecture progressive)
+            await new Promise(r => setTimeout(r, 400));
+            simSetMeter('sim_puissance',   valeurs.puissance,   'W');
+            simSetMeter('sim_tension',     valeurs.tension,     'V');
+            await new Promise(r => setTimeout(r, 250));
+            simSetMeter('sim_intensite',   valeurs.intensite,   'A');
+            simSetMeter('sim_eclairement', valeurs.eclairement, 'lux');
+
+            simDernieresValeurs = { ...valeurs, ampoule };
+            simLog(`» ${valeurs.commentaire}`, 'ok');
+            simLog(`» Mesure complète — puissance: ${valeurs.puissance} W, éclairement: ${valeurs.eclairement} lux`, 'ok');
+
+            injectBtn.disabled = false;
+
+        } catch(err) {
+            simLog(`» Erreur de connexion — utilisation des valeurs par défaut.`, 'warn');
+            const valeurs = {
+                puissance:   simRandBetween(...ref.puissance),
+                tension:     simRandBetween(...ref.tension),
+                intensite:   simRandBetween(...ref.intensite),
+                eclairement: Math.round(simRandBetween(...ref.eclairement)),
+                commentaire: 'Mode hors-ligne.'
+            };
+            simSetMeter('sim_puissance',   valeurs.puissance,   'W');
+            simSetMeter('sim_tension',     valeurs.tension,     'V');
+            simSetMeter('sim_intensite',   valeurs.intensite,   'A');
+            simSetMeter('sim_eclairement', valeurs.eclairement, 'lux');
+            simDernieresValeurs = { ...valeurs, ampoule };
+            injectBtn.disabled = false;
+        }
+
+        btn.disabled = false;
+    };
+
+    // ── Injection dans le tableau de résultats ──────────────────
+    window.simInjecterDansTableau = function() {
+        if (!simDernieresValeurs) return;
+        const { ampoule, puissance, eclairement } = simDernieresValeurs;
+        const lettre = SIM_LETTRE[ampoule];
+        if (!lettre) return;
+
+        const pField = document.getElementById(`m_puis_${lettre}`);
+        const lField = document.getElementById(`m_lux_${lettre}`);
+        if (pField) { pField.value = puissance; pField.dispatchEvent(new Event('input')); }
+        if (lField) { lField.value = eclairement; lField.dispatchEvent(new Event('input')); }
+        calcEffi(lettre);
+
+        simLog(`» Valeurs reportées dans le tableau — ampoule ${lettre}.`, 'ok');
+        if (window.wizardInstance?.showToast)
+            window.wizardInstance.showToast(`Valeurs ampoule ${lettre} reportées ✓`, 'success');
+    };
+
+</script>
+</body>
+</html>
