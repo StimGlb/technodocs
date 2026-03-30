@@ -55,7 +55,9 @@
       "Bash(grep -rn \"src/assets\" src/*.html src/**/*.html)",
       "Bash(grep -rn \"data/cours\\\\|data/revisions\\\\|data/referentiels\\\\|data/graphiques\" dist/assets/*.js)",
       "Bash(node -e \":*)",
-      "Bash(xargs grep:*)"
+      "Bash(xargs grep:*)",
+      "Bash(ssh -T git@github.com)",
+      "Bash(git -C \"e:/Dev/technodocs-vanilla\" remote -v)"
     ],
     "deny": [],
     "ask": []
