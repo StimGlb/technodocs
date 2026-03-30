@@ -197,6 +197,13 @@ else
   exit 0
 fi
 
+# Pull avec rebase avant push pour éviter le rejet non-fast-forward
+info "Synchronisation avec ${REMOTE}/${BRANCH} avant push..."
+if ! git pull --rebase "$REMOTE" "$BRANCH"; then
+  err "git pull --rebase échoué. Résoudre les conflits manuellement puis relancer."
+  exit 4
+fi
+
 # Push (set upstream si absent)
 push_args=()
 if ! git rev-parse --abbrev-ref --symbolic-full-name @{u} >/dev/null 2>&1; then
