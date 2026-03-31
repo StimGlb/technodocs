@@ -61,7 +61,9 @@
       "Bash(wc -l \"e:\\\\Dev\\\\technodocs-vanilla\\\\src\\\\css\"/*.css)",
       "Bash(ls -la e:/Dev/technodocs-vanilla/*.css)",
       "Bash(git -C e:/Dev/technodocs-vanilla status --short)",
-      "Bash(grep \"\\\\.css$\")"
+      "Bash(grep \"\\\\.css$\")",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\(''''scripts'''',{}\\), indent=2\\)\\)\")",
+      "Bash(python -c \"import json; d=json.load\\(open\\(''package.json''\\)\\); [print\\(f''  {k}: {v}''\\) for k,v in d[''scripts''].items\\(\\) if ''deploy'' in k]\")"
     ],
     "deny": [],
     "ask": []
