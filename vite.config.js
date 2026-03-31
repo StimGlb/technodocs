@@ -86,7 +86,7 @@ export default defineConfig({
     outDir: "dist",
     assetsDir: "assets",
     sourcemap: false,
-    emptyOutDir: false,
+    emptyOutDir: true,
 
     rollupOptions: {
       input: (function collectHtmlInputs() {

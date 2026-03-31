@@ -57,7 +57,11 @@
       "Bash(node -e \":*)",
       "Bash(xargs grep:*)",
       "Bash(ssh -T git@github.com)",
-      "Bash(git -C \"e:/Dev/technodocs-vanilla\" remote -v)"
+      "Bash(git -C \"e:/Dev/technodocs-vanilla\" remote -v)",
+      "Bash(wc -l \"e:\\\\Dev\\\\technodocs-vanilla\\\\src\\\\css\"/*.css)",
+      "Bash(ls -la e:/Dev/technodocs-vanilla/*.css)",
+      "Bash(git -C e:/Dev/technodocs-vanilla status --short)",
+      "Bash(grep \"\\\\.css$\")"
     ],
     "deny": [],
     "ask": []
