@@ -20,7 +20,7 @@
   }
 
   /* Masquage radical des placeholders de chargement qui pourraient prendre de la place */
-  #header-placeholder, 
+  #header-placeholder,
   .cours-hero,
   .fiche-meta {
     display: none !important;
@@ -306,14 +306,14 @@
     align-items: flex-start;
   }
 
-    /* Colonne de droite (Zones de saisie / Tableaux) */
+  /* Colonne de droite (Zones de saisie / Tableaux) */
   .fiche-deux-colonnes__droite {
-      flex: 1 !important; /* Prend tout l'espace restant (65%) */
+    flex: 1 !important; /* Prend tout l'espace restant (65%) */
   }
 
   /* Ajustement pour que les tableaux à l'intérieur occupent 100% de leur colonne */
   .fiche-deux-colonnes__droite table {
-      width: 100% !important;
+    width: 100% !important;
   }
 
   /* Zones de réponse */
@@ -497,6 +497,10 @@
 
   .zone-reponse,
   .zone-illustration {
+    page-break-inside: avoid;
+  }
+
+  .md-content pre {
     page-break-inside: avoid;
   }
 
