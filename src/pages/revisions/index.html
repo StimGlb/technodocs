@@ -10,6 +10,7 @@
     <title>Révisions DNB Technologie | TechnoDocs</title>
 
     <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/style-index-light.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -19,6 +20,16 @@
   </head>
 
   <body>
+    <!-- Toggle Mode Clair/Sombre -->
+    <button
+      class="mode-toggle"
+      id="modeToggle"
+      title="Basculer le mode"
+      aria-label="Basculer le mode clair/sombre"
+    >
+      🌙
+    </button>
+
     <!-- Header dynamique -->
     <div id="header-placeholder"></div>
 
@@ -37,7 +48,6 @@
       <!-- Grille des fiches de révision -->
       <section class="section">
         <div class="cards-grid">
-          
           <a href="./fiche-ost.html" class="card card--dnb-blanc">
             <div class="card__icon">⚙️</div>
             <h2 class="card__title">
@@ -159,6 +169,47 @@
 
     <!-- Footer dynamique -->
     <div id="footer-placeholder"></div>
+
+    <!-- Light Mode Toggle -->
+    <script>
+      function initLightModeToggle() {
+        const body = document.body;
+        const toggle = document.getElementById("modeToggle");
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentMode = urlParams.get("mode") === "light" ? "light" : "dark";
+
+        if (currentMode === "light") {
+          body.classList.add("light-mode");
+          toggle.textContent = "☀️";
+        } else {
+          body.classList.remove("light-mode");
+          toggle.textContent = "🌙";
+        }
+
+        toggle.addEventListener("click", () => {
+          currentMode = currentMode === "dark" ? "light" : "dark";
+          if (currentMode === "light") {
+            body.classList.add("light-mode");
+            toggle.textContent = "☀️";
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set("mode", "light");
+            window.history.replaceState({}, "", newUrl);
+          } else {
+            body.classList.remove("light-mode");
+            toggle.textContent = "🌙";
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.delete("mode");
+            window.history.replaceState({}, "", newUrl);
+          }
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initLightModeToggle);
+      } else {
+        initLightModeToggle();
+      }
+    </script>
 
     <!-- Scripts pour charger le Header/Footer et animations -->
     <script type="module" src="../../js/components.js"></script>

@@ -10,6 +10,7 @@
     <title>Techno Docs | Accueil</title>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/style-index-light.css" />
     <!-- Google Fonts - Police moderne et lisible -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -19,6 +20,16 @@
     />
   </head>
   <body>
+    <!-- Toggle Mode Clair/Sombre -->
+    <button
+      class="mode-toggle"
+      id="modeToggle"
+      title="Basculer le mode"
+      aria-label="Basculer le mode clair/sombre"
+    >
+      🌙
+    </button>
+
     <!-- Header avec navigation -->
     <div id="header-placeholder"></div>
 
@@ -43,7 +54,8 @@
             </h1>
             <p class="hero__subtitle">
               <span class="typing__cursor">
-                Accédez aux Activités par niveau,<br /> aux Fiches de révisions et aux Outils.
+                Accédez aux Activités par niveau,<br />
+                aux Fiches de révisions et aux Outils.
               </span>
               <span class="typing__static"></span>
             </p>
@@ -69,7 +81,6 @@
               >
                 <span>📁</span> Ressources
               </a>
-
             </div>
           </div>
           <!-- Image décorative (désactivée : hero-illustration.png manquant) -->
@@ -108,7 +119,9 @@
             class="revision-card revision-card--fiches"
           >
             <div class="revision-card__icon">📋</div>
-            <h3 class="revision-card__title">Fiches de révision DNB et exercices</h3>
+            <h3 class="revision-card__title">
+              Fiches de révision DNB et exercices
+            </h3>
             <p class="revision-card__text">8 fiches pour préparer l'épreuve</p>
           </a>
           <a
@@ -143,6 +156,53 @@
     <div id="footer-placeholder"></div>
 
     <!-- Scripts -->
+    <script>
+      // ── Gestion Light Mode pour index.html ──
+      function initLightModeToggle() {
+        const body = document.body;
+        const toggle = document.getElementById("modeToggle");
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentMode = urlParams.get("mode") === "light" ? "light" : "dark";
+
+        // Appliquer le mode depuis l'URL au chargement
+        if (currentMode === "light") {
+          body.classList.add("light-mode");
+          toggle.textContent = "☀️";
+        } else {
+          body.classList.remove("light-mode");
+          toggle.textContent = "🌙";
+        }
+
+        // Écouter les clics sur le toggle
+        toggle.addEventListener("click", () => {
+          currentMode = currentMode === "dark" ? "light" : "dark";
+
+          if (currentMode === "light") {
+            body.classList.add("light-mode");
+            toggle.textContent = "☀️";
+            // Mettre à jour l'URL
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set("mode", "light");
+            window.history.replaceState({}, "", newUrl);
+          } else {
+            body.classList.remove("light-mode");
+            toggle.textContent = "🌙";
+            // Mettre à jour l'URL
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.delete("mode");
+            window.history.replaceState({}, "", newUrl);
+          }
+        });
+      }
+
+      // Initialiser le toggle dès le chargement du DOM
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initLightModeToggle);
+      } else {
+        initLightModeToggle();
+      }
+    </script>
+
     <script type="module" src="/src/js/main.js"></script>
   </body>
 </html>

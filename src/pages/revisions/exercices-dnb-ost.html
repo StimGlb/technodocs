@@ -13,6 +13,7 @@
     <!-- Styles -->
     <link rel="stylesheet" href="/src/css/style.css" />
     <link rel="stylesheet" href="/src/css/wizard.css" />
+    <link rel="stylesheet" href="/src/css/style-index-light.css" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1177,6 +1178,45 @@
         resetCorrection();
         window.scrollTo({ top: 0, behavior: "smooth" });
       };
+
+      // ── Light Mode Toggle ──
+      function initLightModeToggle() {
+        const body = document.body;
+        const toggle = document.getElementById('modeToggle');
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentMode = urlParams.get('mode') === 'light' ? 'light' : 'dark';
+
+        if (currentMode === 'light') {
+          body.classList.add('light-mode');
+          toggle.textContent = '☀️';
+        } else {
+          body.classList.remove('light-mode');
+          toggle.textContent = '🌙';
+        }
+
+        toggle.addEventListener('click', () => {
+          currentMode = currentMode === 'dark' ? 'light' : 'dark';
+          if (currentMode === 'light') {
+            body.classList.add('light-mode');
+            toggle.textContent = '☀️';
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set('mode', 'light');
+            window.history.replaceState({}, '', newUrl);
+          } else {
+            body.classList.remove('light-mode');
+            toggle.textContent = '🌙';
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.delete('mode');
+            window.history.replaceState({}, '', newUrl);
+          }
+        });
+      }
+
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initLightModeToggle);
+      } else {
+        initLightModeToggle();
+      }
     </script>
   </body>
 </html>

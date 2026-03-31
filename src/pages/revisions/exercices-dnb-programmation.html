@@ -6,910 +6,1512 @@
 ║  3 exercices progressifs · Mix QCM + complétion + ouvertes      ║
 ╚══════════════════════════════════════════════════════════════════╝
 -->
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Entraînement DNB — Programmation 3ème — TechnoDocs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Entraînement DNB — Programmation 3ème — TechnoDocs"
+    />
     <title>DNB · Programmation | TechnoDocs</title>
 
-    <link rel="stylesheet" href="/src/css/style.css">
-    <link rel="stylesheet" href="/src/css/wizard.css">
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+    <link rel="stylesheet" href="/src/css/style-index-light.css" />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <button
+      class="mode-toggle"
+      id="modeToggle"
+      title="Basculer le mode"
+      aria-label="Basculer le mode clair/sombre"
+    >
+      🌙
+    </button>
+
     <style>
-        .password-overlay {
-            position: fixed; top: 0; left: 0;
-            width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.8);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 1000;
-        }
-        .password-prompt {
-            background-color: var(--color-white);
-            padding: 2rem; border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-            text-align: center; max-width: 400px; width: 90%;
-        }
-        .password-prompt h2 { color: var(--color-primary-700); margin-bottom: 1.5rem; font-size: 1.8rem; }
-        .password-prompt input[type="password"] {
-            width: calc(100% - 2rem); padding: 0.75rem 1rem;
-            margin-bottom: 1rem; border: 1px solid var(--color-gray-300);
-            border-radius: 4px; font-size: 1rem;
-        }
-        .password-prompt button {
-            background-color: var(--color-primary-500); color: var(--color-white);
-            border: none; padding: 0.75rem 1.5rem; border-radius: 4px;
-            cursor: pointer; font-size: 1rem; transition: background-color 0.2s ease;
-        }
-        .password-prompt button:hover { background-color: var(--color-primary-600); }
-        .password-prompt .error-message { color: var(--color-error); margin-top: 0.5rem; font-size: 0.9rem; }
+      .password-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+      .password-prompt {
+        background-color: var(--color-white);
+        padding: 2rem;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 400px;
+        width: 90%;
+      }
+      .password-prompt h2 {
+        color: var(--color-primary-700);
+        margin-bottom: 1.5rem;
+        font-size: 1.8rem;
+      }
+      .password-prompt input[type="password"] {
+        width: calc(100% - 2rem);
+        padding: 0.75rem 1rem;
+        margin-bottom: 1rem;
+        border: 1px solid var(--color-gray-300);
+        border-radius: 4px;
+        font-size: 1rem;
+      }
+      .password-prompt button {
+        background-color: var(--color-primary-500);
+        color: var(--color-white);
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 1rem;
+        transition: background-color 0.2s ease;
+      }
+      .password-prompt button:hover {
+        background-color: var(--color-primary-600);
+      }
+      .password-prompt .error-message {
+        color: var(--color-error);
+        margin-top: 0.5rem;
+        font-size: 0.9rem;
+      }
 
-        /* ── Blocs de code algorithmique ── */
-        .wizard__code {
-            background: var(--color-gray-900, #1e1e2e);
-            color: var(--color-gray-100, #f0f0f0);
-            font-family: 'Courier New', Courier, monospace;
-            font-size: 0.9rem;
-            line-height: 1.8;
-            padding: 1rem 1.25rem;
-            border-radius: 6px;
-            margin: 0.5rem 0 1rem;
-            white-space: pre;
-            overflow-x: auto;
-            border-left: 4px solid var(--color-primary-400, #7c6af7);
-        }
-        .wizard__code-label {
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            color: var(--color-gray-500);
-            margin: 0.75rem 0 0.2rem;
-        }
+      /* ── Blocs de code algorithmique ── */
+      .wizard__code {
+        background: var(--color-gray-900, #1e1e2e);
+        color: var(--color-gray-100, #f0f0f0);
+        font-family: "Courier New", Courier, monospace;
+        font-size: 0.9rem;
+        line-height: 1.8;
+        padding: 1rem 1.25rem;
+        border-radius: 6px;
+        margin: 0.5rem 0 1rem;
+        white-space: pre;
+        overflow-x: auto;
+        border-left: 4px solid var(--color-primary-400, #7c6af7);
+      }
+      .wizard__code-label {
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-gray-500);
+        margin: 0.75rem 0 0.2rem;
+      }
 
-        /* ── Numéro de question ── */
-        .wizard__question-number {
-            display: inline-block;
-            background: var(--color-primary-100, #ede9fe);
-            color: var(--color-primary-700, #4c3f9e);
-            font-weight: 700;
-            font-size: 0.8rem;
-            padding: 0.15rem 0.5rem;
-            border-radius: 4px;
-            margin-bottom: 0.4rem;
-        }
+      /* ── Numéro de question ── */
+      .wizard__question-number {
+        display: inline-block;
+        background: var(--color-primary-100, #ede9fe);
+        color: var(--color-primary-700, #4c3f9e);
+        font-weight: 700;
+        font-size: 0.8rem;
+        padding: 0.15rem 0.5rem;
+        border-radius: 4px;
+        margin-bottom: 0.4rem;
+      }
 
-        /* ── Blocs Scratch simulés ── */
-        .scratch-program {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            padding: 1rem;
-            background: #f3f4f6;
-            border-radius: 8px;
-            margin: 0.75rem 0 1rem;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-        }
-        .scratch-block {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px 6px 10px;
-            border-radius: 6px;
-            font-weight: 600;
-            color: #fff;
-            width: fit-content;
-            flex-wrap: wrap;
-        }
-        .scratch-block--hat      { background: #e6a817; border-radius: 16px 16px 6px 6px; }
-        .scratch-block--control  { background: #e6a817; }
-        .scratch-block--sensing  { background: #5cb1d6; }
-        .scratch-block--operator { background: #5db85c; }
-        .scratch-block--variable { background: #e64d00; }
-        .scratch-block--looks    { background: #9966ff; }
-        .scratch-block--motion   { background: #4c97ff; }
-        .scratch-block--sound    { background: #cf63cf; }
-        .scratch-indent {
-            margin-left: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-            border-left: 3px solid #e6a817;
-            padding-left: 8px;
-        }
-        .scratch-block__blank {
-            display: inline-block;
-            min-width: 80px;
-            background: rgba(255,255,255,0.35);
-            border: 2px dashed rgba(255,255,255,0.7);
-            border-radius: 4px;
-            padding: 1px 8px;
-            font-weight: 400;
-            font-style: italic;
-            color: rgba(255,255,255,0.8);
-            font-size: 0.82rem;
-        }
-        /* select intégré dans un bloc Scratch */
-        .scratch-block select {
-            background: rgba(255,255,255,0.25);
-            border: 2px solid rgba(255,255,255,0.6);
-            border-radius: 4px;
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.85rem;
-            padding: 1px 6px;
-            cursor: pointer;
-        }
-        .scratch-block select option { color: #111; background: #fff; }
-        /* input court dans un bloc Scratch */
-        .scratch-block input[type="text"] {
-            background: rgba(255,255,255,0.25);
-            border: 2px solid rgba(255,255,255,0.6);
-            border-radius: 4px;
-            color: #fff;
-            font-weight: 700;
-            font-size: 0.85rem;
-            padding: 1px 6px;
-            width: 70px;
-            text-align: center;
-        }
-        .scratch-block input[type="text"]::placeholder { color: rgba(255,255,255,0.55); }
+      /* ── Blocs Scratch simulés ── */
+      .scratch-program {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 1rem;
+        background: #f3f4f6;
+        border-radius: 8px;
+        margin: 0.75rem 0 1rem;
+        font-family: "Inter", sans-serif;
+        font-size: 0.9rem;
+      }
+      .scratch-block {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 14px 6px 10px;
+        border-radius: 6px;
+        font-weight: 600;
+        color: #fff;
+        width: fit-content;
+        flex-wrap: wrap;
+      }
+      .scratch-block--hat {
+        background: #e6a817;
+        border-radius: 16px 16px 6px 6px;
+      }
+      .scratch-block--control {
+        background: #e6a817;
+      }
+      .scratch-block--sensing {
+        background: #5cb1d6;
+      }
+      .scratch-block--operator {
+        background: #5db85c;
+      }
+      .scratch-block--variable {
+        background: #e64d00;
+      }
+      .scratch-block--looks {
+        background: #9966ff;
+      }
+      .scratch-block--motion {
+        background: #4c97ff;
+      }
+      .scratch-block--sound {
+        background: #cf63cf;
+      }
+      .scratch-indent {
+        margin-left: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        border-left: 3px solid #e6a817;
+        padding-left: 8px;
+      }
+      .scratch-block__blank {
+        display: inline-block;
+        min-width: 80px;
+        background: rgba(255, 255, 255, 0.35);
+        border: 2px dashed rgba(255, 255, 255, 0.7);
+        border-radius: 4px;
+        padding: 1px 8px;
+        font-weight: 400;
+        font-style: italic;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.82rem;
+      }
+      /* select intégré dans un bloc Scratch */
+      .scratch-block select {
+        background: rgba(255, 255, 255, 0.25);
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        border-radius: 4px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.85rem;
+        padding: 1px 6px;
+        cursor: pointer;
+      }
+      .scratch-block select option {
+        color: #111;
+        background: #fff;
+      }
+      /* input court dans un bloc Scratch */
+      .scratch-block input[type="text"] {
+        background: rgba(255, 255, 255, 0.25);
+        border: 2px solid rgba(255, 255, 255, 0.6);
+        border-radius: 4px;
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.85rem;
+        padding: 1px 6px;
+        width: 70px;
+        text-align: center;
+      }
+      .scratch-block input[type="text"]::placeholder {
+        color: rgba(255, 255, 255, 0.55);
+      }
     </style>
 
     <main class="wizard">
+      <!-- ========== BANNIÈRE TITRE ========== -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">🌡️</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">
+            Entraînement DNB — La Programmation
+          </h1>
+          <div class="wizard__banner-skills">
+            <span class="wizard__skill">SFC 31</span>
+            <span class="wizard__skill">CCRI 31</span>
+            <span class="wizard__skill">3ème</span>
+          </div>
+        </div>
+      </div>
 
-        <!-- ========== BANNIÈRE TITRE ========== -->
-        <div class="wizard__banner">
-            <div class="wizard__banner-icon">🌡️</div>
-            <div class="wizard__banner-content">
-                <h1 class="wizard__banner-title">Entraînement DNB — La Programmation</h1>
-                <div class="wizard__banner-skills">
-                    <span class="wizard__skill">SFC 31</span>
-                    <span class="wizard__skill">CCRI 31</span>
-                    <span class="wizard__skill">3ème</span>
-                </div>
-            </div>
+      <!-- ========== INFO ÉLÈVE ========== -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="studentName">Prénom et Nom</label>
+            <input
+              type="text"
+              id="studentName"
+              data-field="studentName"
+              placeholder=""
+              spellcheck="true"
+              lang="fr"
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="studentClass">Classe</label>
+            <select id="studentClass" data-field="studentClass">
+              <option value="">— Sélectionner —</option>
+              <optgroup label="3ème">
+                <option value="302">3ème 2</option>
+                <option value="303">3ème 3</option>
+                <option value="304">3ème 4</option>
+                <option value="305">3ème 5</option>
+                <option value="306">3ème 6</option>
+                <option value="307">3ème 7</option>
+                <option value="308">3ème 8</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="wizard__student-field wizard__student-field--date">
+            <label>Date</label>
+            <span
+              class="wizard__date-display"
+              id="projectDate"
+              data-field="projectDate"
+            ></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== PROGRESSION ========== -->
+      <section class="wizard__progress">
+        <div class="wizard__progress-header">
+          <h2 class="wizard__progress-title">Progression</h2>
+          <div class="wizard__save-indicator" id="saveIndicator">
+            <span class="wizard__save-dot"></span>
+            <span class="wizard__save-text">Auto-save</span>
+          </div>
+          <span class="wizard__progress-percentage" id="progressPercentage"
+            >0%</span
+          >
+        </div>
+        <div class="wizard__progress-bar">
+          <div
+            class="wizard__progress-fill"
+            id="progressFill"
+            style="width: 0%"
+          ></div>
         </div>
 
-        <!-- ========== INFO ÉLÈVE ========== -->
-        <div class="wizard__student-info">
-            <div class="wizard__student-row">
-                <div class="wizard__student-field wizard__student-field--name">
-                    <label for="studentName">Prénom et Nom</label>
-                    <input type="text" id="studentName" data-field="studentName" placeholder="" spellcheck="true" lang="fr">
-                </div>
-                <div class="wizard__student-field wizard__student-field--class">
-                    <label for="studentClass">Classe</label>
-                    <select id="studentClass" data-field="studentClass">
-                        <option value="">— Sélectionner —</option>
-                        <optgroup label="3ème">
-                            <option value="302">3ème 2</option>
-                            <option value="303">3ème 3</option>
-                            <option value="304">3ème 4</option>
-                            <option value="305">3ème 5</option>
-                            <option value="306">3ème 6</option>
-                            <option value="307">3ème 7</option>
-                            <option value="308">3ème 8</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="wizard__student-field wizard__student-field--date">
-                    <label>Date</label>
-                    <span class="wizard__date-display" id="projectDate" data-field="projectDate"></span>
-                </div>
-            </div>
-        </div>
+        <nav class="wizard__nav" id="phaseNav">
+          <button class="wizard__nav-btn active" data-phase="1">
+            <span class="wizard__nav-number">1</span>
+            <span>Lire un programme</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="2">
+            <span class="wizard__nav-number">2</span>
+            <span>Compléter un programme</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="3">
+            <span class="wizard__nav-number">3</span>
+            <span>Modifier un programme</span>
+          </button>
+        </nav>
+      </section>
 
-        <!-- ========== PROGRESSION ========== -->
-        <section class="wizard__progress">
-            <div class="wizard__progress-header">
-                <h2 class="wizard__progress-title">Progression</h2>
-                <div class="wizard__save-indicator" id="saveIndicator">
-                    <span class="wizard__save-dot"></span>
-                    <span class="wizard__save-text">Auto-save</span>
-                </div>
-                <span class="wizard__progress-percentage" id="progressPercentage">0%</span>
-            </div>
-            <div class="wizard__progress-bar">
-                <div class="wizard__progress-fill" id="progressFill" style="width: 0%"></div>
-            </div>
-
-            <nav class="wizard__nav" id="phaseNav">
-                <button class="wizard__nav-btn active" data-phase="1">
-                    <span class="wizard__nav-number">1</span>
-                    <span>Lire un programme</span>
-                </button>
-                <button class="wizard__nav-btn" data-phase="2">
-                    <span class="wizard__nav-number">2</span>
-                    <span>Compléter un programme</span>
-                </button>
-                <button class="wizard__nav-btn" data-phase="3">
-                    <span class="wizard__nav-number">3</span>
-                    <span>Modifier un programme</span>
-                </button>
-            </nav>
-        </section>
-
-        <div class="wizard__container">
-
-            <!-- ╔═══════════════════════════════════════════════════╗
+      <div class="wizard__container">
+        <!-- ╔═══════════════════════════════════════════════════╗
                  ║  EXERCICE 1 — Lire et comprendre un programme    ║
                  ║  Contexte : station météo · programme complet    ║
                  ║  Attendu 3ème SFC 31.1 : identifier données      ║
                  ╚═══════════════════════════════════════════════════╝ -->
-            <section class="wizard__phase active" data-phase="1">
-                <div class="wizard__phase-header">
-                    <div class="wizard__phase-icon">👀</div>
-                    <h2 class="wizard__phase-title">Exercice 1 — Lire un programme Scratch</h2>
-                    <p class="wizard__phase-subtitle">Observe le programme de la station météo, puis réponds aux questions.</p>
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">👀</div>
+            <h2 class="wizard__phase-title">
+              Exercice 1 — Lire un programme Scratch
+            </h2>
+            <p class="wizard__phase-subtitle">
+              Observe le programme de la station météo, puis réponds aux
+              questions.
+            </p>
+          </div>
+
+          <!-- Contexte OST -->
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">📄 Contexte</p>
+            <div class="wizard__tips-content">
+              <p>
+                Le collège a installé une
+                <strong>station météo connectée</strong> dans la cour. Un
+                capteur de température envoie des mesures à un programme Scratch
+                qui affiche un message d'alerte si la température dépasse 35 °C.
+              </p>
+              <p style="margin-top: 0.6rem">
+                Voici le programme Scratch complet :
+              </p>
+
+              <!-- Programme Scratch simulé -->
+              <div class="scratch-program">
+                <div class="scratch-block scratch-block--hat">
+                  🚩 Quand ⚑ est cliqué
                 </div>
 
-                <!-- Contexte OST -->
-                <div class="wizard__tips">
-                    <p class="wizard__tips-title">📄 Contexte</p>
-                    <div class="wizard__tips-content">
-                        <p>
-                            Le collège a installé une <strong>station météo connectée</strong> dans la cour.
-                            Un capteur de température envoie des mesures à un programme Scratch qui affiche
-                            un message d'alerte si la température dépasse 35 °C.
-                        </p>
-                        <p style="margin-top:0.6rem;">Voici le programme Scratch complet :</p>
-
-                        <!-- Programme Scratch simulé -->
-                        <div class="scratch-program">
-                            <div class="scratch-block scratch-block--hat">🚩 Quand ⚑ est cliqué</div>
-
-                            <div class="scratch-block scratch-block--variable">
-                                mettre <strong>temperature_max</strong> à <strong>35</strong>
-                            </div>
-                            <div class="scratch-block scratch-block--sensing">
-                                mettre <strong>temperature_actuelle</strong> à [valeur du capteur]
-                            </div>
-
-                            <div class="scratch-block scratch-block--control">
-                                si <span style="background:rgba(255,255,255,0.2);border-radius:4px;padding:2px 8px;">
-                                    temperature_actuelle &gt; temperature_max
-                                </span> alors
-                            </div>
-                            <div class="scratch-indent">
-                                <div class="scratch-block scratch-block--looks">
-                                    dire <strong>⚠️ Alerte chaleur !</strong>
-                                </div>
-                            </div>
-                            <div class="scratch-block scratch-block--control">sinon</div>
-                            <div class="scratch-indent">
-                                <div class="scratch-block scratch-block--looks">
-                                    dire <strong>Température normale</strong>
-                                </div>
-                            </div>
-                            <div class="scratch-block scratch-block--control">fin si</div>
-                        </div>
-                    </div>
+                <div class="scratch-block scratch-block--variable">
+                  mettre <strong>temperature_max</strong> à <strong>35</strong>
+                </div>
+                <div class="scratch-block scratch-block--sensing">
+                  mettre <strong>temperature_actuelle</strong> à [valeur du
+                  capteur]
                 </div>
 
-                <!-- Q1 — QCM : identifier une variable -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 1</span>
-                    <label class="wizard__label required">
-                        Quelle est la valeur stockée dans la variable <code>temperature_max</code> au début du programme ?
-                    </label>
-                    <div class="wizard__checkbox-group">
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q1" data-field="ex1_q1" value="0" />
-                            <span class="wizard__checkbox-label">0</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q1" data-field="ex1_q1" value="35" />
-                            <span class="wizard__checkbox-label">35</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q1" data-field="ex1_q1" value="temperature_actuelle" />
-                            <span class="wizard__checkbox-label">temperature_actuelle</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q1" data-field="ex1_q1" value="alerte" />
-                            <span class="wizard__checkbox-label">⚠️ Alerte chaleur !</span>
-                        </label>
-                    </div>
+                <div class="scratch-block scratch-block--control">
+                  si
+                  <span
+                    style="
+                      background: rgba(255, 255, 255, 0.2);
+                      border-radius: 4px;
+                      padding: 2px 8px;
+                    "
+                  >
+                    temperature_actuelle &gt; temperature_max
+                  </span>
+                  alors
                 </div>
-
-                <!-- Q2 — QCM : lire la condition -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 2</span>
-                    <label class="wizard__label required">
-                        Le capteur mesure 28 °C. Quel message le programme affiche-t-il ?
-                    </label>
-                    <div class="wizard__checkbox-group">
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q2" data-field="ex1_q2" value="alerte" />
-                            <span class="wizard__checkbox-label">⚠️ Alerte chaleur !</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q2" data-field="ex1_q2" value="normale" />
-                            <span class="wizard__checkbox-label">Température normale</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q2" data-field="ex1_q2" value="rien" />
-                            <span class="wizard__checkbox-label">Rien — le programme ne fait rien</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q2" data-field="ex1_q2" value="les_deux" />
-                            <span class="wizard__checkbox-label">Les deux messages à la suite</span>
-                        </label>
-                    </div>
+                <div class="scratch-indent">
+                  <div class="scratch-block scratch-block--looks">
+                    dire <strong>⚠️ Alerte chaleur !</strong>
+                  </div>
                 </div>
-
-                <!-- Q3 — QCM : identifier entrée / sortie -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 3</span>
-                    <label class="wizard__label required">
-                        Dans ce programme, quelle est l'<strong>entrée</strong> et quelle est la <strong>sortie</strong> ?
-                    </label>
-                    <div class="wizard__checkbox-group">
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q3" data-field="ex1_q3" value="correct" />
-                            <span class="wizard__checkbox-label">Entrée : valeur du capteur de température · Sortie : message affiché</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q3" data-field="ex1_q3" value="inverse" />
-                            <span class="wizard__checkbox-label">Entrée : message affiché · Sortie : valeur du capteur</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q3" data-field="ex1_q3" value="variable_seule" />
-                            <span class="wizard__checkbox-label">Entrée : la variable temperature_max · Sortie : rien</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q3" data-field="ex1_q3" value="pas_entree" />
-                            <span class="wizard__checkbox-label">Ce programme n'a ni entrée ni sortie</span>
-                        </label>
-                    </div>
+                <div class="scratch-block scratch-block--control">sinon</div>
+                <div class="scratch-indent">
+                  <div class="scratch-block scratch-block--looks">
+                    dire <strong>Température normale</strong>
+                  </div>
                 </div>
+                <div class="scratch-block scratch-block--control">fin si</div>
+              </div>
+            </div>
+          </div>
 
-                <!-- Q4 — QCM : identifier la structure de contrôle -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 4</span>
-                    <label class="wizard__label required">
-                        Le bloc <em>« si … alors … sinon »</em> est une structure de contrôle de type…
-                    </label>
-                    <div class="wizard__checkbox-group">
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q4" data-field="ex1_q4" value="boucle" />
-                            <span class="wizard__checkbox-label">Boucle (répétition)</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q4" data-field="ex1_q4" value="conditionnelle" />
-                            <span class="wizard__checkbox-label">Instruction conditionnelle</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q4" data-field="ex1_q4" value="affectation" />
-                            <span class="wizard__checkbox-label">Affectation de variable</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex1q4" data-field="ex1_q4" value="evenement" />
-                            <span class="wizard__checkbox-label">Événement déclencheur</span>
-                        </label>
-                    </div>
-                </div>
+          <!-- Q1 — QCM : identifier une variable -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 1</span>
+            <label class="wizard__label required">
+              Quelle est la valeur stockée dans la variable
+              <code>temperature_max</code> au début du programme ?
+            </label>
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q1"
+                  data-field="ex1_q1"
+                  value="0"
+                />
+                <span class="wizard__checkbox-label">0</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q1"
+                  data-field="ex1_q1"
+                  value="35"
+                />
+                <span class="wizard__checkbox-label">35</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q1"
+                  data-field="ex1_q1"
+                  value="temperature_actuelle"
+                />
+                <span class="wizard__checkbox-label">temperature_actuelle</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q1"
+                  data-field="ex1_q1"
+                  value="alerte"
+                />
+                <span class="wizard__checkbox-label">⚠️ Alerte chaleur !</span>
+              </label>
+            </div>
+          </div>
 
-                <!-- Q5 — Ouverte courte : traduire en langage naturel -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 5</span>
-                    <label class="wizard__label required">
-                        Traduis en une phrase en langage naturel ce que fait le bloc
-                        <em>« mettre temperature_max à 35 »</em>.
-                    </label>
-                    <p class="wizard__hint">Commence ta phrase par : <em>« Le programme stocke… »</em></p>
-                    <input type="text" class="wizard__input"
-                           data-field="ex1_q5"
-                           placeholder="Le programme stocke…"
-                           spellcheck="true" lang="fr" />
-                </div>
+          <!-- Q2 — QCM : lire la condition -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 2</span>
+            <label class="wizard__label required">
+              Le capteur mesure 28 °C. Quel message le programme affiche-t-il ?
+            </label>
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q2"
+                  data-field="ex1_q2"
+                  value="alerte"
+                />
+                <span class="wizard__checkbox-label">⚠️ Alerte chaleur !</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q2"
+                  data-field="ex1_q2"
+                  value="normale"
+                />
+                <span class="wizard__checkbox-label">Température normale</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q2"
+                  data-field="ex1_q2"
+                  value="rien"
+                />
+                <span class="wizard__checkbox-label"
+                  >Rien — le programme ne fait rien</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q2"
+                  data-field="ex1_q2"
+                  value="les_deux"
+                />
+                <span class="wizard__checkbox-label"
+                  >Les deux messages à la suite</span
+                >
+              </label>
+            </div>
+          </div>
 
-                <div class="wizard__phase-nav">
-                    <div></div>
-                    <button class="btn btn--primary" onclick="wizardGoToPhase(2)">Suivant →</button>
-                </div>
-            </section>
+          <!-- Q3 — QCM : identifier entrée / sortie -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 3</span>
+            <label class="wizard__label required">
+              Dans ce programme, quelle est l'<strong>entrée</strong> et quelle
+              est la <strong>sortie</strong> ?
+            </label>
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q3"
+                  data-field="ex1_q3"
+                  value="correct"
+                />
+                <span class="wizard__checkbox-label"
+                  >Entrée : valeur du capteur de température · Sortie : message
+                  affiché</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q3"
+                  data-field="ex1_q3"
+                  value="inverse"
+                />
+                <span class="wizard__checkbox-label"
+                  >Entrée : message affiché · Sortie : valeur du capteur</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q3"
+                  data-field="ex1_q3"
+                  value="variable_seule"
+                />
+                <span class="wizard__checkbox-label"
+                  >Entrée : la variable temperature_max · Sortie : rien</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q3"
+                  data-field="ex1_q3"
+                  value="pas_entree"
+                />
+                <span class="wizard__checkbox-label"
+                  >Ce programme n'a ni entrée ni sortie</span
+                >
+              </label>
+            </div>
+          </div>
 
-            <!-- ╔═══════════════════════════════════════════════════╗
+          <!-- Q4 — QCM : identifier la structure de contrôle -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 4</span>
+            <label class="wizard__label required">
+              Le bloc <em>« si … alors … sinon »</em> est une structure de
+              contrôle de type…
+            </label>
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q4"
+                  data-field="ex1_q4"
+                  value="boucle"
+                />
+                <span class="wizard__checkbox-label">Boucle (répétition)</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q4"
+                  data-field="ex1_q4"
+                  value="conditionnelle"
+                />
+                <span class="wizard__checkbox-label"
+                  >Instruction conditionnelle</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q4"
+                  data-field="ex1_q4"
+                  value="affectation"
+                />
+                <span class="wizard__checkbox-label"
+                  >Affectation de variable</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex1q4"
+                  data-field="ex1_q4"
+                  value="evenement"
+                />
+                <span class="wizard__checkbox-label"
+                  >Événement déclencheur</span
+                >
+              </label>
+            </div>
+          </div>
+
+          <!-- Q5 — Ouverte courte : traduire en langage naturel -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 5</span>
+            <label class="wizard__label required">
+              Traduis en une phrase en langage naturel ce que fait le bloc
+              <em>« mettre temperature_max à 35 »</em>.
+            </label>
+            <p class="wizard__hint">
+              Commence ta phrase par : <em>« Le programme stocke… »</em>
+            </p>
+            <input
+              type="text"
+              class="wizard__input"
+              data-field="ex1_q5"
+              placeholder="Le programme stocke…"
+              spellcheck="true"
+              lang="fr"
+            />
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔═══════════════════════════════════════════════════╗
                  ║  EXERCICE 2 — Compléter un programme Scratch     ║
                  ║  Contexte : station météo · boucle + alerte LED  ║
                  ║  Attendu 3ème SFC 31.2 : compléter + tester      ║
                  ╚═══════════════════════════════════════════════════╝ -->
-            <section class="wizard__phase" data-phase="2">
-                <div class="wizard__phase-header">
-                    <div class="wizard__phase-icon">✏️</div>
-                    <h2 class="wizard__phase-title">Exercice 2 — Compléter un programme Scratch</h2>
-                    <p class="wizard__phase-subtitle">Des blocs ont été effacés. Choisis ou écris les éléments manquants.</p>
+        <section class="wizard__phase" data-phase="2">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">✏️</div>
+            <h2 class="wizard__phase-title">
+              Exercice 2 — Compléter un programme Scratch
+            </h2>
+            <p class="wizard__phase-subtitle">
+              Des blocs ont été effacés. Choisis ou écris les éléments
+              manquants.
+            </p>
+          </div>
+
+          <!-- Contexte OST -->
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">📄 Contexte</p>
+            <div class="wizard__tips-content">
+              <p>
+                On améliore la station météo : elle doit maintenant
+                <strong>relever la température toutes les heures</strong> (soit
+                <strong>24 fois par jour</strong>) et allumer une LED rouge si
+                la température dépasse le seuil. Le programme Scratch ci-dessous
+                a été commencé, mais certains blocs sont
+                <strong>incomplets</strong>.
+              </p>
+              <p
+                style="
+                  margin-top: 0.6rem;
+                  color: var(--color-primary-700);
+                  font-weight: 600;
+                "
+              >
+                🔲 Les cases grises représentent les blocs à compléter.
+              </p>
+
+              <!-- Programme Scratch avec trous -->
+              <div class="scratch-program">
+                <div class="scratch-block scratch-block--hat">
+                  🚩 Quand ⚑ est cliqué
                 </div>
 
-                <!-- Contexte OST -->
-                <div class="wizard__tips">
-                    <p class="wizard__tips-title">📄 Contexte</p>
-                    <div class="wizard__tips-content">
-                        <p>
-                            On améliore la station météo : elle doit maintenant <strong>relever la température toutes les heures</strong>
-                            (soit <strong>24 fois par jour</strong>) et allumer une LED rouge si la température dépasse le seuil.
-                            Le programme Scratch ci-dessous a été commencé, mais certains blocs sont <strong>incomplets</strong>.
-                        </p>
-                        <p style="margin-top:0.6rem; color: var(--color-primary-700); font-weight:600;">
-                            🔲 Les cases grises représentent les blocs à compléter.
-                        </p>
+                <div class="scratch-block scratch-block--variable">
+                  mettre <strong>temperature_max</strong> à <strong>35</strong>
+                </div>
 
-                        <!-- Programme Scratch avec trous -->
-                        <div class="scratch-program">
-                            <div class="scratch-block scratch-block--hat">🚩 Quand ⚑ est cliqué</div>
+                <!-- TROU A : type de boucle -->
+                <div class="scratch-block scratch-block--control">
+                  <select data-field="ex2_trou_A" id="ex2_trou_A">
+                    <option value="">— choisir —</option>
+                    <option value="repeter_24">répéter 24 fois</option>
+                    <option value="toujours">répéter indéfiniment</option>
+                    <option value="si">si … alors</option>
+                    <option value="attendre">attendre 1 seconde</option>
+                  </select>
+                </div>
 
-                            <div class="scratch-block scratch-block--variable">
-                                mettre <strong>temperature_max</strong> à <strong>35</strong>
-                            </div>
+                <div class="scratch-indent">
+                  <div class="scratch-block scratch-block--sensing">
+                    mettre <strong>temperature_actuelle</strong> à [valeur du
+                    capteur]
+                  </div>
 
-                            <!-- TROU A : type de boucle -->
-                            <div class="scratch-block scratch-block--control">
-                                <select data-field="ex2_trou_A" id="ex2_trou_A">
-                                    <option value="">— choisir —</option>
-                                    <option value="repeter_24">répéter 24 fois</option>
-                                    <option value="toujours">répéter indéfiniment</option>
-                                    <option value="si">si … alors</option>
-                                    <option value="attendre">attendre 1 seconde</option>
-                                </select>
-                            </div>
+                  <div class="scratch-block scratch-block--control">
+                    si
+                    <span
+                      style="
+                        background: rgba(255, 255, 255, 0.2);
+                        border-radius: 4px;
+                        padding: 2px 8px;
+                      "
+                    >
+                      temperature_actuelle &gt;
+                      <!-- TROU B : valeur du seuil -->
+                      <input
+                        type="text"
+                        data-field="ex2_trou_B"
+                        id="ex2_trou_B"
+                        placeholder="?"
+                      />
+                    </span>
+                    alors
+                  </div>
 
-                            <div class="scratch-indent">
-                                <div class="scratch-block scratch-block--sensing">
-                                    mettre <strong>temperature_actuelle</strong> à [valeur du capteur]
-                                </div>
-
-                                <div class="scratch-block scratch-block--control">
-                                    si <span style="background:rgba(255,255,255,0.2);border-radius:4px;padding:2px 8px;">
-                                        temperature_actuelle &gt;
-                                        <!-- TROU B : valeur du seuil -->
-                                        <input type="text" data-field="ex2_trou_B" id="ex2_trou_B"
-                                               placeholder="?" />
-                                    </span> alors
-                                </div>
-
-                                <div class="scratch-indent">
-                                    <!-- TROU C : action si alerte -->
-                                    <div class="scratch-block scratch-block--looks">
-                                        <select data-field="ex2_trou_C" id="ex2_trou_C">
-                                            <option value="">— choisir —</option>
-                                            <option value="dire_alerte">dire ⚠️ Alerte chaleur !</option>
-                                            <option value="dire_normale">dire Température normale</option>
-                                            <option value="arreter">arrêter tout</option>
-                                            <option value="attendre">attendre 1 seconde</option>
-                                        </select>
-                                    </div>
-                                </div>
-
-                                <div class="scratch-block scratch-block--control">fin si</div>
-                            </div>
-
-                            <!-- Bloc fermant la boucle — affiché mais non modifiable -->
-                            <div class="scratch-block scratch-block--control">fin répéter</div>
-                        </div>
+                  <div class="scratch-indent">
+                    <!-- TROU C : action si alerte -->
+                    <div class="scratch-block scratch-block--looks">
+                      <select data-field="ex2_trou_C" id="ex2_trou_C">
+                        <option value="">— choisir —</option>
+                        <option value="dire_alerte">
+                          dire ⚠️ Alerte chaleur !
+                        </option>
+                        <option value="dire_normale">
+                          dire Température normale
+                        </option>
+                        <option value="arreter">arrêter tout</option>
+                        <option value="attendre">attendre 1 seconde</option>
+                      </select>
                     </div>
+                  </div>
+
+                  <div class="scratch-block scratch-block--control">fin si</div>
                 </div>
 
-                <!-- Q1 : justifier le choix de la boucle (trou A) -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 1</span>
-                    <label class="wizard__label required">
-                        Tu viens de choisir le bloc pour la case <strong>A</strong>.
-                        Pourquoi ce type de boucle est-il adapté ici et non une boucle <em>« répéter indéfiniment »</em> ?
-                    </label>
-                    <div class="wizard__checkbox-group">
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex2q1" data-field="ex2_q1" value="connu" />
-                            <span class="wizard__checkbox-label">Parce que le nombre de répétitions est connu à l'avance (24 mesures par jour)</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex2q1" data-field="ex2_q1" value="plus_rapide" />
-                            <span class="wizard__checkbox-label">Parce que cette boucle s'exécute plus rapidement</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex2q1" data-field="ex2_q1" value="obligatoire_scratch" />
-                            <span class="wizard__checkbox-label">Parce que Scratch n'autorise pas la boucle indéfinie</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex2q1" data-field="ex2_q1" value="moins_memoire" />
-                            <span class="wizard__checkbox-label">Parce qu'elle utilise moins de mémoire</span>
-                        </label>
-                    </div>
+                <!-- Bloc fermant la boucle — affiché mais non modifiable -->
+                <div class="scratch-block scratch-block--control">
+                  fin répéter
                 </div>
+              </div>
+            </div>
+          </div>
 
-                <!-- Q2 : vérifier la valeur du trou B -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 2</span>
-                    <label class="wizard__label required">
-                        Quelle valeur as-tu écrite dans la case <strong>B</strong> (le seuil de la condition) ?
-                        Explique pourquoi en une phrase.
-                    </label>
-                    <p class="wizard__hint">La réponse est dans le contexte de l'exercice 1.</p>
-                    <textarea class="wizard__textarea"
-                              data-field="ex2_q2"
-                              placeholder="J'ai écrit … parce que…"
-                              spellcheck="true" lang="fr"
-                              autocorrect="on" autocapitalize="sentences"
-                              style="min-height: 70px;"></textarea>
-                </div>
+          <!-- Q1 : justifier le choix de la boucle (trou A) -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 1</span>
+            <label class="wizard__label required">
+              Tu viens de choisir le bloc pour la case <strong>A</strong>.
+              Pourquoi ce type de boucle est-il adapté ici et non une boucle
+              <em>« répéter indéfiniment »</em> ?
+            </label>
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex2q1"
+                  data-field="ex2_q1"
+                  value="connu"
+                />
+                <span class="wizard__checkbox-label"
+                  >Parce que le nombre de répétitions est connu à l'avance (24
+                  mesures par jour)</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex2q1"
+                  data-field="ex2_q1"
+                  value="plus_rapide"
+                />
+                <span class="wizard__checkbox-label"
+                  >Parce que cette boucle s'exécute plus rapidement</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex2q1"
+                  data-field="ex2_q1"
+                  value="obligatoire_scratch"
+                />
+                <span class="wizard__checkbox-label"
+                  >Parce que Scratch n'autorise pas la boucle indéfinie</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex2q1"
+                  data-field="ex2_q1"
+                  value="moins_memoire"
+                />
+                <span class="wizard__checkbox-label"
+                  >Parce qu'elle utilise moins de mémoire</span
+                >
+              </label>
+            </div>
+          </div>
 
-                <!-- Q3 — QCM : que se passe-t-il si température = 35 ? -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 3</span>
-                    <label class="wizard__label required">
-                        Si la temperature_actuelle est exactement égale à 35 °C, le programme affiche-t-il l'alerte ?
-                    </label>
-                    <div class="wizard__checkbox-group">
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex2q3" data-field="ex2_q3" value="oui" />
-                            <span class="wizard__checkbox-label">Oui, car 35 = 35</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex2q3" data-field="ex2_q3" value="non" />
-                            <span class="wizard__checkbox-label">Non, car la condition est <code>strictement supérieur à</code> 35, pas égal</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex2q3" data-field="ex2_q3" value="erreur" />
-                            <span class="wizard__checkbox-label">Le programme plante car les deux valeurs sont identiques</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex2q3" data-field="ex2_q3" value="depends" />
-                            <span class="wizard__checkbox-label">Cela dépend du capteur utilisé</span>
-                        </label>
-                    </div>
-                </div>
+          <!-- Q2 : vérifier la valeur du trou B -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 2</span>
+            <label class="wizard__label required">
+              Quelle valeur as-tu écrite dans la case <strong>B</strong> (le
+              seuil de la condition) ? Explique pourquoi en une phrase.
+            </label>
+            <p class="wizard__hint">
+              La réponse est dans le contexte de l'exercice 1.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="ex2_q2"
+              placeholder="J'ai écrit … parce que…"
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+              style="min-height: 70px"
+            ></textarea>
+          </div>
 
-                <!-- Q4 — QCM : identifier le bloc de la case C -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 4</span>
-                    <label class="wizard__label required">
-                        Pour la case <strong>C</strong>, tu as choisi un bloc de la catégorie <em>Apparence</em> (Looks).
-                        Dans quel cas aurais-tu plutôt utilisé un bloc de la catégorie <em>Son</em> ?
-                    </label>
-                    <div class="wizard__checkbox-group">
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex2q4" data-field="ex2_q4" value="son_alerte" />
-                            <span class="wizard__checkbox-label">Si on voulait déclencher une alarme sonore en plus du message visuel</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex2q4" data-field="ex2_q4" value="son_toujours" />
-                            <span class="wizard__checkbox-label">Toujours — le son est plus visible qu'un message texte</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex2q4" data-field="ex2_q4" value="son_jamais" />
-                            <span class="wizard__checkbox-label">Jamais — Scratch ne permet pas de mélanger les catégories</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex2q4" data-field="ex2_q4" value="son_variable" />
-                            <span class="wizard__checkbox-label">Si la variable temperature_actuelle était de type mot</span>
-                        </label>
-                    </div>
-                </div>
+          <!-- Q3 — QCM : que se passe-t-il si température = 35 ? -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 3</span>
+            <label class="wizard__label required">
+              Si la temperature_actuelle est exactement égale à 35 °C, le
+              programme affiche-t-il l'alerte ?
+            </label>
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex2q3"
+                  data-field="ex2_q3"
+                  value="oui"
+                />
+                <span class="wizard__checkbox-label">Oui, car 35 = 35</span>
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex2q3"
+                  data-field="ex2_q3"
+                  value="non"
+                />
+                <span class="wizard__checkbox-label"
+                  >Non, car la condition est
+                  <code>strictement supérieur à</code> 35, pas égal</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex2q3"
+                  data-field="ex2_q3"
+                  value="erreur"
+                />
+                <span class="wizard__checkbox-label"
+                  >Le programme plante car les deux valeurs sont
+                  identiques</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex2q3"
+                  data-field="ex2_q3"
+                  value="depends"
+                />
+                <span class="wizard__checkbox-label"
+                  >Cela dépend du capteur utilisé</span
+                >
+              </label>
+            </div>
+          </div>
 
-                <div class="wizard__phase-nav">
-                    <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">← Précédent</button>
-                    <button class="btn btn--primary" onclick="wizardGoToPhase(3)">Suivant →</button>
-                </div>
-            </section>
+          <!-- Q4 — QCM : identifier le bloc de la case C -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 4</span>
+            <label class="wizard__label required">
+              Pour la case <strong>C</strong>, tu as choisi un bloc de la
+              catégorie <em>Apparence</em> (Looks). Dans quel cas aurais-tu
+              plutôt utilisé un bloc de la catégorie <em>Son</em> ?
+            </label>
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex2q4"
+                  data-field="ex2_q4"
+                  value="son_alerte"
+                />
+                <span class="wizard__checkbox-label"
+                  >Si on voulait déclencher une alarme sonore en plus du message
+                  visuel</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex2q4"
+                  data-field="ex2_q4"
+                  value="son_toujours"
+                />
+                <span class="wizard__checkbox-label"
+                  >Toujours — le son est plus visible qu'un message texte</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex2q4"
+                  data-field="ex2_q4"
+                  value="son_jamais"
+                />
+                <span class="wizard__checkbox-label"
+                  >Jamais — Scratch ne permet pas de mélanger les
+                  catégories</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex2q4"
+                  data-field="ex2_q4"
+                  value="son_variable"
+                />
+                <span class="wizard__checkbox-label"
+                  >Si la variable temperature_actuelle était de type mot</span
+                >
+              </label>
+            </div>
+          </div>
 
-            <!-- ╔═══════════════════════════════════════════════════╗
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
+              ← Précédent
+            </button>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(3)">
+              Suivant →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔═══════════════════════════════════════════════════╗
                  ║  EXERCICE 3 — Modifier un programme Scratch      ║
                  ║  Contexte : station météo · nouvelle fonctionnalité║
                  ║  Attendu 3ème SFC 31.2/3 : analyser + modifier   ║
                  ╚═══════════════════════════════════════════════════╝ -->
-            <section class="wizard__phase" data-phase="3">
-                <div class="wizard__phase-header">
-                    <div class="wizard__phase-icon">🔧</div>
-                    <h2 class="wizard__phase-title">Exercice 3 — Modifier un programme Scratch</h2>
-                    <p class="wizard__phase-subtitle">Le programme doit évoluer. Analyse et propose les modifications.</p>
+        <section class="wizard__phase" data-phase="3">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🔧</div>
+            <h2 class="wizard__phase-title">
+              Exercice 3 — Modifier un programme Scratch
+            </h2>
+            <p class="wizard__phase-subtitle">
+              Le programme doit évoluer. Analyse et propose les modifications.
+            </p>
+          </div>
+
+          <!-- Contexte OST -->
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">📄 Contexte</p>
+            <div class="wizard__tips-content">
+              <p>
+                Le principal du collège souhaite deux améliorations à la station
+                météo :
+              </p>
+              <ol style="margin: 0.5rem 0 0 1.2rem; line-height: 2">
+                <li>
+                  Le seuil d'alerte doit passer de
+                  <strong>35 °C à 38 °C</strong>.
+                </li>
+                <li>
+                  En plus de l'alerte chaleur, le programme doit aussi afficher
+                  <strong>« ❄️ Risque de gel ! »</strong> si la température
+                  passe <strong>en dessous de 0 °C</strong>.
+                </li>
+              </ol>
+              <p style="margin-top: 0.6rem">
+                Voici le programme de départ (celui de l'exercice 1, complet) :
+              </p>
+
+              <div class="scratch-program">
+                <div class="scratch-block scratch-block--hat">
+                  🚩 Quand ⚑ est cliqué
                 </div>
-
-                <!-- Contexte OST -->
-                <div class="wizard__tips">
-                    <p class="wizard__tips-title">📄 Contexte</p>
-                    <div class="wizard__tips-content">
-                        <p>
-                            Le principal du collège souhaite deux améliorations à la station météo :
-                        </p>
-                        <ol style="margin: 0.5rem 0 0 1.2rem; line-height: 2;">
-                            <li>Le seuil d'alerte doit passer de <strong>35 °C à 38 °C</strong>.</li>
-                            <li>En plus de l'alerte chaleur, le programme doit aussi afficher
-                            <strong>« ❄️ Risque de gel ! »</strong> si la température passe
-                            <strong>en dessous de 0 °C</strong>.</li>
-                        </ol>
-                        <p style="margin-top:0.6rem;">
-                            Voici le programme de départ (celui de l'exercice 1, complet) :
-                        </p>
-
-                        <div class="scratch-program">
-                            <div class="scratch-block scratch-block--hat">🚩 Quand ⚑ est cliqué</div>
-                            <div class="scratch-block scratch-block--variable">mettre <strong>temperature_max</strong> à <strong>35</strong></div>
-                            <div class="scratch-block scratch-block--sensing">mettre <strong>temperature_actuelle</strong> à [valeur du capteur]</div>
-                            <div class="scratch-block scratch-block--control">si <span style="background:rgba(255,255,255,0.2);border-radius:4px;padding:2px 8px;">temperature_actuelle &gt; temperature_max</span> alors</div>
-                            <div class="scratch-indent">
-                                <div class="scratch-block scratch-block--looks">dire <strong>⚠️ Alerte chaleur !</strong></div>
-                            </div>
-                            <div class="scratch-block scratch-block--control">sinon</div>
-                            <div class="scratch-indent">
-                                <div class="scratch-block scratch-block--looks">dire <strong>Température normale</strong></div>
-                            </div>
-                            <div class="scratch-block scratch-block--control">fin si</div>
-                        </div>
-                    </div>
+                <div class="scratch-block scratch-block--variable">
+                  mettre <strong>temperature_max</strong> à <strong>35</strong>
                 </div>
-
-                <!-- Q1 — QCM simple : modification du seuil -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 1</span>
-                    <label class="wizard__label required">
-                        Pour passer le seuil d'alerte à 38 °C, quel bloc faut-il modifier dans le programme ?
-                    </label>
-                    <div class="wizard__checkbox-group">
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex3q1" data-field="ex3_q1" value="bloc_variable" />
-                            <span class="wizard__checkbox-label">Le bloc <em>« mettre temperature_max à 35 »</em> → remplacer 35 par 38</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex3q1" data-field="ex3_q1" value="bloc_capteur" />
-                            <span class="wizard__checkbox-label">Le bloc <em>« mettre temperature_actuelle à [valeur du capteur] »</em></span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex3q1" data-field="ex3_q1" value="bloc_dire" />
-                            <span class="wizard__checkbox-label">Le bloc <em>« dire ⚠️ Alerte chaleur ! »</em></span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex3q1" data-field="ex3_q1" value="bloc_chapeau" />
-                            <span class="wizard__checkbox-label">Le bloc chapeau <em>« Quand ⚑ est cliqué »</em></span>
-                        </label>
-                    </div>
+                <div class="scratch-block scratch-block--sensing">
+                  mettre <strong>temperature_actuelle</strong> à [valeur du
+                  capteur]
                 </div>
-
-                <!-- Q2 — QCM : identifier où ajouter le test gel -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 2</span>
-                    <label class="wizard__label required">
-                        Pour ajouter la détection du gel (température &lt; 0 °C), où faut-il placer
-                        le nouveau bloc <em>« si … alors »</em> dans le programme ?
-                    </label>
-                    <div class="wizard__checkbox-group">
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex3q2" data-field="ex3_q2" value="apres_premier_si" />
-                            <span class="wizard__checkbox-label">Après le premier bloc « fin si », en ajoutant un deuxième test indépendant</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex3q2" data-field="ex3_q2" value="dans_sinon" />
-                            <span class="wizard__checkbox-label">À l'intérieur du bloc « sinon », en remplaçant « Température normale »</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex3q2" data-field="ex3_q2" value="avant_premier_si" />
-                            <span class="wizard__checkbox-label">Avant le premier bloc « si », au tout début du programme</span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex3q2" data-field="ex3_q2" value="dans_alerte" />
-                            <span class="wizard__checkbox-label">À l'intérieur du bloc « dire ⚠️ Alerte chaleur ! »</span>
-                        </label>
-                    </div>
+                <div class="scratch-block scratch-block--control">
+                  si
+                  <span
+                    style="
+                      background: rgba(255, 255, 255, 0.2);
+                      border-radius: 4px;
+                      padding: 2px 8px;
+                    "
+                    >temperature_actuelle &gt; temperature_max</span
+                  >
+                  alors
                 </div>
-
-                <!-- Q3 — Complétion : écrire la condition gel -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 3</span>
-                    <label class="wizard__label required">
-                        Complète le programme en écrivant la <strong>condition</strong> du nouveau test
-                        et le <strong>message</strong> à afficher en cas de gel.
-                    </label>
-                    <p style="margin-top:0.5rem; margin-bottom:0.25rem; font-size:0.85rem; color: var(--color-gray-600);">
-                        Nouveau bloc à compléter :
-                    </p>
-                    <div class="scratch-program">
-                        <div class="scratch-block scratch-block--control">
-                            si
-                            <input type="text" data-field="ex3_condition_gel"
-                                   placeholder="condition…"
-                                   style="width:160px;" />
-                            alors
-                        </div>
-                        <div class="scratch-indent">
-                            <div class="scratch-block scratch-block--looks">
-                                dire
-                                <input type="text" data-field="ex3_message_gel"
-                                       placeholder="message…"
-                                       style="width:160px;" />
-                            </div>
-                        </div>
-                        <div class="scratch-block scratch-block--control">fin si</div>
-                    </div>
+                <div class="scratch-indent">
+                  <div class="scratch-block scratch-block--looks">
+                    dire <strong>⚠️ Alerte chaleur !</strong>
+                  </div>
                 </div>
-
-                <!-- Q4 — QCM : effet du changement sur le comportement -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 4</span>
-                    <label class="wizard__label required">
-                        Avec le seuil modifié à 38 °C, que se passe-t-il si le capteur mesure 36 °C ?
-                    </label>
-                    <div class="wizard__checkbox-group">
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex3q4" data-field="ex3_q4" value="alerte" />
-                            <span class="wizard__checkbox-label">Le programme affiche <em>⚠️ Alerte chaleur !</em></span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex3q4" data-field="ex3_q4" value="normale" />
-                            <span class="wizard__checkbox-label">Le programme affiche <em>Température normale</em></span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex3q4" data-field="ex3_q4" value="gel" />
-                            <span class="wizard__checkbox-label">Le programme affiche <em>❄️ Risque de gel !</em></span>
-                        </label>
-                        <label class="wizard__checkbox-item">
-                            <input type="radio" name="ex3q4" data-field="ex3_q4" value="erreur" />
-                            <span class="wizard__checkbox-label">Le programme affiche une erreur car 36 est entre 0 et 38</span>
-                        </label>
-                    </div>
+                <div class="scratch-block scratch-block--control">sinon</div>
+                <div class="scratch-indent">
+                  <div class="scratch-block scratch-block--looks">
+                    dire <strong>Température normale</strong>
+                  </div>
                 </div>
+                <div class="scratch-block scratch-block--control">fin si</div>
+              </div>
+            </div>
+          </div>
 
-                <!-- Q5 — Ouverte courte : expliquer en langage naturel -->
-                <div class="wizard__group">
-                    <span class="wizard__question-number">Question 5</span>
-                    <label class="wizard__label required">
-                        Décris en une ou deux phrases, en langage naturel, ce que fait le programme
-                        modifié dans sa totalité.
-                    </label>
-                    <p class="wizard__hint">Utilise les mots : <em>capteur</em>, <em>seuil</em>, <em>affiche</em>.</p>
-                    <textarea class="wizard__textarea"
-                              data-field="ex3_q5"
-                              placeholder="Le programme lit la valeur du capteur, puis…"
-                              spellcheck="true" lang="fr"
-                              autocorrect="on" autocapitalize="sentences"></textarea>
+          <!-- Q1 — QCM simple : modification du seuil -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 1</span>
+            <label class="wizard__label required">
+              Pour passer le seuil d'alerte à 38 °C, quel bloc faut-il modifier
+              dans le programme ?
+            </label>
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex3q1"
+                  data-field="ex3_q1"
+                  value="bloc_variable"
+                />
+                <span class="wizard__checkbox-label"
+                  >Le bloc <em>« mettre temperature_max à 35 »</em> → remplacer
+                  35 par 38</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex3q1"
+                  data-field="ex3_q1"
+                  value="bloc_capteur"
+                />
+                <span class="wizard__checkbox-label"
+                  >Le bloc
+                  <em
+                    >« mettre temperature_actuelle à [valeur du capteur] »</em
+                  ></span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex3q1"
+                  data-field="ex3_q1"
+                  value="bloc_dire"
+                />
+                <span class="wizard__checkbox-label"
+                  >Le bloc <em>« dire ⚠️ Alerte chaleur ! »</em></span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex3q1"
+                  data-field="ex3_q1"
+                  value="bloc_chapeau"
+                />
+                <span class="wizard__checkbox-label"
+                  >Le bloc chapeau <em>« Quand ⚑ est cliqué »</em></span
+                >
+              </label>
+            </div>
+          </div>
+
+          <!-- Q2 — QCM : identifier où ajouter le test gel -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 2</span>
+            <label class="wizard__label required">
+              Pour ajouter la détection du gel (température &lt; 0 °C), où
+              faut-il placer le nouveau bloc <em>« si … alors »</em> dans le
+              programme ?
+            </label>
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex3q2"
+                  data-field="ex3_q2"
+                  value="apres_premier_si"
+                />
+                <span class="wizard__checkbox-label"
+                  >Après le premier bloc « fin si », en ajoutant un deuxième
+                  test indépendant</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex3q2"
+                  data-field="ex3_q2"
+                  value="dans_sinon"
+                />
+                <span class="wizard__checkbox-label"
+                  >À l'intérieur du bloc « sinon », en remplaçant « Température
+                  normale »</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex3q2"
+                  data-field="ex3_q2"
+                  value="avant_premier_si"
+                />
+                <span class="wizard__checkbox-label"
+                  >Avant le premier bloc « si », au tout début du
+                  programme</span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex3q2"
+                  data-field="ex3_q2"
+                  value="dans_alerte"
+                />
+                <span class="wizard__checkbox-label"
+                  >À l'intérieur du bloc « dire ⚠️ Alerte chaleur ! »</span
+                >
+              </label>
+            </div>
+          </div>
+
+          <!-- Q3 — Complétion : écrire la condition gel -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 3</span>
+            <label class="wizard__label required">
+              Complète le programme en écrivant la <strong>condition</strong> du
+              nouveau test et le <strong>message</strong> à afficher en cas de
+              gel.
+            </label>
+            <p
+              style="
+                margin-top: 0.5rem;
+                margin-bottom: 0.25rem;
+                font-size: 0.85rem;
+                color: var(--color-gray-600);
+              "
+            >
+              Nouveau bloc à compléter :
+            </p>
+            <div class="scratch-program">
+              <div class="scratch-block scratch-block--control">
+                si
+                <input
+                  type="text"
+                  data-field="ex3_condition_gel"
+                  placeholder="condition…"
+                  style="width: 160px"
+                />
+                alors
+              </div>
+              <div class="scratch-indent">
+                <div class="scratch-block scratch-block--looks">
+                  dire
+                  <input
+                    type="text"
+                    data-field="ex3_message_gel"
+                    placeholder="message…"
+                    style="width: 160px"
+                  />
                 </div>
+              </div>
+              <div class="scratch-block scratch-block--control">fin si</div>
+            </div>
+          </div>
 
-                <div class="wizard__phase-nav">
-                    <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">← Précédent</button>
-                    <button class="btn btn--success" onclick="wizardComplete()">✅ Terminer</button>
-                </div>
-            </section>
+          <!-- Q4 — QCM : effet du changement sur le comportement -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 4</span>
+            <label class="wizard__label required">
+              Avec le seuil modifié à 38 °C, que se passe-t-il si le capteur
+              mesure 36 °C ?
+            </label>
+            <div class="wizard__checkbox-group">
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex3q4"
+                  data-field="ex3_q4"
+                  value="alerte"
+                />
+                <span class="wizard__checkbox-label"
+                  >Le programme affiche <em>⚠️ Alerte chaleur !</em></span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex3q4"
+                  data-field="ex3_q4"
+                  value="normale"
+                />
+                <span class="wizard__checkbox-label"
+                  >Le programme affiche <em>Température normale</em></span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex3q4"
+                  data-field="ex3_q4"
+                  value="gel"
+                />
+                <span class="wizard__checkbox-label"
+                  >Le programme affiche <em>❄️ Risque de gel !</em></span
+                >
+              </label>
+              <label class="wizard__checkbox-item">
+                <input
+                  type="radio"
+                  name="ex3q4"
+                  data-field="ex3_q4"
+                  value="erreur"
+                />
+                <span class="wizard__checkbox-label"
+                  >Le programme affiche une erreur car 36 est entre 0 et
+                  38</span
+                >
+              </label>
+            </div>
+          </div>
 
-        </div><!-- /.wizard__container -->
+          <!-- Q5 — Ouverte courte : expliquer en langage naturel -->
+          <div class="wizard__group">
+            <span class="wizard__question-number">Question 5</span>
+            <label class="wizard__label required">
+              Décris en une ou deux phrases, en langage naturel, ce que fait le
+              programme modifié dans sa totalité.
+            </label>
+            <p class="wizard__hint">
+              Utilise les mots : <em>capteur</em>, <em>seuil</em>,
+              <em>affiche</em>.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="ex3_q5"
+              placeholder="Le programme lit la valeur du capteur, puis…"
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
 
-        <!-- ========== BARRE D'ACTIONS ========== -->
-        <div class="wizard__actions">
-            <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter JSON</button>
-            <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer JSON</button>
-            <input type="file" id="importInput" accept=".json" style="display:none" onchange="wizardImportJSON(event)">
-            <button class="btn btn--secondary btn--small" onclick="handleSafeReset()">🗑️ Réinitialiser</button>
-            <button class="btn btn--secondary btn--small" onclick="window.print()">🖨️ Imprimer</button>
-        </div>
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
+              ← Précédent
+            </button>
+            <button class="btn btn--success" onclick="wizardComplete()">
+              ✅ Terminer
+            </button>
+          </div>
+        </section>
+      </div>
+      <!-- /.wizard__container -->
 
+      <!-- ========== BARRE D'ACTIONS ========== -->
+      <div class="wizard__actions">
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="wizardExportJSON()"
+        >
+          📤 Exporter JSON
+        </button>
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="document.getElementById('importInput').click()"
+        >
+          📥 Importer JSON
+        </button>
+        <input
+          type="file"
+          id="importInput"
+          accept=".json"
+          style="display: none"
+          onchange="wizardImportJSON(event)"
+        />
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="handleSafeReset()"
+        >
+          🗑️ Réinitialiser
+        </button>
+        <button class="btn btn--secondary btn--small" onclick="window.print()">
+          🖨️ Imprimer
+        </button>
+      </div>
     </main>
 
     <div id="footer-placeholder"></div>
 
     <!-- ========== MODALES ========== -->
     <div class="wizard__modal-overlay" id="completionModal">
-        <div class="wizard__modal">
-            <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
-            <div class="wizard__modal-content">
-                <p>Tu as terminé les 3 exercices !</p>
-                <p style="margin-top:1rem">Tes réponses ont été <strong>sauvegardées automatiquement</strong>.</p>
-                <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--color-gray-500)">
-                    Tu peux aussi exporter une copie locale en JSON.
-                </p>
-            </div>
-            <div class="wizard__modal-actions">
-                <button class="btn btn--secondary" onclick="wizardCloseModal('completionModal')">Fermer</button>
-                <button class="btn btn--primary" onclick="wizardExportJSON();wizardCloseModal('completionModal')">📤 Exporter</button>
-            </div>
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
+        <div class="wizard__modal-content">
+          <p>Tu as terminé les 3 exercices !</p>
+          <p style="margin-top: 1rem">
+            Tes réponses ont été <strong>sauvegardées automatiquement</strong>.
+          </p>
+          <p
+            style="
+              margin-top: 0.75rem;
+              font-size: 0.875rem;
+              color: var(--color-gray-500);
+            "
+          >
+            Tu peux aussi exporter une copie locale en JSON.
+          </p>
         </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('completionModal')"
+          >
+            Fermer
+          </button>
+          <button
+            class="btn btn--primary"
+            onclick="
+              wizardExportJSON();
+              wizardCloseModal('completionModal');
+            "
+          >
+            📤 Exporter
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="wizard__modal-overlay" id="resetModal">
-        <div class="wizard__modal">
-            <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
-            <div class="wizard__modal-content">
-                <p>Une <strong>sauvegarde</strong> a été téléchargée automatiquement.</p>
-                <p>Voulez-vous <strong>recommencer</strong> avec un formulaire vide ?</p>
-            </div>
-            <div class="wizard__modal-actions">
-                <button class="btn btn--secondary" onclick="wizardCloseModal('resetModal')">Annuler</button>
-                <button class="btn btn--primary" style="background:var(--color-error)" onclick="wizardReset()">🗑️ Réinitialiser</button>
-            </div>
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
+        <div class="wizard__modal-content">
+          <p>
+            Une <strong>sauvegarde</strong> a été téléchargée automatiquement.
+          </p>
+          <p>
+            Voulez-vous <strong>recommencer</strong> avec un formulaire vide ?
+          </p>
         </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('resetModal')"
+          >
+            Annuler
+          </button>
+          <button
+            class="btn btn--primary"
+            style="background: var(--color-error)"
+            onclick="wizardReset()"
+          >
+            🗑️ Réinitialiser
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="wizard__toast" id="wizardToast">
-        <span class="wizard__toast-icon"></span>
-        <span class="wizard__toast-message"></span>
+      <span class="wizard__toast-icon"></span>
+      <span class="wizard__toast-message"></span>
     </div>
 
     <!-- ========== SCRIPTS ========== -->
     <script type="module" src="/src/js/components.js"></script>
     <script type="module">
-        import { WizardFirebase } from '/src/js/new-wizard-firebase.js';
+      import { WizardFirebase } from "/src/js/new-wizard-firebase.js";
 
-        window.wizardInstance = new WizardFirebase({
-            collectionName: 'dnb-programmation-3eme-v2',
+      window.wizardInstance = new WizardFirebase({
+        collectionName: "dnb-programmation-3eme-v2",
 
-            requiredFields: {
-                1: [
-                    'studentName',
-                    'studentClass',
-                    'ex1_q1',
-                    'ex1_q2',
-                    'ex1_q3',
-                    'ex1_q4',
-                    'ex1_q5',
-                ],
-                2: [
-                    'ex2_trou_A',
-                    'ex2_trou_B',
-                    'ex2_trou_C',
-                    'ex2_q1',
-                    'ex2_q2',
-                    'ex2_q3',
-                    'ex2_q4',
-                ],
-                3: [
-                    'ex3_q1',
-                    'ex3_q2',
-                    'ex3_condition_gel',
-                    'ex3_message_gel',
-                    'ex3_q4',
-                    'ex3_q5',
-                ]
-            },
+        requiredFields: {
+          1: [
+            "studentName",
+            "studentClass",
+            "ex1_q1",
+            "ex1_q2",
+            "ex1_q3",
+            "ex1_q4",
+            "ex1_q5",
+          ],
+          2: [
+            "ex2_trou_A",
+            "ex2_trou_B",
+            "ex2_trou_C",
+            "ex2_q1",
+            "ex2_q2",
+            "ex2_q3",
+            "ex2_q4",
+          ],
+          3: [
+            "ex3_q1",
+            "ex3_q2",
+            "ex3_condition_gel",
+            "ex3_message_gel",
+            "ex3_q4",
+            "ex3_q5",
+          ],
+        },
 
-            onComplete: (data) => {
-                console.log('🎉 Formulaire complété:', data);
-            },
-            onSaveSuccess: () => {
-                console.log('✅ Sauvegarde Firestore OK');
-            },
-            onSaveError: (error) => {
-                console.error('❌ Erreur Firestore:', error);
-            }
+        onComplete: (data) => {
+          console.log("🎉 Formulaire complété:", data);
+        },
+        onSaveSuccess: () => {
+          console.log("✅ Sauvegarde Firestore OK");
+        },
+        onSaveError: (error) => {
+          console.error("❌ Erreur Firestore:", error);
+        },
+      });
+
+      window.handleSafeReset = function () {
+        if (typeof wizardExportJSON === "function") {
+          wizardExportJSON();
+        } else if (window.wizardInstance) {
+          window.wizardInstance.exportToJSON();
+        }
+        if (window.wizardInstance?.showToast) {
+          window.wizardInstance.showToast(
+            "Sauvegarde de secours téléchargée !",
+            "success",
+          );
+        }
+        wizardShowModal("resetModal");
+      };
+
+      import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+
+      window.checkPassword = function () {
+        const passwordInput = document.getElementById("passwordInput");
+        const errorMessage = document.getElementById("errorMessage");
+        const passwordOverlay = document.getElementById("passwordOverlay");
+        const mainContent = document.querySelector("main.wizard");
+
+        if (passwordInput.value === CORRECT_PASSWORD) {
+          passwordOverlay.style.display = "none";
+          mainContent.style.display = "block";
+          errorMessage.style.display = "none";
+          if (window.wizardInstance) window.wizardInstance.init();
+        } else {
+          errorMessage.style.display = "block";
+          passwordInput.value = "";
+        }
+      };
+
+      document
+        .getElementById("passwordInput")
+        .addEventListener("keypress", function (e) {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            checkPassword();
+          }
         });
 
-        window.handleSafeReset = function() {
-            if (typeof wizardExportJSON === "function") {
-                wizardExportJSON();
-            } else if (window.wizardInstance) {
-                window.wizardInstance.exportToJSON();
-            }
-            if (window.wizardInstance?.showToast) {
-                window.wizardInstance.showToast("Sauvegarde de secours téléchargée !", "success");
-            }
-            wizardShowModal('resetModal');
-        };
+      // ── Light Mode Toggle ──
+      function initLightModeToggle() {
+        const body = document.body;
+        const toggle = document.getElementById("modeToggle");
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentMode = urlParams.get("mode") === "light" ? "light" : "dark";
 
-        import { CORRECT_PASSWORD } from '/src/js/wizard-config.js';
+        if (currentMode === "light") {
+          body.classList.add("light-mode");
+          toggle.textContent = "☀️";
+        } else {
+          body.classList.remove("light-mode");
+          toggle.textContent = "🌙";
+        }
 
-        window.checkPassword = function() {
-            const passwordInput = document.getElementById('passwordInput');
-            const errorMessage  = document.getElementById('errorMessage');
-            const passwordOverlay = document.getElementById('passwordOverlay');
-            const mainContent   = document.querySelector('main.wizard');
-
-            if (passwordInput.value === CORRECT_PASSWORD) {
-                passwordOverlay.style.display = 'none';
-                mainContent.style.display     = 'block';
-                errorMessage.style.display    = 'none';
-                if (window.wizardInstance) window.wizardInstance.init();
-            } else {
-                errorMessage.style.display = 'block';
-                passwordInput.value = '';
-            }
-        };
-
-        document.getElementById('passwordInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') { e.preventDefault(); checkPassword(); }
+        toggle.addEventListener("click", () => {
+          currentMode = currentMode === "dark" ? "light" : "dark";
+          if (currentMode === "light") {
+            body.classList.add("light-mode");
+            toggle.textContent = "☀️";
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set("mode", "light");
+            window.history.replaceState({}, "", newUrl);
+          } else {
+            body.classList.remove("light-mode");
+            toggle.textContent = "🌙";
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.delete("mode");
+            window.history.replaceState({}, "", newUrl);
+          }
         });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initLightModeToggle);
+      } else {
+        initLightModeToggle();
+      }
     </script>
-</body>
+  </body>
 </html>

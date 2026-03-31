@@ -1,9 +1,8 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!-- ╔══════════════════════════════════════════════════════════════╗
          ║  TEMPLATE FICHE DE RÉVISION DNB — TechnoDocs               ║
          ║                                                              ║
@@ -20,43 +19,60 @@
          ╚══════════════════════════════════════════════════════════════╝ -->
 
     <!-- [À MODIFIER] Titre de la page -->
-    <title>Les objets et systèmes techniques | Révisions DNB | TechnoDocs</title>
+    <title>
+      Les objets et systèmes techniques | Révisions DNB | TechnoDocs
+    </title>
 
     <!-- [À MODIFIER] Description SEO -->
-    <meta name="description" content="Fiche de révision DNB Technologie — Les objets et systèmes techniques">
+    <meta
+      name="description"
+      content="Fiche de révision DNB Technologie — Les objets et systèmes techniques"
+    />
 
-    <link rel="stylesheet" href="../../css/style.css">
-    <link rel="stylesheet" href="../../css/markdown.css">
-    <link rel="stylesheet" href="../../css/cours.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="../../css/style.css" />
+    <link rel="stylesheet" href="../../css/markdown.css" />
+    <link rel="stylesheet" href="../../css/cours.css" />
+    <link rel="stylesheet" href="../../css/style-index-light.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@400;500&family=Lexend:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
-</head>
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&family=Fira+Code:wght@400;500&family=Lexend:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
 
-<body>
+  <body>
+    <button
+      class="mode-toggle"
+      id="modeToggle"
+      title="Basculer le mode"
+      aria-label="Basculer le mode clair/sombre"
+    >
+      🌙
+    </button>
     <div id="header-placeholder"></div>
 
     <main>
-        <!-- Hero simple (titre + subtitle chargés par cours-loader.js via le JSON) -->
-        <section class="cours-hero">
-            <div class="cours-hero__shapes" aria-hidden="true">
-                <div class="cours-shape cours-shape--1"></div>
-                <div class="cours-shape cours-shape--2"></div>
-                <div class="cours-shape cours-shape--3"></div>
-            </div>
+      <!-- Hero simple (titre + subtitle chargés par cours-loader.js via le JSON) -->
+      <section class="cours-hero">
+        <div class="cours-hero__shapes" aria-hidden="true">
+          <div class="cours-shape cours-shape--1"></div>
+          <div class="cours-shape cours-shape--2"></div>
+          <div class="cours-shape cours-shape--3"></div>
+        </div>
 
-            <div class="cours-hero__header">
-                <h1 class="cours-hero__title" id="cours-title">Chargement…</h1>
-                <p class="cours-hero__subtitle" id="cours-subtitle">Fiche de révision DNB</p>
-            </div>
-        </section>
+        <div class="cours-hero__header">
+          <h1 class="cours-hero__title" id="cours-title">Chargement…</h1>
+          <p class="cours-hero__subtitle" id="cours-subtitle">
+            Fiche de révision DNB
+          </p>
+        </div>
+      </section>
 
-        <!-- Contenu Markdown (chargé par cours-loader.js) -->
-        <article class="md-content" id="markdown-container">
-            <div class="md-loading">Chargement de la fiche…</div>
-        </article>
+      <!-- Contenu Markdown (chargé par cours-loader.js) -->
+      <article class="md-content" id="markdown-container">
+        <div class="md-loading">Chargement de la fiche…</div>
+      </article>
     </main>
 
     <div id="footer-placeholder"></div>
@@ -67,11 +83,50 @@
     <!-- Scripts modules -->
     <script type="module" src="../../js/components.js"></script>
     <script type="module">
-        import { initCoursPage } from '../../js/cours-loader.js';
+      import { initCoursPage } from "../../js/cours-loader.js";
 
-        // [À MODIFIER] Chemin vers le JSON de configuration de cette fiche
-        initCoursPage('../../data/revisions/fiche-01-ost.json');
+      // [À MODIFIER] Chemin vers le JSON de configuration de cette fiche
+      initCoursPage("../../data/revisions/fiche-01-ost.json");
     </script>
-</body>
+    <!-- Light Mode Toggle -->
+    <script>
+      function initLightModeToggle() {
+        const body = document.body;
+        const toggle = document.getElementById("modeToggle");
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentMode = urlParams.get("mode") === "light" ? "light" : "dark";
 
+        if (currentMode === "light") {
+          body.classList.add("light-mode");
+          toggle.textContent = "☀️";
+        } else {
+          body.classList.remove("light-mode");
+          toggle.textContent = "🌙";
+        }
+
+        toggle.addEventListener("click", () => {
+          currentMode = currentMode === "dark" ? "light" : "dark";
+          if (currentMode === "light") {
+            body.classList.add("light-mode");
+            toggle.textContent = "☀️";
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set("mode", "light");
+            window.history.replaceState({}, "", newUrl);
+          } else {
+            body.classList.remove("light-mode");
+            toggle.textContent = "🌙";
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.delete("mode");
+            window.history.replaceState({}, "", newUrl);
+          }
+        });
+      }
+
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initLightModeToggle);
+      } else {
+        initLightModeToggle();
+      }
+    </script>
+  </body>
 </html>

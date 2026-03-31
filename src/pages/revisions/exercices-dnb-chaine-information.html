@@ -1,284 +1,476 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Exercices type DNB — Chaînes d'information — TechnoDocs">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Exercices type DNB — Chaînes d'information — TechnoDocs"
+    />
     <title>Exercices DNB – Chaînes d'information | TechnoDocs</title>
 
     <!-- CSS du projet -->
-    <link rel="stylesheet" href="/src/css/style.css">
-    <link rel="stylesheet" href="/src/css/wizard.css">
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+    <link rel="stylesheet" href="/src/css/style-index-light.css" />
 
     <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
-</head>
-<body>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <button
+      class="mode-toggle"
+      id="modeToggle"
+      title="Basculer le mode"
+      aria-label="Basculer le mode clair/sombre"
+    >
+      🌙
+    </button>
 
     <!-- <div id="header-placeholder"></div> -->
 
     <main class="wizard">
-
-        <!-- ========== BANNIÈRE TITRE ========== -->
-        <div class="wizard__banner">
-            <div class="wizard__banner-icon">🔗</div>
-            <div class="wizard__banner-content">
-                <h1 class="wizard__banner-title">Exercices type DNB — Chaînes d'information</h1>
-                <div class="wizard__banner-skills">
-                    <span class="wizard__skill">SFC 11 — Chaîne d'information</span>
-                    <span class="wizard__skill">SFC 12 — Capteurs & actionneurs</span>
-                </div>
-            </div>
+      <!-- ========== BANNIÈRE TITRE ========== -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">🔗</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">
+            Exercices type DNB — Chaînes d'information
+          </h1>
+          <div class="wizard__banner-skills">
+            <span class="wizard__skill">SFC 11 — Chaîne d'information</span>
+            <span class="wizard__skill">SFC 12 — Capteurs & actionneurs</span>
+          </div>
         </div>
+      </div>
 
-        <!-- ========== INFO ÉLÈVE ========== -->
-        <div class="wizard__student-info">
-            <div class="wizard__student-row">
-                <div class="wizard__student-field wizard__student-field--name">
-                    <label for="studentName">Prénom et Nom</label>
-                    <input type="text" id="studentName" data-field="studentName" placeholder="" spellcheck="true" lang="fr">
-                </div>
-                <div class="wizard__student-field wizard__student-field--class">
-                    <label for="studentClass">Classe</label>
-                    <select id="studentClass" data-field="studentClass">
-                        <option value="">— Sélectionner —</option>
-                        <optgroup label="3ème">
-                            <option value="302">3ème 2</option>
-                            <option value="303">3ème 3</option>
-                            <option value="304">3ème 4</option>
-                            <option value="305">3ème 5</option>
-                            <option value="306">3ème 6</option>
-                            <option value="307">3ème 7</option>
-                            <option value="308">3ème 8</option>
-                        </optgroup>
-                    </select>
-                </div>
-                <div class="wizard__student-field wizard__student-field--date">
-                    <label>Date</label>
-                    <span class="wizard__date-display" id="projectDate" data-field="projectDate"></span>
-                </div>
-            </div>
+      <!-- ========== INFO ÉLÈVE ========== -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="studentName">Prénom et Nom</label>
+            <input
+              type="text"
+              id="studentName"
+              data-field="studentName"
+              placeholder=""
+              spellcheck="true"
+              lang="fr"
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="studentClass">Classe</label>
+            <select id="studentClass" data-field="studentClass">
+              <option value="">— Sélectionner —</option>
+              <optgroup label="3ème">
+                <option value="302">3ème 2</option>
+                <option value="303">3ème 3</option>
+                <option value="304">3ème 4</option>
+                <option value="305">3ème 5</option>
+                <option value="306">3ème 6</option>
+                <option value="307">3ème 7</option>
+                <option value="308">3ème 8</option>
+              </optgroup>
+            </select>
+          </div>
+          <div class="wizard__student-field wizard__student-field--date">
+            <label>Date</label>
+            <span
+              class="wizard__date-display"
+              id="projectDate"
+              data-field="projectDate"
+            ></span>
+          </div>
         </div>
+      </div>
 
-        <!-- ========== PROGRESSION ========== -->
-        <section class="wizard__progress">
-            <div class="wizard__progress-header">
-                <h2 class="wizard__progress-title">Progression</h2>
-                <div class="wizard__save-indicator" id="saveIndicator">
-                    <span class="wizard__save-dot"></span>
-                    <span class="wizard__save-text">Auto-save</span>
-                </div>
-                <span class="wizard__progress-percentage" id="progressPercentage">0%</span>
-            </div>
-            <div class="wizard__progress-bar">
-                <div class="wizard__progress-fill" id="progressFill" style="width: 0%"></div>
-            </div>
-            <nav class="wizard__nav" id="phaseNav">
-                <button class="wizard__nav-btn active" data-phase="1">
-                    <span class="wizard__nav-number">1</span>
-                    <span>Portail automatique</span>
-                </button>
-                <button class="wizard__nav-btn" data-phase="2">
-                    <span class="wizard__nav-number">2</span>
-                    <span>Éclairage automatique</span>
-                </button>
-                <button class="wizard__nav-btn" data-phase="3">
-                    <span class="wizard__nav-number">3</span>
-                    <span>Aspirateur robot</span>
-                </button>
-            </nav>
-        </section>
+      <!-- ========== PROGRESSION ========== -->
+      <section class="wizard__progress">
+        <div class="wizard__progress-header">
+          <h2 class="wizard__progress-title">Progression</h2>
+          <div class="wizard__save-indicator" id="saveIndicator">
+            <span class="wizard__save-dot"></span>
+            <span class="wizard__save-text">Auto-save</span>
+          </div>
+          <span class="wizard__progress-percentage" id="progressPercentage"
+            >0%</span
+          >
+        </div>
+        <div class="wizard__progress-bar">
+          <div
+            class="wizard__progress-fill"
+            id="progressFill"
+            style="width: 0%"
+          ></div>
+        </div>
+        <nav class="wizard__nav" id="phaseNav">
+          <button class="wizard__nav-btn active" data-phase="1">
+            <span class="wizard__nav-number">1</span>
+            <span>Portail automatique</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="2">
+            <span class="wizard__nav-number">2</span>
+            <span>Éclairage automatique</span>
+          </button>
+          <button class="wizard__nav-btn" data-phase="3">
+            <span class="wizard__nav-number">3</span>
+            <span>Aspirateur robot</span>
+          </button>
+        </nav>
+      </section>
 
-        <!-- ══════════════════════════════════════════
+      <!-- ══════════════════════════════════════════
              PHASES DU WIZARD
              ══════════════════════════════════════════ -->
-        <div class="wizard__container">
-
-            <!-- ╔═══════════════════════════════════╗
+      <div class="wizard__container">
+        <!-- ╔═══════════════════════════════════╗
                  ║  PHASE 1 — Portail automatique   ║
                  ╚═══════════════════════════════════╝ -->
-            <section class="wizard__phase active" data-phase="1">
-                <div class="wizard__phase-header">
-                    <div class="wizard__phase-icon">🚪</div>
-                    <h2 class="wizard__phase-title">Exercice 1 — Identifier les éléments d'une chaîne d'information</h2>
-                    <p class="wizard__phase-subtitle">Portail automatique de maison</p>
-                </div>
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🚪</div>
+            <h2 class="wizard__phase-title">
+              Exercice 1 — Identifier les éléments d'une chaîne d'information
+            </h2>
+            <p class="wizard__phase-subtitle">Portail automatique de maison</p>
+          </div>
 
-                <!-- Mise en situation -->
-                <div class="wizard__tips">
-                    <p class="wizard__tips-title">📋 Mise en situation</p>
-                    <div class="wizard__tips-content">
-                        <p>Un portail automatique de maison possède les éléments suivants : une <strong>télécommande radio</strong>, un <strong>récepteur radio</strong>, une <strong>carte électronique</strong>, un <strong>voyant LED</strong> (vert = ouvert, rouge = fermé), et un <strong>moteur électrique</strong>.</p>
-                    </div>
-                </div>
+          <!-- Mise en situation -->
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">📋 Mise en situation</p>
+            <div class="wizard__tips-content">
+              <p>
+                Un portail automatique de maison possède les éléments suivants :
+                une <strong>télécommande radio</strong>, un
+                <strong>récepteur radio</strong>, une
+                <strong>carte électronique</strong>, un
+                <strong>voyant LED</strong> (vert = ouvert, rouge = fermé), et
+                un <strong>moteur électrique</strong>.
+              </p>
+            </div>
+          </div>
 
-                <!-- Question a -->
-                <div class="wizard__group">
-                    <label class="wizard__label required">a) Place chaque élément dans la bonne fonction de la chaîne d'information.</label>
-                    <p class="wizard__hint">Les 4 fonctions sont : <strong>acquérir</strong>, <strong>traiter</strong>, <strong>communiquer</strong>, <strong>commander</strong>. Associe chaque élément à sa fonction et justifie brièvement.</p>
-                    <textarea class="wizard__textarea"
-                              data-field="ex1_chaine_fonctions"
-                              placeholder="Ex : Acquérir → ... | Traiter → ... | Communiquer → ... | Commander → ..."
-                              spellcheck="true" lang="fr"
-                              autocorrect="on" autocapitalize="sentences"></textarea>
-                </div>
+          <!-- Question a -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >a) Place chaque élément dans la bonne fonction de la chaîne
+              d'information.</label
+            >
+            <p class="wizard__hint">
+              Les 4 fonctions sont : <strong>acquérir</strong>,
+              <strong>traiter</strong>, <strong>communiquer</strong>,
+              <strong>commander</strong>. Associe chaque élément à sa fonction
+              et justifie brièvement.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="ex1_chaine_fonctions"
+              placeholder="Ex : Acquérir → ... | Traiter → ... | Communiquer → ... | Commander → ..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
 
-                <!-- Question b -->
-                <div class="wizard__group">
-                    <label class="wizard__label required">b) Quel est le capteur de ce système ? Quelle grandeur détecte-t-il ?</label>
-                    <p class="wizard__hint">Un capteur est un élément qui détecte une grandeur physique (lumière, pression, son, onde…).</p>
-                    <textarea class="wizard__textarea"
-                              data-field="ex1_capteur"
-                              placeholder="Le capteur est ... Il détecte ..."
-                              spellcheck="true" lang="fr"
-                              autocorrect="on" autocapitalize="sentences"></textarea>
-                </div>
+          <!-- Question b -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >b) Quel est le capteur de ce système ? Quelle grandeur
+              détecte-t-il ?</label
+            >
+            <p class="wizard__hint">
+              Un capteur est un élément qui détecte une grandeur physique
+              (lumière, pression, son, onde…).
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="ex1_capteur"
+              placeholder="Le capteur est ... Il détecte ..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
 
-                <!-- Question c -->
-                <div class="wizard__group">
-                    <label class="wizard__label required">c) Comment la chaîne d'information commande-t-elle la chaîne d'énergie dans ce système ?</label>
-                    <p class="wizard__hint">Décris le lien entre les deux chaînes : quel élément donne l'ordre, et à quel composant de la chaîne d'énergie ?</p>
-                    <textarea class="wizard__textarea"
-                              data-field="ex1_commande_energie"
-                              placeholder="La carte électronique (traiter) envoie..."
-                              spellcheck="true" lang="fr"
-                              autocorrect="on" autocapitalize="sentences"></textarea>
-                </div>
+          <!-- Question c -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >c) Comment la chaîne d'information commande-t-elle la chaîne
+              d'énergie dans ce système ?</label
+            >
+            <p class="wizard__hint">
+              Décris le lien entre les deux chaînes : quel élément donne
+              l'ordre, et à quel composant de la chaîne d'énergie ?
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="ex1_commande_energie"
+              placeholder="La carte électronique (traiter) envoie..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
 
-                <div class="wizard__phase-nav">
-                    <div></div>
-                    <button class="btn btn--primary" onclick="wizardGoToPhase(2)">Suivant →</button>
-                </div>
-            </section>
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+              Suivant →
+            </button>
+          </div>
+        </section>
 
-            <!-- ╔═══════════════════════════════════╗
+        <!-- ╔═══════════════════════════════════╗
                  ║  PHASE 2 — Éclairage automatique ║
                  ╚═══════════════════════════════════╝ -->
-            <section class="wizard__phase" data-phase="2">
-                <div class="wizard__phase-header">
-                    <div class="wizard__phase-icon">💡</div>
-                    <h2 class="wizard__phase-title">Exercice 2 — Capteur analogique vs numérique</h2>
-                    <p class="wizard__phase-subtitle">Système d'éclairage automatique de jardin</p>
-                </div>
+        <section class="wizard__phase" data-phase="2">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">💡</div>
+            <h2 class="wizard__phase-title">
+              Exercice 2 — Capteur analogique vs numérique
+            </h2>
+            <p class="wizard__phase-subtitle">
+              Système d'éclairage automatique de jardin
+            </p>
+          </div>
 
-                <!-- Mise en situation -->
-                <div class="wizard__tips">
-                    <p class="wizard__tips-title">📋 Mise en situation</p>
-                    <div class="wizard__tips-content">
-                        <p>Un système d'éclairage automatique de jardin utilise un <strong>capteur de luminosité (LDR)</strong> et un <strong>capteur infrarouge de présence</strong>.</p>
-                        <p style="margin-top:0.5rem">Le microcontrôleur allume les lampes si la valeur de luminosité est <strong>inférieure à 400</strong> ET qu'une <strong>présence est détectée</strong>.</p>
-                    </div>
-                </div>
+          <!-- Mise en situation -->
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">📋 Mise en situation</p>
+            <div class="wizard__tips-content">
+              <p>
+                Un système d'éclairage automatique de jardin utilise un
+                <strong>capteur de luminosité (LDR)</strong> et un
+                <strong>capteur infrarouge de présence</strong>.
+              </p>
+              <p style="margin-top: 0.5rem">
+                Le microcontrôleur allume les lampes si la valeur de luminosité
+                est <strong>inférieure à 400</strong> ET qu'une
+                <strong>présence est détectée</strong>.
+              </p>
+            </div>
+          </div>
 
-                <!-- Question a -->
-                <div class="wizard__group">
-                    <label class="wizard__label required">a) Lequel est analogique ? Lequel est numérique ? Justifie.</label>
-                    <p class="wizard__hint">Un capteur <strong>analogique</strong> renvoie une valeur continue (ex : 0 à 1023). Un capteur <strong>numérique</strong> renvoie uniquement 0 ou 1.</p>
-                    <textarea class="wizard__textarea"
-                              data-field="ex2_analogique_numerique"
-                              placeholder="Le capteur LDR est ... car ... Le capteur infrarouge est ... car ..."
-                              spellcheck="true" lang="fr"
-                              autocorrect="on" autocapitalize="sentences"></textarea>
-                </div>
+          <!-- Question a -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >a) Lequel est analogique ? Lequel est numérique ?
+              Justifie.</label
+            >
+            <p class="wizard__hint">
+              Un capteur <strong>analogique</strong> renvoie une valeur continue
+              (ex : 0 à 1023). Un capteur <strong>numérique</strong> renvoie
+              uniquement 0 ou 1.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="ex2_analogique_numerique"
+              placeholder="Le capteur LDR est ... car ... Le capteur infrarouge est ... car ..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
 
-                <!-- Question b -->
-                <div class="wizard__group">
-                    <label class="wizard__label required">b) Le microcontrôleur reçoit la valeur 750 du capteur de luminosité. Que se passe-t-il ?</label>
-                    <p class="wizard__hint">Vérifie la condition du programme : 750 &lt; 400 ? Rappelle-toi que les deux conditions doivent être vraies en même temps.</p>
-                    <textarea class="wizard__textarea"
-                              data-field="ex2_valeur_750"
-                              placeholder="La valeur 750 est ... La condition n'est pas remplie car ..."
-                              spellcheck="true" lang="fr"
-                              autocorrect="on" autocapitalize="sentences"></textarea>
-                </div>
+          <!-- Question b -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >b) Le microcontrôleur reçoit la valeur 750 du capteur de
+              luminosité. Que se passe-t-il ?</label
+            >
+            <p class="wizard__hint">
+              Vérifie la condition du programme : 750 &lt; 400 ? Rappelle-toi
+              que les deux conditions doivent être vraies en même temps.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="ex2_valeur_750"
+              placeholder="La valeur 750 est ... La condition n'est pas remplie car ..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
 
-                <!-- Question c -->
-                <div class="wizard__group">
-                    <label class="wizard__label required">c) La valeur passe à 280. Une personne passe devant le capteur infrarouge. Décris ce qui se passe dans chaque fonction de la chaîne d'information.</label>
-                    <p class="wizard__hint">Détaille les 4 fonctions dans l'ordre : <strong>Acquérir → Traiter → Communiquer → Commander</strong>.</p>
-                    <textarea class="wizard__textarea"
-                              data-field="ex2_scenario_280"
-                              placeholder="Acquérir : ... | Traiter : ... | Communiquer : ... | Commander : ..."
-                              spellcheck="true" lang="fr"
-                              autocorrect="on" autocapitalize="sentences"></textarea>
-                </div>
+          <!-- Question c -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >c) La valeur passe à 280. Une personne passe devant le capteur
+              infrarouge. Décris ce qui se passe dans chaque fonction de la
+              chaîne d'information.</label
+            >
+            <p class="wizard__hint">
+              Détaille les 4 fonctions dans l'ordre :
+              <strong>Acquérir → Traiter → Communiquer → Commander</strong>.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="ex2_scenario_280"
+              placeholder="Acquérir : ... | Traiter : ... | Communiquer : ... | Commander : ..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
 
-                <div class="wizard__phase-nav">
-                    <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">← Précédent</button>
-                    <button class="btn btn--primary" onclick="wizardGoToPhase(3)">Suivant →</button>
-                </div>
-            </section>
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
+              ← Précédent
+            </button>
+            <button class="btn btn--primary" onclick="wizardGoToPhase(3)">
+              Suivant →
+            </button>
+          </div>
+        </section>
 
-            <!-- ╔═══════════════════════════════════╗
+        <!-- ╔═══════════════════════════════════╗
                  ║  PHASE 3 — Aspirateur robot      ║
                  ╚═══════════════════════════════════╝ -->
-            <section class="wizard__phase" data-phase="3">
-                <div class="wizard__phase-header">
-                    <div class="wizard__phase-icon">🤖</div>
-                    <h2 class="wizard__phase-title">Exercice 3 — Schéma complet des deux chaînes</h2>
-                    <p class="wizard__phase-subtitle">Aspirateur robot</p>
-                </div>
+        <section class="wizard__phase" data-phase="3">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🤖</div>
+            <h2 class="wizard__phase-title">
+              Exercice 3 — Schéma complet des deux chaînes
+            </h2>
+            <p class="wizard__phase-subtitle">Aspirateur robot</p>
+          </div>
 
-                <!-- Mise en situation -->
-                <div class="wizard__tips">
-                    <p class="wizard__tips-title">📋 Mise en situation</p>
-                    <div class="wizard__tips-content">
-                        <p>Un aspirateur robot possède : une <strong>batterie</strong>, un <strong>moteur d'aspiration</strong>, un <strong>moteur de roues</strong>, des <strong>capteurs de choc (pare-chocs)</strong>, un <strong>capteur infrarouge</strong> (détection de vide/escalier), un <strong>microprocesseur</strong>, un <strong>voyant LED de charge</strong>, et des <strong>roues</strong>.</p>
-                    </div>
-                </div>
+          <!-- Mise en situation -->
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">📋 Mise en situation</p>
+            <div class="wizard__tips-content">
+              <p>
+                Un aspirateur robot possède : une <strong>batterie</strong>, un
+                <strong>moteur d'aspiration</strong>, un
+                <strong>moteur de roues</strong>, des
+                <strong>capteurs de choc (pare-chocs)</strong>, un
+                <strong>capteur infrarouge</strong> (détection de
+                vide/escalier), un <strong>microprocesseur</strong>, un
+                <strong>voyant LED de charge</strong>, et des
+                <strong>roues</strong>.
+              </p>
+            </div>
+          </div>
 
-                <!-- Question a -->
-                <div class="wizard__group">
-                    <label class="wizard__label required">a) Identifie les éléments qui appartiennent à la chaîne d'information et ceux qui appartiennent à la chaîne d'énergie.</label>
-                    <p class="wizard__hint">Un élément peut appartenir aux deux chaînes à la fois. Classe tous les éléments listés dans la mise en situation.</p>
-                    <textarea class="wizard__textarea"
-                              data-field="ex3_chaines_elements"
-                              placeholder="Chaîne d'information : ... | Chaîne d'énergie : ..."
-                              spellcheck="true" lang="fr"
-                              autocorrect="on" autocapitalize="sentences"></textarea>
-                </div>
+          <!-- Question a -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >a) Identifie les éléments qui appartiennent à la chaîne
+              d'information et ceux qui appartiennent à la chaîne
+              d'énergie.</label
+            >
+            <p class="wizard__hint">
+              Un élément peut appartenir aux deux chaînes à la fois. Classe tous
+              les éléments listés dans la mise en situation.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="ex3_chaines_elements"
+              placeholder="Chaîne d'information : ... | Chaîne d'énergie : ..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
 
-                <!-- Question b -->
-                <div class="wizard__group">
-                    <label class="wizard__label required">b) Le robot détecte un obstacle avec son pare-chocs. Décris le trajet de l'information depuis la détection jusqu'au changement de direction.</label>
-                    <p class="wizard__hint">Suis le chemin de l'information : capteur → microprocesseur → moteurs. Décris ce que fait chaque élément.</p>
-                    <textarea class="wizard__textarea"
-                              data-field="ex3_trajet_information"
-                              placeholder="Le capteur de choc détecte... → envoie un signal au... → le programme décide de... → le microprocesseur commande..."
-                              spellcheck="true" lang="fr"
-                              autocorrect="on" autocapitalize="sentences"></textarea>
-                </div>
+          <!-- Question b -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >b) Le robot détecte un obstacle avec son pare-chocs. Décris le
+              trajet de l'information depuis la détection jusqu'au changement de
+              direction.</label
+            >
+            <p class="wizard__hint">
+              Suis le chemin de l'information : capteur → microprocesseur →
+              moteurs. Décris ce que fait chaque élément.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="ex3_trajet_information"
+              placeholder="Le capteur de choc détecte... → envoie un signal au... → le programme décide de... → le microprocesseur commande..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
 
-                <!-- Question c -->
-                <div class="wizard__group">
-                    <label class="wizard__label required">c) Pourquoi dit-on que la chaîne d'information « pilote » la chaîne d'énergie ?</label>
-                    <p class="wizard__hint">Imagine ce qui se passerait <em>sans</em> chaîne d'information. Cela t'aidera à expliquer son rôle essentiel.</p>
-                    <textarea class="wizard__textarea"
-                              data-field="ex3_pilote"
-                              placeholder="Sans la chaîne d'information, les moteurs... C'est la chaîne d'information qui décide..."
-                              spellcheck="true" lang="fr"
-                              autocorrect="on" autocapitalize="sentences"></textarea>
-                </div>
+          <!-- Question c -->
+          <div class="wizard__group">
+            <label class="wizard__label required"
+              >c) Pourquoi dit-on que la chaîne d'information « pilote » la
+              chaîne d'énergie ?</label
+            >
+            <p class="wizard__hint">
+              Imagine ce qui se passerait <em>sans</em> chaîne d'information.
+              Cela t'aidera à expliquer son rôle essentiel.
+            </p>
+            <textarea
+              class="wizard__textarea"
+              data-field="ex3_pilote"
+              placeholder="Sans la chaîne d'information, les moteurs... C'est la chaîne d'information qui décide..."
+              spellcheck="true"
+              lang="fr"
+              autocorrect="on"
+              autocapitalize="sentences"
+            ></textarea>
+          </div>
 
-                <div class="wizard__phase-nav">
-                    <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">← Précédent</button>
-                    <button class="btn btn--success" onclick="wizardComplete()">✅ Terminer</button>
-                </div>
-            </section>
+          <div class="wizard__phase-nav">
+            <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
+              ← Précédent
+            </button>
+            <button class="btn btn--success" onclick="wizardComplete()">
+              ✅ Terminer
+            </button>
+          </div>
+        </section>
+      </div>
+      <!-- /.wizard__container -->
 
-        </div><!-- /.wizard__container -->
-
-        <!-- ========== BARRE D'ACTIONS ========== -->
-        <div class="wizard__actions">
-            <button class="btn btn--secondary btn--small" onclick="wizardExportJSON()">📤 Exporter JSON</button>
-            <button class="btn btn--secondary btn--small" onclick="document.getElementById('importInput').click()">📥 Importer JSON</button>
-            <input type="file" id="importInput" accept=".json" style="display:none" onchange="wizardImportJSON(event)">
-            <button class="btn btn--secondary btn--small" onclick="handleSafeReset()">🗑️ Réinitialiser</button>
-            <button class="btn btn--secondary btn--small" onclick="window.print()">🖨️ Imprimer</button>
-        </div>
-
+      <!-- ========== BARRE D'ACTIONS ========== -->
+      <div class="wizard__actions">
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="wizardExportJSON()"
+        >
+          📤 Exporter JSON
+        </button>
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="document.getElementById('importInput').click()"
+        >
+          📥 Importer JSON
+        </button>
+        <input
+          type="file"
+          id="importInput"
+          accept=".json"
+          style="display: none"
+          onchange="wizardImportJSON(event)"
+        />
+        <button
+          class="btn btn--secondary btn--small"
+          onclick="handleSafeReset()"
+        >
+          🗑️ Réinitialiser
+        </button>
+        <button class="btn btn--secondary btn--small" onclick="window.print()">
+          🖨️ Imprimer
+        </button>
+      </div>
     </main>
 
     <div id="footer-placeholder"></div>
@@ -286,95 +478,167 @@
     <!-- ========== MODALES ========== -->
 
     <div class="wizard__modal-overlay" id="completionModal">
-        <div class="wizard__modal">
-            <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
-            <div class="wizard__modal-content">
-                <p>Tu as terminé les 3 exercices !</p>
-                <p style="margin-top:1rem">Tes réponses ont été <strong>sauvegardées automatiquement</strong> dans la base de données.</p>
-                <p style="margin-top:0.75rem;font-size:0.875rem;color:var(--color-gray-500)">
-                    Tu peux aussi exporter une copie locale en JSON.
-                </p>
-            </div>
-            <div class="wizard__modal-actions">
-                <button class="btn btn--secondary" onclick="wizardCloseModal('completionModal')">Fermer</button>
-                <button class="btn btn--primary" onclick="wizardExportJSON();wizardCloseModal('completionModal')">📤 Exporter</button>
-            </div>
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">🎉 Félicitations !</h3>
+        <div class="wizard__modal-content">
+          <p>Tu as terminé les 3 exercices !</p>
+          <p style="margin-top: 1rem">
+            Tes réponses ont été
+            <strong>sauvegardées automatiquement</strong> dans la base de
+            données.
+          </p>
+          <p
+            style="
+              margin-top: 0.75rem;
+              font-size: 0.875rem;
+              color: var(--color-gray-500);
+            "
+          >
+            Tu peux aussi exporter une copie locale en JSON.
+          </p>
         </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('completionModal')"
+          >
+            Fermer
+          </button>
+          <button
+            class="btn btn--primary"
+            onclick="
+              wizardExportJSON();
+              wizardCloseModal('completionModal');
+            "
+          >
+            📤 Exporter
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="wizard__modal-overlay" id="resetModal">
-        <div class="wizard__modal">
-            <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
-            <div class="wizard__modal-content">
-                <p>Une <strong>sauvegarde</strong> a été téléchargée automatiquement.</p>
-                <p>Voulez-vous <strong>recommencer</strong> avec un formulaire vide ?</p>
-            </div>
-            <div class="wizard__modal-actions">
-                <button class="btn btn--secondary" onclick="wizardCloseModal('resetModal')">Annuler</button>
-                <button class="btn btn--primary" style="background:var(--color-error)" onclick="wizardReset()">🗑️ Réinitialiser</button>
-            </div>
+      <div class="wizard__modal">
+        <h3 class="wizard__modal-title">⚠️ Réinitialiser ?</h3>
+        <div class="wizard__modal-content">
+          <p>
+            Une <strong>sauvegarde</strong> a été téléchargée automatiquement.
+          </p>
+          <p>
+            Voulez-vous <strong>recommencer</strong> avec un formulaire vide ?
+          </p>
         </div>
+        <div class="wizard__modal-actions">
+          <button
+            class="btn btn--secondary"
+            onclick="wizardCloseModal('resetModal')"
+          >
+            Annuler
+          </button>
+          <button
+            class="btn btn--primary"
+            style="background: var(--color-error)"
+            onclick="wizardReset()"
+          >
+            🗑️ Réinitialiser
+          </button>
+        </div>
+      </div>
     </div>
 
     <div class="wizard__toast" id="wizardToast">
-        <span class="wizard__toast-icon"></span>
-        <span class="wizard__toast-message"></span>
+      <span class="wizard__toast-icon"></span>
+      <span class="wizard__toast-message"></span>
     </div>
 
     <!-- ========== SCRIPTS ========== -->
     <script type="module" src="/src/js/components.js"></script>
     <script type="module">
-        import { WizardFirebase } from '/src/js/new-wizard-firebase.js';
+      import { WizardFirebase } from "/src/js/new-wizard-firebase.js";
 
-        window.wizardInstance = new WizardFirebase({
-            collectionName: 'dnb-chaines-information-3e',
-            autoInit: true,
+      window.wizardInstance = new WizardFirebase({
+        collectionName: "dnb-chaines-information-3e",
+        autoInit: true,
 
-            requiredFields: {
-                1: [
-                    'studentName',
-                    'studentClass',
-                    'ex1_chaine_fonctions',
-                    'ex1_capteur',
-                    'ex1_commande_energie',
-                ],
-                2: [
-                    'ex2_analogique_numerique',
-                    'ex2_valeur_750',
-                    'ex2_scenario_280',
-                ],
-                3: [
-                    'ex3_chaines_elements',
-                    'ex3_trajet_information',
-                    'ex3_pilote',
-                ]
-            },
+        requiredFields: {
+          1: [
+            "studentName",
+            "studentClass",
+            "ex1_chaine_fonctions",
+            "ex1_capteur",
+            "ex1_commande_energie",
+          ],
+          2: ["ex2_analogique_numerique", "ex2_valeur_750", "ex2_scenario_280"],
+          3: ["ex3_chaines_elements", "ex3_trajet_information", "ex3_pilote"],
+        },
 
-            onComplete: (data) => {
-                console.log('🎉 Formulaire complété:', data);
-            },
-            onSaveSuccess: (data) => {
-                console.log('✅ Sauvegarde Firestore OK');
-            },
-            onSaveError: (error) => {
-                console.error('❌ Erreur Firestore:', error);
-            }
+        onComplete: (data) => {
+          console.log("🎉 Formulaire complété:", data);
+        },
+        onSaveSuccess: (data) => {
+          console.log("✅ Sauvegarde Firestore OK");
+        },
+        onSaveError: (error) => {
+          console.error("❌ Erreur Firestore:", error);
+        },
+      });
+
+      // ============================================
+      // RÉINITIALISATION SÉCURISÉE
+      // ============================================
+      window.handleSafeReset = function () {
+        if (typeof wizardExportJSON === "function") {
+          wizardExportJSON();
+        } else if (window.wizardInstance) {
+          window.wizardInstance.exportToJSON();
+        }
+        if (window.wizardInstance?.showToast) {
+          window.wizardInstance.showToast(
+            "Sauvegarde de secours téléchargée !",
+            "success",
+          );
+        }
+        wizardShowModal("resetModal");
+      };
+
+      // ── Light Mode Toggle ──
+      function initLightModeToggle() {
+        const body = document.body;
+        const toggle = document.getElementById("modeToggle");
+        const urlParams = new URLSearchParams(window.location.search);
+        let currentMode = urlParams.get("mode") === "light" ? "light" : "dark";
+
+        if (currentMode === "light") {
+          body.classList.add("light-mode");
+          toggle.textContent = "☀️";
+        } else {
+          body.classList.remove("light-mode");
+          toggle.textContent = "🌙";
+        }
+
+        toggle.addEventListener("click", () => {
+          currentMode = currentMode === "dark" ? "light" : "dark";
+          if (currentMode === "light") {
+            body.classList.add("light-mode");
+            toggle.textContent = "☀️";
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set("mode", "light");
+            window.history.replaceState({}, "", newUrl);
+          } else {
+            body.classList.remove("light-mode");
+            toggle.textContent = "🌙";
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.delete("mode");
+            window.history.replaceState({}, "", newUrl);
+          }
         });
+      }
 
-        // ============================================
-        // RÉINITIALISATION SÉCURISÉE
-        // ============================================
-        window.handleSafeReset = function() {
-            if (typeof wizardExportJSON === "function") {
-                wizardExportJSON();
-            } else if (window.wizardInstance) {
-                window.wizardInstance.exportToJSON();
-            }
-            if (window.wizardInstance?.showToast) {
-                window.wizardInstance.showToast("Sauvegarde de secours téléchargée !", "success");
-            }
-            wizardShowModal('resetModal');
-        };
+      if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initLightModeToggle);
+      } else {
+        initLightModeToggle();
+      }
     </script>
-</body>
+  </body>
 </html>
