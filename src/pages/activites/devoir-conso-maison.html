@@ -115,16 +115,12 @@
 
         <!-- Navigation par phases -->
         <nav class="wizard__nav" id="phaseNav">
-          <button class="wizard__nav-btn active" data-phase="1">
+          <button class="wizard__nav-btn active" data-phase="2">
             <span class="wizard__nav-number">1</span>
-            <span>Découvrir</span>
-          </button>
-          <button class="wizard__nav-btn" data-phase="2">
-            <span class="wizard__nav-number">2</span>
             <span>Simuler</span>
           </button>
           <button class="wizard__nav-btn" data-phase="3">
-            <span class="wizard__nav-number">3</span>
+            <span class="wizard__nav-number">2</span>
             <span>Plan d'action</span>
           </button>
         </nav>
@@ -135,147 +131,9 @@
              ══════════════════════════════════════════ -->
       <div class="wizard__container">
         <!-- ╔═══════════════════════════════════╗
-                 ║         PHASE 1                   ║
-                 ╚═══════════════════════════════════╝ -->
-        <section class="wizard__phase active" data-phase="1">
-          <div class="wizard__phase-header">
-            <div class="wizard__phase-icon">🔍</div>
-            <h2 class="wizard__phase-title">
-              Phase 1 : Découvrir les postes de consommation
-            </h2>
-            <p class="wizard__phase-subtitle">
-              Analyser la répartition de la consommation électrique
-            </p>
-          </div>
-
-          <div class="wizard__tips">
-            <p class="wizard__tips-title">💡 Contexte</p>
-            <div class="wizard__tips-content">
-              <p>
-                La famille Kiagi habite au 12 rue des Connectés à Cergy. Elle
-                vient de recevoir sa facture d'électricité :
-                <strong>313,11 € pour 2 mois</strong> (janvier–février 2026).
-                Trois postes principaux ont été identifiés : chauffage (2 800
-                kWh/an), éclairage (500 kWh/an), veille des appareils (380
-                kWh/an), soit <strong>3 680 kWh/an</strong> au total.
-              </p>
-            </div>
-          </div>
-
-          <!-- Q1 -->
-          <div class="wizard__group">
-            <label class="wizard__label required"
-              >Calcule le pourcentage du chauffage par rapport au total (3 680
-              kWh).</label
-            >
-            <p class="wizard__hint">
-              Formule : (consommation du poste / total) × 100
-            </p>
-            <input
-              type="text"
-              class="wizard__input"
-              data-field="q1PourcentageChauffage"
-              placeholder=""
-              spellcheck="false"
-            />
-          </div>
-
-          <!-- Q2 -->
-          <div class="wizard__group">
-            <label class="wizard__label required"
-              >Calcule le pourcentage de l'éclairage.</label
-            >
-            <input
-              type="text"
-              class="wizard__input"
-              data-field="q2PourcentageEclairage"
-              placeholder=""
-              spellcheck="false"
-            />
-          </div>
-
-          <!-- Q3 -->
-          <div class="wizard__group">
-            <label class="wizard__label required"
-              >Calcule le pourcentage de la veille des appareils.</label
-            >
-            <input
-              type="text"
-              class="wizard__input"
-              data-field="q3PourcentageVeille"
-              placeholder=""
-              spellcheck="false"
-            />
-          </div>
-
-          <!-- Q4 -->
-          <div class="wizard__group">
-            <label class="wizard__label required"
-              >Quel poste consomme le plus ? Cela te surprend-il ? Pourquoi
-              ?</label
-            >
-            <textarea
-              class="wizard__textarea"
-              data-field="q4PosteMax"
-              placeholder=""
-              spellcheck="true"
-              lang="fr"
-              autocorrect="on"
-              autocapitalize="sentences"
-            ></textarea>
-          </div>
-
-          <!-- Q5 -->
-          <div class="wizard__group">
-            <label class="wizard__label required"
-              >La veille des appareils, c'est l'électricité consommée par les
-              appareils éteints mais encore branchés (TV, box internet,
-              chargeurs…). Es-tu surpris par cette consommation (380 kWh/an) ?
-              Pourquoi ?</label
-            >
-            <textarea
-              class="wizard__textarea"
-              data-field="q5VeilleSurprise"
-              placeholder=""
-              spellcheck="true"
-              lang="fr"
-              autocorrect="on"
-              autocapitalize="sentences"
-            ></textarea>
-          </div>
-
-          <!-- Q6 -->
-          <div class="wizard__group">
-            <label class="wizard__label required"
-              >La facture couvre 2 mois d'hiver. La conso annuelle est de 3 680
-              kWh, soit en moyenne 613 kWh pour 2 mois. Pourtant, la facture
-              indique 1 200 kWh. Pourquoi la consommation hivernale est-elle
-              supérieure à la moyenne ?</label
-            >
-            <textarea
-              class="wizard__textarea"
-              data-field="q6ConsoHiver"
-              placeholder=""
-              spellcheck="true"
-              lang="fr"
-              autocorrect="on"
-              autocapitalize="sentences"
-            ></textarea>
-          </div>
-
-          <!-- Navigation inter-phases -->
-          <div class="wizard__phase-nav">
-            <div></div>
-            <button class="btn btn--primary" data-goto-phase="2">
-              Suivant →
-            </button>
-          </div>
-        </section>
-
-        <!-- ╔═══════════════════════════════════╗
                  ║         PHASE 2                   ║
                  ╚═══════════════════════════════════╝ -->
-        <section class="wizard__phase" data-phase="2">
+        <section class="wizard__phase active" data-phase="2">
           <div class="wizard__phase-header">
             <div class="wizard__phase-icon">⚡</div>
             <h2 class="wizard__phase-title">Phase 2 : Simuler des économies</h2>
@@ -434,9 +292,7 @@
           </div>
 
           <div class="wizard__phase-nav">
-            <button class="btn btn--secondary" data-goto-phase="1">
-              ← Précédent
-            </button>
+            <div></div>
             <button class="btn btn--primary" data-goto-phase="3">
               Suivant →
             </button>
