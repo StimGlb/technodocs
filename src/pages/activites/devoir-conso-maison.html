@@ -12,6 +12,19 @@
     <!-- CSS du projet -->
     <link rel="stylesheet" href="/src/css/style.css" />
     <link rel="stylesheet" href="/src/css/wizard.css" />
+    <style>
+      .wizard__tips-content a {
+        color: var(--color-primary-600);
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        text-decoration-thickness: 1px;
+        transition: color 0.2s ease;
+      }
+      .wizard__tips-content a:hover {
+        color: var(--color-primary-700);
+      }
+    </style>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -136,7 +149,7 @@
         <section class="wizard__phase active" data-phase="2">
           <div class="wizard__phase-header">
             <div class="wizard__phase-icon">⚡</div>
-            <h2 class="wizard__phase-title">Phase 2 : Simuler des économies</h2>
+            <h2 class="wizard__phase-title">Phase 1 : Simuler des économies</h2>
             <p class="wizard__phase-subtitle">
               Tester des scénarios sur le simulateur TechnoDocs
             </p>
@@ -146,9 +159,14 @@
             <p class="wizard__tips-title">💡 Consigne</p>
             <div class="wizard__tips-content">
               <p>
-                Ouvre le simulateur de consommation électrique sur TechnoDocs
-                (Simulateurs &gt; Consommation Électrique). Utilise les curseurs
-                pour tester chaque scénario, puis note les résultats.
+                Ouvre
+                <a
+                  href="/src/pages/simulateurs/conso-electrique.html"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >le simulateur de consommation électrique</a
+                >. Utilise les curseurs pour tester chaque scénario, puis note
+                les résultats.
               </p>
             </div>
           </div>
@@ -306,7 +324,7 @@
           <div class="wizard__phase-header">
             <div class="wizard__phase-icon">📋</div>
             <h2 class="wizard__phase-title">
-              Phase 3 : Proposer un plan d'action
+              Phase 2 : Proposer un plan d'action
             </h2>
             <p class="wizard__phase-subtitle">
               Rédiger des recommandations chiffrées pour la famille Kiagi
