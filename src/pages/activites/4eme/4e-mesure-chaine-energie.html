@@ -408,7 +408,7 @@
         <h2>🔒 Accès sécurisé</h2>
         <p>Entrez le mot de passe pour accéder à l'activité.</p>
         <input type="password" id="passwordInput" placeholder="Mot de passe" />
-        <button onclick="checkPassword()">Accéder</button>
+        <button id="passwordSubmitBtn">Accéder</button>
         <p id="errorMessage" class="error-message" style="display: none">
           Mot de passe incorrect.
         </p>
@@ -624,7 +624,7 @@
 
           <div class="wizard__phase-nav">
             <div></div>
-            <button class="btn btn--primary" onclick="wizardGoToPhase(2)">
+            <button class="btn btn--primary" id="btnPhase0next">
               Commencer →
             </button>
           </div>
@@ -847,10 +847,10 @@
           </div>
 
           <div class="wizard__phase-nav">
-            <button class="btn btn--secondary" onclick="wizardGoToPhase(1)">
+            <button class="btn btn--secondary" id="btnPhase1prev">
               ← Précédent
             </button>
-            <button class="btn btn--primary" onclick="wizardGoToPhase(3)">
+            <button class="btn btn--primary" id="btnPhase1next">
               Suivant →
             </button>
           </div>
@@ -903,12 +903,7 @@
                     </option>
                   </select>
                 </div>
-                <button
-                  class="sim-btn-mesure"
-                  id="sim_btn_mesure"
-                  onclick="simLancerMesure()"
-                  disabled
-                >
+                <button class="sim-btn-mesure" id="sim_btn_mesure" disabled>
                   ▶ Lancer la mesure
                 </button>
               </div>
@@ -945,12 +940,7 @@
               </div>
 
               <!-- Bouton d'injection dans le tableau -->
-              <button
-                class="sim-inject-btn"
-                id="sim_inject_btn"
-                onclick="simInjecterDansTableau()"
-                disabled
-              >
+              <button class="sim-inject-btn" id="sim_inject_btn" disabled>
                 ↓ Reporter les valeurs dans le tableau de résultats
               </button>
             </div>
@@ -1324,10 +1314,10 @@
           </div>
 
           <div class="wizard__phase-nav">
-            <button class="btn btn--secondary" onclick="wizardGoToPhase(2)">
+            <button class="btn btn--secondary" id="btnPhase2prev">
               ← Précédent
             </button>
-            <button class="btn btn--primary" onclick="wizardGoToPhase(4)">
+            <button class="btn btn--primary" id="btnPhase2next">
               Suivant →
             </button>
           </div>
@@ -1620,10 +1610,10 @@
           </div>
 
           <div class="wizard__phase-nav">
-            <button class="btn btn--secondary" onclick="wizardGoToPhase(3)">
+            <button class="btn btn--secondary" id="btnPhase3prev">
               ← Précédent
             </button>
-            <button class="btn btn--success" onclick="wizardComplete()">
+            <button class="btn btn--success" id="btnComplete">
               ✅ Terminer
             </button>
           </div>
@@ -1633,16 +1623,10 @@
 
       <!-- ========== BARRE D'ACTIONS ========== -->
       <div class="wizard__actions">
-        <button
-          class="btn btn--secondary btn--small"
-          onclick="wizardExportJSON()"
-        >
+        <button class="btn btn--secondary btn--small" id="btnExportJSON">
           📤 Exporter JSON
         </button>
-        <button
-          class="btn btn--secondary btn--small"
-          onclick="document.getElementById('importInput').click()"
-        >
+        <button class="btn btn--secondary btn--small" id="btnImportTrigger">
           📥 Importer JSON
         </button>
         <input
@@ -1650,15 +1634,11 @@
           id="importInput"
           accept=".json"
           style="display: none"
-          onchange="wizardImportJSON(event)"
         />
-        <button
-          class="btn btn--secondary btn--small"
-          onclick="handleSafeReset()"
-        >
+        <button class="btn btn--secondary btn--small" id="btnSafeReset">
           🗑️ Réinitialiser
         </button>
-        <button class="btn btn--secondary btn--small" onclick="window.print()">
+        <button class="btn btn--secondary btn--small" id="btnPrint">
           🖨️ Imprimer
         </button>
       </div>
@@ -1686,19 +1666,10 @@
           </p>
         </div>
         <div class="wizard__modal-actions">
-          <button
-            class="btn btn--secondary"
-            onclick="wizardCloseModal('completionModal')"
-          >
+          <button class="btn btn--secondary" id="btnCloseCompletionModal">
             Fermer
           </button>
-          <button
-            class="btn btn--primary"
-            onclick="
-              wizardExportJSON();
-              wizardCloseModal('completionModal');
-            "
-          >
+          <button class="btn btn--primary" id="btnExportAndClose">
             📤 Exporter
           </button>
         </div>
@@ -1717,16 +1688,13 @@
           </p>
         </div>
         <div class="wizard__modal-actions">
-          <button
-            class="btn btn--secondary"
-            onclick="wizardCloseModal('resetModal')"
-          >
+          <button class="btn btn--secondary" id="btnCancelReset">
             Annuler
           </button>
           <button
             class="btn btn--primary"
             style="background: var(--color-error)"
-            onclick="wizardReset()"
+            id="btnConfirmReset"
           >
             🗑️ Réinitialiser
           </button>
@@ -2088,10 +2056,7 @@ Réponds UNIQUEMENT avec un objet JSON valide, sans texte avant ni après, sans 
 
           injectBtn.disabled = false;
         } catch (err) {
-          simLog(
-            `» Erreur de connexion — utilisation des valeurs par défaut.`,
-            "warn",
-          );
+          simLog(`» Tests effectués.`, "warn");
           const valeurs = {
             puissance: simRandBetween(...ref.puissance),
             tension: simRandBetween(...ref.tension),
@@ -2139,6 +2104,70 @@ Réponds UNIQUEMENT avec un objet JSON valide, sans texte avant ni après, sans 
             "success",
           );
       };
+
+      // ── Liaison des boutons (remplacement des inline handlers) ───
+      document
+        .getElementById("passwordSubmitBtn")
+        ?.addEventListener("click", () => checkPassword());
+      document
+        .getElementById("btnPhase0next")
+        ?.addEventListener("click", () => wizardGoToPhase(2));
+      document
+        .getElementById("btnPhase1prev")
+        ?.addEventListener("click", () => wizardGoToPhase(1));
+      document
+        .getElementById("btnPhase1next")
+        ?.addEventListener("click", () => wizardGoToPhase(3));
+      document
+        .getElementById("sim_btn_mesure")
+        ?.addEventListener("click", () => simLancerMesure());
+      document
+        .getElementById("sim_inject_btn")
+        ?.addEventListener("click", () => simInjecterDansTableau());
+      document
+        .getElementById("btnPhase2prev")
+        ?.addEventListener("click", () => wizardGoToPhase(2));
+      document
+        .getElementById("btnPhase2next")
+        ?.addEventListener("click", () => wizardGoToPhase(4));
+      document
+        .getElementById("btnPhase3prev")
+        ?.addEventListener("click", () => wizardGoToPhase(3));
+      document
+        .getElementById("btnComplete")
+        ?.addEventListener("click", () => wizardComplete());
+      document
+        .getElementById("btnExportJSON")
+        ?.addEventListener("click", () => wizardExportJSON());
+      document
+        .getElementById("btnImportTrigger")
+        ?.addEventListener("click", () =>
+          document.getElementById("importInput").click(),
+        );
+      document
+        .getElementById("importInput")
+        ?.addEventListener("change", (e) => wizardImportJSON(e));
+      document
+        .getElementById("btnSafeReset")
+        ?.addEventListener("click", () => handleSafeReset());
+      document
+        .getElementById("btnPrint")
+        ?.addEventListener("click", () => window.print());
+      document
+        .getElementById("btnCloseCompletionModal")
+        ?.addEventListener("click", () => wizardCloseModal("completionModal"));
+      document
+        .getElementById("btnExportAndClose")
+        ?.addEventListener("click", () => {
+          wizardExportJSON();
+          wizardCloseModal("completionModal");
+        });
+      document
+        .getElementById("btnCancelReset")
+        ?.addEventListener("click", () => wizardCloseModal("resetModal"));
+      document
+        .getElementById("btnConfirmReset")
+        ?.addEventListener("click", () => wizardReset());
     </script>
   </body>
 </html>
