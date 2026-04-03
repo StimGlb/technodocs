@@ -28,7 +28,7 @@
     # Content Security Policy (CSP) - Protection contre XSS
     # Note: 'unsafe-inline' temporairement ajouté pour style-src pour permettre les styles inline dynamiques
     # Firebase: scripts et data access from gstatic.com and googleapis.com
-    Content-Security-Policy = "default-src 'self'; script-src 'self' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com; frame-src https://*.firebaseapp.com;"
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://www.gstatic.com; frame-src https://*.firebaseapp.com;"
 
     # Security headers renforcés pour la production
     X-Frame-Options = "DENY"

@@ -403,7 +403,7 @@
     </style>
 
     <!-- ========== OVERLAY MOT DE PASSE ========== -->
-    <div id="passwordOverlay" class="password-overlay">
+    <!-- <div id="passwordOverlay" class="password-overlay">
       <div class="password-prompt">
         <h2>🔒 Accès sécurisé</h2>
         <p>Entrez le mot de passe pour accéder à l'activité.</p>
@@ -413,7 +413,7 @@
           Mot de passe incorrect.
         </p>
       </div>
-    </div>
+    </div> -->
 
     <!-- ========== TOGGLE MODE CLAIR/SOMBRE ========== -->
     <button
@@ -980,7 +980,6 @@
                       data-field="mesure_puis_A"
                       id="m_puis_A"
                       placeholder="W"
-                      oninput="calcEffi('A')"
                     />
                   </td>
                   <td>
@@ -990,7 +989,6 @@
                       data-field="mesure_lux_A"
                       id="m_lux_A"
                       placeholder="lux"
-                      oninput="calcEffi('A')"
                     />
                   </td>
                   <td>
@@ -1014,7 +1012,6 @@
                       data-field="mesure_puis_B"
                       id="m_puis_B"
                       placeholder="W"
-                      oninput="calcEffi('B')"
                     />
                   </td>
                   <td>
@@ -1024,7 +1021,6 @@
                       data-field="mesure_lux_B"
                       id="m_lux_B"
                       placeholder="lux"
-                      oninput="calcEffi('B')"
                     />
                   </td>
                   <td>
@@ -1048,7 +1044,6 @@
                       data-field="mesure_puis_C"
                       id="m_puis_C"
                       placeholder="W"
-                      oninput="calcEffi('C')"
                     />
                   </td>
                   <td>
@@ -1058,7 +1053,6 @@
                       data-field="mesure_lux_C"
                       id="m_lux_C"
                       placeholder="lux"
-                      oninput="calcEffi('C')"
                     />
                   </td>
                   <td>
@@ -1082,7 +1076,6 @@
                       data-field="mesure_puis_D"
                       id="m_puis_D"
                       placeholder="W"
-                      oninput="calcEffi('D')"
                     />
                   </td>
                   <td>
@@ -1092,7 +1085,6 @@
                       data-field="mesure_lux_D"
                       id="m_lux_D"
                       placeholder="lux"
-                      oninput="calcEffi('D')"
                     />
                   </td>
                   <td>
@@ -1139,7 +1131,6 @@
                       step="0.1"
                       data-field="calc_puis_A"
                       placeholder="W"
-                      oninput="calcCout('A')"
                     />
                   </td>
                   <td>
@@ -1171,7 +1162,6 @@
                       step="0.1"
                       data-field="calc_puis_B"
                       placeholder="W"
-                      oninput="calcCout('B')"
                     />
                   </td>
                   <td>
@@ -1203,7 +1193,6 @@
                       step="0.1"
                       data-field="calc_puis_C"
                       placeholder="W"
-                      oninput="calcCout('C')"
                     />
                   </td>
                   <td>
@@ -1235,7 +1224,6 @@
                       step="0.1"
                       data-field="calc_puis_D"
                       placeholder="W"
-                      oninput="calcCout('D')"
                     />
                   </td>
                   <td>
@@ -1822,7 +1810,7 @@
       };
       document
         .getElementById("passwordInput")
-        .addEventListener("keypress", (e) => {
+        ?.addEventListener("keypress", (e) => {
           if (e.key === "Enter") {
             e.preventDefault();
             checkPassword();
@@ -2168,6 +2156,19 @@ Réponds UNIQUEMENT avec un objet JSON valide, sans texte avant ni après, sans 
       document
         .getElementById("btnConfirmReset")
         ?.addEventListener("click", () => wizardReset());
+
+      // ── Calcul auto : input listeners pour calcEffi / calcCout ──
+      ["A", "B", "C", "D"].forEach((l) => {
+        document
+          .getElementById(`m_puis_${l}`)
+          ?.addEventListener("input", () => calcEffi(l));
+        document
+          .getElementById(`m_lux_${l}`)
+          ?.addEventListener("input", () => calcEffi(l));
+        document
+          .querySelector(`[data-field="calc_puis_${l}"]`)
+          ?.addEventListener("input", () => calcCout(l));
+      });
     </script>
   </body>
 </html>
