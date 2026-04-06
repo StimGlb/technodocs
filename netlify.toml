@@ -87,5 +87,5 @@
     to = "/_dev.html"
     status = 302
 
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
+# [[plugins]]
+#   package = "@netlify/plugin-lighthouse"
