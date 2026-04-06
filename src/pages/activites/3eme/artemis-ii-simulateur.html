@@ -1,0 +1,1133 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mission Artemis II — Simulateur de trajectoire | TechnoDocs</title>
+  <meta name="description" content="Simulateur interactif de la trajectoire Artemis II — Mission lunaire habitée en cours (avril 2026). Activité pédagogique." />
+  <meta name="robots" content="noindex" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
+  <style>
+    /* ================================================
+       ARTEMIS II — Simulateur de trajectoire
+       TechnoDocs — Activité — Avril 2026
+       Variables CSS alignées sur le projet TechnoDocs.
+       Thème spatial : fond sombre, accents NASA blue.
+    ================================================ */
+    :root {
+      /* Palette TechnoDocs (valeurs standalone pour page autonome) */
+      --color-primary-500: #818cf8;
+      --color-primary-700: #6366f1;
+      --color-gray-300: #4b5563;
+      --color-gray-500: #9ca3af;
+      --color-white: #ffffff;
+      --color-error:   #f87171;
+      --color-success: #34d399;
+
+      /* Thème spatial */
+      --space-bg:           #0a0e27;
+      --space-bg-card:      #0f1535;
+      --nasa-blue:          #0B3D91;
+      --nasa-blue-light:    #1a5dcc;
+      --earth-blue:         #1e88e5;
+      --moon-gray:          #9e9e9e;
+      --orion-gold:         #ffd600;
+      --trajectory-color:   rgba(129, 140, 248, 0.6);
+
+      /* Typographie */
+      --font-main:    "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-display: "Space Grotesk", var(--font-main);
+
+      /* Espacements (TechnoDocs standard) */
+      --space-1: 0.25rem;
+      --space-2: 0.5rem;
+      --space-3: 0.75rem;
+      --space-4: 1rem;
+      --space-6: 1.5rem;
+      --space-8: 2rem;
+
+      /* Coins */
+      --radius-sm:   0.375rem;
+      --radius-md:   0.5rem;
+      --radius-lg:   0.75rem;
+      --radius-xl:   1rem;
+      --radius-full: 9999px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-main);
+      background-color: var(--space-bg);
+      color: #e2e8f0;
+      min-height: 100vh;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page-wrapper {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: var(--space-6) var(--space-4);
+    }
+
+    /* ---- BANNIÈRE D'EN-TÊTE ----
+       Reprend le pattern .wizard__banner de wizard.css :
+       gradient linéaire, badge compétences, icône.
+    -------------------------------- */
+    .banner {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      background: linear-gradient(135deg, var(--nasa-blue) 0%, #071d50 100%);
+      border-radius: var(--radius-xl);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+      box-shadow: 0 10px 40px rgba(11, 61, 145, 0.45), 0 0 0 1px rgba(129,140,248,0.15);
+    }
+
+    .banner__icon { font-size: 3rem; line-height: 1; flex-shrink: 0; }
+
+    .banner__content { flex: 1; min-width: 0; }
+
+    .banner__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.125rem, 2.5vw, 1.75rem);
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: var(--space-2);
+      letter-spacing: -0.02em;
+    }
+
+    .banner__badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-2);
+    }
+
+    /* Badges génériques (même système que wizard.css .wizard__skill) */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.2rem 0.75rem;
+      border-radius: var(--radius-full);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      white-space: nowrap;
+    }
+
+    .badge--level  { background: rgba(255,255,255,0.18); color: #fff; }
+    .badge--skill  {
+      background: rgba(129,140,248,0.18);
+      color: #c7d2fe;
+      border: 1px solid rgba(129,140,248,0.3);
+    }
+    .badge--live   {
+      background: rgba(239,68,68,0.22);
+      color: #fca5a5;
+      border: 1px solid rgba(239,68,68,0.35);
+      animation: pulse-live 2.2s ease-in-out infinite;
+    }
+
+    @keyframes pulse-live {
+      0%, 100% { opacity: 1; }
+      50%       { opacity: 0.55; }
+    }
+
+    @media (max-width: 600px) {
+      .banner              { flex-direction: column; text-align: center; }
+      .banner__badges      { justify-content: center; }
+    }
+
+    /* ---- LAYOUT PRINCIPAL : simulateur + panneau info ---- */
+    .sim-layout {
+      display: grid;
+      grid-template-columns: 1fr 330px;
+      gap: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+
+    /* Sur tablette/mobile : empilé — simulateur en haut */
+    @media (max-width: 900px) {
+      .sim-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ---- CARTES GÉNÉRIQUES ---- */
+    .card {
+      background: var(--space-bg-card);
+      border-radius: var(--radius-xl);
+      padding: var(--space-4);
+      border: 1px solid rgba(129,140,248,0.12);
+      box-shadow: 0 4px 24px rgba(0,0,0,0.35);
+    }
+
+    .card__label {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: var(--color-primary-500);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: var(--space-3);
+    }
+
+    /* ---- ZONE CANVAS ---- */
+    .canvas-wrapper {
+      position: relative;
+      width: 100%;
+      background: radial-gradient(ellipse at 30% 50%, #0d1545 0%, #050812 100%);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+
+    #trajectoryCanvas {
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+
+    /* Overlay "perte de signal" face cachée de la Lune */
+    .signal-lost {
+      position: absolute;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(5, 8, 18, 0.82);
+      border-radius: var(--radius-lg);
+      z-index: 10;
+      pointer-events: none;
+    }
+    .signal-lost.is-active { display: flex; }
+    .signal-lost__text {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: #fca5a5;
+      text-align: center;
+      animation: flicker 0.55s step-end infinite;
+      text-shadow: 0 0 16px rgba(252,165,165,0.6);
+    }
+    @keyframes flicker {
+      0%, 100% { opacity: 1; }
+      30%       { opacity: 0.25; }
+      70%       { opacity: 0.75; }
+    }
+
+    /* ---- INDICATEUR DE PHASE ---- */
+    .phase-indicator {
+      margin-top: var(--space-3);
+      padding: var(--space-3) var(--space-4);
+      background: rgba(129,140,248,0.07);
+      border-radius: var(--radius-md);
+      border-left: 3px solid var(--color-primary-500);
+    }
+    .phase-indicator__label {
+      font-size: 0.65rem;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--color-gray-500);
+      margin-bottom: 0.1rem;
+    }
+    .phase-indicator__name {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    /* ---- CONTRÔLES ---- */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-top: var(--space-4);
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      padding: 0.45rem 0.9rem;
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-main);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 150ms ease, transform 100ms ease;
+    }
+    .btn:focus-visible { outline: 2px solid var(--color-primary-500); outline-offset: 2px; }
+    .btn:active { transform: scale(0.97); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .btn--primary   { background: var(--nasa-blue); color: #fff; }
+    .btn--primary:not(:disabled):hover { background: var(--nasa-blue-light); }
+
+    .btn--secondary {
+      background: rgba(255,255,255,0.07);
+      color: #e2e8f0;
+      border: 1px solid rgba(255,255,255,0.13);
+    }
+    .btn--secondary:not(:disabled):hover { background: rgba(255,255,255,0.13); }
+
+    /* Contrôle de vitesse */
+    .speed-control {
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+      margin-left: auto;
+    }
+    .speed-control label {
+      font-size: 0.78rem;
+      color: var(--color-gray-500);
+      white-space: nowrap;
+    }
+    input[type="range"].speed-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 90px;
+      height: 4px;
+      background: var(--color-gray-300);
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+    }
+    input[type="range"].speed-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 15px; height: 15px;
+      background: var(--color-primary-500);
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    input[type="range"].speed-slider::-moz-range-thumb {
+      width: 15px; height: 15px;
+      background: var(--color-primary-500);
+      border-radius: 50%;
+      cursor: pointer;
+      border: none;
+    }
+    .speed-value {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--color-primary-500);
+      min-width: 3.5ch;
+    }
+
+    /* ---- PANNEAU INFOS ---- */
+    .info-panel {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    /* Grille télémétrie */
+    .telemetry-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-2);
+    }
+    .telem-item {
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--radius-md);
+      padding: var(--space-2) var(--space-3);
+    }
+    .telem-item__label {
+      font-size: 0.62rem;
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+      color: var(--color-gray-500);
+      margin-bottom: 0.1rem;
+    }
+    .telem-item__value {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+    }
+    .telem-item__unit {
+      font-size: 0.62rem;
+      color: var(--color-gray-500);
+      font-weight: 400;
+    }
+
+    /* Équipage */
+    .crew-list {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+    .crew-member {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-2);
+      padding: var(--space-2) var(--space-3);
+      background: rgba(255,255,255,0.04);
+      border-radius: var(--radius-md);
+    }
+    .crew-member__flag   { font-size: 1.3rem; line-height: 1.2; flex-shrink: 0; }
+    .crew-member__name   { font-weight: 600; font-size: 0.82rem; color: #fff; }
+    .crew-member__role   { font-size: 0.72rem; color: var(--color-gray-500); }
+    .crew-member__record { font-size: 0.68rem; color: var(--orion-gold); margin-top: 0.1rem; }
+
+    /* ---- SECTION CHIFFRES CLÉS ---- */
+    .section-heading {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: var(--space-4);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+    .section-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(129,140,248,0.18);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+      gap: var(--space-4);
+      margin-bottom: var(--space-8);
+    }
+
+    .stat-card {
+      background: var(--space-bg-card);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      border: 1px solid rgba(129,140,248,0.1);
+      transition: border-color 200ms ease, transform 200ms ease;
+    }
+    .stat-card:hover {
+      border-color: rgba(129,140,248,0.38);
+      transform: translateY(-2px);
+    }
+    .stat-card__icon  { font-size: 1.4rem; margin-bottom: var(--space-2); display: block; }
+    .stat-card__value {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.1rem;
+    }
+    .stat-card__label { font-size: 0.72rem; color: var(--color-gray-500); line-height: 1.4; }
+
+    /* ---- PIED DE PAGE ---- */
+    .page-footer {
+      text-align: center;
+      font-size: 0.72rem;
+      color: var(--color-gray-500);
+      padding: var(--space-6) 0 var(--space-4);
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .page-footer a { color: var(--color-primary-500); text-decoration: none; }
+    .page-footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <!-- ============================================================
+         1. BANNIÈRE D'EN-TÊTE
+         Pattern identique à .wizard__banner dans wizard.css :
+         gradient bleu, icône, titre, badges compétences.
+    ============================================================ -->
+    <header class="banner" role="banner">
+      <div class="banner__icon" aria-hidden="true">🚀</div>
+      <div class="banner__content">
+        <h1 class="banner__title">Mission Artemis II — Simulateur de trajectoire</h1>
+        <div class="banner__badges">
+          <span class="badge badge--level">Cycle 4</span>
+          <span class="badge badge--live">● En direct — Avril 2026</span>
+          <span class="badge badge--skill">OST 31</span>
+          <span class="badge badge--skill">SFC 11</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- ============================================================
+         2. SIMULATEUR + PANNEAU INFO
+         Desktop : simulateur à gauche (flex 1), info à droite (330px)
+         Tablette/mobile : empilé
+    ============================================================ -->
+    <div class="sim-layout">
+
+      <!-- Simulateur principal -->
+      <section class="card" aria-labelledby="sim-heading">
+        <p class="card__label" id="sim-heading">Trajectoire de la mission</p>
+
+        <div class="canvas-wrapper">
+          <canvas
+            id="trajectoryCanvas"
+            width="800"
+            height="400"
+            role="img"
+            aria-label="Animation de la trajectoire Artemis II en figure de 8 : Terre, transit vers la Lune, survol lunaire, retour Terre">
+          </canvas>
+
+          <!-- Overlay perte de signal — face cachée de la Lune (J6) -->
+          <div class="signal-lost" id="signalLost" aria-live="assertive" aria-atomic="true">
+            <div class="signal-lost__text">
+              📡 PERTE DE SIGNAL<br>
+              <small style="font-size:0.72rem;opacity:0.8">Face cachée de la Lune</small>
+            </div>
+          </div>
+        </div>
+
+        <!-- Phase courante — mise à jour en sync avec l'animation -->
+        <div class="phase-indicator" aria-live="polite" aria-atomic="true">
+          <div class="phase-indicator__label">Phase actuelle</div>
+          <div class="phase-indicator__name" id="phaseName">Appuyer sur ▶ Play pour démarrer</div>
+        </div>
+
+        <!-- Contrôles -->
+        <div class="controls">
+          <button class="btn btn--primary"    id="btnPlay"  aria-label="Démarrer l'animation">▶ Play</button>
+          <button class="btn btn--secondary"  id="btnPause" aria-label="Mettre en pause" disabled>⏸ Pause</button>
+          <button class="btn btn--secondary"  id="btnReset" aria-label="Recommencer depuis le début">🔄 Recommencer</button>
+
+          <div class="speed-control">
+            <label for="speedSlider">Vitesse :</label>
+            <input type="range" id="speedSlider" class="speed-slider"
+                   min="1" max="3" step="1" value="2"
+                   aria-label="Vitesse d'animation" />
+            <span class="speed-value" id="speedValue" aria-live="polite">×10</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Panneau d'information (sidebar) -->
+      <aside class="info-panel" aria-label="Informations de mission en temps réel">
+
+        <!-- Télémétrie simulée — se met à jour pendant l'animation -->
+        <div class="card">
+          <p class="card__label">📡 Télémétrie simulée</p>
+          <div class="telemetry-grid">
+            <div class="telem-item">
+              <div class="telem-item__label">Jour mission</div>
+              <div class="telem-item__value" id="telDay">J 1</div>
+            </div>
+            <div class="telem-item">
+              <div class="telem-item__label">Vitesse</div>
+              <div class="telem-item__value" id="telSpeed">
+                —<span class="telem-item__unit"> km/h</span>
+              </div>
+            </div>
+            <div class="telem-item">
+              <div class="telem-item__label">Dist. Terre</div>
+              <div class="telem-item__value" id="telEarth">
+                —<span class="telem-item__unit"> km</span>
+              </div>
+            </div>
+            <div class="telem-item">
+              <div class="telem-item__label">Dist. Lune</div>
+              <div class="telem-item__value" id="telMoon">
+                —<span class="telem-item__unit"> km</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Fiche équipage -->
+        <div class="card">
+          <p class="card__label">👨‍🚀 Équipage Artemis II</p>
+          <div class="crew-list">
+            <div class="crew-member">
+              <span class="crew-member__flag" aria-label="Drapeau américain">🇺🇸</span>
+              <div>
+                <div class="crew-member__name">Reid Wiseman</div>
+                <div class="crew-member__role">Commandant</div>
+              </div>
+            </div>
+            <div class="crew-member">
+              <span class="crew-member__flag" aria-label="Drapeau américain">🇺🇸</span>
+              <div>
+                <div class="crew-member__name">Victor Glover</div>
+                <div class="crew-member__role">Pilote</div>
+                <div class="crew-member__record">★ 1er homme de couleur à voyager vers la Lune</div>
+              </div>
+            </div>
+            <div class="crew-member">
+              <span class="crew-member__flag" aria-label="Drapeau américain">🇺🇸</span>
+              <div>
+                <div class="crew-member__name">Christina Koch</div>
+                <div class="crew-member__role">Spécialiste de mission</div>
+                <div class="crew-member__record">★ 1ère femme à voyager vers la Lune</div>
+              </div>
+            </div>
+            <div class="crew-member">
+              <span class="crew-member__flag" aria-label="Drapeau canadien">🇨🇦</span>
+              <div>
+                <div class="crew-member__name">Jeremy Hansen</div>
+                <div class="crew-member__role">Spécialiste de mission</div>
+                <div class="crew-member__record">★ 1er Canadien à voyager vers la Lune</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+    </div><!-- /sim-layout -->
+
+    <!-- ============================================================
+         3. CHIFFRES CLÉS — Données NASA réelles (source : nasa.gov)
+    ============================================================ -->
+    <section aria-labelledby="stats-heading">
+      <h2 class="section-heading" id="stats-heading">Chiffres clés de la mission</h2>
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-card__icon" aria-hidden="true">📅</span>
+          <div class="stat-card__value">~10 jours</div>
+          <div class="stat-card__label">Durée totale de la mission</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__icon" aria-hidden="true">📏</span>
+          <div class="stat-card__value">1 118 000 km</div>
+          <div class="stat-card__label">Distance totale parcourue (695 081 miles)</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__icon" aria-hidden="true">⚡</span>
+          <div class="stat-card__value">39 472 km/h</div>
+          <div class="stat-card__label">Vitesse max lors du burn TLI</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__icon" aria-hidden="true">🌕</span>
+          <div class="stat-card__value">~6 500 km</div>
+          <div class="stat-card__label">Distance lors du survol lunaire</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__icon" aria-hidden="true">🌍</span>
+          <div class="stat-card__value">406 700 km</div>
+          <div class="stat-card__label">Distance maximale de la Terre (252 760 miles)</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__icon" aria-hidden="true">🏆</span>
+          <div class="stat-card__value">+6 600 km</div>
+          <div class="stat-card__label">Record Apollo 13 dépassé (précédent record humain)</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__icon" aria-hidden="true">🚀</span>
+          <div class="stat-card__value">SLS Block 1</div>
+          <div class="stat-card__label">Fusée Space Launch System — NASA</div>
+        </div>
+        <div class="stat-card">
+          <span class="stat-card__icon" aria-hidden="true">🛸</span>
+          <div class="stat-card__value">Orion "Integrity"</div>
+          <div class="stat-card__label">Capsule habitée — Lancement 1ᵉʳ avril 2026</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="page-footer">
+      Sources :
+      <a href="https://www.nasa.gov/artemis" target="_blank" rel="noopener noreferrer">NASA Artemis</a> ·
+      Données de mission au 6 avril 2026 ·
+      TechnoDocs — Usage pédagogique exclusivement
+    </footer>
+
+  </div><!-- /page-wrapper -->
+
+  <!-- ============================================================
+       JAVASCRIPT — Simulateur de trajectoire (Canvas API)
+
+       Architecture :
+         1. PHASES         — tableau des phases de mission avec données télémétrie
+         2. TRAJECTORY_PTS — points de contrôle de la figure de 8 (normalisés)
+         3. catmullRom()   — interpolation lisse passant par tous les points
+         4. draw()         — rendu canvas : étoiles, trajectoire, sillon, corps, vaisseau
+         5. animate()      — boucle requestAnimationFrame, avance t de 0→1
+         6. updateUI()     — synchronise les éléments HTML avec t courant
+  ============================================================ -->
+  <script>
+  'use strict';
+
+  /* --------------------------------------------------------
+     1. DONNÉES DE MISSION
+     Chaque phase couvre un intervalle de progression t ∈ [0..1].
+     Les distances et vitesses sont interpolées linéairement
+     entre les valeurs [début, fin] de chaque phase.
+     Valeurs basées sur les données NASA réelles d'Artemis II.
+  -------------------------------------------------------- */
+  const PHASES = [
+    {
+      tStart: 0.00, tEnd: 0.08,
+      nom: 'Lancement — Orbite terrestre haute (1ᵉʳ avril)',
+      jour: 1,
+      vitesse:   [28_000, 7_900],       // km/h : décélération insertion orbite
+      distTerre: [200, 2_000],          // km depuis le centre de la Terre (approx.)
+      distLune:  [384_400, 382_000],
+    },
+    {
+      tStart: 0.08, tEnd: 0.16,
+      nom: 'Burn TLI — Injection translunaire (2 avril, 19h49 EDT)',
+      jour: 2,
+      vitesse:   [7_900, 39_472],       // accélération du SLS → vitesse de fuite
+      distTerre: [2_000, 10_000],
+      distLune:  [382_000, 374_000],
+    },
+    {
+      tStart: 0.16, tEnd: 0.46,
+      nom: 'Transit Terre → Lune (J3 – J5)',
+      jour: 3,
+      vitesse:   [39_472, 3_200],       // décélération par attraction terrestre
+      distTerre: [10_000, 393_000],
+      distLune:  [374_000, 8_000],
+    },
+    {
+      tStart: 0.46, tEnd: 0.54,
+      nom: 'Sphère d\'influence lunaire — Approche (6 avril, 00h41 EDT)',
+      jour: 6,
+      vitesse:   [3_200, 8_500],        // accélération par gravité lunaire
+      distTerre: [393_000, 406_700],    // maximum atteint = record de distance
+      distLune:  [8_000, 6_500],
+    },
+    {
+      tStart: 0.54, tEnd: 0.61,
+      nom: 'Survol lunaire — Approche à ~6 500 km (6 avril après-midi)',
+      jour: 6,
+      vitesse:   [8_500, 9_200],
+      distTerre: [406_700, 398_000],
+      distLune:  [6_500, 8_500],
+    },
+    {
+      tStart: 0.61, tEnd: 0.70,
+      nom: '📡 Passage face cachée — Perte de signal temporaire (J7)',
+      jour: 7,
+      vitesse:   [9_200, 7_600],
+      distTerre: [398_000, 375_000],
+      distLune:  [8_500, 18_000],
+      signalLost: true,                 // active l'overlay "perte de signal"
+    },
+    {
+      tStart: 0.70, tEnd: 0.86,
+      nom: 'Retour vers la Terre (J8 – J9)',
+      jour: 8,
+      vitesse:   [7_600, 5_800],
+      distTerre: [375_000, 45_000],
+      distLune:  [18_000, 345_000],
+    },
+    {
+      tStart: 0.86, tEnd: 1.00,
+      nom: 'Rentrée atmosphérique — Amerrissage Pacifique (~10 avril)',
+      jour: 10,
+      vitesse:   [5_800, 40_000],       // pic de chaleur à l'entrée atmo
+      distTerre: [45_000, 0],
+      distLune:  [345_000, 384_400],
+    },
+  ];
+
+  /* --------------------------------------------------------
+     2. POINTS DE CONTRÔLE DE LA TRAJECTOIRE
+     Coordonnées normalisées [x, y] ∈ [0..1] pour le canvas.
+     Ils décrivent la figure de 8 : boucle terrestre →
+     arc supérieur vers la Lune → survol → face cachée →
+     arc inférieur retour → rentrée atmosphérique.
+     L'interpolation Catmull-Rom assure une courbe lisse.
+  -------------------------------------------------------- */
+  const TRAJECTORY_PTS = [
+    [0.190, 0.500],   //  0 — Terre (point de départ et d'arrivée)
+    [0.190, 0.300],   //  1 — Orbite haute (nord)
+    [0.240, 0.210],   //  2 — Quitter l'orbite terrestre
+    [0.360, 0.140],   //  3 — Transit Terre→Lune, arc supérieur
+    [0.500, 0.105],   //  4 — Mi-chemin (point le plus haut)
+    [0.650, 0.145],   //  5 — Approche sphère d'influence lunaire
+    [0.770, 0.265],   //  6 — Entrée sphère d'influence lunaire
+    [0.815, 0.430],   //  7 — Point de survol le plus proche (~6 500 km)
+    [0.805, 0.590],   //  8 — Face cachée (perte de signal)
+    [0.770, 0.700],   //  9 — Sortie face cachée
+    [0.660, 0.790],   // 10 — Arc inférieur retour
+    [0.500, 0.840],   // 11 — Mi-retour (point le plus bas)
+    [0.355, 0.790],   // 12 — Approche Terre (arc inférieur)
+    [0.240, 0.720],   // 13 — Descente vers rentrée atmo
+    [0.190, 0.630],   // 14 — Rentrée atmosphérique
+    [0.190, 0.500],   // 15 — Amerrissage (retour au point 0)
+  ];
+
+  /* --------------------------------------------------------
+     3. RÉFÉRENCE AU CANVAS
+  -------------------------------------------------------- */
+  const canvas = document.getElementById('trajectoryCanvas');
+  const ctx    = canvas.getContext('2d');
+  const W      = canvas.width;   // 800 px (intrinsèque)
+  const H      = canvas.height;  // 400 px (intrinsèque)
+
+  /* Positions des corps célestes sur le canvas (en px) */
+  const EARTH_X = TRAJECTORY_PTS[0][0] * W;  // ~152
+  const EARTH_Y = TRAJECTORY_PTS[0][1] * H;  // 200
+  const MOON_X  = TRAJECTORY_PTS[7][0] * W;  // ~652 (position survol)
+  const MOON_Y  = TRAJECTORY_PTS[7][1] * H;  // ~172
+
+  /* --------------------------------------------------------
+     4. ÉTAT DE L'ANIMATION
+  -------------------------------------------------------- */
+  let t          = 0;      // progression normalisée [0..1]
+  let animId     = null;   // id requestAnimationFrame courant
+  let isPlaying  = false;
+  let speedLevel = 2;      // 1 = ×1 | 2 = ×10 | 3 = ×100
+
+  /* Incrément par frame selon la vitesse.
+     Mission ~10 jours. À 60 fps :
+       ×1   → 36 000 frames → très lent (réaliste)
+       ×10  → 3 600 frames  → ~60 s d'animation
+       ×100 →   360 frames  → ~6 s d'animation         */
+  const SPEED_MAP    = { 1: 1/36_000, 2: 1/3_600, 3: 1/360 };
+  const SPEED_LABELS = { 1: '×1', 2: '×10', 3: '×100' };
+
+  /* --------------------------------------------------------
+     5. INTERPOLATION CATMULL-ROM
+     Donne une courbe lisse passant exactement par chaque point.
+     t ∈ [0..1] indexe l'ensemble du tableau de points.
+  -------------------------------------------------------- */
+  function catmullRomPoint(pts, t) {
+    const n       = pts.length - 1;
+    const seg     = Math.min(Math.floor(t * n), n - 1);
+    const tLoc    = t * n - seg;          // progression locale dans le segment
+
+    // 4 points voisins avec clamp aux extrémités du tableau
+    const p0 = pts[Math.max(seg - 1, 0)];
+    const p1 = pts[seg];
+    const p2 = pts[Math.min(seg + 1, n)];
+    const p3 = pts[Math.min(seg + 2, n)];
+
+    const t2 = tLoc * tLoc;
+    const t3 = t2 * tLoc;
+
+    // Formule Catmull-Rom (tension α = 0.5 implicite)
+    const cx = 0.5 * (
+      2 * p1[0] +
+      (-p0[0] + p2[0]) * tLoc +
+      (2*p0[0] - 5*p1[0] + 4*p2[0] - p3[0]) * t2 +
+      (-p0[0] + 3*p1[0] - 3*p2[0] + p3[0]) * t3
+    );
+    const cy = 0.5 * (
+      2 * p1[1] +
+      (-p0[1] + p2[1]) * tLoc +
+      (2*p0[1] - 5*p1[1] + 4*p2[1] - p3[1]) * t2 +
+      (-p0[1] + 3*p1[1] - 3*p2[1] + p3[1]) * t3
+    );
+    return [cx * W, cy * H];
+  }
+
+  /* Interpolation linéaire simple entre deux valeurs scalaires */
+  function lerp(a, b, u) { return a + (b - a) * Math.min(u, 1); }
+
+  /* --------------------------------------------------------
+     6. DONNÉES TÉLÉMÉTRIE selon t courant
+  -------------------------------------------------------- */
+  function getPhase(t) {
+    for (const phase of PHASES) {
+      if (t >= phase.tStart && t <= phase.tEnd) return phase;
+    }
+    return PHASES[PHASES.length - 1];
+  }
+
+  function getTelemetry(t) {
+    const phase = getPhase(t);
+    const u     = (t - phase.tStart) / (phase.tEnd - phase.tStart); // [0..1]
+    return {
+      jour:       phase.jour,
+      vitesse:    Math.round(lerp(phase.vitesse[0],   phase.vitesse[1],   u)),
+      distTerre:  Math.round(lerp(phase.distTerre[0], phase.distTerre[1], u)),
+      distLune:   Math.round(lerp(phase.distLune[0],  phase.distLune[1],  u)),
+      nom:        phase.nom,
+      signalLost: phase.signalLost || false,
+    };
+  }
+
+  /* --------------------------------------------------------
+     7. ÉTOILES DE FOND
+     Générées une seule fois pour ne pas recalculer à chaque frame.
+  -------------------------------------------------------- */
+  const STARS = Array.from({ length: 200 }, () => ({
+    x:       Math.random() * W,
+    y:       Math.random() * H,
+    r:       Math.random() * 1.1 + 0.3,
+    opacity: Math.random() * 0.65 + 0.25,
+  }));
+
+  function drawStars() {
+    STARS.forEach(({ x, y, r, opacity }) => {
+      ctx.beginPath();
+      ctx.arc(x, y, r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255,255,255,${opacity})`;
+      ctx.fill();
+    });
+  }
+
+  /* --------------------------------------------------------
+     8. TRAJECTOIRE COMPLÈTE en pointillés (chemin prévu)
+  -------------------------------------------------------- */
+  function drawTrajectoryPath() {
+    ctx.save();
+    ctx.setLineDash([4, 7]);
+    ctx.strokeStyle = 'rgba(129,140,248,0.25)';
+    ctx.lineWidth   = 1.5;
+    ctx.beginPath();
+    const [sx, sy] = catmullRomPoint(TRAJECTORY_PTS, 0);
+    ctx.moveTo(sx, sy);
+    for (let i = 1; i <= 240; i++) {
+      const [px, py] = catmullRomPoint(TRAJECTORY_PTS, i / 240);
+      ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /* --------------------------------------------------------
+     9. SILLON PARCOURU (trait lumineux, dégradé violet)
+        Permet à l'élève de voir le chemin déjà effectué.
+  -------------------------------------------------------- */
+  function drawTrail(currentT) {
+    if (currentT <= 0.001) return;
+    const steps = Math.max(Math.floor(currentT * 240), 2);
+    const [sx, sy] = catmullRomPoint(TRAJECTORY_PTS, 0);
+    const [ex, ey] = catmullRomPoint(TRAJECTORY_PTS, currentT);
+
+    ctx.save();
+    ctx.setLineDash([]);
+    const grad = ctx.createLinearGradient(sx, sy, ex, ey);
+    grad.addColorStop(0,   'rgba(99,102,241,0)');
+    grad.addColorStop(0.5, 'rgba(129,140,248,0.45)');
+    grad.addColorStop(1,   'rgba(196,181,253,0.9)');
+    ctx.strokeStyle = grad;
+    ctx.lineWidth   = 2.5;
+    ctx.lineCap     = 'round';
+    ctx.beginPath();
+    ctx.moveTo(sx, sy);
+    for (let i = 1; i <= steps; i++) {
+      const [px, py] = catmullRomPoint(TRAJECTORY_PTS, i / 240);
+      ctx.lineTo(px, py);
+    }
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  /* --------------------------------------------------------
+     10. DESSIN DE LA TERRE
+  -------------------------------------------------------- */
+  function drawEarth() {
+    // Halo bleu atmosphérique
+    const halo = ctx.createRadialGradient(EARTH_X, EARTH_Y, 18, EARTH_X, EARTH_Y, 52);
+    halo.addColorStop(0, 'rgba(30,136,229,0.22)');
+    halo.addColorStop(1, 'rgba(30,136,229,0)');
+    ctx.fillStyle = halo;
+    ctx.beginPath();
+    ctx.arc(EARTH_X, EARTH_Y, 52, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Globe avec dégradé (reflet en haut à gauche)
+    const globe = ctx.createRadialGradient(
+      EARTH_X - 7, EARTH_Y - 7, 2,
+      EARTH_X,     EARTH_Y,     22
+    );
+    globe.addColorStop(0,   '#64b5f6');
+    globe.addColorStop(0.4, '#1e88e5');
+    globe.addColorStop(1,   '#0d47a1');
+    ctx.fillStyle = globe;
+    ctx.beginPath();
+    ctx.arc(EARTH_X, EARTH_Y, 22, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Masses terrestres (suggestif — ellipses vertes)
+    ctx.fillStyle = 'rgba(76,175,80,0.72)';
+    ctx.beginPath(); ctx.ellipse(EARTH_X - 5, EARTH_Y - 7, 7, 5, 0.3, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.ellipse(EARTH_X + 7, EARTH_Y + 4, 5, 4, -0.4, 0, Math.PI * 2); ctx.fill();
+
+    // Étiquette
+    ctx.fillStyle   = 'rgba(255,255,255,0.85)';
+    ctx.font        = 'bold 10px Inter, sans-serif';
+    ctx.textAlign   = 'center';
+    ctx.fillText('TERRE', EARTH_X, EARTH_Y + 36);
+  }
+
+  /* --------------------------------------------------------
+     11. DESSIN DE LA LUNE
+  -------------------------------------------------------- */
+  function drawMoon() {
+    // Halo gris
+    const halo = ctx.createRadialGradient(MOON_X, MOON_Y, 12, MOON_X, MOON_Y, 38);
+    halo.addColorStop(0, 'rgba(158,158,158,0.16)');
+    halo.addColorStop(1, 'rgba(158,158,158,0)');
+    ctx.fillStyle = halo;
+    ctx.beginPath();
+    ctx.arc(MOON_X, MOON_Y, 38, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Globe lunaire
+    const globe = ctx.createRadialGradient(
+      MOON_X - 4, MOON_Y - 4, 1,
+      MOON_X,     MOON_Y,     16
+    );
+    globe.addColorStop(0,   '#e0e0e0');
+    globe.addColorStop(0.5, '#9e9e9e');
+    globe.addColorStop(1,   '#525252');
+    ctx.fillStyle = globe;
+    ctx.beginPath();
+    ctx.arc(MOON_X, MOON_Y, 16, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Cratères (cercles sombres suggestifs)
+    ctx.fillStyle = 'rgba(0,0,0,0.25)';
+    ctx.beginPath(); ctx.arc(MOON_X - 5, MOON_Y - 3, 3.5, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(MOON_X + 6, MOON_Y + 5,   2, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(MOON_X + 1, MOON_Y - 9, 1.5, 0, Math.PI * 2); ctx.fill();
+
+    // Étiquette
+    ctx.fillStyle   = 'rgba(255,255,255,0.75)';
+    ctx.font        = 'bold 10px Inter, sans-serif';
+    ctx.textAlign   = 'center';
+    ctx.fillText('LUNE', MOON_X, MOON_Y + 30);
+  }
+
+  /* --------------------------------------------------------
+     12. DESSIN DU VAISSEAU ORION
+        Triangle doré avec halo de propulsion pulsant.
+  -------------------------------------------------------- */
+  function drawOrion(x, y) {
+    ctx.save();
+    ctx.translate(x, y);
+
+    // Halo moteur — pulse pour simuler la propulsion
+    const pulse   = 1 + 0.28 * Math.sin(Date.now() / 190);
+    const thrustG = ctx.createRadialGradient(0, 0, 0, 0, 0, 13 * pulse);
+    thrustG.addColorStop(0,   'rgba(255,214,0,0.95)');
+    thrustG.addColorStop(0.4, 'rgba(255,140,0,0.45)');
+    thrustG.addColorStop(1,   'rgba(255,80,0,0)');
+    ctx.fillStyle = thrustG;
+    ctx.beginPath();
+    ctx.arc(0, 0, 13 * pulse, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Corps du vaisseau : triangle équilatéral pointant vers le haut
+    ctx.fillStyle = '#ffd600';
+    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
+    ctx.lineWidth = 0.8;
+    ctx.beginPath();
+    ctx.moveTo( 0,  -8);
+    ctx.lineTo( 6,   6);
+    ctx.lineTo(-6,   6);
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // Hublot (bleu clair)
+    ctx.fillStyle = '#81d4fa';
+    ctx.beginPath();
+    ctx.arc(0, -1, 2.2, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  /* --------------------------------------------------------
+     13. MISE À JOUR DES ÉLÉMENTS HTML (télémétrie + phase)
+  -------------------------------------------------------- */
+  function updateUI(telem) {
+    document.getElementById('phaseName').textContent = telem.nom;
+    document.getElementById('telDay').textContent    = `J ${telem.jour}`;
+
+    document.getElementById('telSpeed').innerHTML =
+      `${telem.vitesse.toLocaleString('fr-FR')}<span class="telem-item__unit"> km/h</span>`;
+    document.getElementById('telEarth').innerHTML =
+      `${telem.distTerre.toLocaleString('fr-FR')}<span class="telem-item__unit"> km</span>`;
+    document.getElementById('telMoon').innerHTML  =
+      `${telem.distLune.toLocaleString('fr-FR')}<span class="telem-item__unit"> km</span>`;
+
+    // Overlay perte de signal face cachée
+    document.getElementById('signalLost')
+      .classList.toggle('is-active', telem.signalLost);
+  }
+
+  /* --------------------------------------------------------
+     14. RENDU COMPLET D'UNE FRAME
+  -------------------------------------------------------- */
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    drawStars();
+    drawTrajectoryPath();
+    drawTrail(t);
+    drawEarth();
+    drawMoon();
+
+    const [ox, oy] = catmullRomPoint(TRAJECTORY_PTS, t);
+    drawOrion(ox, oy);
+
+    updateUI(getTelemetry(t));
+  }
+
+  /* --------------------------------------------------------
+     15. BOUCLE D'ANIMATION (requestAnimationFrame)
+  -------------------------------------------------------- */
+  function animate() {
+    t = Math.min(t + SPEED_MAP[speedLevel], 1);
+    draw();
+
+    if (t < 1) {
+      animId = requestAnimationFrame(animate);
+    } else {
+      // Fin de mission — réinitialise les boutons
+      isPlaying = false;
+      document.getElementById('btnPlay').disabled  = true;
+      document.getElementById('btnPause').disabled = true;
+      document.getElementById('phaseName').textContent =
+        '🎉 Amerrissage réussi — Mission Artemis II accomplie !';
+    }
+  }
+
+  /* --------------------------------------------------------
+     16. GESTIONNAIRES DE CONTRÔLES
+  -------------------------------------------------------- */
+  document.getElementById('btnPlay').addEventListener('click', () => {
+    if (isPlaying) return;
+    isPlaying = true;
+    document.getElementById('btnPlay').disabled  = true;
+    document.getElementById('btnPause').disabled = false;
+    animId = requestAnimationFrame(animate);
+  });
+
+  document.getElementById('btnPause').addEventListener('click', () => {
+    if (!isPlaying) return;
+    isPlaying = false;
+    cancelAnimationFrame(animId);
+    animId = null;
+    document.getElementById('btnPlay').disabled  = false;
+    document.getElementById('btnPause').disabled = true;
+  });
+
+  document.getElementById('btnReset').addEventListener('click', () => {
+    cancelAnimationFrame(animId);
+    animId    = null;
+    isPlaying = false;
+    t         = 0;
+    document.getElementById('btnPlay').disabled  = false;
+    document.getElementById('btnPause').disabled = true;
+    document.getElementById('signalLost').classList.remove('is-active');
+    document.getElementById('phaseName').textContent = 'Appuyer sur ▶ Play pour démarrer';
+    draw();
+  });
+
+  document.getElementById('speedSlider').addEventListener('input', (e) => {
+    speedLevel = parseInt(e.target.value, 10);
+    document.getElementById('speedValue').textContent = SPEED_LABELS[speedLevel];
+  });
+
+  /* --------------------------------------------------------
+     17. RENDU INITIAL
+     Affiche la scène (Terre, Lune, étoiles, trajectoire)
+     avant même que l'élève appuie sur Play.
+  -------------------------------------------------------- */
+  draw();
+  </script>
+</body>
+</html>
