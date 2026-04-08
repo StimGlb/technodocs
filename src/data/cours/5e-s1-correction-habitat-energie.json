@@ -1,0 +1,32 @@
+{
+  "title": "Correction — Habitat & Énergie",
+  "subtitle": "Consommation électrique d'une maison connectée — Séquence 1 — 5ème",
+  "markdownPath": "../../content/md/corrections/s1-5eme-consommation-maison-correction.md",
+  "slides": [
+    {
+      "icon": "🎯",
+      "title": "Activité 1 — Où va l'électricité ?",
+      "description": "- Lire et compléter un diagramme en bâtons\n- Identifier les postes les plus consommateurs\n- Calculer le coût de la veille électrique"
+    },
+    {
+      "icon": "🏠",
+      "title": "Poste n°1 : Chauffage",
+      "description": "Le chauffage électrique représente **45 %** de la consommation d'une maison (2 800 kWh/an). C'est de loin le poste le plus important à maîtriser."
+    },
+    {
+      "icon": "💡",
+      "title": "Activité 2 — Éco-gestes et domotique",
+      "description": "- Associer un éco-geste simple à chaque poste\n- Identifier un équipement connecté possible\n- Comparer l'impact potentiel des postes"
+    },
+    {
+      "icon": "🔄",
+      "title": "Activité 3 — Cycle de vie d'une ampoule",
+      "description": "Les 2 étapes les plus impactantes :\n- **Utilisation** : consommation sur toute la durée de vie\n- **Extraction** : matières premières, terres rares, pollution"
+    },
+    {
+      "icon": "✅",
+      "title": "Ce que je retiens",
+      "description": "- Le **chauffage** = 1er poste consommateur (45 %)\n- Une LED consomme **10 fois moins** qu'une ampoule incandescente\n- Cycle de vie : extraction → fabrication → transport → utilisation → fin de vie"
+    }
+  ]
+}
