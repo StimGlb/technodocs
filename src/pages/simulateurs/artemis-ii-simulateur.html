@@ -446,13 +446,8 @@
     <header class="banner" role="banner">
       <div class="banner__icon" aria-hidden="true">🚀</div>
       <div class="banner__content">
-        <h1 class="banner__title">Mission Artemis II — Simulateur de trajectoire</h1>
-        <div class="banner__badges">
-          <span class="badge badge--level">Cycle 4</span>
-          <span class="badge badge--live">● En direct — Avril 2026</span>
-          <span class="badge badge--skill">OST 31</span>
-          <span class="badge badge--skill">SFC 11</span>
-        </div>
+        <h1 class="banner__title">Mission Artemis II — Programme de la mission et simulateur de trajectoire</h1>
+        <span class="badge badge--live">● Encore en cours — Avril 2026</span>
       </div>
     </header>
 
@@ -465,7 +460,7 @@
 
       <!-- Simulateur principal -->
       <section class="card" aria-labelledby="sim-heading">
-        <p class="card__label" id="sim-heading">Trajectoire de la mission</p>
+        <p class="card__label" id="sim-heading">Trajectoire simplifiée de la mission</p>
 
         <div class="canvas-wrapper">
           <canvas
@@ -546,14 +541,14 @@
             <div class="crew-member">
               <span class="crew-member__flag" aria-label="Drapeau américain">🇺🇸</span>
               <div>
-                <div class="crew-member__name">Reid Wiseman</div>
+                <div class="crew-member__name">Reid Wiseman - 50 ans</div>
                 <div class="crew-member__role">Commandant</div>
               </div>
             </div>
             <div class="crew-member">
               <span class="crew-member__flag" aria-label="Drapeau américain">🇺🇸</span>
               <div>
-                <div class="crew-member__name">Victor Glover</div>
+                <div class="crew-member__name">Victor Glover - 49 ans</div>
                 <div class="crew-member__role">Pilote</div>
                 <div class="crew-member__record">★ 1er homme de couleur à voyager vers la Lune</div>
               </div>
@@ -561,7 +556,7 @@
             <div class="crew-member">
               <span class="crew-member__flag" aria-label="Drapeau américain">🇺🇸</span>
               <div>
-                <div class="crew-member__name">Christina Koch</div>
+                <div class="crew-member__name">Christina Koch - 47 ans</div>
                 <div class="crew-member__role">Spécialiste de mission</div>
                 <div class="crew-member__record">★ 1ère femme à voyager vers la Lune</div>
               </div>
@@ -569,7 +564,7 @@
             <div class="crew-member">
               <span class="crew-member__flag" aria-label="Drapeau canadien">🇨🇦</span>
               <div>
-                <div class="crew-member__name">Jeremy Hansen</div>
+                <div class="crew-member__name">Jeremy Hansen - 50 ans</div>
                 <div class="crew-member__role">Spécialiste de mission</div>
                 <div class="crew-member__record">★ 1er Canadien à voyager vers la Lune</div>
               </div>
@@ -649,485 +644,6 @@
          5. animate()      — boucle requestAnimationFrame, avance t de 0→1
          6. updateUI()     — synchronise les éléments HTML avec t courant
   ============================================================ -->
-  <script>
-  'use strict';
-
-  /* --------------------------------------------------------
-     1. DONNÉES DE MISSION
-     Chaque phase couvre un intervalle de progression t ∈ [0..1].
-     Les distances et vitesses sont interpolées linéairement
-     entre les valeurs [début, fin] de chaque phase.
-     Valeurs basées sur les données NASA réelles d'Artemis II.
-  -------------------------------------------------------- */
-  const PHASES = [
-    {
-      tStart: 0.00, tEnd: 0.08,
-      nom: 'Lancement — Orbite terrestre haute (1ᵉʳ avril)',
-      jour: 1,
-      vitesse:   [28_000, 7_900],       // km/h : décélération insertion orbite
-      distTerre: [200, 2_000],          // km depuis le centre de la Terre (approx.)
-      distLune:  [384_400, 382_000],
-    },
-    {
-      tStart: 0.08, tEnd: 0.16,
-      nom: 'Burn TLI — Injection translunaire (2 avril, 19h49 EDT)',
-      jour: 2,
-      vitesse:   [7_900, 39_472],       // accélération du SLS → vitesse de fuite
-      distTerre: [2_000, 10_000],
-      distLune:  [382_000, 374_000],
-    },
-    {
-      tStart: 0.16, tEnd: 0.46,
-      nom: 'Transit Terre → Lune (J3 – J5)',
-      jour: 3,
-      vitesse:   [39_472, 3_200],       // décélération par attraction terrestre
-      distTerre: [10_000, 393_000],
-      distLune:  [374_000, 8_000],
-    },
-    {
-      tStart: 0.46, tEnd: 0.54,
-      nom: 'Sphère d\'influence lunaire — Approche (6 avril, 00h41 EDT)',
-      jour: 6,
-      vitesse:   [3_200, 8_500],        // accélération par gravité lunaire
-      distTerre: [393_000, 406_700],    // maximum atteint = record de distance
-      distLune:  [8_000, 6_500],
-    },
-    {
-      tStart: 0.54, tEnd: 0.61,
-      nom: 'Survol lunaire — Approche à ~6 500 km (6 avril après-midi)',
-      jour: 6,
-      vitesse:   [8_500, 9_200],
-      distTerre: [406_700, 398_000],
-      distLune:  [6_500, 8_500],
-    },
-    {
-      tStart: 0.61, tEnd: 0.70,
-      nom: '📡 Passage face cachée — Perte de signal temporaire (J7)',
-      jour: 7,
-      vitesse:   [9_200, 7_600],
-      distTerre: [398_000, 375_000],
-      distLune:  [8_500, 18_000],
-      signalLost: true,                 // active l'overlay "perte de signal"
-    },
-    {
-      tStart: 0.70, tEnd: 0.86,
-      nom: 'Retour vers la Terre (J8 – J9)',
-      jour: 8,
-      vitesse:   [7_600, 5_800],
-      distTerre: [375_000, 45_000],
-      distLune:  [18_000, 345_000],
-    },
-    {
-      tStart: 0.86, tEnd: 1.00,
-      nom: 'Rentrée atmosphérique — Amerrissage Pacifique (~10 avril)',
-      jour: 10,
-      vitesse:   [5_800, 40_000],       // pic de chaleur à l'entrée atmo
-      distTerre: [45_000, 0],
-      distLune:  [345_000, 384_400],
-    },
-  ];
-
-  /* --------------------------------------------------------
-     2. POINTS DE CONTRÔLE DE LA TRAJECTOIRE
-     Coordonnées normalisées [x, y] ∈ [0..1] pour le canvas.
-     Ils décrivent la figure de 8 : boucle terrestre →
-     arc supérieur vers la Lune → survol → face cachée →
-     arc inférieur retour → rentrée atmosphérique.
-     L'interpolation Catmull-Rom assure une courbe lisse.
-  -------------------------------------------------------- */
-  const TRAJECTORY_PTS = [
-    [0.190, 0.500],   //  0 — Terre (point de départ et d'arrivée)
-    [0.190, 0.300],   //  1 — Orbite haute (nord)
-    [0.240, 0.210],   //  2 — Quitter l'orbite terrestre
-    [0.360, 0.140],   //  3 — Transit Terre→Lune, arc supérieur
-    [0.500, 0.105],   //  4 — Mi-chemin (point le plus haut)
-    [0.650, 0.145],   //  5 — Approche sphère d'influence lunaire
-    [0.770, 0.265],   //  6 — Entrée sphère d'influence lunaire
-    [0.815, 0.430],   //  7 — Point de survol le plus proche (~6 500 km)
-    [0.805, 0.590],   //  8 — Face cachée (perte de signal)
-    [0.770, 0.700],   //  9 — Sortie face cachée
-    [0.660, 0.790],   // 10 — Arc inférieur retour
-    [0.500, 0.840],   // 11 — Mi-retour (point le plus bas)
-    [0.355, 0.790],   // 12 — Approche Terre (arc inférieur)
-    [0.240, 0.720],   // 13 — Descente vers rentrée atmo
-    [0.190, 0.630],   // 14 — Rentrée atmosphérique
-    [0.190, 0.500],   // 15 — Amerrissage (retour au point 0)
-  ];
-
-  /* --------------------------------------------------------
-     3. RÉFÉRENCE AU CANVAS
-  -------------------------------------------------------- */
-  const canvas = document.getElementById('trajectoryCanvas');
-  const ctx    = canvas.getContext('2d');
-  const W      = canvas.width;   // 800 px (intrinsèque)
-  const H      = canvas.height;  // 400 px (intrinsèque)
-
-  /* Positions des corps célestes sur le canvas (en px) */
-  const EARTH_X = TRAJECTORY_PTS[0][0] * W;  // ~152
-  const EARTH_Y = TRAJECTORY_PTS[0][1] * H;  // 200
-  const MOON_X  = TRAJECTORY_PTS[7][0] * W;  // ~652 (position survol)
-  const MOON_Y  = TRAJECTORY_PTS[7][1] * H;  // ~172
-
-  /* --------------------------------------------------------
-     4. ÉTAT DE L'ANIMATION
-  -------------------------------------------------------- */
-  let t          = 0;      // progression normalisée [0..1]
-  let animId     = null;   // id requestAnimationFrame courant
-  let isPlaying  = false;
-  let speedLevel = 2;      // 1 = ×1 | 2 = ×10 | 3 = ×100
-
-  /* Incrément par frame selon la vitesse.
-     Mission ~10 jours. À 60 fps :
-       ×1   → 36 000 frames → très lent (réaliste)
-       ×10  → 3 600 frames  → ~60 s d'animation
-       ×100 →   360 frames  → ~6 s d'animation         */
-  const SPEED_MAP    = { 1: 1/36_000, 2: 1/3_600, 3: 1/360 };
-  const SPEED_LABELS = { 1: '×1', 2: '×10', 3: '×100' };
-
-  /* --------------------------------------------------------
-     5. INTERPOLATION CATMULL-ROM
-     Donne une courbe lisse passant exactement par chaque point.
-     t ∈ [0..1] indexe l'ensemble du tableau de points.
-  -------------------------------------------------------- */
-  function catmullRomPoint(pts, t) {
-    const n       = pts.length - 1;
-    const seg     = Math.min(Math.floor(t * n), n - 1);
-    const tLoc    = t * n - seg;          // progression locale dans le segment
-
-    // 4 points voisins avec clamp aux extrémités du tableau
-    const p0 = pts[Math.max(seg - 1, 0)];
-    const p1 = pts[seg];
-    const p2 = pts[Math.min(seg + 1, n)];
-    const p3 = pts[Math.min(seg + 2, n)];
-
-    const t2 = tLoc * tLoc;
-    const t3 = t2 * tLoc;
-
-    // Formule Catmull-Rom (tension α = 0.5 implicite)
-    const cx = 0.5 * (
-      2 * p1[0] +
-      (-p0[0] + p2[0]) * tLoc +
-      (2*p0[0] - 5*p1[0] + 4*p2[0] - p3[0]) * t2 +
-      (-p0[0] + 3*p1[0] - 3*p2[0] + p3[0]) * t3
-    );
-    const cy = 0.5 * (
-      2 * p1[1] +
-      (-p0[1] + p2[1]) * tLoc +
-      (2*p0[1] - 5*p1[1] + 4*p2[1] - p3[1]) * t2 +
-      (-p0[1] + 3*p1[1] - 3*p2[1] + p3[1]) * t3
-    );
-    return [cx * W, cy * H];
-  }
-
-  /* Interpolation linéaire simple entre deux valeurs scalaires */
-  function lerp(a, b, u) { return a + (b - a) * Math.min(u, 1); }
-
-  /* --------------------------------------------------------
-     6. DONNÉES TÉLÉMÉTRIE selon t courant
-  -------------------------------------------------------- */
-  function getPhase(t) {
-    for (const phase of PHASES) {
-      if (t >= phase.tStart && t <= phase.tEnd) return phase;
-    }
-    return PHASES[PHASES.length - 1];
-  }
-
-  function getTelemetry(t) {
-    const phase = getPhase(t);
-    const u     = (t - phase.tStart) / (phase.tEnd - phase.tStart); // [0..1]
-    return {
-      jour:       phase.jour,
-      vitesse:    Math.round(lerp(phase.vitesse[0],   phase.vitesse[1],   u)),
-      distTerre:  Math.round(lerp(phase.distTerre[0], phase.distTerre[1], u)),
-      distLune:   Math.round(lerp(phase.distLune[0],  phase.distLune[1],  u)),
-      nom:        phase.nom,
-      signalLost: phase.signalLost || false,
-    };
-  }
-
-  /* --------------------------------------------------------
-     7. ÉTOILES DE FOND
-     Générées une seule fois pour ne pas recalculer à chaque frame.
-  -------------------------------------------------------- */
-  const STARS = Array.from({ length: 200 }, () => ({
-    x:       Math.random() * W,
-    y:       Math.random() * H,
-    r:       Math.random() * 1.1 + 0.3,
-    opacity: Math.random() * 0.65 + 0.25,
-  }));
-
-  function drawStars() {
-    STARS.forEach(({ x, y, r, opacity }) => {
-      ctx.beginPath();
-      ctx.arc(x, y, r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${opacity})`;
-      ctx.fill();
-    });
-  }
-
-  /* --------------------------------------------------------
-     8. TRAJECTOIRE COMPLÈTE en pointillés (chemin prévu)
-  -------------------------------------------------------- */
-  function drawTrajectoryPath() {
-    ctx.save();
-    ctx.setLineDash([4, 7]);
-    ctx.strokeStyle = 'rgba(129,140,248,0.25)';
-    ctx.lineWidth   = 1.5;
-    ctx.beginPath();
-    const [sx, sy] = catmullRomPoint(TRAJECTORY_PTS, 0);
-    ctx.moveTo(sx, sy);
-    for (let i = 1; i <= 240; i++) {
-      const [px, py] = catmullRomPoint(TRAJECTORY_PTS, i / 240);
-      ctx.lineTo(px, py);
-    }
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  /* --------------------------------------------------------
-     9. SILLON PARCOURU (trait lumineux, dégradé violet)
-        Permet à l'élève de voir le chemin déjà effectué.
-  -------------------------------------------------------- */
-  function drawTrail(currentT) {
-    if (currentT <= 0.001) return;
-    const steps = Math.max(Math.floor(currentT * 240), 2);
-    const [sx, sy] = catmullRomPoint(TRAJECTORY_PTS, 0);
-    const [ex, ey] = catmullRomPoint(TRAJECTORY_PTS, currentT);
-
-    ctx.save();
-    ctx.setLineDash([]);
-    const grad = ctx.createLinearGradient(sx, sy, ex, ey);
-    grad.addColorStop(0,   'rgba(99,102,241,0)');
-    grad.addColorStop(0.5, 'rgba(129,140,248,0.45)');
-    grad.addColorStop(1,   'rgba(196,181,253,0.9)');
-    ctx.strokeStyle = grad;
-    ctx.lineWidth   = 2.5;
-    ctx.lineCap     = 'round';
-    ctx.beginPath();
-    ctx.moveTo(sx, sy);
-    for (let i = 1; i <= steps; i++) {
-      const [px, py] = catmullRomPoint(TRAJECTORY_PTS, i / 240);
-      ctx.lineTo(px, py);
-    }
-    ctx.stroke();
-    ctx.restore();
-  }
-
-  /* --------------------------------------------------------
-     10. DESSIN DE LA TERRE
-  -------------------------------------------------------- */
-  function drawEarth() {
-    // Halo bleu atmosphérique
-    const halo = ctx.createRadialGradient(EARTH_X, EARTH_Y, 18, EARTH_X, EARTH_Y, 52);
-    halo.addColorStop(0, 'rgba(30,136,229,0.22)');
-    halo.addColorStop(1, 'rgba(30,136,229,0)');
-    ctx.fillStyle = halo;
-    ctx.beginPath();
-    ctx.arc(EARTH_X, EARTH_Y, 52, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Globe avec dégradé (reflet en haut à gauche)
-    const globe = ctx.createRadialGradient(
-      EARTH_X - 7, EARTH_Y - 7, 2,
-      EARTH_X,     EARTH_Y,     22
-    );
-    globe.addColorStop(0,   '#64b5f6');
-    globe.addColorStop(0.4, '#1e88e5');
-    globe.addColorStop(1,   '#0d47a1');
-    ctx.fillStyle = globe;
-    ctx.beginPath();
-    ctx.arc(EARTH_X, EARTH_Y, 22, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Masses terrestres (suggestif — ellipses vertes)
-    ctx.fillStyle = 'rgba(76,175,80,0.72)';
-    ctx.beginPath(); ctx.ellipse(EARTH_X - 5, EARTH_Y - 7, 7, 5, 0.3, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.ellipse(EARTH_X + 7, EARTH_Y + 4, 5, 4, -0.4, 0, Math.PI * 2); ctx.fill();
-
-    // Étiquette
-    ctx.fillStyle   = 'rgba(255,255,255,0.85)';
-    ctx.font        = 'bold 10px Inter, sans-serif';
-    ctx.textAlign   = 'center';
-    ctx.fillText('TERRE', EARTH_X, EARTH_Y + 36);
-  }
-
-  /* --------------------------------------------------------
-     11. DESSIN DE LA LUNE
-  -------------------------------------------------------- */
-  function drawMoon() {
-    // Halo gris
-    const halo = ctx.createRadialGradient(MOON_X, MOON_Y, 12, MOON_X, MOON_Y, 38);
-    halo.addColorStop(0, 'rgba(158,158,158,0.16)');
-    halo.addColorStop(1, 'rgba(158,158,158,0)');
-    ctx.fillStyle = halo;
-    ctx.beginPath();
-    ctx.arc(MOON_X, MOON_Y, 38, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Globe lunaire
-    const globe = ctx.createRadialGradient(
-      MOON_X - 4, MOON_Y - 4, 1,
-      MOON_X,     MOON_Y,     16
-    );
-    globe.addColorStop(0,   '#e0e0e0');
-    globe.addColorStop(0.5, '#9e9e9e');
-    globe.addColorStop(1,   '#525252');
-    ctx.fillStyle = globe;
-    ctx.beginPath();
-    ctx.arc(MOON_X, MOON_Y, 16, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Cratères (cercles sombres suggestifs)
-    ctx.fillStyle = 'rgba(0,0,0,0.25)';
-    ctx.beginPath(); ctx.arc(MOON_X - 5, MOON_Y - 3, 3.5, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(MOON_X + 6, MOON_Y + 5,   2, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(MOON_X + 1, MOON_Y - 9, 1.5, 0, Math.PI * 2); ctx.fill();
-
-    // Étiquette
-    ctx.fillStyle   = 'rgba(255,255,255,0.75)';
-    ctx.font        = 'bold 10px Inter, sans-serif';
-    ctx.textAlign   = 'center';
-    ctx.fillText('LUNE', MOON_X, MOON_Y + 30);
-  }
-
-  /* --------------------------------------------------------
-     12. DESSIN DU VAISSEAU ORION
-        Triangle doré avec halo de propulsion pulsant.
-  -------------------------------------------------------- */
-  function drawOrion(x, y) {
-    ctx.save();
-    ctx.translate(x, y);
-
-    // Halo moteur — pulse pour simuler la propulsion
-    const pulse   = 1 + 0.28 * Math.sin(Date.now() / 190);
-    const thrustG = ctx.createRadialGradient(0, 0, 0, 0, 0, 13 * pulse);
-    thrustG.addColorStop(0,   'rgba(255,214,0,0.95)');
-    thrustG.addColorStop(0.4, 'rgba(255,140,0,0.45)');
-    thrustG.addColorStop(1,   'rgba(255,80,0,0)');
-    ctx.fillStyle = thrustG;
-    ctx.beginPath();
-    ctx.arc(0, 0, 13 * pulse, 0, Math.PI * 2);
-    ctx.fill();
-
-    // Corps du vaisseau : triangle équilatéral pointant vers le haut
-    ctx.fillStyle = '#ffd600';
-    ctx.strokeStyle = 'rgba(255,255,255,0.6)';
-    ctx.lineWidth = 0.8;
-    ctx.beginPath();
-    ctx.moveTo( 0,  -8);
-    ctx.lineTo( 6,   6);
-    ctx.lineTo(-6,   6);
-    ctx.closePath();
-    ctx.fill();
-    ctx.stroke();
-
-    // Hublot (bleu clair)
-    ctx.fillStyle = '#81d4fa';
-    ctx.beginPath();
-    ctx.arc(0, -1, 2.2, 0, Math.PI * 2);
-    ctx.fill();
-
-    ctx.restore();
-  }
-
-  /* --------------------------------------------------------
-     13. MISE À JOUR DES ÉLÉMENTS HTML (télémétrie + phase)
-  -------------------------------------------------------- */
-  function updateUI(telem) {
-    document.getElementById('phaseName').textContent = telem.nom;
-    document.getElementById('telDay').textContent    = `J ${telem.jour}`;
-
-    document.getElementById('telSpeed').innerHTML =
-      `${telem.vitesse.toLocaleString('fr-FR')}<span class="telem-item__unit"> km/h</span>`;
-    document.getElementById('telEarth').innerHTML =
-      `${telem.distTerre.toLocaleString('fr-FR')}<span class="telem-item__unit"> km</span>`;
-    document.getElementById('telMoon').innerHTML  =
-      `${telem.distLune.toLocaleString('fr-FR')}<span class="telem-item__unit"> km</span>`;
-
-    // Overlay perte de signal face cachée
-    document.getElementById('signalLost')
-      .classList.toggle('is-active', telem.signalLost);
-  }
-
-  /* --------------------------------------------------------
-     14. RENDU COMPLET D'UNE FRAME
-  -------------------------------------------------------- */
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    drawStars();
-    drawTrajectoryPath();
-    drawTrail(t);
-    drawEarth();
-    drawMoon();
-
-    const [ox, oy] = catmullRomPoint(TRAJECTORY_PTS, t);
-    drawOrion(ox, oy);
-
-    updateUI(getTelemetry(t));
-  }
-
-  /* --------------------------------------------------------
-     15. BOUCLE D'ANIMATION (requestAnimationFrame)
-  -------------------------------------------------------- */
-  function animate() {
-    t = Math.min(t + SPEED_MAP[speedLevel], 1);
-    draw();
-
-    if (t < 1) {
-      animId = requestAnimationFrame(animate);
-    } else {
-      // Fin de mission — réinitialise les boutons
-      isPlaying = false;
-      document.getElementById('btnPlay').disabled  = true;
-      document.getElementById('btnPause').disabled = true;
-      document.getElementById('phaseName').textContent =
-        '🎉 Amerrissage réussi — Mission Artemis II accomplie !';
-    }
-  }
-
-  /* --------------------------------------------------------
-     16. GESTIONNAIRES DE CONTRÔLES
-  -------------------------------------------------------- */
-  document.getElementById('btnPlay').addEventListener('click', () => {
-    if (isPlaying) return;
-    isPlaying = true;
-    document.getElementById('btnPlay').disabled  = true;
-    document.getElementById('btnPause').disabled = false;
-    animId = requestAnimationFrame(animate);
-  });
-
-  document.getElementById('btnPause').addEventListener('click', () => {
-    if (!isPlaying) return;
-    isPlaying = false;
-    cancelAnimationFrame(animId);
-    animId = null;
-    document.getElementById('btnPlay').disabled  = false;
-    document.getElementById('btnPause').disabled = true;
-  });
-
-  document.getElementById('btnReset').addEventListener('click', () => {
-    cancelAnimationFrame(animId);
-    animId    = null;
-    isPlaying = false;
-    t         = 0;
-    document.getElementById('btnPlay').disabled  = false;
-    document.getElementById('btnPause').disabled = true;
-    document.getElementById('signalLost').classList.remove('is-active');
-    document.getElementById('phaseName').textContent = 'Appuyer sur ▶ Play pour démarrer';
-    draw();
-  });
-
-  document.getElementById('speedSlider').addEventListener('input', (e) => {
-    speedLevel = parseInt(e.target.value, 10);
-    document.getElementById('speedValue').textContent = SPEED_LABELS[speedLevel];
-  });
-
-  /* --------------------------------------------------------
-     17. RENDU INITIAL
-     Affiche la scène (Terre, Lune, étoiles, trajectoire)
-     avant même que l'élève appuie sur Play.
-  -------------------------------------------------------- */
-  draw();
-  </script>
+  <script type="module" src="../../js/simulateurs/artemis-ii.js"></script>
 </body>
 </html>
