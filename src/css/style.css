@@ -772,7 +772,7 @@ body.has-header main {
 }
 
 .card--dnb-blanc::before {
-  content: "📝 DNB Blanc";
+  content: "📝 À réviser";
   position: absolute;
   top: var(--space-2);
   right: var(--space-2);
