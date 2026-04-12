@@ -6,6 +6,6 @@
   "seance": "S3 — Systèmes automatiques",
   "duree": "45 min",
   "competences": ["OST 31", "OST 32", "SFC 11", "SFC 13", "SFC 31"],
-  "markdownPath": "../../../content/md/activites/s3-alerte-qualite-air.md",
+  "markdownPath": "/src/content/md/activites/s3-alerte-qualite-air.md",
   "slides": []
 }

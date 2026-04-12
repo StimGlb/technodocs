@@ -116,10 +116,8 @@
 
     <script type="module" src="../../../js/components.js"></script>
     <script type="module">
-      import { initCoursPage } from "../../../js/cours-loader.js";
-      initCoursPage(
-        "../../../data/activites/activite-s3-eclairage-adaptatif.json",
-      );
+      import { loadS3EclairageAdaptatif } from "../../../js/loaders/activites.js";
+      loadS3EclairageAdaptatif();
     </script>
   </body>
 </html>

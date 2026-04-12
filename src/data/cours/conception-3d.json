@@ -39,5 +39,5 @@
             "description": "Vérifier les dimensions, la solidité et la **conformité** au cahier des charges initial."
         }
     ],
-    "markdownPath": "../../content/md/cours/conception-3d.md"
+    "markdownPath": "/src/content/md/cours/conception-3d.md"
 }

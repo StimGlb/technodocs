@@ -20,6 +20,8 @@
   publish = "."
   # Auto-open browser
   autoLaunch = false
+  # Disable HTML proxy rewriting to prevent module path mangling
+  noHtmlProxy = true
 
 # Headers for caching and security
 [[headers]]
@@ -82,10 +84,16 @@
   to = "/src/:splat"
   status = 200
 
+# Servir les fichiers HTML statiques dans src/pages sans redirect
+[[redirects]]
+  from = "/src/pages/**/*.html"
+  to = "/src/pages/:splat.html"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 404
+  status = 200
 
 [context.deploy-preview]
   [[context.deploy-preview.redirects]]

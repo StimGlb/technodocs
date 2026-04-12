@@ -120,10 +120,8 @@
 
     <script type="module" src="../../../js/components.js"></script>
     <script type="module">
-      import { initCoursPage } from "../../../js/cours-loader.js";
-      initCoursPage(
-        "../../../data/activites/activite-s3-eclairage-couloir.json",
-      );
+      import { loadS3EclairageCouloir } from "../../../js/loaders/activites.js";
+      loadS3EclairageCouloir();
     </script>
   </body>
 </html>

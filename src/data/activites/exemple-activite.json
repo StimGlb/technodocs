@@ -6,6 +6,6 @@
   "seance": "Séance 2/6",
   "duree": "1h30",
   "competences": ["CCRI 16", "SFC 12"],
-  "markdownPath": "../../content/md/activites/exemple-activite.md",
+  "markdownPath": "/src/content/md/activites/exemple-activite.md",
   "slides": []
 }

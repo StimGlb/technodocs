@@ -1,7 +1,7 @@
 {
   "title": "Correction — Habitat & Énergie",
   "subtitle": "Consommation électrique d'une maison connectée — Séquence 1 — 5ème",
-  "markdownPath": "../../content/md/corrections/s1-5eme-consommation-maison-correction.md",
+  "markdownPath": "/src/content/md/corrections/s1-5eme-consommation-maison-correction.md",
   "slides": [
     {
       "icon": "🎯",

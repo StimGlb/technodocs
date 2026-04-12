@@ -6,6 +6,6 @@
   "seance": "Exercices 01",
   "duree": "—",
   "competences": ["Évolution technologique", "Choix responsable", "IA & biais"],
-  "markdownPath": "../../content/md/revisions/exercices-01.md",
+  "markdownPath": "/src/content/md/revisions/exercices-01.md",
   "slides": []
 }

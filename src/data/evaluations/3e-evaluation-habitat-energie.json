@@ -6,6 +6,6 @@
   "seance": "Évaluation 6/6",
   "duree": "45 minutes",
   "competences": ["CCRI 16", "SFC 12"],
-  "markdownPath": "../../content/md/evaluations/3e-evaluation-habitat-energie.md",
+  "markdownPath": "/src/content/md/evaluations/3e-evaluation-habitat-energie.md",
   "slides": []
 }

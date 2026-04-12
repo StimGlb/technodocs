@@ -6,5 +6,5 @@
   "seance": "Séance 3/4",
   "duree": "1h30",
   "competences": ["OST 31", "OST 11"],
-  "markdownPath": "../../content/md/activites/tinkercad-detecteur-presence.md"
+  "markdownPath": "/src/content/md/activites/tinkercad-detecteur-presence.md"
 }

@@ -126,11 +126,9 @@
     <!-- Scripts modules -->
     <script type="module" src="../../js/components.js"></script>
     <script type="module">
-      import { initCoursPage } from "../../js/cours-loader.js";
+      import { loadMontlageTinkercad } from "../../js/loaders/activites.js";
 
-      await initCoursPage(
-        "../../data/activites/activite-montage-tinkercad.json",
-      );
+      await loadMontlageTinkercad();
 
       // Détection robuste des images insérées via Markdown
       document.querySelectorAll(".fiche-img").forEach((figure) => {
