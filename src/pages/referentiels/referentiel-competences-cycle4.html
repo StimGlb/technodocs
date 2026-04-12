@@ -36,7 +36,6 @@
         <div class="cours-hero__header">
           <h1 class="cours-hero__title" id="cours-title">Chargement…</h1>
           <p class="cours-hero__subtitle" id="cours-subtitle">
-            Référentiel — Document enseignant
           </p>
         </div>
       </section>
@@ -93,12 +92,19 @@
         <div class="print-header__infos">
           <span><strong>Niveau :</strong> <span id="printNiveau">—</span></span>
           <span><strong>Durée :</strong> <span id="printDuree">—</span></span>
-          <span><strong>Compétences :</strong> <span id="printCompetences">—</span></span>
+          <span
+            ><strong>Compétences :</strong>
+            <span id="printCompetences">—</span></span
+          >
         </div>
       </div>
 
       <!-- Contenu Markdown -->
-      <article class="md-content" id="markdown-container">
+      <article
+        class="md-content"
+        id="markdown-container"
+        data-config="../../data/referentiels/referentiel-competences-cycle4.json"
+      >
         <div class="md-loading">Chargement du référentiel…</div>
       </article>
     </main>
@@ -107,11 +113,6 @@
 
     <script src="../../js/libs/marked.min.js"></script>
     <script type="module" src="../../js/components.js"></script>
-    <script type="module">
-      import { initCoursPage } from "../../js/cours-loader.js";
-      await initCoursPage(
-        "../../data/referentiels/referentiel-competences-cycle4.json",
-      );
-    </script>
+    <script type="module" src="../../js/cours-page-init.js"></script>
   </body>
 </html>

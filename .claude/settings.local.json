@@ -64,7 +64,8 @@
       "Bash(grep \"\\\\.css$\")",
       "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\(''''scripts'''',{}\\), indent=2\\)\\)\")",
       "Bash(python -c \"import json; d=json.load\\(open\\(''package.json''\\)\\); [print\\(f''  {k}: {v}''\\) for k,v in d[''scripts''].items\\(\\) if ''deploy'' in k]\")",
-      "Bash(netlify --version)"
+      "Bash(netlify --version)",
+      "Bash(npm run:*)"
     ],
     "deny": [],
     "ask": []

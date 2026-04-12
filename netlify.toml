@@ -75,7 +75,13 @@
     # Cache SVG files for 1 year
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Redirect rules (also handled by _redirects file)
+# Redirect rules — fallback SPA pour les routes non trouvées
+# Exclut les assets statiques src/ pour éviter les 500 en dev:netlify
+[[redirects]]
+  from = "/src/*"
+  to = "/src/:splat"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
