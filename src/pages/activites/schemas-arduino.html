@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
   <head>
     <meta charset="UTF-8" />
@@ -35,11 +35,14 @@
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
         cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition:
+          transform 0.2s ease,
+          box-shadow 0.2s ease;
         text-decoration: none;
         color: inherit;
         display: flex;
         flex-direction: column;
+        height: 100%;
       }
       .schema-card:hover {
         transform: translateY(-4px);
@@ -129,7 +132,7 @@
         gap: 0.5rem;
       }
       .schema-card__title {
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: "Space Grotesk", sans-serif;
         font-size: 1.1rem;
         font-weight: 600;
         margin: 0;
@@ -140,6 +143,7 @@
         color: var(--color-gray-500, #6b7280);
         margin: 0;
         line-height: 1.5;
+        flex: 1;
       }
       .schema-card__tags {
         display: flex;
@@ -239,7 +243,7 @@
         padding: 1.5rem 2rem 2rem;
       }
       .schema-modal__title {
-        font-family: 'Space Grotesk', sans-serif;
+        font-family: "Space Grotesk", sans-serif;
         font-size: 1.5rem;
         font-weight: 700;
         margin: 0 0 0.25rem;
@@ -348,6 +352,11 @@
         color: #9d174d;
       }
 
+      /* Espacement chips → subtitle après réordonnancement */
+      .cours-hero .cours-hero__chips {
+        margin-bottom: 0.75rem;
+      }
+
       /* ============================================
          FILTRE PAR NIVEAU
          ============================================ */
@@ -356,7 +365,7 @@
         justify-content: center;
         gap: 0.5rem;
         flex-wrap: wrap;
-        margin: 0 auto 2rem;
+        margin: 2rem auto 1.5rem;
         max-width: 1200px;
         padding: 0 1rem;
       }
@@ -412,23 +421,26 @@
         <div class="cours-hero__header">
           <span class="cours-hero__badge">⚡ Montages Arduino</span>
           <h1 class="cours-hero__title">Schémas de montages — Tinkercad</h1>
-          <p class="cours-hero__subtitle">
-            Reproduis chaque montage sur Tinkercad mode Circuits en suivant les instructions.
-            Clique sur un schéma pour voir les détails.
-          </p>
           <div class="cours-hero__chips">
             <span class="cours-chip">🔧 Multi-niveaux</span>
             <span class="cours-chip">🖥️ Tinkercad</span>
           </div>
+          <p class="cours-hero__subtitle">
+            Reproduis chaque montage sur Tinkercad mode Circuits en suivant les
+            instructions. Clique sur un schéma pour voir les détails.
+          </p>
         </div>
-              <!-- ========== FILTRES ========== -->
+      </section>
+
+      <!-- ========== FILTRES ========== -->
       <div class="schemas-filters" id="schemaFilters">
-        <button class="schemas-filters__btn active" data-filter="all">Tous</button>
+        <button class="schemas-filters__btn active" data-filter="all">
+          Tous
+        </button>
         <button class="schemas-filters__btn" data-filter="5eme">5ème</button>
         <button class="schemas-filters__btn" data-filter="4eme">4ème</button>
         <button class="schemas-filters__btn" data-filter="3eme">3ème</button>
       </div>
-      </section>
 
       <!-- ========== GRILLE SCHÉMAS (générée par JS) ========== -->
       <section class="schemas-grid" id="schemasGrid">
@@ -438,8 +450,15 @@
 
     <!-- ========== MODAL ZOOM ========== -->
     <div class="schema-modal-overlay" id="schemaModal">
-      <div class="schema-modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-        <button class="schema-modal__close" id="modalClose" aria-label="Fermer">✕</button>
+      <div
+        class="schema-modal"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <button class="schema-modal__close" id="modalClose" aria-label="Fermer">
+          ✕
+        </button>
 
         <div class="schema-modal__img-zone">
           <img id="modalImg" src="" alt="" />
@@ -447,7 +466,10 @@
 
         <div class="schema-modal__content">
           <h2 class="schema-modal__title" id="modalTitle"></h2>
-          <span class="schema-modal__difficulty-badge" id="modalDifficulty"></span>
+          <span
+            class="schema-modal__difficulty-badge"
+            id="modalDifficulty"
+          ></span>
 
           <!-- Niveaux concernés -->
           <div class="schema-modal__section">

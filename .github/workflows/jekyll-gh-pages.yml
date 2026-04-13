@@ -1,8 +1,9 @@
-name: Deploy static content to Pages
+name: Deploy Vite Site to Pages
 
 on:
   push:
-    branches: ["dev"]
+    branches: ["dev"] # Se déclenche quand tu mergeras dev vers main
+  workflow_dispatch: # Te permet de le lancer manuellement
 
 permissions:
   contents: read
@@ -10,19 +11,16 @@ permissions:
   id-token: write
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps: deployment.outputs.page_url }}
+  build-and-deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-      
+
       - name: Set up Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
 
       - name: Install dependencies
@@ -31,7 +29,7 @@ jobs:
       - name: Build
         run: npm run build
         env:
-          GITHUB_PAGES: true # Déclenche la condition dans votre vite.config.js
+          GITHUB_PAGES: true # Pour que ton vite.config.js sache qu'il est sur GH Pages
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
