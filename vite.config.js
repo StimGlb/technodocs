@@ -88,85 +88,78 @@ function copyStaticAssets() {
   };
 }
 
-export default defineConfig({
-  plugins: [copyStaticAssets()],
+// ... (gardez tout votre code au-dessus, y compris la fonction copyStaticAssets)
 
-  root: ".",
-  base: "/",
+export default defineConfig(({ command, mode }) => {
+  // Détection si on est sur GitHub Actions
+  const isGitHubPages = process.env.GITHUB_PAGES === 'true';
 
-  build: {
-    outDir: "dist",
-    assetsDir: "assets",
-    sourcemap: false,
-    emptyOutDir: true,
+  return {
+    plugins: [copyStaticAssets()],
 
-    rollupOptions: {
-      input: (function collectHtmlInputs() {
-        const inputs = {};
-        const root = resolve(__dirname);
+    root: ".",
+    // Si GH Pages : on utilise le dossier du repo, sinon racine (Netlify / Local)
+    base: isGitHubPages ? '/technodocs/' : '/',
 
-        // Fonction récursive pour scanner tous les dossiers
-        function scanDirectory(dir) {
-          try {
-            const entries = readdirSync(dir, { withFileTypes: true });
+    build: {
+      outDir: "dist",
+      assetsDir: "assets",
+      sourcemap: false,
+      emptyOutDir: true,
 
-            for (const entry of entries) {
-              const fullPath = join(dir, entry.name);
-
-              if (entry.isDirectory()) {
-                // Scanner les sous-dossiers (sauf node_modules, dist, .git)
-                if (
-                  !["node_modules", "dist", ".git", "scripts"].includes(
-                    entry.name,
-                  )
-                ) {
-                  scanDirectory(fullPath);
+      rollupOptions: {
+        input: (function collectHtmlInputs() {
+          // ... (votre fonction collectHtmlInputs inchangée)
+          const inputs = {};
+          const root = resolve(__dirname);
+          function scanDirectory(dir) {
+            try {
+              const entries = readdirSync(dir, { withFileTypes: true });
+              for (const entry of entries) {
+                const fullPath = join(dir, entry.name);
+                if (entry.isDirectory()) {
+                  if (!["node_modules", "dist", ".git", "scripts"].includes(entry.name)) {
+                    scanDirectory(fullPath);
+                  }
+                } else if (entry.name.endsWith(".html")) {
+                  const relativePath = relative(root, fullPath);
+                  const key = relativePath
+                    .replace(/\.html$/i, "")
+                    .replace(/[\\/]/g, "-")
+                    .replace(/^src-/, "");
+                  inputs[key || "index"] = fullPath;
                 }
-              } else if (entry.name.endsWith(".html")) {
-                // Ajouter le fichier HTML
-                const relativePath = relative(root, fullPath);
-                const key = relativePath
-                  .replace(/\.html$/i, "")
-                  .replace(/[\\/]/g, "-")
-                  .replace(/^src-/, ""); // Enlever le préfixe "src-"
-
-                inputs[key || "index"] = fullPath;
               }
+            } catch (e) {
+              console.error(`Erreur scan ${dir}:`, e.message);
             }
-          } catch (e) {
-            console.error(`Erreur scan ${dir}:`, e.message);
           }
-        }
+          scanDirectory(root);
+          return inputs;
+        })(),
+      },
 
-        // Scanner depuis la racine
-        scanDirectory(root);
-
-        console.log("📄 Fichiers HTML détectés:", Object.keys(inputs).length);
-        return inputs;
-      })(),
+      copyPublicDir: true,
     },
 
-    copyPublicDir: true,
-  },
-
-  server: {
-    port: 3001,
-    // Navigateur désactivé — lancer manuellement depuis tasks.json
-    open: false,
-  },
-
-  preview: {
-    port: 4173,
-  },
-
-  resolve: {
-    alias: {
-      "@": resolve(__dirname, "src"),
-      "@css": resolve(__dirname, "src/css"),
-      "@js": resolve(__dirname, "src/js"),
-      "@images": resolve(__dirname, "src/images"),
+    server: {
+      port: 3001,
+      open: false,
     },
-  },
 
-  publicDir: "public",
+    preview: {
+      port: 4173,
+    },
+
+    resolve: {
+      alias: {
+        "@": resolve(__dirname, "src"),
+        "@css": resolve(__dirname, "src/css"),
+        "@js": resolve(__dirname, "src/js"),
+        "@images": resolve(__dirname, "src/images"),
+      },
+    },
+
+    publicDir: "public",
+  };
 });
