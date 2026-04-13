@@ -85,7 +85,43 @@ const SCHEMAS = [
       "Programme : lire digitalRead(2) — si HIGH (mouvement détecté), allumer la LED sur la broche 3, sinon l'éteindre.",
       "Lance la simulation. Le capteur PIR a un délai de calibration d'environ 30 secondes au démarrage — attends avant de tester."
     ]
-  }
+  },
+  {
+    id: "digicode-serrure",
+    title: "Serrure à digicode",
+    description: "Système de contrôle d'accès domotique : saisie d'un code sur clavier matriciel, affichage LCD et déverrouillage par servomoteur.",
+    image: "/src/assets/schemas-arduino/digicode-serrure.png",
+    difficulty: "avance",
+    niveaux: ["4eme", "3eme"],
+    composants: [
+      "1× Arduino Uno",
+      "1× Breadboard",
+      "1× Clavier matriciel 4×4 (membrane, 8 broches)",
+      "1× Écran LCD 16×2 avec module I2C",
+      "1× Servomoteur SG90",
+      "Fils de connexion"
+    ],
+    consignes: [
+      // --- LCD I2C (4 fils) ---
+      "Branche le LCD I2C : GND → GND Arduino, VCC → 5V Arduino, SDA → broche A4, SCL → broche A5.",
+
+      // --- Servomoteur (3 fils) ---
+      "Branche le servomoteur : fil rouge → 5V, fil marron/noir → GND, fil orange → broche 9 (PWM).",
+
+      // --- Clavier 4×4 (8 fils) ---
+      "Repère les 8 broches du clavier (de gauche à droite, nappe face à toi) : les 4 premières sont les LIGNES (R1–R4), les 4 suivantes sont les COLONNES (C1–C4).",
+      "Branche les 4 lignes du clavier : R1 → broche 8, R2 → broche 7, R3 → broche 6, R4 → broche 5.",
+      "Branche les 4 colonnes du clavier : C1 → broche 4, C2 → broche 3, C3 → broche 2, C4 → broche A0.",
+
+      // --- Vérification ---
+      "Vérifie qu'aucun fil ne se croise ou ne touche un voisin sur la breadboard.",
+
+      // --- Programmation ---
+      "Programme : utilise les bibliothèques Keypad.h, LiquidCrystal_I2C.h et Servo.h. Définis un code secret (ex: 1234 pour tester). À chaque touche pressée, affiche une étoile * sur le LCD. Si le code est correct, affiche « Accès OK » et tourne le servo à 90°. Sinon, affiche « Code faux » et garde le servo à 0°.",
+
+      "Lance la simulation et teste avec le bon et le mauvais code."
+    ]
+    },
 ];
 
 // ============================================
