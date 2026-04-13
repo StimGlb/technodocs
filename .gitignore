@@ -14,6 +14,7 @@ Desktop.ini
 .claude/
 /backups/
 /docs/
+/workflow/
 *.swp
 *.swo
 *~
