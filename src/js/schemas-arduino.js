@@ -89,6 +89,92 @@ const SCHEMAS = [
       "Lance la simulation. Le capteur PIR a un délai de calibration d'environ 30 secondes au démarrage — attends avant de tester.",
     ],
   },
+    {
+    id: 'ldr-led-rgb',
+    title: 'Éclairage adaptatif (LDR + LED RGB)',
+    description:
+      'Éclairage ambiant automatique : la couleur et l\'intensité de la LED RGB s\'adaptent à la luminosité captée par la photorésistance.',
+    image: '/src/assets/schemas-arduino/ldr-led-rgb.png',
+    difficulty: 'avance',
+    niveaux: ['4eme', '3eme'],
+    composants: [
+      '1× Arduino Uno',
+      '1× Breadboard',
+      '1× Photorésistance (LDR)',
+      '1× Résistance 10kΩ (diviseur de tension LDR)',
+      '1× LED RGB (cathode commune)',
+      '3× Résistance 220Ω (une par couleur R, G, B)',
+      'Fils de connexion',
+    ],
+    consignes: [
+      'Place la photorésistance (LDR) sur la breadboard. Branche une patte au +5V.',
+      "Branche l'autre patte de la LDR à l'entrée analogique A0 de l'Arduino ET à une résistance de 10kΩ reliée au GND (diviseur de tension).",
+      'Place la LED RGB sur la breadboard. Identifie la patte la plus longue : c\'est la cathode commune (GND).',
+      "Relie la cathode commune au GND de l'Arduino.",
+      'Branche chaque patte couleur via une résistance de 220Ω : Rouge → broche 9 (PWM), Vert → broche 10 (PWM), Bleu → broche 11 (PWM).',
+      "Programme : lis analogRead(A0) pour obtenir le niveau de luminosité (0–1023). Utilise map() pour convertir en intensité PWM (0–255).",
+      'Définis des seuils : forte luminosité → LED éteinte ou blanc froid (R+G+B bas), luminosité moyenne → blanc chaud (R fort, G moyen, B faible), obscurité → veilleuse bleue douce.',
+      'Utilise analogWrite() sur les broches 9, 10, 11 pour mixer les couleurs.',
+      'Lance la simulation et fais varier la luminosité sur la LDR pour voir la LED changer de couleur.',
+    ],
+    code: `// ============================================
+// ÉCLAIRAGE ADAPTATIF — Arduino Uno
+// Photorésistance (LDR) + LED RGB
+// TechnoDocs — Domotique & Systèmes embarqués
+// ============================================
+
+// --- Broches LED RGB (PWM obligatoire) ---
+const int BROCHE_ROUGE = 9;
+const int BROCHE_VERT  = 10;
+const int BROCHE_BLEU  = 11;
+
+// --- Broche capteur LDR ---
+const int BROCHE_LDR = A0;
+
+// --- Seuils de luminosité (à calibrer selon ta LDR) ---
+const int SEUIL_JOUR = 700;    // au-dessus → forte luminosité
+const int SEUIL_MOYEN = 400;   // entre moyen et jour → mi-ombre
+                                 // en dessous → obscurité
+
+void setup() {
+  pinMode(BROCHE_ROUGE, OUTPUT);
+  pinMode(BROCHE_VERT, OUTPUT);
+  pinMode(BROCHE_BLEU, OUTPUT);
+
+  Serial.begin(9600);
+}
+
+void loop() {
+  int luminosite = analogRead(BROCHE_LDR);
+
+  Serial.print("LDR : ");
+  Serial.println(luminosite);
+
+  if (luminosite > SEUIL_JOUR) {
+    // --- Forte luminosité → LED éteinte (économie) ---
+    allumerRGB(0, 0, 0);
+
+  } else if (luminosite > SEUIL_MOYEN) {
+    // --- Luminosité moyenne → blanc chaud ---
+    int intensite = map(luminosite, SEUIL_MOYEN, SEUIL_JOUR, 200, 20);
+    allumerRGB(intensite, intensite / 2, intensite / 5);
+
+  } else {
+    // --- Obscurité → veilleuse bleue douce ---
+    int intensite = map(luminosite, 0, SEUIL_MOYEN, 150, 30);
+    allumerRGB(0, 0, intensite);
+  }
+
+  delay(200);
+}
+
+// Fonction utilitaire pour allumer la LED RGB
+void allumerRGB(int rouge, int vert, int bleu) {
+  analogWrite(BROCHE_ROUGE, constrain(rouge, 0, 255));
+  analogWrite(BROCHE_VERT,  constrain(vert, 0, 255));
+  analogWrite(BROCHE_BLEU,  constrain(bleu, 0, 255));
+}`,
+  },
   {
     id: 'digicode-serrure',
     title: 'Serrure à digicode',

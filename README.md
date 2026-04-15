@@ -7,14 +7,6 @@ Ressources pédagogiques incluant cours, outils interactifs, flashcards et suppo
 
 **TechnoDocs** est une plateforme web statique sans framework, construite en HTML/CSS/JavaScript pur (ES6+), destinée aux élèves de collège pour l'apprentissage de la Technologie (Cycle 4). Le projet met l'accent sur la **sécurité**, la **performance**, l'**accessibilité** et la **modularité**.
 
-### Thématiques couvertes
-
-- 🏗️ **Conception 3D** — Modélisation et impression 3D
-- 🔌 **Réparabilité** — Indice de réparabilité, diagnostic de pannes
-- 💻 **Programmation** — Scratch, Python, Arduino
-- 🌐 **Internet & Réseaux** — Web, sécurité, communication
-- 🎴 **Révisions interactives** — Flashcards avec animations 3D
-
 ## 🏗️ Architecture
 
 ### Stack technique
