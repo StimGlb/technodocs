@@ -257,16 +257,44 @@ ol {
     padding: 0;
     border: none;
     background: transparent;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
   }
 
   .nav__list {
     flex-direction: row;
     gap: var(--space-1);
+    display: flex;
+    flex-wrap: nowrap;
   }
 
   .nav__link {
+    white-space: nowrap;
+    flex-shrink: 0;
     padding: var(--space-2) var(--space-3);
   }
+}
+
+/* Styling scrollbar WebKit (Chrome, Safari, Edge) */
+.header__nav::-webkit-scrollbar {
+  height: 4px;
+}
+
+.header__nav::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.header__nav::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 2px;
+}
+
+.header__nav::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
 
 /* ---------- Main Content ---------- */
