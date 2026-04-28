@@ -73,8 +73,7 @@ async function buildAndInjectNav(navData) {
     const staticLinks = [
       { id: "idx-cours", name: "📚 Cours", href: "#cours" },
       { id: "idx-revisions", name: "🧠 Révisions", href: "#revisions" },
-      { id: "idx-corrections", name: "✅ Corrections", href: "#corrections" },
-      { id: "idx-outils", name: "🛠️ Outils", href: "#outils" },
+      { id: "idx-corrections", name: "✅ Corrections", url: "/src/pages/corrections/corrections.html" },
     ];
 
     const ulStatic = document.createElement("ul");
@@ -90,18 +89,22 @@ async function buildAndInjectNav(navData) {
       // Déterminer href intelligent :
       // - si on est sur l'index (/) => laisser l'ancre (#cours)
       // - sinon => préfixe relatif + 'index.html#anchor' (ex: ../../index.html#cours)
-      const anchor = (s.href || "").startsWith("#")
-        ? s.href
-        : "#" + String(s.href || "").replace(/^#+/, "");
-      let finalHref = anchor;
       const onIndex =
         currentPath === "/" ||
         currentPath.endsWith("/index.html") ||
         currentPath.endsWith("index.html");
-      if (!onIndex) {
-        // getRelativePrefix() renvoie '' ou '../' répétées
-        const p = prefix || "";
-        finalHref = (p || "") + "index.html" + anchor;
+      let finalHref;
+      if (s.url) {
+        finalHref = s.url;
+      } else {
+        const anchor = (s.href || "").startsWith("#")
+          ? s.href
+          : "#" + String(s.href || "").replace(/^#+/, "");
+        finalHref = anchor;
+        if (!onIndex) {
+          const p = prefix || "";
+          finalHref = (p || "") + "index.html" + anchor;
+        }
       }
 
       a.setAttribute("href", finalHref);
@@ -127,7 +130,7 @@ async function buildAndInjectNav(navData) {
     const ulDynamic = document.createElement("ul");
     ulDynamic.className = "nav__list nav__list--dynamic";
 
-    const sections = ["cours", "devoirs", "outils"];
+    const sections = [];
     sections.forEach((section) => {
       const items = (navData[section] || []).filter((i) => i.visible !== false);
       items.forEach((item) => {

@@ -47,43 +47,50 @@
       "visible": true
     },
     {
+      "id": "task-manager",
+      "name": "Gestionnaire de tâches",
+      "path": "src/pages/outils/task-manager.html",
+      "icon": { "type": "emoji", "value": "📅" },
+      "description": "Organisez vos devoirs et échéances"
+    },
+    {
       "id": "tinkercad-classes",
       "name": "Tinkercad",
       "path": "src/pages/outils/tinkercad-classes.html",
       "icon": { "type": "emoji", "value": "🛠️" },
       "description": "Connexion aux classes Tinkercad"
-    }
-  ],
-  "flashcards": [
-    {
-      "id": "flashcards-index",
-      "name": "Flashcards",
-      "path": "src/pages/flashcards/flashcards.html",
-      "icon": { "type": "emoji", "value": "🗒️" },
-      "description": "Sélectionne un thème pour réviser"
     },
     {
-      "id": "modelisation3d",
-      "name": "Modélisation 3D (Flashcards)",
-      "path": "src/pages/flashcards/modelisation3d.html",
-      "icon": { "type": "emoji", "value": "🏗️" },
-      "description": "Cartes pour la modélisation 3D"
+      "id": "scratch",
+      "name": "Scratch",
+      "url": "https://scratch.mit.edu/",
+      "external": true,
+      "icon": { "type": "emoji", "value": "🐱" },
+      "description": "Programmation visuelle"
     },
     {
-      "id": "flash-reparabilite",
-      "name": "Réparabilité (Flashcards)",
-      "path": "src/pages/flashcards/reparabilite.html",
-      "icon": { "type": "emoji", "value": "🔌" },
-      "description": "Cartes sur l'indice de réparabilité"
-    }
-  ],
-  "activites": [
+      "id": "mblock",
+      "name": "mBlock IDE",
+      "url": "https://ide.mblock.cc/",
+      "external": true,
+      "icon": { "type": "emoji", "value": "🤖" },
+      "description": "IDE en ligne pour robotique"
+    },
     {
-      "id": "activites-index",
-      "name": "Activités",
-      "path": "src/pages/activites/devoirs.html",
-      "icon": { "type": "emoji", "value": "📋" },
-      "description": "Devoirs en ligne et exercices pratiques"
+      "id": "vittascience",
+      "name": "Vittascience",
+      "url": "https://fr.vittascience.com/",
+      "external": true,
+      "icon": { "type": "emoji", "value": "🔬" },
+      "description": "Ressources Arduino / micro:bit"
+    },
+    {
+      "id": "trinket",
+      "name": "Trinket — Python en ligne",
+      "url": "https://trinket.io/",
+      "external": true,
+      "icon": { "type": "emoji", "value": "🐍" },
+      "description": "Python dans le navigateur"
     }
   ]
 }
