@@ -8,7 +8,6 @@
     "dev:netlify": "netlify dev",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy:dev": "echo '⚠️  Deploy DEV = source brute, SANS build. Non representatif de la prod.' && netlify deploy --dir=. --message='Dev preview'",
     "deploy:preview": "npm run build && netlify deploy",
     "deploy:prod": "npm run build && netlify deploy --prod",
     "security-check": "node scripts/build/security-check.js",
