@@ -35,24 +35,7 @@
       "description": "Cahier des charges et étapes d'impression"
     }
   ],
-  "corrections": [
-    {
-      "id": "correction-reparabilite",
-      "name": "Correction Réparabilité",
-      "path": "src/pages/corrections/correction-reparabilite.html",
-      "icon": { "type": "emoji", "value": "♻️" },
-      "description": "Correction détaillée de l'activité Réparabilité",
-      "variant": "fiches"
-    },
-    {
-      "id": "correction-impression3d",
-      "name": "Correction Impression 3D",
-      "path": "src/pages/corrections/correction-impression3d.html",
-      "icon": { "type": "emoji", "value": "🏗️" },
-      "description": "Correction de l'activité Impression 3D",
-      "variant": "eval"
-    }
-  ],
+  "corrections": [],
   "outils": [
     {
       "id": "generateur-graphiques",
@@ -64,50 +47,11 @@
       "visible": true
     },
     {
-      "id": "task-manager",
-      "name": "Gestionnaire de tâches",
-      "path": "src/pages/outils/task-manager.html",
-      "icon": { "type": "emoji", "value": "📅" },
-      "description": "Organisez vos devoirs et échéances"
-    },
-    {
       "id": "tinkercad-classes",
       "name": "Tinkercad",
       "path": "src/pages/outils/tinkercad-classes.html",
       "icon": { "type": "emoji", "value": "🛠️" },
       "description": "Connexion aux classes Tinkercad"
-    },
-    {
-      "id": "scratch",
-      "name": "Scratch",
-      "url": "https://scratch.mit.edu/",
-      "external": true,
-      "icon": { "type": "emoji", "value": "🐱" },
-      "description": "Programmation visuelle — Scratch"
-    },
-    {
-      "id": "mblock",
-      "name": "mBlock IDE",
-      "url": "https://ide.mblock.cc/",
-      "external": true,
-      "icon": { "type": "emoji", "value": "🤖" },
-      "description": "IDE en ligne pour robotique"
-    },
-    {
-      "id": "vittascience",
-      "name": "Vittascience",
-      "url": "https://fr.vittascience.com/",
-      "external": true,
-      "icon": { "type": "emoji", "value": "🔬" },
-      "description": "Ressources Arduino / micro:bit"
-    },
-    {
-      "id": "trinket",
-      "name": "Trinket — Python en ligne",
-      "url": "https://trinket.io/",
-      "external": true,
-      "icon": { "type": "emoji", "value": "🐍" },
-      "description": "Exécutez du Python dans le navigateur"
     }
   ],
   "flashcards": [
