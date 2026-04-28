@@ -1,7 +1,7 @@
-import { defineConfig } from "vite";
-import { resolve, relative, join } from "path";
-import { readdirSync, existsSync, mkdirSync, copyFileSync, statSync } from "fs";
-import { dirname } from "path";
+import { defineConfig } from 'vite';
+import { resolve, relative, join } from 'path';
+import { readdirSync, existsSync, mkdirSync, copyFileSync, statSync } from 'fs';
+import { dirname } from 'path';
 
 // Plugin : copie les assets non-bundlables vers dist en préservant les chemins src/
 // Nécessaire pour :
@@ -24,54 +24,59 @@ function copyStaticAssets() {
   }
 
   return {
-    name: "copy-static-assets",
+    name: 'copy-static-assets',
     // closeBundle : appelé une seule fois après que tous les chunks sont écrits
     closeBundle() {
       const copies = [
         // marked.min.js → pages HTML l'accèdent via ../../js/libs/marked.min.js
         {
-          src: resolve(__dirname, "src/js/libs"),
-          dst: resolve(__dirname, "dist/src/js/libs"),
+          src: resolve(__dirname, 'src/js/libs'),
+          dst: resolve(__dirname, 'dist/src/js/libs'),
         },
         // JSON cours → fetchés via ../../data/cours/xxx.json
         {
-          src: resolve(__dirname, "src/data/cours"),
-          dst: resolve(__dirname, "dist/src/data/cours"),
+          src: resolve(__dirname, 'src/data/cours'),
+          dst: resolve(__dirname, 'dist/src/data/cours'),
         },
         // JSON activités → fetchés via ../../data/activites/xxx.json
         {
-          src: resolve(__dirname, "src/data/activites"),
-          dst: resolve(__dirname, "dist/src/data/activites"),
+          src: resolve(__dirname, 'src/data/activites'),
+          dst: resolve(__dirname, 'dist/src/data/activites'),
         },
         // JSON révisions → fetchés via ../../data/revisions/xxx.json
         {
-          src: resolve(__dirname, "src/data/revisions"),
-          dst: resolve(__dirname, "dist/src/data/revisions"),
+          src: resolve(__dirname, 'src/data/revisions'),
+          dst: resolve(__dirname, 'dist/src/data/revisions'),
         },
         // JSON référentiels → fetchés via ../../data/referentiels/xxx.json
         {
-          src: resolve(__dirname, "src/data/referentiels"),
-          dst: resolve(__dirname, "dist/src/data/referentiels"),
+          src: resolve(__dirname, 'src/data/referentiels'),
+          dst: resolve(__dirname, 'dist/src/data/referentiels'),
         },
         // JSON graphiques → fetchés dynamiquement si nécessaire
         {
-          src: resolve(__dirname, "src/data/graphiques"),
-          dst: resolve(__dirname, "dist/src/data/graphiques"),
+          src: resolve(__dirname, 'src/data/graphiques'),
+          dst: resolve(__dirname, 'dist/src/data/graphiques'),
         },
         // JSON postes consommation électrique → fetché via /src/data/postes-conso-elect.json
         {
-          src: resolve(__dirname, "src/data/postes-conso-elect.json"),
-          dst: resolve(__dirname, "dist/src/data/postes-conso-elect.json"),
+          src: resolve(__dirname, 'src/data/postes-conso-elect.json'),
+          dst: resolve(__dirname, 'dist/src/data/postes-conso-elect.json'),
         },
         // Fichiers Markdown → fetchés via ../../content/md/xxx/yyy.md
         {
-          src: resolve(__dirname, "src/content/md"),
-          dst: resolve(__dirname, "dist/src/content/md"),
+          src: resolve(__dirname, 'src/content/md'),
+          dst: resolve(__dirname, 'dist/src/content/md'),
         },
         // Images → référencées dans les .md et HTML via chemins relatifs
         {
-          src: resolve(__dirname, "src/assets"),
-          dst: resolve(__dirname, "dist/src/assets"),
+          src: resolve(__dirname, 'src/assets'),
+          dst: resolve(__dirname, 'dist/src/assets'),
+        },
+        // _redirects → fichier Netlify pour les règles de redirection
+        {
+          src: resolve(__dirname, '_redirects'),
+          dst: resolve(__dirname, 'dist/_redirects'),
         },
       ];
 
@@ -97,13 +102,13 @@ export default defineConfig(({ command, mode }) => {
   return {
     plugins: [copyStaticAssets()],
 
-    root: ".",
+    root: '.',
     // Si GH Pages : on utilise le dossier du repo, sinon racine (Netlify / Local)
     base: isGitHubPages ? '/technodocs/' : '/',
 
     build: {
-      outDir: "dist",
-      assetsDir: "assets",
+      outDir: 'dist',
+      assetsDir: 'assets',
       sourcemap: false,
       emptyOutDir: true,
 
@@ -118,16 +123,16 @@ export default defineConfig(({ command, mode }) => {
               for (const entry of entries) {
                 const fullPath = join(dir, entry.name);
                 if (entry.isDirectory()) {
-                  if (!["node_modules", "dist", ".git", "scripts"].includes(entry.name)) {
+                  if (!['node_modules', 'dist', '.git', 'scripts'].includes(entry.name)) {
                     scanDirectory(fullPath);
                   }
-                } else if (entry.name.endsWith(".html")) {
+                } else if (entry.name.endsWith('.html')) {
                   const relativePath = relative(root, fullPath);
                   const key = relativePath
-                    .replace(/\.html$/i, "")
-                    .replace(/[\\/]/g, "-")
-                    .replace(/^src-/, "");
-                  inputs[key || "index"] = fullPath;
+                    .replace(/\.html$/i, '')
+                    .replace(/[\\/]/g, '-')
+                    .replace(/^src-/, '');
+                  inputs[key || 'index'] = fullPath;
                 }
               }
             } catch (e) {
@@ -153,13 +158,13 @@ export default defineConfig(({ command, mode }) => {
 
     resolve: {
       alias: {
-        "@": resolve(__dirname, "src"),
-        "@css": resolve(__dirname, "src/css"),
-        "@js": resolve(__dirname, "src/js"),
-        "@images": resolve(__dirname, "src/images"),
+        '@': resolve(__dirname, 'src'),
+        '@css': resolve(__dirname, 'src/css'),
+        '@js': resolve(__dirname, 'src/js'),
+        '@images': resolve(__dirname, 'src/images'),
       },
     },
 
-    publicDir: "public",
+    publicDir: 'public',
   };
 });
