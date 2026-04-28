@@ -1,0 +1,76 @@
+{
+  "name": "Programme Techno Cycle 4",
+  "children": [
+    {
+      "name": "SFC (Structure et Fonctionnement)",
+      "children": [
+        {
+          "name": "Chaîne d'énergie (SFC 11)",
+          "children": [
+            { "name": "Bac Pro MELEC", "type": "pro", "onisep": "https://www.onisep.fr/ressources/univers-formation/formations/lycees/bac-pro-metiers-de-l-electricite-et-de-ses-environnements-connectes" },
+            { "name": "Bac Techno STI2D - EE", "type": "techno" }
+          ]
+        },
+        {
+          "name": "Chaîne d'info (SFC 13)",
+          "children": [
+            { "name": "Bac Pro CIEL", "type": "pro", "onisep": "https://www.onisep.fr/ressources/univers-formation/formations/lycees/bac-pro-cybersecurite-informatique-et-reseaux-electronique" },
+            { "name": "Bac Techno STI2D - SIN", "type": "techno" }
+          ]
+        },
+        {
+          "name": "Réseaux (SFC 15)",
+          "children": [
+            { "name": "Bac Pro CIEL - Réseaux", "type": "pro" },
+            { "name": "Bac Techno STI2D - SIN", "type": "techno" }
+          ]
+        },
+        {
+          "name": "Réparabilité (SFC 21)",
+          "children": [
+            { "name": "Bac Pro MSPC", "type": "pro" },
+            { "name": "Bac Pro MV", "type": "pro" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "CCRI (Création et Innovation)",
+      "children": [
+        {
+          "name": "Prototypage (CCRI 16)",
+          "children": [
+            { "name": "Bac Pro EDPI", "type": "pro" },
+            { "name": "Bac Techno STI2D - ITEC", "type": "techno" }
+          ]
+        },
+        {
+          "name": "Programmation (CCRI 31)",
+          "children": [
+            { "name": "Bac Pro CIEL - Info", "type": "pro" },
+            { "name": "Bac Techno STI2D - SIN", "type": "techno" }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "OST (Objets et Société)",
+      "children": [
+        {
+          "name": "Dév. durable (OST 31)",
+          "children": [
+            { "name": "Bac Pro TMSEC", "type": "pro" },
+            { "name": "Bac Techno STI2D - EE", "type": "techno" }
+          ]
+        },
+        {
+          "name": "Cybersécurité (OST 12)",
+          "children": [
+            { "name": "Bac Pro CIEL", "type": "pro" },
+            { "name": "Bac Techno STI2D - SIN", "type": "techno" }
+          ]
+        }
+      ]
+    }
+  ]
+}

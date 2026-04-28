@@ -1,4 +1,4 @@
-// TechnoDocs - Application principale
+﻿// TechnoDocs - Application principale
 // Gestion de la navigation, animations et interactions
 
 // ===========================
@@ -88,6 +88,11 @@ document.head.appendChild(styleSheet);
 // ===========================
 // 3. Effet d'ombre sur le header au scroll
 // ===========================
+document.addEventListener("components-loaded", () => {
+    initNavigation();
+    initHeaderScroll();
+});
+
 const initHeaderScroll = () => {
     const header = document.querySelector('.header');
 
@@ -191,3 +196,4 @@ document.addEventListener('DOMContentLoaded', async () => {
 
 // Exporter les fonctions pour utilisation modulaire
 export { initNavigation, initScrollAnimations, initHeaderScroll, initTypingEffect };
+

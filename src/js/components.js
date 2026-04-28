@@ -1,4 +1,4 @@
-// TechnoDocs - Chargement des composants (Header/Footer)
+﻿// TechnoDocs - Chargement des composants (Header/Footer)
 // Charge dynamiquement les includes HTML
 
 import { initNavigation } from "./app.js";
@@ -312,13 +312,18 @@ async function loadFooter() {
 // Chargement de tous les composants
 // ===========================
 async function loadComponents() {
+  const event = new CustomEvent("components-loading");
+  document.dispatchEvent(event);
   await Promise.all([loadHeader(), loadFooter()]);
 }
 
 // Auto-initialisation au chargement du DOM
 document.addEventListener("DOMContentLoaded", async () => {
   await loadComponents();
+  const event = new CustomEvent("components-loaded");
+  document.dispatchEvent(event);
 });
 
 // Exporter pour utilisation modulaire
 export { loadComponents, loadHeader, loadFooter };
+

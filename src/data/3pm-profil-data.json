@@ -1,0 +1,85 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "text": "J'ai aimé programmer le mBot (robotique)",
+      "competences": ["SFC 31", "CCRI 31"],
+      "axes": {
+        "Numérique": 3,
+        "Production": 1
+      }
+    },
+    {
+      "id": 2,
+      "text": "J'ai aimé démonter et réparer un objet",
+      "competences": ["SFC 21"],
+      "axes": {
+        "Maintenance": 3,
+        "Production": 1
+      }
+    },
+    {
+      "id": 3,
+      "text": "J'ai aimé dessiner en 3D sur ordinateur",
+      "competences": ["CCRI 16"],
+      "axes": {
+        "Production": 3,
+        "Numérique": 1
+      }
+    },
+    {
+      "id": 4,
+      "text": "J'ai aimé réaliser un câblage électrique",
+      "competences": ["SFC 11", "SFC 13"],
+      "axes": {
+        "Énergie": 3,
+        "Production": 1
+      }
+    },
+    {
+      "id": 5,
+      "text": "J'ai aimé comprendre comment fonctionne Internet",
+      "competences": ["SFC 15"],
+      "axes": {
+        "Numérique": 3,
+        "Gestion": 1
+      }
+    },
+    {
+      "id": 6,
+      "text": "J'ai aimé gérer mon équipe de projet",
+      "competences": ["CCRI 11"],
+      "axes": {
+        "Gestion": 3,
+        "Qualité": 1
+      }
+    },
+    {
+      "id": 7,
+      "text": "J'ai aimé comparer l'impact écologique des produits",
+      "competences": ["OST 31"],
+      "axes": {
+        "Qualité": 3,
+        "Énergie": 1
+      }
+    },
+    {
+      "id": 8,
+      "text": "J'ai aimé chercher pourquoi un système est en panne",
+      "competences": ["SFC 2"],
+      "axes": {
+        "Maintenance": 3,
+        "Gestion": 1
+      }
+    }
+  ],
+  "axes": ["Énergie", "Numérique", "Maintenance", "Production", "Gestion", "Qualité"],
+  "mapping_metiers": {
+    "Énergie": ["electricien", "technicien-domotique", "technicien-enr"],
+    "Numérique": ["technicien-reseau", "developpeur", "technicien-cybersecurite"],
+    "Maintenance": ["technicien-maintenance", "reparateur-sav", "carrossier-auto"],
+    "Production": ["dessinateur-industriel"],
+    "Gestion": ["conducteur-travaux"],
+    "Qualité": ["technicien-qualite"]
+  }
+}

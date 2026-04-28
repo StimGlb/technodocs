@@ -96,7 +96,7 @@ const SCHEMAS = [
       'Éclairage ambiant automatique : la couleur et l\'intensité de la LED RGB s\'adaptent à la luminosité captée par la photorésistance.',
     image: '/src/assets/schemas-arduino/ldr-led-rgb.png',
     difficulty: 'avance',
-    niveaux: ['4eme', '3eme'],
+    niveaux: ['3eme'],
     composants: [
       '1× Arduino Uno',
       '1× Breadboard',
@@ -182,7 +182,7 @@ void allumerRGB(int rouge, int vert, int bleu) {
       "Système de contrôle d'accès domotique : saisie d'un code sur clavier matriciel, affichage LCD et déverrouillage par servomoteur.",
     image: '/src/assets/schemas-arduino/digicode-serrure.png',
     difficulty: 'avance',
-    niveaux: ['4eme', '3eme'],
+    niveaux: ['3eme'],
     composants: [
       '1× Arduino Uno',
       '1× Breadboard',
@@ -212,136 +212,136 @@ void allumerRGB(int rouge, int vert, int bleu) {
       'Lance la simulation et teste avec le bon et le mauvais code.',
     ],
     code: `// ============================================
-// SERRURE À DIGICODE — Arduino Uno
-// Clavier 4x4 + LCD I2C + Servomoteur
-// TechnoDocs — Domotique & Systèmes embarqués
-// ============================================
+    // SERRURE À DIGICODE — Arduino Uno
+    // Clavier 4x4 + LCD I2C + Servomoteur
+    // TechnoDocs — Domotique & Systèmes embarqués
+    // ============================================
 
-#include <Keypad.h>
-#include <LiquidCrystal_I2C.h>
-#include <Servo.h>
+    #include <Keypad.h>
+    #include <LiquidCrystal_I2C.h>
+    #include <Servo.h>
 
-// --- Configuration du clavier 4x4 ---
-const byte LIGNES = 4;
-const byte COLONNES = 4;
+    // --- Configuration du clavier 4x4 ---
+    const byte LIGNES = 4;
+    const byte COLONNES = 4;
 
-char touches[LIGNES][COLONNES] = {
-  {'1', '2', '3', 'A'},
-  {'4', '5', '6', 'B'},
-  {'7', '8', '9', 'C'},
-  {'*', '0', '#', 'D'}
-};
+    char touches[LIGNES][COLONNES] = {
+      {'1', '2', '3', 'A'},
+      {'4', '5', '6', 'B'},
+      {'7', '8', '9', 'C'},
+      {'*', '0', '#', 'D'}
+    };
 
-byte brochesFils[LIGNES] = {8, 7, 6, 5};
-byte brochesColonnes[COLONNES] = {4, 3, 2, A0};
+    byte brochesFils[LIGNES] = {8, 7, 6, 5};
+    byte brochesColonnes[COLONNES] = {4, 3, 2, A0};
 
-Keypad clavier = Keypad(makeKeymap(touches), brochesFils, brochesColonnes, LIGNES, COLONNES);
+    Keypad clavier = Keypad(makeKeymap(touches), brochesFils, brochesColonnes, LIGNES, COLONNES);
 
-// --- Configuration LCD I2C (adresse 0x27 standard) ---
-LiquidCrystal_I2C lcd(0x27, 16, 2);
+    // --- Configuration LCD I2C (adresse 0x27 standard) ---
+    LiquidCrystal_I2C lcd(0x27, 16, 2);
 
-// --- Configuration Servo ---
-Servo verrou;
-const int BROCHE_SERVO = 9;
-const int ANGLE_FERME = 0;
-const int ANGLE_OUVERT = 90;
+    // --- Configuration Servo ---
+    Servo verrou;
+    const int BROCHE_SERVO = 9;
+    const int ANGLE_FERME = 0;
+    const int ANGLE_OUVERT = 90;
 
-// --- Code secret ---
-const char CODE_SECRET[] = "1234";
-const int LONGUEUR_CODE = 4;
+    // --- Code secret ---
+    const char CODE_SECRET[] = "1234";
+    const int LONGUEUR_CODE = 4;
 
-// --- Variables ---
-char codeSaisi[5];
-int position = 0;
-bool porteOuverte = false;
+    // --- Variables ---
+    char codeSaisi[5];
+    int position = 0;
+    bool porteOuverte = false;
 
-// --- Temporisation ---
-unsigned long tempoDebut = 0;
-const unsigned long DUREE_MESSAGE = 3000;
-bool enAttente = false;
+    // --- Temporisation ---
+    unsigned long tempoDebut = 0;
+    const unsigned long DUREE_MESSAGE = 3000;
+    bool enAttente = false;
 
-void setup() {
-  lcd.init();
-  lcd.backlight();
-  verrou.attach(BROCHE_SERVO);
-  verrou.write(ANGLE_FERME);
-  afficherAccueil();
-}
+    void setup() {
+      lcd.init();
+      lcd.backlight();
+      verrou.attach(BROCHE_SERVO);
+      verrou.write(ANGLE_FERME);
+      afficherAccueil();
+    }
 
-void loop() {
-  if (enAttente) {
-    if (millis() - tempoDebut >= DUREE_MESSAGE) {
-      enAttente = false;
-      if (porteOuverte) {
-        verrou.write(ANGLE_FERME);
-        porteOuverte = false;
+    void loop() {
+      if (enAttente) {
+        if (millis() - tempoDebut >= DUREE_MESSAGE) {
+          enAttente = false;
+          if (porteOuverte) {
+            verrou.write(ANGLE_FERME);
+            porteOuverte = false;
+          }
+          reinitialiserSaisie();
+          afficherAccueil();
+        }
+        return;
       }
-      reinitialiserSaisie();
-      afficherAccueil();
+
+      char touche = clavier.getKey();
+
+      if (touche) {
+        if (touche == '*') {
+          reinitialiserSaisie();
+          afficherAccueil();
+          return;
+        }
+
+        if (touche == '#' || touche == 'A' || touche == 'B' ||
+            touche == 'C' || touche == 'D') {
+          return;
+        }
+
+        codeSaisi[position] = touche;
+        position++;
+
+        lcd.setCursor(position - 1, 1);
+        lcd.print('*');
+
+        if (position == LONGUEUR_CODE) {
+          codeSaisi[position] = '\\0';
+          verifierCode();
+        }
+      }
     }
-    return;
-  }
 
-  char touche = clavier.getKey();
-
-  if (touche) {
-    if (touche == '*') {
-      reinitialiserSaisie();
-      afficherAccueil();
-      return;
+    void afficherAccueil() {
+      lcd.clear();
+      lcd.setCursor(0, 0);
+      lcd.print("Tapez le code :");
+      lcd.setCursor(0, 1);
+      lcd.print("                ");
+      lcd.setCursor(0, 1);
     }
 
-    if (touche == '#' || touche == 'A' || touche == 'B' ||
-        touche == 'C' || touche == 'D') {
-      return;
+    void verifierCode() {
+      if (strcmp(codeSaisi, CODE_SECRET) == 0) {
+        lcd.clear();
+        lcd.setCursor(2, 0);
+        lcd.print("Acces OK !");
+        lcd.setCursor(1, 1);
+        lcd.print("Porte ouverte");
+        verrou.write(ANGLE_OUVERT);
+        porteOuverte = true;
+      } else {
+        lcd.clear();
+        lcd.setCursor(2, 0);
+        lcd.print("Code faux !");
+        lcd.setCursor(1, 1);
+        lcd.print("Reessayez...");
+      }
+      tempoDebut = millis();
+      enAttente = true;
     }
 
-    codeSaisi[position] = touche;
-    position++;
-
-    lcd.setCursor(position - 1, 1);
-    lcd.print('*');
-
-    if (position == LONGUEUR_CODE) {
-      codeSaisi[position] = '\\0';
-      verifierCode();
-    }
-  }
-}
-
-void afficherAccueil() {
-  lcd.clear();
-  lcd.setCursor(0, 0);
-  lcd.print("Tapez le code :");
-  lcd.setCursor(0, 1);
-  lcd.print("                ");
-  lcd.setCursor(0, 1);
-}
-
-void verifierCode() {
-  if (strcmp(codeSaisi, CODE_SECRET) == 0) {
-    lcd.clear();
-    lcd.setCursor(2, 0);
-    lcd.print("Acces OK !");
-    lcd.setCursor(1, 1);
-    lcd.print("Porte ouverte");
-    verrou.write(ANGLE_OUVERT);
-    porteOuverte = true;
-  } else {
-    lcd.clear();
-    lcd.setCursor(2, 0);
-    lcd.print("Code faux !");
-    lcd.setCursor(1, 1);
-    lcd.print("Reessayez...");
-  }
-  tempoDebut = millis();
-  enAttente = true;
-}
-
-void reinitialiserSaisie() {
-  position = 0;
-  codeSaisi[0] = '\\0';
-}`,
+    void reinitialiserSaisie() {
+      position = 0;
+      codeSaisi[0] = '\\0';
+    }`,
   },
 ];
 

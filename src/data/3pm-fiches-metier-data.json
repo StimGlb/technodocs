@@ -1,0 +1,122 @@
+[
+  {
+    "slug": "electricien",
+    "titre": "Électricien",
+    "secteur": "Énergie",
+    "accroche": "Installe et entretient les réseaux électriques du futur.",
+    "competence": "SFC 11",
+    "filiere_pro": "Bac Pro MELEC",
+    "filiere_techno": "STI2D - EE",
+    "onisep": "https://www.onisep.fr/ressources/univers-metier/metiers/electricien-electricienne-batiment"
+  },
+  {
+    "slug": "technicien-maintenance",
+    "titre": "Technicien de maintenance",
+    "secteur": "Maintenance",
+    "accroche": "Le médecin des machines industrielles.",
+    "competence": "SFC 21",
+    "filiere_pro": "Bac Pro MSPC",
+    "filiere_techno": "",
+    "onisep": "https://www.onisep.fr/ressources/univers-metier/metiers/technicien-technicienne-de-maintenance-industrielle"
+  },
+  {
+    "slug": "technicien-reseau",
+    "titre": "Technicien réseau / fibre",
+    "secteur": "Numérique",
+    "accroche": "Connecte le monde à la vitesse de la lumière.",
+    "competence": "SFC 15",
+    "filiere_pro": "Bac Pro CIEL",
+    "filiere_techno": "STI2D - SIN",
+    "onisep": "https://www.onisep.fr/ressources/univers-metier/metiers/monteur-cableur-monteuse-cableuse-de-reseaux-telecoms"
+  },
+  {
+    "slug": "reparateur-sav",
+    "titre": "Réparateur / Technicien SAV",
+    "secteur": "Maintenance",
+    "accroche": "Donne une seconde vie aux objets du quotidien.",
+    "competence": "SFC 21",
+    "filiere_pro": "Bac Pro MSPC, MV ou MAC",
+    "filiere_techno": "",
+    "onisep": "https://www.onisep.fr/ressources/univers-metier/metiers/technicien-technicienne-conseil-en-service-apres-vente"
+  },
+  {
+    "slug": "developpeur",
+    "titre": "Développeur / Programmeur",
+    "secteur": "Numérique",
+    "accroche": "Crée des solutions numériques par le code.",
+    "competence": "CCRI 31",
+    "filiere_pro": "Bac Pro CIEL",
+    "filiere_techno": "STI2D - SIN, NSI",
+    "onisep": "https://www.onisep.fr/ressources/univers-metier/metiers/developpeur-developpeuse"
+  },
+  {
+    "slug": "dessinateur-industriel",
+    "titre": "Dessinateur industriel",
+    "secteur": "Production",
+    "accroche": "Conçoit les objets de demain en 3D.",
+    "competence": "CCRI 16",
+    "filiere_pro": "Bac Pro EDPI",
+    "filiere_techno": "STI2D - ITEC",
+    "onisep": "https://www.onisep.fr/ressources/univers-metier/metiers/dessinateur-dessinatrice-industriel-le"
+  },
+  {
+    "slug": "technicien-domotique",
+    "titre": "Technicien domotique",
+    "secteur": "Énergie/Numérique",
+    "accroche": "Rend les maisons intelligentes et connectées.",
+    "competence": "SFC 13",
+    "filiere_pro": "Bac Pro CIEL",
+    "filiere_techno": "STI2D - SIN",
+    "onisep": "https://www.onisep.fr/ressources/univers-metier/metiers/technicien-technicienne-en-domotique"
+  },
+  {
+    "slug": "technicien-enr",
+    "titre": "Technicien EnR",
+    "secteur": "Énergie",
+    "accroche": "Agit pour la planète grâce aux énergies propres.",
+    "competence": "OST 31",
+    "filiere_pro": "Bac Pro TMSEC ou MEE",
+    "filiere_techno": "STI2D - EE",
+    "onisep": "https://www.onisep.fr/ressources/univers-metier/metiers/technicien-technicienne-en-energies-renouvelables"
+  },
+  {
+    "slug": "technicien-cybersecurite",
+    "titre": "Technicien cybersécurité",
+    "secteur": "Numérique",
+    "accroche": "Le gardien des données et des systèmes.",
+    "competence": "OST 12",
+    "filiere_pro": "Bac Pro CIEL",
+    "filiere_techno": "STI2D - SIN, NSI",
+    "onisep": "https://www.onisep.fr/ressources/univers-metier/metiers/technicien-technicienne-de-securite-informatique"
+  },
+  {
+    "slug": "carrossier-auto",
+    "titre": "Carrossier / Technicien auto",
+    "secteur": "Maintenance",
+    "accroche": "Réparer et entretenir la mobilité de demain.",
+    "competence": "SFC 21",
+    "filiere_pro": "Bac Pro MV",
+    "filiere_techno": "",
+    "onisep": "https://www.onisep.fr/ressources/univers-metier/metiers/mecanicien-mecanicienne-automobile"
+  },
+  {
+    "slug": "conducteur-travaux",
+    "titre": "Conducteur de travaux",
+    "secteur": "Gestion",
+    "accroche": "Chef d'orchestre des chantiers de construction.",
+    "competence": "CCRI 11",
+    "filiere_pro": "Bac Pro TBORGO",
+    "filiere_techno": "STI2D - AC",
+    "onisep": "https://www.onisep.fr/ressources/univers-metier/metiers/conducteur-conductrice-de-travaux"
+  },
+  {
+    "slug": "technicien-qualite",
+    "titre": "Technicien qualité/environnement",
+    "secteur": "Qualité",
+    "accroche": "Garantit la qualité et le respect de l'environnement.",
+    "competence": "OST 31",
+    "filiere_pro": "Bac Pro QHSE",
+    "filiere_techno": "STI2D",
+    "onisep": "https://www.onisep.fr/ressources/univers-metier/metiers/technicien-technicienne-qualite"
+  }
+]
