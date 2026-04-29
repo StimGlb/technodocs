@@ -1,0 +1,40 @@
+/* Bouton spécial Artemis II — thème spatial, badge "live" pulsant */
+.btn--artemis {
+  background: linear-gradient(135deg, #0B3D91, #1a5dcc);
+  color: #fff;
+  border: 1px solid rgba(129, 140, 248, 0.45);
+  box-shadow: 0 0 18px rgba(11, 61, 145, 0.55);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  position: relative;
+  overflow: hidden;
+  transition: box-shadow 200ms ease, transform 150ms ease;
+}
+.btn--artemis::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(255,255,255,0.08));
+  pointer-events: none;
+}
+.btn--artemis:hover {
+  box-shadow: 0 0 28px rgba(26, 93, 204, 0.75);
+  transform: translateY(-2px);
+}
+.btn--artemis__live {
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  background: rgba(239, 68, 68, 0.25);
+  color: #fca5a5;
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  padding: 0.1rem 0.45rem;
+  border-radius: 999px;
+  white-space: nowrap;
+  animation: artemis-pulse 2s ease-in-out infinite;
+}
+@keyframes artemis-pulse {
+  0%, 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(248,113,113,0.6); }
+  50%       { opacity: 0.5; box-shadow: 0 0 0 5px rgba(248,113,113,0); }
+}

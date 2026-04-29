@@ -73,7 +73,10 @@ technodocs/
 │       ├── activites/
 │       │   ├── devoirs.html                    # Index devoirs
 │       │   ├── presentation-objet-technique.html
-│       │   └── devoirs/                        # Pages devoirs détaillées
+│       │   ├── devoirs/                        # Pages devoirs détaillées
+│       │   ├── 5eme.html                       # Activités 5ème
+│       │   ├── 4eme.html                       # Activités 4ème
+│       │   └── 3eme.html                       # Activités 3ème
 │       ├── corrections/
 │       │   ├── index-corrections-fa.html       # Index des corrections
 │       │   ├── correction-impression3d.html
@@ -98,6 +101,10 @@ technodocs/
 │       ├── quiz/
 │       │   ├── quiz-modelisation-3d.html
 │       │   └── quiz-reparabilite.html
+│       ├── revisions/
+│       │   └── index.html                      # Index fiches de révision
+│       ├── simulateurs/
+│       │   └── artemis-ii-simulateur.html      # Simulateur Artemis II
 │       └── ressources/
 │           └── ressources.html
 ├── docs/                      # Documentation technique
@@ -197,7 +204,7 @@ Le site est déployé automatiquement sur Netlify à chaque push sur `main`.
 
 ```bash
 # Développement
-npm run dev              # Serveur Vite (http://localhost:3000)
+npm run dev              # Serveur Vite (http://localhost:3001)
 npm run dev:netlify      # Serveur Netlify CLI + Vite (http://localhost:8888)
 npm run build            # Build de production dans dist/
 npm run preview          # Preview du build local
@@ -224,7 +231,7 @@ npm run deploy:prod      # Puis déployer en production
 
 ```bash
 npm install    # Première fois uniquement
-npm run dev    # Lance le serveur Vite sur http://localhost:3000 (hot reload)
+npm run dev    # Lance le serveur Vite sur http://localhost:3001 (hot reload)
 ```
 
 > ⚠️ Un serveur local est requis (modules ES6, fetch). L'ouverture directe du HTML ne fonctionne pas.
@@ -270,6 +277,14 @@ npm run dev    # Lance le serveur Vite sur http://localhost:3000 (hot reload)
 2. Ajouter l'objet dans la section appropriée
 3. Définir : `name`, `url`, `description`/`tag`, `icon`
 4. Voir `docs/LINKS_SYSTEM.md` pour la documentation complète
+
+### Convention `data-field` (wizards)
+
+Les nouveaux wizards **doivent** utiliser le format **kebab-case** pour les attributs `data-field` :
+- ✅ `data-field="student-name"`, `data-field="q1-chauffage-source"`
+- ❌ `data-field="studentName"` (legacy uniquement)
+
+Voir `CLAUDE.md` section "Convention Wizard" pour le détail.
 
 ### Sécurité : Scripts externalisés pour CSP
 
