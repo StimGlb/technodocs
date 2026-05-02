@@ -1699,7 +1699,7 @@
     <script type="module" src="/src/js/components.js"></script>
     <script type="module">
       import { WizardFirebase } from "/src/js/new-wizard-firebase.js";
-      import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+      import { checkPasswordHash } from "/src/js/wizard-config.js";
 
       // ── Gestion du mode clair/sombre ─────────────────────────────
       function initModeToggle() {
@@ -1791,12 +1791,12 @@
       });
 
       // ── Mot de passe ─────────────────────────────────────────────
-      window.checkPassword = function () {
+      window.checkPassword = async function () {
         const input = document.getElementById("passwordInput");
         const err = document.getElementById("errorMessage");
         const overlay = document.getElementById("passwordOverlay");
         const main = document.querySelector("main.wizard");
-        if (input.value === CORRECT_PASSWORD) {
+        if (await checkPasswordHash(input.value)) {
           overlay.style.display = "none";
           main.style.display = "block";
           err.style.display = "none";

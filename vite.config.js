@@ -123,7 +123,7 @@ export default defineConfig(({ command, mode }) => {
               for (const entry of entries) {
                 const fullPath = join(dir, entry.name);
                 if (entry.isDirectory()) {
-                  if (!['node_modules', 'dist', '.git', 'scripts'].includes(entry.name)) {
+                  if (!['node_modules', 'dist', '.git', 'scripts', '.claude'].includes(entry.name)) {
                     scanDirectory(fullPath);
                   }
                 } else if (entry.name.endsWith('.html')) {

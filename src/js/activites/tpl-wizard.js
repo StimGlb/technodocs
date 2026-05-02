@@ -4,7 +4,7 @@
 // ⚠️ Adapter collectionName et requiredFields
 // ============================================
 import { WizardFirebase } from "/src/js/new-wizard-firebase.js";
-import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+import { checkPasswordHash } from "/src/js/wizard-config.js";
 
 window.wizardInstance = new WizardFirebase({
   // Nom unique de la collection Firestore pour ce wizard
@@ -71,13 +71,13 @@ function handleSafeReset() {
 // ============================================
 // LOGIQUE D'ACCÈS PAR MOT DE PASSE
 // ============================================
-function checkPassword() {
+async function checkPassword() {
   const passwordInput = document.getElementById("passwordInput");
   const errorMessage = document.getElementById("errorMessage");
   const passwordOverlay = document.getElementById("passwordOverlay");
   const mainContent = document.querySelector("main.wizard");
 
-  if (passwordInput.value === CORRECT_PASSWORD) {
+  if (await checkPasswordHash(passwordInput.value)) {
     passwordOverlay.style.display = "none";
     mainContent.style.display = "block";
     errorMessage.style.display = "none";

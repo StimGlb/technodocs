@@ -1,4 +1,3 @@
-// Centralized wizard configuration
-// Change the exported password here to update all forms at once.
-// NOTE: For production use consider a safer secret mechanism.
-export const CORRECT_PASSWORD = "2rv3"; // À MODIFIER EN PRODUCTION
+// Configuration wizard — classe 5e
+// Réexporte depuis wizard-config.js (mot de passe partagé).
+export { checkPasswordHash } from "./wizard-config.js";

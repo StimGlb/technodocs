@@ -759,15 +759,15 @@
       // =============================================
       // ACCÈS PAR MOT DE PASSE
       // =============================================
-      import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+      import { checkPasswordHash } from "/src/js/wizard-config.js";
 
-      window.checkPassword = function () {
+      window.checkPassword = async function () {
         const input = document.getElementById("passwordInput");
         const error = document.getElementById("errorMessage");
         const overlay = document.getElementById("passwordOverlay");
         const main = document.querySelector("main.wizard");
 
-        if (input.value === CORRECT_PASSWORD) {
+        if (await checkPasswordHash(input.value)) {
           overlay.style.display = "none";
           main.classList.remove("is-locked");
           error.style.display = "none";

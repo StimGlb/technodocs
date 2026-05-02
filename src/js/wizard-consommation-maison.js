@@ -1,5 +1,5 @@
 import { WizardFirebase } from "/src/js/wizard-firebase.js";
-import { CORRECT_PASSWORD } from "/src/js/wizard-config.js";
+import { checkPasswordHash } from "/src/js/wizard-config.js";
 
 const wizardInstance = new WizardFirebase({
   collectionName: "s1_4eme_consommation_maison",
@@ -21,7 +21,7 @@ const wizardInstance = new WizardFirebase({
 
 window.wizardInstance = wizardInstance;
 
-function unlockWizard() {
+async function unlockWizard() {
   const passwordInput = document.getElementById("passwordInput");
   const errorMessage = document.getElementById("errorMessage");
   const overlay = document.getElementById("passwordOverlay");
@@ -30,7 +30,7 @@ function unlockWizard() {
     return;
   }
 
-  if (passwordInput.value === CORRECT_PASSWORD) {
+  if (await checkPasswordHash(passwordInput.value)) {
     errorMessage.hidden = true;
     overlay.style.display = "none";
     wizardInstance.init();

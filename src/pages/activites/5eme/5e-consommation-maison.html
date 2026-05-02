@@ -1026,7 +1026,7 @@
     <!-- Scripts -->
     <script type="module">
       import { WizardFirebase } from "/src/js/wizard-firebase.js";
-      import { CORRECT_PASSWORD } from "/src/js/wizard-config-5e.js";
+      import { checkPasswordHash } from "/src/js/wizard-config-5e.js";
 
       window.wizardInstance = new WizardFirebase({
         collectionName: "s1_5eme_consommation_maison",
@@ -1073,13 +1073,13 @@
       });
 
       // Password check
-      window.checkPassword = function () {
+      window.checkPassword = async function () {
         const input = document.getElementById("passwordInput");
         const error = document.getElementById("errorMessage");
         const overlay = document.getElementById("passwordOverlay");
         const main = document.querySelector("main.wizard");
 
-        if (input.value === CORRECT_PASSWORD) {
+        if (await checkPasswordHash(input.value)) {
           overlay.style.display = "none";
           main.classList.remove("is-locked");
           error.style.display = "none";
