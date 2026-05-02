@@ -1,639 +1,755 @@
 <!doctype html>
 <html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mission Artemis II — Simulateur de trajectoire | TechnoDocs</title>
-  <meta name="description" content="Simulateur interactif de la trajectoire Artemis II — Mission lunaire habitée en cours (avril 2026). Activité pédagogique." />
-  <meta name="robots" content="noindex" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet" />
-  <style>
-    /* ================================================
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mission Artemis II — Simulateur de trajectoire | TechnoDocs</title>
+    <meta
+      name="description"
+      content="Simulateur interactif de la trajectoire Artemis II — Mission lunaire habitée en cours (avril 2026). Activité pédagogique."
+    />
+    <meta name="robots" content="noindex" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ================================================
        ARTEMIS II — Simulateur de trajectoire
        TechnoDocs — Activité — Avril 2026
        Variables CSS alignées sur le projet TechnoDocs.
        Thème spatial : fond sombre, accents NASA blue.
     ================================================ */
-    :root {
-      /* Palette TechnoDocs (valeurs standalone pour page autonome) */
-      --color-primary-500: #818cf8;
-      --color-primary-700: #6366f1;
-      --color-gray-300: #4b5563;
-      --color-gray-500: #9ca3af;
-      --color-white: #ffffff;
-      --color-error:   #f87171;
-      --color-success: #34d399;
+      :root {
+        /* Palette TechnoDocs (valeurs standalone pour page autonome) */
+        --color-primary-500: #818cf8;
+        --color-primary-700: #6366f1;
+        --color-gray-300: #4b5563;
+        --color-gray-500: #9ca3af;
+        --color-white: #ffffff;
+        --color-error: #f87171;
+        --color-success: #34d399;
 
-      /* Thème spatial */
-      --space-bg:           #0a0e27;
-      --space-bg-card:      #0f1535;
-      --nasa-blue:          #0B3D91;
-      --nasa-blue-light:    #1a5dcc;
-      --earth-blue:         #1e88e5;
-      --moon-gray:          #9e9e9e;
-      --orion-gold:         #ffd600;
-      --trajectory-color:   rgba(129, 140, 248, 0.6);
+        /* Thème spatial */
+        --space-bg: #0a0e27;
+        --space-bg-card: #0f1535;
+        --nasa-blue: #0b3d91;
+        --nasa-blue-light: #1a5dcc;
+        --earth-blue: #1e88e5;
+        --moon-gray: #9e9e9e;
+        --orion-gold: #ffd600;
+        --trajectory-color: rgba(129, 140, 248, 0.6);
 
-      /* Typographie */
-      --font-main:    "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
-      --font-display: "Space Grotesk", var(--font-main);
+        /* Typographie */
+        --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        --font-display: 'Space Grotesk', var(--font-main);
 
-      /* Espacements (TechnoDocs standard) */
-      --space-1: 0.25rem;
-      --space-2: 0.5rem;
-      --space-3: 0.75rem;
-      --space-4: 1rem;
-      --space-6: 1.5rem;
-      --space-8: 2rem;
+        /* Espacements (TechnoDocs standard) */
+        --space-1: 0.25rem;
+        --space-2: 0.5rem;
+        --space-3: 0.75rem;
+        --space-4: 1rem;
+        --space-6: 1.5rem;
+        --space-8: 2rem;
 
-      /* Coins */
-      --radius-sm:   0.375rem;
-      --radius-md:   0.5rem;
-      --radius-lg:   0.75rem;
-      --radius-xl:   1rem;
-      --radius-full: 9999px;
-    }
+        /* Coins */
+        --radius-sm: 0.375rem;
+        --radius-md: 0.5rem;
+        --radius-lg: 0.75rem;
+        --radius-xl: 1rem;
+        --radius-full: 9999px;
+      }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
 
-    html { scroll-behavior: smooth; }
+      html {
+        scroll-behavior: smooth;
+      }
 
-    body {
-      font-family: var(--font-main);
-      background-color: var(--space-bg);
-      color: #e2e8f0;
-      min-height: 100vh;
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-    }
+      body {
+        font-family: var(--font-main);
+        background-color: var(--space-bg);
+        color: #e2e8f0;
+        min-height: 100vh;
+        line-height: 1.6;
+        -webkit-font-smoothing: antialiased;
+      }
 
-    .page-wrapper {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: var(--space-6) var(--space-4);
-    }
+      .page-wrapper {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: var(--space-6) var(--space-4);
+      }
 
-    /* ---- BANNIÈRE D'EN-TÊTE ----
+      /* ---- BANNIÈRE D'EN-TÊTE ----
        Reprend le pattern .wizard__banner de wizard.css :
        gradient linéaire, badge compétences, icône.
     -------------------------------- */
-    .banner {
-      display: flex;
-      align-items: center;
-      gap: var(--space-4);
-      background: linear-gradient(135deg, var(--nasa-blue) 0%, #071d50 100%);
-      border-radius: var(--radius-xl);
-      padding: var(--space-6);
-      margin-bottom: var(--space-6);
-      box-shadow: 0 10px 40px rgba(11, 61, 145, 0.45), 0 0 0 1px rgba(129,140,248,0.15);
-    }
+      .banner {
+        display: flex;
+        align-items: center;
+        gap: var(--space-4);
+        background: linear-gradient(135deg, var(--nasa-blue) 0%, #071d50 100%);
+        border-radius: var(--radius-xl);
+        padding: var(--space-6);
+        margin-bottom: var(--space-6);
+        box-shadow:
+          0 10px 40px rgba(11, 61, 145, 0.45),
+          0 0 0 1px rgba(129, 140, 248, 0.15);
+      }
 
-    .banner__icon { font-size: 3rem; line-height: 1; flex-shrink: 0; }
+      .banner__icon {
+        font-size: 3rem;
+        line-height: 1;
+        flex-shrink: 0;
+      }
 
-    .banner__content { flex: 1; min-width: 0; }
+      .banner__content {
+        flex: 1;
+        min-width: 0;
+      }
 
-    .banner__title {
-      font-family: var(--font-display);
-      font-size: clamp(1.125rem, 2.5vw, 1.75rem);
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: var(--space-2);
-      letter-spacing: -0.02em;
-    }
+      .banner__title {
+        font-family: var(--font-display);
+        font-size: clamp(1.125rem, 2.5vw, 1.75rem);
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: var(--space-2);
+        letter-spacing: -0.02em;
+      }
 
-    .banner__badges {
-      display: flex;
-      flex-wrap: wrap;
-      gap: var(--space-2);
-    }
+      .banner__badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--space-2);
+      }
 
-    /* Badges génériques (même système que wizard.css .wizard__skill) */
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.25rem;
-      padding: 0.2rem 0.75rem;
-      border-radius: var(--radius-full);
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 0.04em;
-      white-space: nowrap;
-    }
+      /* Badges génériques (même système que wizard.css .wizard__skill) */
+      .badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.25rem;
+        padding: 0.2rem 0.75rem;
+        border-radius: var(--radius-full);
+        font-size: 0.7rem;
+        font-weight: 600;
+        letter-spacing: 0.04em;
+        white-space: nowrap;
+      }
 
-    .badge--level  { background: rgba(255,255,255,0.18); color: #fff; }
-    .badge--skill  {
-      background: rgba(129,140,248,0.18);
-      color: #c7d2fe;
-      border: 1px solid rgba(129,140,248,0.3);
-    }
-    .badge--live   {
-      background: rgba(239,68,68,0.22);
-      color: #fca5a5;
-      border: 1px solid rgba(239,68,68,0.35);
-      animation: pulse-live 2.2s ease-in-out infinite;
-    }
+      .badge--level {
+        background: rgba(255, 255, 255, 0.18);
+        color: #fff;
+      }
+      .badge--skill {
+        background: rgba(129, 140, 248, 0.18);
+        color: #c7d2fe;
+        border: 1px solid rgba(129, 140, 248, 0.3);
+      }
+      .badge--live {
+        background: rgba(239, 68, 68, 0.22);
+        color: #fca5a5;
+        border: 1px solid rgba(239, 68, 68, 0.35);
+        animation: pulse-live 2.2s ease-in-out infinite;
+      }
 
-    @keyframes pulse-live {
-      0%, 100% { opacity: 1; }
-      50%       { opacity: 0.55; }
-    }
+      @keyframes pulse-live {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.55;
+        }
+      }
 
-    @media (max-width: 600px) {
-      .banner              { flex-direction: column; text-align: center; }
-      .banner__badges      { justify-content: center; }
-    }
+      @media (max-width: 600px) {
+        .banner {
+          flex-direction: column;
+          text-align: center;
+        }
+        .banner__badges {
+          justify-content: center;
+        }
+      }
 
-    /* ---- LAYOUT PRINCIPAL : simulateur + panneau info ---- */
-    .sim-layout {
-      display: grid;
-      grid-template-columns: 1fr 330px;
-      gap: var(--space-6);
-      margin-bottom: var(--space-6);
-    }
+      /* ---- LAYOUT PRINCIPAL : simulateur + panneau info ---- */
+      .sim-layout {
+        display: grid;
+        grid-template-columns: 1fr 330px;
+        gap: var(--space-6);
+        margin-bottom: var(--space-6);
+      }
 
-    /* Sur tablette/mobile : empilé — simulateur en haut */
-    @media (max-width: 900px) {
-      .sim-layout { grid-template-columns: 1fr; }
-    }
+      /* Sur tablette/mobile : empilé — simulateur en haut */
+      @media (max-width: 900px) {
+        .sim-layout {
+          grid-template-columns: 1fr;
+        }
+      }
 
-    /* ---- CARTES GÉNÉRIQUES ---- */
-    .card {
-      background: var(--space-bg-card);
-      border-radius: var(--radius-xl);
-      padding: var(--space-4);
-      border: 1px solid rgba(129,140,248,0.12);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.35);
-    }
+      /* ---- CARTES GÉNÉRIQUES ---- */
+      .card {
+        background: var(--space-bg-card);
+        border-radius: var(--radius-xl);
+        padding: var(--space-4);
+        border: 1px solid rgba(129, 140, 248, 0.12);
+        box-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+      }
 
-    .card__label {
-      font-family: var(--font-display);
-      font-size: 0.7rem;
-      font-weight: 700;
-      color: var(--color-primary-500);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      margin-bottom: var(--space-3);
-    }
+      .card__label {
+        font-family: var(--font-display);
+        font-size: 0.7rem;
+        font-weight: 700;
+        color: var(--color-primary-500);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: var(--space-3);
+      }
 
-    /* ---- ZONE CANVAS ---- */
-    .canvas-wrapper {
-      position: relative;
-      width: 100%;
-      background: radial-gradient(ellipse at 30% 50%, #0d1545 0%, #050812 100%);
-      border-radius: var(--radius-lg);
-      overflow: hidden;
-    }
+      /* ---- ZONE CANVAS ---- */
+      .canvas-wrapper {
+        position: relative;
+        width: 100%;
+        background: radial-gradient(ellipse at 30% 50%, #0d1545 0%, #050812 100%);
+        border-radius: var(--radius-lg);
+        overflow: hidden;
+      }
 
-    #trajectoryCanvas {
-      display: block;
-      width: 100%;
-      height: auto;
-    }
+      #trajectoryCanvas {
+        display: block;
+        width: 100%;
+        height: auto;
+      }
 
-    /* Overlay "perte de signal" face cachée de la Lune */
-    .signal-lost {
-      position: absolute;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      background: rgba(5, 8, 18, 0.82);
-      border-radius: var(--radius-lg);
-      z-index: 10;
-      pointer-events: none;
-    }
-    .signal-lost.is-active { display: flex; }
-    .signal-lost__text {
-      font-family: var(--font-display);
-      font-size: 1rem;
-      color: #fca5a5;
-      text-align: center;
-      animation: flicker 0.55s step-end infinite;
-      text-shadow: 0 0 16px rgba(252,165,165,0.6);
-    }
-    @keyframes flicker {
-      0%, 100% { opacity: 1; }
-      30%       { opacity: 0.25; }
-      70%       { opacity: 0.75; }
-    }
+      /* Overlay "perte de signal" face cachée de la Lune */
+      .signal-lost {
+        position: absolute;
+        inset: 0;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        background: rgba(5, 8, 18, 0.82);
+        border-radius: var(--radius-lg);
+        z-index: 10;
+        pointer-events: none;
+      }
+      .signal-lost.is-active {
+        display: flex;
+      }
+      .signal-lost__text {
+        font-family: var(--font-display);
+        font-size: 1rem;
+        color: #fca5a5;
+        text-align: center;
+        animation: flicker 0.55s step-end infinite;
+        text-shadow: 0 0 16px rgba(252, 165, 165, 0.6);
+      }
+      @keyframes flicker {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        30% {
+          opacity: 0.25;
+        }
+        70% {
+          opacity: 0.75;
+        }
+      }
 
-    /* ---- INDICATEUR DE PHASE ---- */
-    .phase-indicator {
-      margin-top: var(--space-3);
-      padding: var(--space-3) var(--space-4);
-      background: rgba(129,140,248,0.07);
-      border-radius: var(--radius-md);
-      border-left: 3px solid var(--color-primary-500);
-    }
-    .phase-indicator__label {
-      font-size: 0.65rem;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--color-gray-500);
-      margin-bottom: 0.1rem;
-    }
-    .phase-indicator__name {
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #fff;
-    }
+      /* ---- INDICATEUR DE PHASE ---- */
+      .phase-indicator {
+        margin-top: var(--space-3);
+        padding: var(--space-3) var(--space-4);
+        background: rgba(129, 140, 248, 0.07);
+        border-radius: var(--radius-md);
+        border-left: 3px solid var(--color-primary-500);
+      }
+      .phase-indicator__label {
+        font-size: 0.65rem;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        color: var(--color-gray-500);
+        margin-bottom: 0.1rem;
+      }
+      .phase-indicator__name {
+        font-family: var(--font-display);
+        font-size: 0.95rem;
+        font-weight: 600;
+        color: #fff;
+      }
 
-    /* ---- CONTRÔLES ---- */
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      margin-top: var(--space-4);
-      flex-wrap: wrap;
-    }
+      /* ---- CONTRÔLES ---- */
+      .controls {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        margin-top: var(--space-4);
+        flex-wrap: wrap;
+      }
 
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      padding: 0.45rem 0.9rem;
-      border: none;
-      border-radius: var(--radius-md);
-      font-family: var(--font-main);
-      font-size: 0.82rem;
-      font-weight: 600;
-      cursor: pointer;
-      transition: background 150ms ease, transform 100ms ease;
-    }
-    .btn:focus-visible { outline: 2px solid var(--color-primary-500); outline-offset: 2px; }
-    .btn:active { transform: scale(0.97); }
-    .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.3rem;
+        padding: 0.45rem 0.9rem;
+        border: none;
+        border-radius: var(--radius-md);
+        font-family: var(--font-main);
+        font-size: 0.82rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition:
+          background 150ms ease,
+          transform 100ms ease;
+      }
+      .btn:focus-visible {
+        outline: 2px solid var(--color-primary-500);
+        outline-offset: 2px;
+      }
+      .btn:active {
+        transform: scale(0.97);
+      }
+      .btn:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
+      }
 
-    .btn--primary   { background: var(--nasa-blue); color: #fff; }
-    .btn--primary:not(:disabled):hover { background: var(--nasa-blue-light); }
+      .btn--primary {
+        background: var(--nasa-blue);
+        color: #fff;
+      }
+      .btn--primary:not(:disabled):hover {
+        background: var(--nasa-blue-light);
+      }
 
-    .btn--secondary {
-      background: rgba(255,255,255,0.07);
-      color: #e2e8f0;
-      border: 1px solid rgba(255,255,255,0.13);
-    }
-    .btn--secondary:not(:disabled):hover { background: rgba(255,255,255,0.13); }
+      .btn--secondary {
+        background: rgba(255, 255, 255, 0.07);
+        color: #e2e8f0;
+        border: 1px solid rgba(255, 255, 255, 0.13);
+      }
+      .btn--secondary:not(:disabled):hover {
+        background: rgba(255, 255, 255, 0.13);
+      }
 
-    /* Contrôle de vitesse */
-    .speed-control {
-      display: flex;
-      align-items: center;
-      gap: var(--space-2);
-      margin-left: auto;
-    }
-    .speed-control label {
-      font-size: 0.78rem;
-      color: var(--color-gray-500);
-      white-space: nowrap;
-    }
-    input[type="range"].speed-slider {
-      -webkit-appearance: none;
-      appearance: none;
-      width: 90px;
-      height: 4px;
-      background: var(--color-gray-300);
-      border-radius: 2px;
-      outline: none;
-      cursor: pointer;
-    }
-    input[type="range"].speed-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 15px; height: 15px;
-      background: var(--color-primary-500);
-      border-radius: 50%;
-      cursor: pointer;
-    }
-    input[type="range"].speed-slider::-moz-range-thumb {
-      width: 15px; height: 15px;
-      background: var(--color-primary-500);
-      border-radius: 50%;
-      cursor: pointer;
-      border: none;
-    }
-    .speed-value {
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--color-primary-500);
-      min-width: 3.5ch;
-    }
+      /* Contrôle de vitesse */
+      .speed-control {
+        display: flex;
+        align-items: center;
+        gap: var(--space-2);
+        margin-left: auto;
+      }
+      .speed-control label {
+        font-size: 0.78rem;
+        color: var(--color-gray-500);
+        white-space: nowrap;
+      }
+      input[type='range'].speed-slider {
+        -webkit-appearance: none;
+        appearance: none;
+        width: 90px;
+        height: 4px;
+        background: var(--color-gray-300);
+        border-radius: 2px;
+        outline: none;
+        cursor: pointer;
+      }
+      input[type='range'].speed-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 15px;
+        height: 15px;
+        background: var(--color-primary-500);
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      input[type='range'].speed-slider::-moz-range-thumb {
+        width: 15px;
+        height: 15px;
+        background: var(--color-primary-500);
+        border-radius: 50%;
+        cursor: pointer;
+        border: none;
+      }
+      .speed-value {
+        font-size: 0.8rem;
+        font-weight: 700;
+        color: var(--color-primary-500);
+        min-width: 3.5ch;
+      }
 
-    /* ---- PANNEAU INFOS ---- */
-    .info-panel {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-4);
-    }
+      /* ---- PANNEAU INFOS ---- */
+      .info-panel {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-4);
+      }
 
-    /* Grille télémétrie */
-    .telemetry-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--space-2);
-    }
-    .telem-item {
-      background: rgba(255,255,255,0.04);
-      border-radius: var(--radius-md);
-      padding: var(--space-2) var(--space-3);
-    }
-    .telem-item__label {
-      font-size: 0.62rem;
-      text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--color-gray-500);
-      margin-bottom: 0.1rem;
-    }
-    .telem-item__value {
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      font-weight: 700;
-      color: #fff;
-      font-variant-numeric: tabular-nums;
-    }
-    .telem-item__unit {
-      font-size: 0.62rem;
-      color: var(--color-gray-500);
-      font-weight: 400;
-    }
+      /* Grille télémétrie */
+      .telemetry-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-2);
+      }
+      .telem-item {
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: var(--radius-md);
+        padding: var(--space-2) var(--space-3);
+      }
+      .telem-item__label {
+        font-size: 0.62rem;
+        text-transform: uppercase;
+        letter-spacing: 0.07em;
+        color: var(--color-gray-500);
+        margin-bottom: 0.1rem;
+      }
+      .telem-item__value {
+        font-family: var(--font-display);
+        font-size: 0.95rem;
+        font-weight: 700;
+        color: #fff;
+        font-variant-numeric: tabular-nums;
+      }
+      .telem-item__unit {
+        font-size: 0.62rem;
+        color: var(--color-gray-500);
+        font-weight: 400;
+      }
 
-    /* Équipage */
-    .crew-list {
-      display: flex;
-      flex-direction: column;
-      gap: var(--space-2);
-    }
-    .crew-member {
-      display: flex;
-      align-items: flex-start;
-      gap: var(--space-2);
-      padding: var(--space-2) var(--space-3);
-      background: rgba(255,255,255,0.04);
-      border-radius: var(--radius-md);
-    }
-    .crew-member__flag   { font-size: 1.3rem; line-height: 1.2; flex-shrink: 0; }
-    .crew-member__name   { font-weight: 600; font-size: 0.82rem; color: #fff; }
-    .crew-member__role   { font-size: 0.72rem; color: var(--color-gray-500); }
-    .crew-member__record { font-size: 0.68rem; color: var(--orion-gold); margin-top: 0.1rem; }
+      /* Équipage */
+      .crew-list {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-2);
+      }
+      .crew-member {
+        display: flex;
+        align-items: flex-start;
+        gap: var(--space-2);
+        padding: var(--space-2) var(--space-3);
+        background: rgba(255, 255, 255, 0.04);
+        border-radius: var(--radius-md);
+      }
+      .crew-member__flag {
+        font-size: 1.3rem;
+        line-height: 1.2;
+        flex-shrink: 0;
+      }
+      .crew-member__name {
+        font-weight: 600;
+        font-size: 0.82rem;
+        color: #fff;
+      }
+      .crew-member__role {
+        font-size: 0.72rem;
+        color: var(--color-gray-500);
+      }
+      .crew-member__record {
+        font-size: 0.68rem;
+        color: var(--orion-gold);
+        margin-top: 0.1rem;
+      }
 
-    /* ---- SECTION CHIFFRES CLÉS ---- */
-    .section-heading {
-      font-family: var(--font-display);
-      font-size: 1.05rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: var(--space-4);
-      display: flex;
-      align-items: center;
-      gap: var(--space-3);
-    }
-    .section-heading::after {
-      content: '';
-      flex: 1;
-      height: 1px;
-      background: rgba(129,140,248,0.18);
-    }
+      /* ---- SECTION CHIFFRES CLÉS ---- */
+      .section-heading {
+        font-family: var(--font-display);
+        font-size: 1.05rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: var(--space-4);
+        display: flex;
+        align-items: center;
+        gap: var(--space-3);
+      }
+      .section-heading::after {
+        content: '';
+        flex: 1;
+        height: 1px;
+        background: rgba(129, 140, 248, 0.18);
+      }
 
-    .stats-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
-      gap: var(--space-4);
-      margin-bottom: var(--space-8);
-    }
+      .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(175px, 1fr));
+        gap: var(--space-4);
+        margin-bottom: var(--space-8);
+      }
 
-    .stat-card {
-      background: var(--space-bg-card);
-      border-radius: var(--radius-lg);
-      padding: var(--space-4);
-      border: 1px solid rgba(129,140,248,0.1);
-      transition: border-color 200ms ease, transform 200ms ease;
-    }
-    .stat-card:hover {
-      border-color: rgba(129,140,248,0.38);
-      transform: translateY(-2px);
-    }
-    .stat-card__icon  { font-size: 1.4rem; margin-bottom: var(--space-2); display: block; }
-    .stat-card__value {
-      font-family: var(--font-display);
-      font-size: 1.15rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.1rem;
-    }
-    .stat-card__label { font-size: 0.72rem; color: var(--color-gray-500); line-height: 1.4; }
+      .stat-card {
+        background: var(--space-bg-card);
+        border-radius: var(--radius-lg);
+        padding: var(--space-4);
+        border: 1px solid rgba(129, 140, 248, 0.1);
+        transition:
+          border-color 200ms ease,
+          transform 200ms ease;
+      }
+      .stat-card:hover {
+        border-color: rgba(129, 140, 248, 0.38);
+        transform: translateY(-2px);
+      }
+      .stat-card__icon {
+        font-size: 1.4rem;
+        margin-bottom: var(--space-2);
+        display: block;
+      }
+      .stat-card__value {
+        font-family: var(--font-display);
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #fff;
+        margin-bottom: 0.1rem;
+      }
+      .stat-card__label {
+        font-size: 0.72rem;
+        color: var(--color-gray-500);
+        line-height: 1.4;
+      }
 
-    /* ---- PIED DE PAGE ---- */
-    .page-footer {
-      text-align: center;
-      font-size: 0.72rem;
-      color: var(--color-gray-500);
-      padding: var(--space-6) 0 var(--space-4);
-      border-top: 1px solid rgba(255,255,255,0.06);
-    }
-    .page-footer a { color: var(--color-primary-500); text-decoration: none; }
-    .page-footer a:hover { text-decoration: underline; }
-  </style>
-</head>
-<body>
-  <div class="page-wrapper">
-
-    <!-- ============================================================
+      /* ---- PIED DE PAGE ---- */
+      .page-footer {
+        text-align: center;
+        font-size: 0.72rem;
+        color: var(--color-gray-500);
+        padding: var(--space-6) 0 var(--space-4);
+        border-top: 1px solid rgba(255, 255, 255, 0.06);
+      }
+      .page-footer a {
+        color: var(--color-primary-500);
+        text-decoration: none;
+      }
+      .page-footer a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page-wrapper">
+      <!-- ============================================================
          1. BANNIÈRE D'EN-TÊTE
          Pattern identique à .wizard__banner dans wizard.css :
          gradient bleu, icône, titre, badges compétences.
     ============================================================ -->
-    <header class="banner" role="banner">
-      <div class="banner__icon" aria-hidden="true">🚀</div>
-      <div class="banner__content">
-        <h1 class="banner__title">Mission Artemis II — Programme de la mission et simulateur de trajectoire</h1>
-        <span class="badge badge--live">● Encore en cours — Avril 2026</span>
-      </div>
-    </header>
+      <header class="banner" role="banner">
+        <div class="banner__icon" aria-hidden="true">🚀</div>
+        <div class="banner__content">
+          <h1 class="banner__title">
+            Mission Artemis II — Programme de la mission et simulateur de trajectoire
+          </h1>
+          <span class="badge badge--live">● Terminée avec succès — Avril 2026</span>
+        </div>
+      </header>
 
-    <!-- ============================================================
+      <!-- ============================================================
          2. SIMULATEUR + PANNEAU INFO
          Desktop : simulateur à gauche (flex 1), info à droite (330px)
          Tablette/mobile : empilé
     ============================================================ -->
-    <div class="sim-layout">
+      <div class="sim-layout">
+        <!-- Simulateur principal -->
+        <section class="card" aria-labelledby="sim-heading">
+          <p class="card__label" id="sim-heading">Trajectoire simplifiée de la mission</p>
 
-      <!-- Simulateur principal -->
-      <section class="card" aria-labelledby="sim-heading">
-        <p class="card__label" id="sim-heading">Trajectoire simplifiée de la mission</p>
+          <div class="canvas-wrapper">
+            <canvas
+              id="trajectoryCanvas"
+              width="800"
+              height="400"
+              role="img"
+              aria-label="Animation de la trajectoire Artemis II en figure de 8 : Terre, transit vers la Lune, survol lunaire, retour Terre"
+            >
+            </canvas>
 
-        <div class="canvas-wrapper">
-          <canvas
-            id="trajectoryCanvas"
-            width="800"
-            height="400"
-            role="img"
-            aria-label="Animation de la trajectoire Artemis II en figure de 8 : Terre, transit vers la Lune, survol lunaire, retour Terre">
-          </canvas>
-
-          <!-- Overlay perte de signal — face cachée de la Lune (J6) -->
-          <div class="signal-lost" id="signalLost" aria-live="assertive" aria-atomic="true">
-            <div class="signal-lost__text">
-              📡 PERTE DE SIGNAL<br>
-              <small style="font-size:0.72rem;opacity:0.8">Face cachée de la Lune</small>
+            <!-- Overlay perte de signal — face cachée de la Lune (J6) -->
+            <div class="signal-lost" id="signalLost" aria-live="assertive" aria-atomic="true">
+              <div class="signal-lost__text">
+                📡 PERTE DE SIGNAL<br />
+                <small style="font-size: 0.72rem; opacity: 0.8">Face cachée de la Lune</small>
+              </div>
             </div>
           </div>
-        </div>
 
-        <!-- Phase courante — mise à jour en sync avec l'animation -->
-        <div class="phase-indicator" aria-live="polite" aria-atomic="true">
-          <div class="phase-indicator__label">Phase actuelle</div>
-          <div class="phase-indicator__name" id="phaseName">Appuyer sur ▶ Play pour démarrer</div>
-        </div>
+          <!-- Phase courante — mise à jour en sync avec l'animation -->
+          <div class="phase-indicator" aria-live="polite" aria-atomic="true">
+            <div class="phase-indicator__label">Phase actuelle</div>
+            <div class="phase-indicator__name" id="phaseName">Appuyer sur ▶ Play pour démarrer</div>
+          </div>
 
-        <!-- Contrôles -->
-        <div class="controls">
-          <button class="btn btn--primary"    id="btnPlay"  aria-label="Démarrer l'animation">▶ Play</button>
-          <button class="btn btn--secondary"  id="btnPause" aria-label="Mettre en pause" disabled>⏸ Pause</button>
-          <button class="btn btn--secondary"  id="btnReset" aria-label="Recommencer depuis le début">🔄 Recommencer</button>
+          <!-- Contrôles -->
+          <div class="controls">
+            <button class="btn btn--primary" id="btnPlay" aria-label="Démarrer l'animation">
+              ▶ Play
+            </button>
+            <button class="btn btn--secondary" id="btnPause" aria-label="Mettre en pause" disabled>
+              ⏸ Pause
+            </button>
+            <button
+              class="btn btn--secondary"
+              id="btnReset"
+              aria-label="Recommencer depuis le début"
+            >
+              🔄 Recommencer
+            </button>
 
-          <div class="speed-control">
-            <label for="speedSlider">Vitesse :</label>
-            <input type="range" id="speedSlider" class="speed-slider"
-                   min="1" max="3" step="1" value="2"
-                   aria-label="Vitesse d'animation" />
-            <span class="speed-value" id="speedValue" aria-live="polite">×10</span>
+            <div class="speed-control">
+              <label for="speedSlider">Vitesse :</label>
+              <input
+                type="range"
+                id="speedSlider"
+                class="speed-slider"
+                min="1"
+                max="3"
+                step="1"
+                value="2"
+                aria-label="Vitesse d'animation"
+              />
+              <span class="speed-value" id="speedValue" aria-live="polite">×10</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Panneau d'information (sidebar) -->
+        <aside class="info-panel" aria-label="Informations de mission en temps réel">
+          <!-- Télémétrie simulée — se met à jour pendant l'animation -->
+          <div class="card">
+            <p class="card__label">📡 Télémétrie simulée</p>
+            <div class="telemetry-grid">
+              <div class="telem-item">
+                <div class="telem-item__label">Jour mission</div>
+                <div class="telem-item__value" id="telDay">J 1</div>
+              </div>
+              <div class="telem-item">
+                <div class="telem-item__label">Vitesse</div>
+                <div class="telem-item__value" id="telSpeed">
+                  —<span class="telem-item__unit"> km/h</span>
+                </div>
+              </div>
+              <div class="telem-item">
+                <div class="telem-item__label">Dist. Terre</div>
+                <div class="telem-item__value" id="telEarth">
+                  —<span class="telem-item__unit"> km</span>
+                </div>
+              </div>
+              <div class="telem-item">
+                <div class="telem-item__label">Dist. Lune</div>
+                <div class="telem-item__value" id="telMoon">
+                  —<span class="telem-item__unit"> km</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Fiche équipage -->
+          <div class="card">
+            <p class="card__label">👨‍🚀 Équipage Artemis II</p>
+            <div class="crew-list">
+              <div class="crew-member">
+                <span class="crew-member__flag" aria-label="Drapeau américain">🇺🇸</span>
+                <div>
+                  <div class="crew-member__name">Reid Wiseman - 50 ans</div>
+                  <div class="crew-member__role">Commandant</div>
+                </div>
+              </div>
+              <div class="crew-member">
+                <span class="crew-member__flag" aria-label="Drapeau américain">🇺🇸</span>
+                <div>
+                  <div class="crew-member__name">Victor Glover - 49 ans</div>
+                  <div class="crew-member__role">Pilote</div>
+                  <div class="crew-member__record">
+                    ★ 1er homme de couleur à voyager vers la Lune
+                  </div>
+                </div>
+              </div>
+              <div class="crew-member">
+                <span class="crew-member__flag" aria-label="Drapeau américain">🇺🇸</span>
+                <div>
+                  <div class="crew-member__name">Christina Koch - 47 ans</div>
+                  <div class="crew-member__role">Spécialiste de mission</div>
+                  <div class="crew-member__record">★ 1ère femme à voyager vers la Lune</div>
+                </div>
+              </div>
+              <div class="crew-member">
+                <span class="crew-member__flag" aria-label="Drapeau canadien">🇨🇦</span>
+                <div>
+                  <div class="crew-member__name">Jeremy Hansen - 50 ans</div>
+                  <div class="crew-member__role">Spécialiste de mission</div>
+                  <div class="crew-member__record">★ 1er Canadien à voyager vers la Lune</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+      <!-- /sim-layout -->
+
+      <!-- ============================================================
+         3. CHIFFRES CLÉS — Données NASA réelles (source : nasa.gov)
+    ============================================================ -->
+      <section aria-labelledby="stats-heading">
+        <h2 class="section-heading" id="stats-heading">Chiffres clés de la mission</h2>
+        <div class="stats-grid">
+          <div class="stat-card">
+            <span class="stat-card__icon" aria-hidden="true">📅</span>
+            <div class="stat-card__value">~10 jours</div>
+            <div class="stat-card__label">Durée totale de la mission</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__icon" aria-hidden="true">📏</span>
+            <div class="stat-card__value">1 118 000 km</div>
+            <div class="stat-card__label">Distance totale parcourue (695 081 miles)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__icon" aria-hidden="true">⚡</span>
+            <div class="stat-card__value">39 472 km/h</div>
+            <div class="stat-card__label">Vitesse max lors du burn TLI</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__icon" aria-hidden="true">🌕</span>
+            <div class="stat-card__value">~6 500 km</div>
+            <div class="stat-card__label">Distance lors du survol lunaire</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__icon" aria-hidden="true">🌍</span>
+            <div class="stat-card__value">406 700 km</div>
+            <div class="stat-card__label">Distance maximale de la Terre (252 760 miles)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__icon" aria-hidden="true">🏆</span>
+            <div class="stat-card__value">+6 600 km</div>
+            <div class="stat-card__label">Record Apollo 13 dépassé (précédent record humain)</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__icon" aria-hidden="true">🚀</span>
+            <div class="stat-card__value">SLS Block 1</div>
+            <div class="stat-card__label">Fusée Space Launch System — NASA</div>
+          </div>
+          <div class="stat-card">
+            <span class="stat-card__icon" aria-hidden="true">🛸</span>
+            <div class="stat-card__value">Orion "Integrity"</div>
+            <div class="stat-card__label">Capsule habitée — Lancement 1ᵉʳ avril 2026</div>
           </div>
         </div>
       </section>
 
-      <!-- Panneau d'information (sidebar) -->
-      <aside class="info-panel" aria-label="Informations de mission en temps réel">
-
-        <!-- Télémétrie simulée — se met à jour pendant l'animation -->
-        <div class="card">
-          <p class="card__label">📡 Télémétrie simulée</p>
-          <div class="telemetry-grid">
-            <div class="telem-item">
-              <div class="telem-item__label">Jour mission</div>
-              <div class="telem-item__value" id="telDay">J 1</div>
-            </div>
-            <div class="telem-item">
-              <div class="telem-item__label">Vitesse</div>
-              <div class="telem-item__value" id="telSpeed">
-                —<span class="telem-item__unit"> km/h</span>
-              </div>
-            </div>
-            <div class="telem-item">
-              <div class="telem-item__label">Dist. Terre</div>
-              <div class="telem-item__value" id="telEarth">
-                —<span class="telem-item__unit"> km</span>
-              </div>
-            </div>
-            <div class="telem-item">
-              <div class="telem-item__label">Dist. Lune</div>
-              <div class="telem-item__value" id="telMoon">
-                —<span class="telem-item__unit"> km</span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- Fiche équipage -->
-        <div class="card">
-          <p class="card__label">👨‍🚀 Équipage Artemis II</p>
-          <div class="crew-list">
-            <div class="crew-member">
-              <span class="crew-member__flag" aria-label="Drapeau américain">🇺🇸</span>
-              <div>
-                <div class="crew-member__name">Reid Wiseman - 50 ans</div>
-                <div class="crew-member__role">Commandant</div>
-              </div>
-            </div>
-            <div class="crew-member">
-              <span class="crew-member__flag" aria-label="Drapeau américain">🇺🇸</span>
-              <div>
-                <div class="crew-member__name">Victor Glover - 49 ans</div>
-                <div class="crew-member__role">Pilote</div>
-                <div class="crew-member__record">★ 1er homme de couleur à voyager vers la Lune</div>
-              </div>
-            </div>
-            <div class="crew-member">
-              <span class="crew-member__flag" aria-label="Drapeau américain">🇺🇸</span>
-              <div>
-                <div class="crew-member__name">Christina Koch - 47 ans</div>
-                <div class="crew-member__role">Spécialiste de mission</div>
-                <div class="crew-member__record">★ 1ère femme à voyager vers la Lune</div>
-              </div>
-            </div>
-            <div class="crew-member">
-              <span class="crew-member__flag" aria-label="Drapeau canadien">🇨🇦</span>
-              <div>
-                <div class="crew-member__name">Jeremy Hansen - 50 ans</div>
-                <div class="crew-member__role">Spécialiste de mission</div>
-                <div class="crew-member__record">★ 1er Canadien à voyager vers la Lune</div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-      </aside>
-    </div><!-- /sim-layout -->
+      <footer class="page-footer">
+        Sources :
+        <a href="https://www.nasa.gov/artemis" target="_blank" rel="noopener noreferrer"
+          >NASA Artemis</a
+        >
+        · Données de mission au 6 avril 2026 · TechnoDocs — Usage pédagogique exclusivement
+      </footer>
+    </div>
+    <!-- /page-wrapper -->
 
     <!-- ============================================================
-         3. CHIFFRES CLÉS — Données NASA réelles (source : nasa.gov)
-    ============================================================ -->
-    <section aria-labelledby="stats-heading">
-      <h2 class="section-heading" id="stats-heading">Chiffres clés de la mission</h2>
-      <div class="stats-grid">
-        <div class="stat-card">
-          <span class="stat-card__icon" aria-hidden="true">📅</span>
-          <div class="stat-card__value">~10 jours</div>
-          <div class="stat-card__label">Durée totale de la mission</div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-card__icon" aria-hidden="true">📏</span>
-          <div class="stat-card__value">1 118 000 km</div>
-          <div class="stat-card__label">Distance totale parcourue (695 081 miles)</div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-card__icon" aria-hidden="true">⚡</span>
-          <div class="stat-card__value">39 472 km/h</div>
-          <div class="stat-card__label">Vitesse max lors du burn TLI</div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-card__icon" aria-hidden="true">🌕</span>
-          <div class="stat-card__value">~6 500 km</div>
-          <div class="stat-card__label">Distance lors du survol lunaire</div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-card__icon" aria-hidden="true">🌍</span>
-          <div class="stat-card__value">406 700 km</div>
-          <div class="stat-card__label">Distance maximale de la Terre (252 760 miles)</div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-card__icon" aria-hidden="true">🏆</span>
-          <div class="stat-card__value">+6 600 km</div>
-          <div class="stat-card__label">Record Apollo 13 dépassé (précédent record humain)</div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-card__icon" aria-hidden="true">🚀</span>
-          <div class="stat-card__value">SLS Block 1</div>
-          <div class="stat-card__label">Fusée Space Launch System — NASA</div>
-        </div>
-        <div class="stat-card">
-          <span class="stat-card__icon" aria-hidden="true">🛸</span>
-          <div class="stat-card__value">Orion "Integrity"</div>
-          <div class="stat-card__label">Capsule habitée — Lancement 1ᵉʳ avril 2026</div>
-        </div>
-      </div>
-    </section>
-
-    <footer class="page-footer">
-      Sources :
-      <a href="https://www.nasa.gov/artemis" target="_blank" rel="noopener noreferrer">NASA Artemis</a> ·
-      Données de mission au 6 avril 2026 ·
-      TechnoDocs — Usage pédagogique exclusivement
-    </footer>
-
-  </div><!-- /page-wrapper -->
-
-  <!-- ============================================================
        JAVASCRIPT — Simulateur de trajectoire (Canvas API)
 
        Architecture :
@@ -644,6 +760,6 @@
          5. animate()      — boucle requestAnimationFrame, avance t de 0→1
          6. updateUI()     — synchronise les éléments HTML avec t courant
   ============================================================ -->
-  <script type="module" src="../../js/simulateurs/artemis-ii.js"></script>
-</body>
+    <script type="module" src="../../js/simulateurs/artemis-ii.js"></script>
+  </body>
 </html>

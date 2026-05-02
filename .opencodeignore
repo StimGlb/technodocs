@@ -1,0 +1,12 @@
+# Dépendances et builds[cite: 1]
+node_modules/
+dist/
+
+# Environnement et logs[cite: 1]
+.env
+*.log
+
+# Git et IDE[cite: 1]
+.git/
+.vscode/
+.DS_Store
