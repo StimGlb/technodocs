@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve, relative, join } from 'path';
-import { readdirSync, existsSync, mkdirSync, copyFileSync, statSync } from 'fs';
+import { readdirSync, existsSync, mkdirSync, copyFileSync, statSync, rmSync } from 'fs';
 import { dirname } from 'path';
 
 // Plugin : copie les assets non-bundlables vers dist en préservant les chemins src/
@@ -25,6 +25,13 @@ function copyStaticAssets() {
 
   return {
     name: 'copy-static-assets',
+    // buildStart : vide dist/ avant que Rollup commence à écrire
+    buildStart() {
+      const distDir = resolve(__dirname, 'dist');
+      if (existsSync(distDir)) {
+        rmSync(distDir, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
+      }
+    },
     // closeBundle : appelé une seule fois après que tous les chunks sont écrits
     closeBundle() {
       const copies = [
@@ -110,7 +117,7 @@ export default defineConfig(({ command, mode }) => {
       outDir: 'dist',
       assetsDir: 'assets',
       sourcemap: false,
-      emptyOutDir: true,
+      emptyOutDir: false, // dist/ is cleared in copyStaticAssets buildStart hook to avoid Windows EPERM
 
       rollupOptions: {
         input: (function collectHtmlInputs() {
@@ -123,7 +130,7 @@ export default defineConfig(({ command, mode }) => {
               for (const entry of entries) {
                 const fullPath = join(dir, entry.name);
                 if (entry.isDirectory()) {
-                  if (!['node_modules', 'dist', '.git', 'scripts', '.claude'].includes(entry.name)) {
+                  if (!['node_modules', 'dist', '.git', 'scripts', '.claude', '.netlify'].includes(entry.name)) {
                     scanDirectory(fullPath);
                   }
                 } else if (entry.name.endsWith('.html')) {
