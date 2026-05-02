@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Parcours Arduino 5 montages — Du témoin LED à la serrure connectée. Carte de progression navigable pour 5e/4e/3e."
+    />
+    <title>Parcours Arduino — 5 montages | TechnoDocs</title>
+
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+    <link rel="stylesheet" href="/src/css/parcours-arduino.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="header-placeholder"></div>
+
+    <main class="wizard wizard--consultatif">
+
+      <!-- ========== BANNIÈRE ========== -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">🤖</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">Parcours Arduino — 5 montages</h1>
+          <div class="wizard__banner-skills">
+            <span class="wizard__skill">5e / 4e / 3e</span>
+            <span class="wizard__skill">Tinkercad Circuits</span>
+            <span class="wizard__skill">150 pts socle · 200 pts max</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ========== NAVIGATION PAR ONGLETS ========== -->
+      <nav class="wizard__nav" aria-label="Navigation par montage" id="wizardNav">
+        <button class="wizard__nav-btn active" data-phase="0" aria-current="true">
+          <span class="wizard__nav-number">🎮</span>
+          Intro
+        </button>
+        <button class="wizard__nav-btn" data-phase="1">
+          <span class="wizard__nav-number">🟢</span>
+          M1 · LED
+        </button>
+        <button class="wizard__nav-btn" data-phase="2">
+          <span class="wizard__nav-number">🟢</span>
+          M2 · Bouton
+        </button>
+        <button class="wizard__nav-btn" data-phase="3">
+          <span class="wizard__nav-number">🟡</span>
+          M3 · PIR
+        </button>
+        <button class="wizard__nav-btn" data-phase="4">
+          <span class="wizard__nav-number">🔴</span>
+          M4 · RGB
+        </button>
+        <button class="wizard__nav-btn" data-phase="5">
+          <span class="wizard__nav-number">⭐</span>
+          M5 · Serrure
+        </button>
+      </nav>
+
+      <!-- ========== PHASE 0 — Introduction ========== -->
+      <section class="wizard__phase active" data-phase="0">
+
+        <div class="wizard__phase-header">
+          <h2 class="wizard__phase-title">🎮 Parcours Arduino — 5 montages, 5 grades</h2>
+          <p class="wizard__phase-subtitle">Du témoin LED à la serrure connectée</p>
+        </div>
+
+        <div class="wizard__intro">
+          <p>
+            Ce parcours te propose de réaliser <strong>5 montages électroniques</strong>
+            de difficulté croissante sur Tinkercad Circuits. À chaque montage validé,
+            tu débloques un <strong>grade</strong> et accumules des <strong>points</strong>.
+          </p>
+          <p>
+            📍 <strong>Comment ça marche</strong> : les schémas de câblage sont disponibles
+            dans la rubrique
+            <a href="/src/pages/activites/schemas-arduino.html">Schémas de montages</a>.
+            Le pseudo-code à traduire et les validations sont sur ta <strong>fiche papier</strong>.
+            Cette page web sert de <strong>carte de progression</strong> et te donne accès
+            direct aux ressources Tinkercad.
+          </p>
+        </div>
+
+        <div class="wizard__grades-overview">
+          <h3>Les 5 grades à débloquer</h3>
+          <ul class="wizard__grades-list">
+            <li class="wizard__grade wizard__grade--apprenti">
+              🟢 <strong>Apprenti</strong> · M1 · 10 pts
+            </li>
+            <li class="wizard__grade wizard__grade--praticien">
+              🟢 <strong>Praticien</strong> · M2 · 15 pts
+            </li>
+            <li class="wizard__grade wizard__grade--expert">
+              🟡 <strong>Expert</strong> · M3 · 25 pts
+            </li>
+            <li class="wizard__grade wizard__grade--maitre">
+              🔴 <strong>Maître</strong> · M4 · 40 pts
+            </li>
+            <li class="wizard__grade wizard__grade--legende">
+              ⭐ <strong>Légende</strong> · M5 · 60 pts
+            </li>
+          </ul>
+          <p class="wizard__total">
+            <strong>Total possible</strong> : 150 pts socle · jusqu'à <strong>200 pts</strong> avec bonus
+          </p>
+        </div>
+
+        <div class="wizard__cta">
+          <p>👉 Commence par <strong>M1 — Allumer une LED</strong> (clique sur l'onglet du haut).</p>
+        </div>
+
+      </section>
+
+      <!-- ========== PHASE 1 — M1 · Allumer une LED · Apprenti ========== -->
+      <section class="wizard__phase" data-phase="1">
+
+        <div class="wizard__phase-header wizard__phase-header--apprenti">
+          <span class="wizard__grade-badge wizard__grade-badge--apprenti">🟢 Apprenti</span>
+          <h2 class="wizard__phase-title">M1 — Allumer une LED</h2>
+          <p class="wizard__phase-points">10 pts (+ 5 pts bonus)</p>
+        </div>
+
+        <div class="wizard__cas-concret">
+          <h3>💡 Cas concret</h3>
+          <p>
+            Tu installes un <strong>témoin de fonctionnement</strong> sur un appareil.
+            Quand l'appareil est sous tension, le témoin s'allume.
+          </p>
+        </div>
+
+        <div class="wizard__mission">
+          <h3>📋 Mission</h3>
+          <p>Allumer une LED en continu, contrôlée par l'Arduino.</p>
+        </div>
+
+        <div class="wizard__ressource">
+          <h3>📍 Schéma de câblage</h3>
+          <a
+            href="/src/pages/activites/schemas-arduino.html"
+            class="wizard__lien-modal"
+            target="_blank"
+            rel="noopener"
+          >
+            Voir le schéma détaillé "Allumer une LED" →
+          </a>
+        </div>
+
+        <div class="wizard__tinkercad">
+          <h3>🛠️ Ouvrir le montage Tinkercad</h3>
+          <a
+            href="https://www.tinkercad.com/circuits"
+            class="wizard__lien-tinkercad"
+            target="_blank"
+            rel="noopener"
+          >
+            Lancer Tinkercad Circuits →
+          </a>
+          <p class="wizard__hint">
+            Connecte-toi avec ton compte élève, puis ouvre le montage partagé
+            <strong>parcours-M1-led-simple</strong>.
+          </p>
+        </div>
+
+        <div class="wizard__rappel-papier">
+          <h3>📝 Sur ta fiche papier</h3>
+          <ul>
+            <li>Identifier la chaîne d'information (3 fonctions, pas de capteur)</li>
+            <li>Traduire le pseudo-code en blocs ou en code textuel</li>
+            <li>Cocher les 4 cases de validation</li>
+            <li>Tenter le bonus : faire <em>clignoter</em> la LED (+5 pts)</li>
+          </ul>
+        </div>
+
+        <div class="wizard__validation-rappel">
+          <h3>✅ Validation par le prof</h3>
+          <p>
+            Quand tu as terminé, lève la main pour faire valider M1 par le professeur.
+            Il signera ta carte de progression sur la fiche papier.
+          </p>
+        </div>
+
+      </section>
+
+      <!-- ========== PHASE 2 — M2 · Bouton-poussoir + LED · Praticien ========== -->
+      <section class="wizard__phase" data-phase="2">
+
+        <div class="wizard__phase-header wizard__phase-header--praticien">
+          <span class="wizard__grade-badge wizard__grade-badge--praticien">🟢 Praticien</span>
+          <h2 class="wizard__phase-title">M2 — Bouton-poussoir + LED</h2>
+          <p class="wizard__phase-points">15 pts (+ 10 pts bonus)</p>
+        </div>
+
+        <div class="wizard__cas-concret">
+          <h3>💡 Cas concret</h3>
+          <p>
+            Tu équipes une <strong>sonnette d'entrée</strong>. Quand un visiteur appuie
+            sur le bouton, une LED s'allume à l'intérieur de la maison.
+          </p>
+        </div>
+
+        <div class="wizard__mission">
+          <h3>📋 Mission</h3>
+          <p>La LED s'allume <strong>uniquement quand le bouton est pressé</strong>.</p>
+        </div>
+
+        <div class="wizard__ressource">
+          <h3>📍 Schéma de câblage</h3>
+          <a
+            href="/src/pages/activites/schemas-arduino.html"
+            class="wizard__lien-modal"
+            target="_blank"
+            rel="noopener"
+          >
+            Voir le schéma détaillé "Bouton-poussoir + LED" →
+          </a>
+        </div>
+
+        <div class="wizard__tinkercad">
+          <h3>🛠️ Ouvrir le montage Tinkercad</h3>
+          <a
+            href="https://www.tinkercad.com/circuits"
+            class="wizard__lien-tinkercad"
+            target="_blank"
+            rel="noopener"
+          >
+            Lancer Tinkercad Circuits →
+          </a>
+        </div>
+
+        <div class="wizard__attention">
+          <h3>⚠️ Attention au piège</h3>
+          <p>
+            Avec <code>INPUT_PULLUP</code>, le bouton <strong>pressé renvoie LOW</strong>,
+            et <strong>relâché renvoie HIGH</strong>. C'est l'inverse de ce qu'on imagine !
+          </p>
+        </div>
+
+        <div class="wizard__rappel-papier">
+          <h3>📝 Sur ta fiche papier</h3>
+          <ul>
+            <li>Identifier le capteur (numérique : 0 ou 1)</li>
+            <li>Traduire le pseudo-code avec une structure <code>SI / SINON</code></li>
+            <li>Cocher les 4 cases de validation</li>
+            <li>Tenter les bonus : appui court allume 3s (+5) · second bouton OFF (+5)</li>
+          </ul>
+        </div>
+
+      </section>
+
+      <!-- ========== PHASE 3 — M3 · Capteur PIR · Expert ========== -->
+      <section class="wizard__phase" data-phase="3">
+
+        <div class="wizard__phase-header wizard__phase-header--expert">
+          <span class="wizard__grade-badge wizard__grade-badge--expert">🟡 Expert</span>
+          <h2 class="wizard__phase-title">M3 — Capteur PIR + LED</h2>
+          <p class="wizard__phase-points">25 pts (+ 15 pts bonus)</p>
+        </div>
+
+        <div class="wizard__cas-concret">
+          <h3>💡 Cas concret</h3>
+          <p>
+            Tu installes un <strong>éclairage automatique</strong> dans le couloir.
+            Quand quelqu'un passe, la lumière s'allume seule pendant 5 secondes,
+            puis s'éteint.
+          </p>
+        </div>
+
+        <div class="wizard__mission">
+          <h3>📋 Mission</h3>
+          <p>
+            Détection de mouvement par capteur PIR → LED allumée pendant
+            <strong>5 secondes</strong>, puis extinction automatique.
+          </p>
+        </div>
+
+        <div class="wizard__ressource">
+          <h3>📍 Schéma de câblage</h3>
+          <a
+            href="/src/pages/activites/schemas-arduino.html"
+            class="wizard__lien-modal"
+            target="_blank"
+            rel="noopener"
+          >
+            Voir le schéma détaillé "Capteur de présence PIR + LED" →
+          </a>
+        </div>
+
+        <div class="wizard__tinkercad">
+          <h3>🛠️ Ouvrir le montage Tinkercad</h3>
+          <a
+            href="https://www.tinkercad.com/circuits"
+            class="wizard__lien-tinkercad"
+            target="_blank"
+            rel="noopener"
+          >
+            Lancer Tinkercad Circuits →
+          </a>
+        </div>
+
+        <div class="wizard__concept-cle">
+          <h3>🎓 Concept-clé : <em>delay()</em> vs <em>millis()</em></h3>
+          <p>
+            La version simple utilise <code>delay(5000)</code> qui <strong>bloque</strong>
+            le programme. Pour les Experts ambitieux, le <strong>bonus B1</strong> propose
+            d'utiliser <code>millis()</code> pour une temporisation <strong>non bloquante</strong>.
+          </p>
+        </div>
+
+        <div class="wizard__rappel-papier">
+          <h3>📝 Sur ta fiche papier</h3>
+          <ul>
+            <li>Compléter la chaîne d'information (Acquérir → Traiter → Communiquer)</li>
+            <li>Traduire le pseudo-code avec temporisation</li>
+            <li>Identifier le défaut du code à <code>delay()</code> bloquant</li>
+            <li>Tenter les bonus : version <code>millis()</code> (+10) · ajouter buzzer (+5)</li>
+          </ul>
+        </div>
+
+      </section>
+
+      <!-- ========== PHASE 4 — M4 · Éclairage RGB · Maître ========== -->
+      <section class="wizard__phase" data-phase="4">
+
+        <div class="wizard__phase-header wizard__phase-header--maitre">
+          <span class="wizard__grade-badge wizard__grade-badge--maitre">🔴 Maître</span>
+          <h2 class="wizard__phase-title">M4 — Éclairage adaptatif RGB</h2>
+          <p class="wizard__phase-points">40 pts (+ 25 pts bonus)</p>
+        </div>
+
+        <div class="wizard__cas-concret">
+          <h3>💡 Cas concret</h3>
+          <p>
+            Tu conçois une <strong>veilleuse intelligente</strong> pour une chambre
+            d'enfant. Le jour : éteinte. Crépuscule : <strong>bleu doux</strong>.
+            Nuit profonde : <strong>rouge</strong> très faible (qui ne perturbe pas le sommeil).
+          </p>
+        </div>
+
+        <div class="wizard__mission">
+          <h3>📋 Mission</h3>
+          <p>
+            Une LED RGB change de <strong>couleur</strong> ET d'<strong>intensité</strong>
+            selon la luminosité ambiante mesurée par une photorésistance (LDR).
+          </p>
+        </div>
+
+        <div class="wizard__ressource">
+          <h3>📍 Schéma de câblage</h3>
+          <a
+            href="/src/pages/activites/schemas-arduino.html"
+            class="wizard__lien-modal"
+            target="_blank"
+            rel="noopener"
+          >
+            Voir le schéma détaillé "Éclairage adaptatif (LDR + LED RGB)" →
+          </a>
+        </div>
+
+        <div class="wizard__tinkercad">
+          <h3>🛠️ Ouvrir le montage Tinkercad</h3>
+          <a
+            href="https://www.tinkercad.com/circuits"
+            class="wizard__lien-tinkercad"
+            target="_blank"
+            rel="noopener"
+          >
+            Lancer Tinkercad Circuits →
+          </a>
+        </div>
+
+        <div class="wizard__nouveaux-concepts">
+          <h3>🆕 Nouveaux concepts</h3>
+          <ul>
+            <li><strong>PWM</strong> (<code>analogWrite</code>) : doser un signal de 0 à 255</li>
+            <li><strong>Lecture analogique</strong> (<code>analogRead</code>) : 0 à 1023</li>
+            <li><strong>map()</strong> : convertir une plage en une autre</li>
+            <li><strong>LED RGB</strong> : 3 LEDs (R, G, B) pour créer toutes les couleurs</li>
+          </ul>
+        </div>
+
+        <div class="wizard__rappel-papier">
+          <h3>📝 Sur ta fiche papier</h3>
+          <ul>
+            <li>Traduire le pseudo-code avec <code>SI / SINON SI / SINON</code></li>
+            <li>Compléter le tableau de tests (3 plages de luminosité × 3 couleurs)</li>
+            <li>Cocher les 5 cases de validation</li>
+            <li>Tenter les bonus : <code>map()</code> en continu (+15) · mode manuel (+10)</li>
+          </ul>
+        </div>
+
+      </section>
+
+      <!-- ========== PHASE 5 — M5 · Serrure à digicode · Légende ========== -->
+      <section class="wizard__phase" data-phase="5">
+
+        <div class="wizard__phase-header wizard__phase-header--legende">
+          <span class="wizard__grade-badge wizard__grade-badge--legende">⭐ Légende</span>
+          <h2 class="wizard__phase-title">M5 — Serrure à digicode</h2>
+          <p class="wizard__phase-points">60 pts (+ 40 pts bonus)</p>
+        </div>
+
+        <div class="wizard__cas-concret">
+          <h3>💡 Cas concret</h3>
+          <p>
+            Tu installes un <strong>système de contrôle d'accès domotique</strong> sur
+            un coffre-fort, une porte de cave ou un boîtier de stockage. L'utilisateur
+            saisit un code à 4 chiffres, et un <strong>servomoteur</strong> déverrouille
+            la porte si le code est bon.
+          </p>
+        </div>
+
+        <div class="wizard__mission">
+          <h3>📋 Mission</h3>
+          <p>
+            Système complet de <strong>saisie</strong> (clavier matriciel) +
+            <strong>vérification</strong> (comparaison de chaîne) +
+            <strong>déverrouillage</strong> (servomoteur) avec retour utilisateur (LCD).
+          </p>
+        </div>
+
+        <div class="wizard__ressource">
+          <h3>📍 Schéma de câblage</h3>
+          <a
+            href="/src/pages/activites/schemas-arduino.html"
+            class="wizard__lien-modal"
+            target="_blank"
+            rel="noopener"
+          >
+            Voir le schéma détaillé "Serrure à digicode" →
+          </a>
+        </div>
+
+        <div class="wizard__tinkercad">
+          <h3>🛠️ Ouvrir le montage Tinkercad</h3>
+          <a
+            href="https://www.tinkercad.com/circuits"
+            class="wizard__lien-tinkercad"
+            target="_blank"
+            rel="noopener"
+          >
+            Lancer Tinkercad Circuits →
+          </a>
+        </div>
+
+        <div class="wizard__attention">
+          <h3>⚠️ Concepts avancés mobilisés</h3>
+          <ul>
+            <li><strong>Bibliothèques externes</strong> : <code>Keypad.h</code>, <code>LiquidCrystal_I2C.h</code></li>
+            <li><strong>Stockage de chaînes</strong> : variable de type <code>String</code></li>
+            <li><strong>Comparaison de chaînes</strong> : code attendu vs saisie</li>
+            <li><strong>Servomoteur</strong> : position angulaire en degrés (0° à 180°)</li>
+            <li><strong>Affichage LCD I2C</strong> : <code>lcd.print()</code></li>
+          </ul>
+        </div>
+
+        <div class="wizard__conseil-3e">
+          <h3>🎓 Conseil de structure (3e)</h3>
+          <p>Ce programme est long. <strong>Découpe-le en sous-programmes</strong> :</p>
+          <ul>
+            <li><code>gererTouche(touche)</code> : ajoute le chiffre à la saisie</li>
+            <li><code>verifierCode()</code> : compare et déclenche ouverture/refus</li>
+            <li><code>ouvrirServo()</code> / <code>fermerServo()</code> : actions servomoteur</li>
+          </ul>
+          <p>C'est cette compétence (<strong>CCRI 31</strong>) qui te fait passer Légende.</p>
+        </div>
+
+        <div class="wizard__rappel-papier">
+          <h3>📝 Sur ta fiche papier</h3>
+          <ul>
+            <li>Identifier la chaîne d'information à <strong>4 fonctions</strong></li>
+            <li>Traduire le pseudo-code en programme structuré (sous-programmes)</li>
+            <li>Cocher les 6 cases de validation (clavier · LCD · servo · code OK/KO · effacer · structure)</li>
+            <li>Tenter les bonus : LEDs (+5) · compteur d'erreurs (+15) · changement de code (+20)</li>
+          </ul>
+        </div>
+
+        <div class="wizard__felicitations">
+          <h3>🏆 Tu as atteint le bout du parcours</h3>
+          <p>
+            Si tu as validé M5, demande à ton prof de remplir ton <strong>diplôme</strong>
+            sur la dernière page de la fiche papier. <strong>Légende !</strong>
+          </p>
+        </div>
+
+      </section>
+
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <script type="module" src="/src/js/components.js"></script>
+
+    <!-- Navigation consultatif : moteur minimal sans WizardFirebase -->
+    <script type="module">
+      const nav = document.getElementById('wizardNav');
+      const phases = document.querySelectorAll('.wizard__phase');
+
+      function goToPhase(index) {
+        // Mise à jour des boutons
+        nav.querySelectorAll('.wizard__nav-btn').forEach((btn) => {
+          const active = Number(btn.dataset.phase) === index;
+          btn.classList.toggle('active', active);
+          btn.setAttribute('aria-current', active ? 'true' : 'false');
+        });
+        // Mise à jour des phases
+        phases.forEach((phase) => {
+          phase.classList.toggle('active', Number(phase.dataset.phase) === index);
+        });
+        // Scroll vers le haut du contenu
+        nav.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      nav.addEventListener('click', (e) => {
+        const btn = e.target.closest('.wizard__nav-btn');
+        if (!btn) return;
+        goToPhase(Number(btn.dataset.phase));
+      });
+    </script>
+  </body>
+</html>

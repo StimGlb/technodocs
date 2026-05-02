@@ -1,6 +1,6 @@
 import { defineConfig } from 'vite';
 import { resolve, relative, join } from 'path';
-import { readdirSync, existsSync, mkdirSync, copyFileSync, statSync, rmSync } from 'fs';
+import { readdirSync, existsSync, mkdirSync, copyFileSync, statSync, rmSync, unlinkSync } from 'fs';
 import { dirname } from 'path';
 
 // Plugin : copie les assets non-bundlables vers dist en préservant les chemins src/
@@ -25,15 +25,19 @@ function copyStaticAssets() {
 
   return {
     name: 'copy-static-assets',
-    // buildStart : vide dist/ avant que Rollup commence à écrire
-    buildStart() {
-      const distDir = resolve(__dirname, 'dist');
-      if (existsSync(distDir)) {
-        rmSync(distDir, { recursive: true, force: true, maxRetries: 3, retryDelay: 100 });
-      }
-    },
     // closeBundle : appelé une seule fois après que tous les chunks sont écrits
     closeBundle() {
+      // Nettoie les anciens chunks hachés dans dist/assets/ pour éviter l'accumulation
+      // (emptyOutDir: false contourne l'EPERM Windows sur dist/src verrouillé par l'OS)
+      const assetsDir = resolve(__dirname, 'dist/assets');
+      if (existsSync(assetsDir)) {
+        for (const f of readdirSync(assetsDir)) {
+          // Supprime uniquement les fichiers JS/CSS hachés (format nom-HASH.ext)
+          if (/\.[a-zA-Z0-9]{8,}\.(js|css)$/.test(f)) {
+            try { unlinkSync(join(assetsDir, f)); } catch (_) { /* ignoré */ }
+          }
+        }
+      }
       const copies = [
         // marked.min.js → pages HTML l'accèdent via ../../js/libs/marked.min.js
         {
@@ -117,7 +121,7 @@ export default defineConfig(({ command, mode }) => {
       outDir: 'dist',
       assetsDir: 'assets',
       sourcemap: false,
-      emptyOutDir: false, // dist/ is cleared in copyStaticAssets buildStart hook to avoid Windows EPERM
+      emptyOutDir: false, // dist/src verrouillé sur Windows — nettoyage des assets dans closeBundle
 
       rollupOptions: {
         input: (function collectHtmlInputs() {
