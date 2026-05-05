@@ -7,6 +7,7 @@
  *   - studentName: string
  *   - studentClass: string
  *   - projectDate: string
+ *   - wizard_id: string (optionnel — identifiant du wizard, ex: "programmation-quiz-4e-3e")
  *   - formData: object (toutes les réponses)
  *   - progress: number (0-100)
  *   - completedPhases: array
@@ -32,6 +33,7 @@ export class WizardFirebase {
   constructor(options = {}) {
     // Configuration
     this.collectionName = options.collectionName || "wizard_submissions";
+    this.wizardId = options.wizardId || null;
     // this.autosaveInterval = options.autosaveInterval || 15000; // Supprimé, remplacé par debounce
     this.requiredFields = options.requiredFields || {};
     this.onComplete = options.onComplete || (() => {});
@@ -251,6 +253,7 @@ export class WizardFirebase {
         studentName: this.formData.studentName || "",
         studentClass: this.formData.studentClass || "",
         projectDate: this.formData.projectDate || "",
+        ...(this.wizardId && { wizard_id: this.wizardId }),
         formData: this.formData,
         progress: this.calculateProgress(),
         completedPhases: this.completedPhases,

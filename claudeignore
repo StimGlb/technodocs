@@ -1,0 +1,49 @@
+# .claudeignore — TechnoDocs
+# Fichiers et dossiers exclus du contexte Claude Code
+
+# Secrets & environnement
+.env
+.env.local
+.env.*.local
+.env.production
+
+# Build & dist
+dist/
+.vite/
+.netlify/
+
+# Dépendances
+node_modules/
+
+# Contenu externe (fichiers .md pédagogiques — input externe, ne pas modifier)
+src/content/md/
+
+# Libs tierces locales (binaires JS minifiés — inutile dans le contexte)
+src/js/libs/
+
+# Assets binaires
+src/assets/
+src/images/
+public/images/
+
+# Scripts d'administration / export (hors périmètre session)
+scripts/export-firestore.js
+scripts/autofill-wizard-firestore.js
+scripts/backup-repo.sh
+
+# Données graphiques JSON (volumineuses, hors périmètre wizard)
+src/data/graphiques/
+
+# Documentation technique (lecture seule — ne pas modifier)
+docs/
+
+# Git
+.git/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*

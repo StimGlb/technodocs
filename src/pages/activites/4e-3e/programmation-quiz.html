@@ -1,0 +1,736 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Quiz Programmation 4e/3e — Algorithme, variables, structures de contrôle — TechnoDocs"
+    />
+    <title>Quiz Programmation | TechnoDocs</title>
+
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="header-placeholder"></div>
+
+    <main class="wizard wizard--quiz">
+
+      <!-- ═══ BANNIÈRE ═══════════════════════════════════════════════════════ -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">💻</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">Quiz — Programmation</h1>
+          <div class="wizard__banner-skills">
+            <span class="wizard__skill">SFC 31</span>
+            <span class="wizard__skill">CCRI 31</span>
+            <span class="wizard__skill">4e · 3e</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ INFO ÉLÈVE ═════════════════════════════════════════════════════ -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="student-name">Prénom et Nom</label>
+            <input
+              type="text"
+              id="student-name"
+              data-field="student-name"
+              placeholder="Ex : Marie Dupont"
+              spellcheck="true"
+              lang="fr"
+              autocomplete="name"
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="student-class">Classe</label>
+            <select id="student-class" data-field="student-class">
+              <option value="">— Sélectionner —</option>
+              <optgroup label="4ème">
+                <option value="401">4ème 1</option>
+                <option value="402">4ème 2</option>
+                <option value="403">4ème 3</option>
+                <option value="404">4ème 4</option>
+                <option value="405">4ème 5</option>
+              </optgroup>
+              <optgroup label="3ème">
+                <option value="302">3ème 2</option>
+                <option value="303">3ème 3</option>
+                <option value="304">3ème 4</option>
+                <option value="305">3ème 5</option>
+                <option value="306">3ème 6</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PROGRESSION (8 points) ════════════════════════════════════════ -->
+      <div
+        class="wizard__quiz-progress"
+        role="progressbar"
+        aria-label="Progression du quiz"
+        aria-valuemin="0"
+        aria-valuemax="8"
+      >
+        <span class="wizard__quiz-step" data-step="1" aria-label="Question 1"></span>
+        <span class="wizard__quiz-step" data-step="2" aria-label="Question 2"></span>
+        <span class="wizard__quiz-step" data-step="3" aria-label="Question 3"></span>
+        <span class="wizard__quiz-step" data-step="4" aria-label="Question 4"></span>
+        <span class="wizard__quiz-step" data-step="5" aria-label="Question 5"></span>
+        <span class="wizard__quiz-step" data-step="6" aria-label="Question 6"></span>
+        <span class="wizard__quiz-step" data-step="7" aria-label="Question 7"></span>
+        <span class="wizard__quiz-step" data-step="8" aria-label="Question 8"></span>
+      </div>
+
+      <!-- ═══ PHASES ═════════════════════════════════════════════════════════ -->
+      <div class="wizard__container">
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 1 — Accueil                  ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">📋</div>
+            <h2 class="wizard__phase-title">Bienvenue dans le Quiz Programmation</h2>
+            <p class="wizard__phase-subtitle">
+              Teste tes connaissances sur les algorithmes, les variables et les structures de contrôle.
+            </p>
+          </div>
+
+          <div class="wizard__quiz-intro">
+            <ul>
+              <li>8 questions à choix unique (1 bonne réponse parmi 4)</li>
+              <li>Un feedback immédiat après chaque validation</li>
+              <li>Pas de retour en arrière une fois la réponse validée</li>
+              <li>Ton score est sauvegardé automatiquement à la fin</li>
+            </ul>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button id="quiz-start-btn" class="btn btn--primary" type="button">
+              Commencer le quiz →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 2 — Q1 : Définition           ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="2">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">💻</div>
+            <h2 class="wizard__phase-title">
+              Question 1
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Algorithme &amp; variables</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Qu'est-ce qu'un <strong>algorithme</strong> ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q1">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Un langage de programmation utilisé sur les ordinateurs</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Une suite d'instructions ordonnées qui permet de résoudre un problème</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Un robot qui exécute automatiquement des tâches</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Une variable qui contient plusieurs valeurs</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q1"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q1">
+            <p class="wizard__feedback-correct">
+              ✅ Bien ! Un algorithme se rédige d'abord en langage naturel, avant d'être traduit en programme.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Un algorithme est une <strong>suite d'instructions ordonnées</strong> qui résout un problème.
+              Il se rédige d'abord en langage naturel avant d'être traduit dans un langage de programmation (Scratch, Python…).
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="3" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 3 — Q2 : Variables et types  ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="3">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">💻</div>
+            <h2 class="wizard__phase-title">
+              Question 2
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Algorithme &amp; variables</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Tu programmes un robot qui mesure une température. Tu écris :
+              <code>temperature ← 22</code>.
+              Quel est le <strong>type</strong> de la variable <code>temperature</code> ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q2">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Nombre</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Mot (chaîne de caractères)</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Booléen</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Liste</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q2"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q2">
+            <p class="wizard__feedback-correct">
+              ✅ Exact ! 22 est une valeur numérique, donc le type est <em>nombre</em>.
+              Une variable a toujours un nom, une valeur et un type.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ La valeur 22 est un nombre, donc le type est <strong>nombre</strong>.
+              Les trois types vus en techno sont : nombre, mot (chaîne de caractères) et booléen (vrai/faux).
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="4" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 4 — Q3 : Conditionnelle       ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="4">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">💻</div>
+            <h2 class="wizard__phase-title">
+              Question 3
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Instruction conditionnelle</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Que va afficher ce programme si la variable <code>temperature</code> vaut <strong>28</strong> ?
+            </p>
+            <pre class="wizard__codeblock"><code>SI temperature &gt; 30 ALORS
+    afficher "Il fait chaud"
+SINON
+    afficher "Température normale"
+FIN SI</code></pre>
+          </div>
+
+          <div class="wizard__options" data-question="q3">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Il fait chaud</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Température normale</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Rien, le programme s'arrête</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Les deux messages à la suite</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q3"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q3">
+            <p class="wizard__feedback-correct">
+              ✅ Bravo ! La condition <code>28 &gt; 30</code> est fausse, donc on exécute le bloc SINON.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ La condition <code>temperature &gt; 30</code> vaut <strong>FAUX</strong> quand la température est 28.
+              Quand la condition est fausse, c'est le bloc <strong>SINON</strong> qui s'exécute → « Température normale ».
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="5" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 5 — Q4 : Opérateurs logiques ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="5">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">💻</div>
+            <h2 class="wizard__phase-title">
+              Question 4
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Instruction conditionnelle</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Tu veux qu'une alarme se déclenche <strong>uniquement</strong> si la porte est ouverte
+              <strong>ET</strong> s'il fait nuit. Quel opérateur logique utiliser ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q4">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">OU</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">ET</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">NON</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">SI</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q4"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q4">
+            <p class="wizard__feedback-correct">
+              ✅ Parfait ! L'opérateur <strong>ET</strong> impose que les deux conditions soient vraies
+              en même temps pour déclencher l'action.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Pour que <strong>deux conditions doivent être vraies en même temps</strong>,
+              on utilise l'opérateur <strong>ET</strong>.
+              Avec <strong>OU</strong>, l'alarme se déclencherait dès qu'une seule des deux conditions est vraie.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="6" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 6 — Q5 : Choisir la boucle   ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="6">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">💻</div>
+            <h2 class="wizard__phase-title">
+              Question 5
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Instructions itératives</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Tu programmes une LED qui doit clignoter <strong>exactement 10 fois</strong>
+              au démarrage du système. Quelle structure utiliser ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q5">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">SI … ALORS … SINON</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">TANT QUE … FAIRE</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">RÉPÉTER 10 fois</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">POUR chaque élément</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q5"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q5">
+            <p class="wizard__feedback-correct">
+              ✅ Bien vu ! Quand on connaît à l'avance le nombre de répétitions, on utilise <em>RÉPÉTER n fois</em>.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Quand le <strong>nombre de répétitions est connu à l'avance</strong> (ici 10),
+              on utilise <strong>RÉPÉTER n fois</strong>.
+              <em>TANT QUE</em> sert quand on répète tant qu'une condition reste vraie (sans savoir combien de fois).
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="7" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 7 — Q6 : Boucle infinie       ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="7">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">💻</div>
+            <h2 class="wizard__phase-title">
+              Question 6
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Instructions itératives</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Tu écris une boucle <code>TANT QUE</code> mais tu oublies de mettre à jour
+              la variable testée. Que se passe-t-il ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q6">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Le programme affiche un message d'erreur et s'arrête</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Le programme saute la boucle et continue</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Le programme tourne indéfiniment et bloque le système (boucle infinie)</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Le programme s'exécute exactement une fois</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q6"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q6">
+            <p class="wizard__feedback-correct">
+              ✅ Exactement ! Si la condition d'une boucle TANT QUE ne devient jamais fausse,
+              le programme ne sort jamais de la boucle. C'est le piège classique à éviter.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Si la condition de la boucle TANT QUE ne peut jamais devenir fausse,
+              on a une <strong>boucle infinie</strong> : le programme tourne sans fin et bloque le système.
+              Il faut toujours vérifier que la condition peut devenir fausse.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="8" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 8 — Q7 : Blocs ↔ textuel     ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="8">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">💻</div>
+            <h2 class="wizard__phase-title">
+              Question 7
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Blocs ↔ textuel</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Dans mBlock (programmation par blocs), tu as utilisé le bloc
+              <em>« mettre [vitesse] à [50] »</em>.
+              Comment écrit-on la même instruction en <strong>Python</strong> (programmation textuelle) ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q7">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text"><code>vitesse → 50</code></span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text"><code>set vitesse 50</code></span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text"><code>vitesse = 50</code></span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text"><code>mettre vitesse à 50</code></span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q7"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q7">
+            <p class="wizard__feedback-correct">
+              ✅ Bravo ! Le bloc <em>mettre … à …</em> correspond à une <strong>affectation</strong>,
+              qui s'écrit avec le signe <code>=</code> en Python.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ En Python, l'affectation s'écrit avec le signe <strong><code>=</code></strong> : <code>vitesse = 50</code>.
+              Les structures algorithmiques sont les mêmes en blocs et en textuel, seule l'écriture change.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="9" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 9 — Q8 : Erreurs Python       ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="9">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">💻</div>
+            <h2 class="wizard__phase-title">
+              Question 8
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Blocs ↔ textuel</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              En Python, tu lances ton programme et tu obtiens un message d'erreur.
+              Quelle est la bonne attitude ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q8">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Je supprime tout et je recommence à zéro</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Je relance le programme plusieurs fois, ça finira par marcher</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Je lis le message d'erreur pour identifier la ligne et le type de problème</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Je ne fais rien, c'est forcément l'ordinateur qui a un bug</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q8"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q8">
+            <p class="wizard__feedback-correct">
+              ✅ Excellent ! L'analyse des messages d'erreur fait partie des compétences attendues en fin de 3e.
+              Le message indique souvent la ligne et le type d'erreur (syntaxe, indentation…).
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ En programmation textuelle, <strong>il faut lire le message d'erreur</strong> :
+              il indique la ligne concernée et le type de problème
+              (oubli de <code>:</code>, mauvaise indentation, nom de variable mal écrit…).
+              C'est une compétence attendue en fin de 3e.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="10" hidden>
+              Voir mon bilan →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 10 — Bilan                   ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="10">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🏁</div>
+            <h2 class="wizard__phase-title">Bilan du quiz</h2>
+            <p class="wizard__phase-subtitle">Quiz Programmation 4e/3e</p>
+          </div>
+
+          <div class="wizard__score">
+            <div class="wizard__score-number">
+              <span id="quiz-score">—</span>
+              <span class="wizard__score-denom">/ 8</span>
+            </div>
+            <p class="wizard__score-label">Score final</p>
+            <p class="wizard__score-message" id="quiz-message"></p>
+          </div>
+
+          <!-- Avertissement pénalité 2e tentative (masqué par défaut) -->
+          <div id="quiz-penalty-notice" class="wizard__tips" hidden>
+            <p class="wizard__tips-title">⚠️ Deuxième tentative</p>
+            <div class="wizard__tips-content">
+              <p>
+                C'était ta <strong>2e tentative</strong> : ton score retenu est
+                <strong><span id="quiz-saved-score">—</span> / 8</strong>
+                (coefficient 0,5 appliqué).
+              </p>
+              <p>Tu ne pourras plus refaire ce quiz sur cet appareil.</p>
+            </div>
+          </div>
+
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">📚 Ressource pédagogique</p>
+            <div class="wizard__tips-content">
+              <p>
+                Inspiré de la fiche Programmation de l'Académie de Toulouse (CC BY-NC-SA).
+                Compétences : SFC 31 · CCRI 31 — BO 2024.
+              </p>
+            </div>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button id="quiz-restart-btn" class="btn btn--secondary" type="button">
+              🔄 Recommencer
+            </button>
+          </div>
+        </section>
+
+      </div><!-- /.wizard__container -->
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Toast -->
+    <div class="wizard__toast" id="wizardToast" role="status" aria-live="polite">
+      <span class="wizard__toast-icon"></span>
+      <span class="wizard__toast-message"></span>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="/src/js/components.js"></script>
+    <script type="module" src="/src/js/activites/programmation-quiz.js"></script>
+  </body>
+</html>

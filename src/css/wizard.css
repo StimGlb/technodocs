@@ -1443,3 +1443,281 @@
 .wizard--light .wizard__tip li {
   color: #2d3748;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   Quiz QCM — classes spécifiques aux wizards de type quiz
+   ───────────────────────────────────────────────────────────── */
+
+/* Indicateur de progression par points */
+.wizard__quiz-progress {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) 0 var(--space-4);
+}
+
+.wizard__quiz-step {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: var(--radius-full);
+  background: var(--color-gray-300);
+  transition: background 0.25s, transform 0.25s;
+  flex-shrink: 0;
+}
+
+.wizard__quiz-step--done {
+  background: var(--color-success);
+}
+
+.wizard__quiz-step--current {
+  background: var(--color-primary);
+  transform: scale(1.5);
+}
+
+/* Compteur de question dans le titre de phase */
+.wizard__phase-counter {
+  font-size: var(--text-sm);
+  font-weight: 400;
+  color: var(--color-gray-500);
+  margin-left: var(--space-2);
+}
+
+/* Bloc de pseudo-code (Q3 etc.) */
+.wizard__codeblock {
+  background: var(--color-gray-50);
+  color: var(--color-gray-900);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  font-family: 'Courier New', Courier, monospace;
+  font-size: var(--text-sm);
+  line-height: 1.7;
+  overflow-x: auto;
+  white-space: pre;
+  margin: var(--space-3) 0 var(--space-4);
+  border-left: 3px solid var(--color-primary);
+}
+
+.wizard__codeblock code {
+  font-family: inherit;
+  font-size: inherit;
+  background: none;
+  padding: 0;
+}
+
+/* Options QCM */
+.wizard__options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 var(--space-4);
+}
+
+.wizard__option {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border: 2px solid var(--color-gray-200);
+  border-radius: var(--radius-md);
+  background: var(--color-gray-100);
+  color: var(--color-gray-900);
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--text-base);
+  font-family: var(--font-main);
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.wizard__option:hover:not(:disabled) {
+  border-color: var(--color-primary);
+  background: var(--color-gray-200);
+}
+
+.wizard__option:disabled {
+  cursor: default;
+}
+
+.wizard__option--selected {
+  border-color: var(--color-primary);
+  background: var(--color-gray-200);
+}
+
+.wizard__option--correct {
+  border-color: var(--color-success) !important;
+  background: rgba(52, 211, 153, 0.1) !important;
+}
+
+.wizard__option--incorrect {
+  border-color: var(--color-error) !important;
+  background: rgba(248, 113, 113, 0.1) !important;
+}
+
+.wizard__option-letter {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-full);
+  background: var(--color-gray-200);
+  color: var(--color-gray-700);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+}
+
+.wizard__option--selected .wizard__option-letter {
+  background: var(--color-primary);
+  color: var(--color-gray-50);
+}
+
+.wizard__option--correct .wizard__option-letter {
+  background: var(--color-success);
+  color: var(--color-gray-50);
+}
+
+.wizard__option--incorrect .wizard__option-letter {
+  background: var(--color-error);
+  color: var(--color-gray-50);
+}
+
+.wizard__option-text {
+  line-height: 1.5;
+}
+
+.wizard__option-text code {
+  background: var(--color-gray-200);
+  border-radius: var(--radius-sm);
+  padding: 0.1em 0.4em;
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 0.9em;
+}
+
+/* Bouton Valider */
+.wizard__validate-btn {
+  display: block;
+  width: 100%;
+  margin-top: var(--space-2);
+}
+
+/* Feedback immédiat */
+.wizard__feedback {
+  display: none;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  margin: var(--space-4) 0 var(--space-2);
+  font-size: var(--text-sm);
+  line-height: 1.6;
+}
+
+.wizard__feedback--visible {
+  display: block;
+}
+
+.wizard__feedback--correct {
+  background: rgba(52, 211, 153, 0.12);
+  border-left: 4px solid var(--color-success);
+}
+
+.wizard__feedback--incorrect {
+  background: rgba(248, 113, 113, 0.12);
+  border-left: 4px solid var(--color-error);
+}
+
+/* Afficher seulement le bon paragraphe selon le résultat */
+.wizard__feedback-correct,
+.wizard__feedback-incorrect {
+  display: none;
+  margin: 0;
+}
+
+.wizard__feedback--correct .wizard__feedback-correct {
+  display: block;
+}
+
+.wizard__feedback--incorrect .wizard__feedback-incorrect {
+  display: block;
+}
+
+/* Bilan final */
+.wizard__score {
+  text-align: center;
+  padding: var(--space-8) var(--space-4);
+}
+
+.wizard__score-number {
+  font-family: var(--font-display);
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  line-height: 1;
+}
+
+.wizard__score-denom {
+  font-size: var(--text-2xl);
+  color: var(--color-gray-500);
+}
+
+.wizard__score-label {
+  font-size: var(--text-lg);
+  color: var(--color-gray-700);
+  margin-top: var(--space-2);
+}
+
+.wizard__score-message {
+  margin-top: var(--space-6);
+  font-size: var(--text-base);
+  font-weight: 500;
+  padding: var(--space-4);
+  border-radius: var(--radius-md);
+  background: var(--color-gray-200);
+  color: var(--color-gray-900);
+}
+
+/* Compacité verticale pour la mise en page quiz
+   (réduit la distance bannière → card question) */
+.wizard--quiz .wizard__banner {
+  padding: var(--space-4) var(--space-6);
+  margin-bottom: var(--space-3);
+}
+
+.wizard--quiz .wizard__student-info {
+  margin-bottom: var(--space-3);
+}
+
+.wizard--quiz .wizard__quiz-progress {
+  padding: var(--space-2) 0 var(--space-3);
+}
+
+/* Bloc intro accueil quiz */
+.wizard__quiz-intro {
+  background: var(--color-gray-200);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  margin: var(--space-4) 0;
+}
+
+.wizard__quiz-intro ul {
+  margin: var(--space-2) 0 0 var(--space-4);
+  color: var(--color-gray-700);
+  line-height: 1.7;
+}
+
+/* Responsive quiz */
+@media (max-width: 600px) {
+  .wizard__option {
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-sm);
+  }
+
+  .wizard__codeblock {
+    font-size: 0.8rem;
+    padding: var(--space-3);
+  }
+
+  .wizard__score-number {
+    font-size: 4rem;
+  }
+}
