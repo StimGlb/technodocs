@@ -3,7 +3,20 @@
    Complète style.css, ne remplace aucune règle globale.
    ================================================ */
 
-/* Rangée principale : boutons niveaux */
+/* hero__actions en colonne pour empiler les trois rangées */
+.hero__actions {
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+/* Rangée 1 : quiz + ressources + artemis */
+.hero__quizzes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+/* Rangée 2 : navigation par niveau */
 .hero__niveaux {
   display: flex;
   flex-wrap: wrap;
@@ -18,12 +31,12 @@
   letter-spacing: 0.02em;
 }
 
-/* Rangée secondaire : Ressources + Artemis */
-.hero__secondary-actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-3);
-  margin-top: var(--space-2);
+/* Modificateur — niveaux en version réduite (deuxième ligne) */
+.hero__niveaux--sm .btn--niveau {
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-base);
+  font-weight: 600;
+  letter-spacing: 0;
 }
 
 /* Modificateur taille — boutons secondaires plus petits */
@@ -72,10 +85,10 @@
   white-space: nowrap;
 }
 
-/* Mobile : empiler les deux rangées en pleine largeur */
+/* Mobile : empiler les rangées en pleine largeur */
 @media (max-width: 640px) {
   .hero__niveaux,
-  .hero__secondary-actions {
+  .hero__quizzes {
     flex-direction: column;
     align-items: stretch;
   }
