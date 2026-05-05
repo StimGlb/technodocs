@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Quiz Intelligence Artificielle 4e/3e — Apprentissage machine, biais, impacts, prompt ACTIF — TechnoDocs"
+    />
+    <title>Quiz IA | TechnoDocs</title>
+
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="header-placeholder"></div>
+
+    <main class="wizard wizard--quiz">
+
+      <!-- ═══ BANNIÈRE ═══════════════════════════════════════════════════════ -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">🤖</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">Quiz — Intelligence Artificielle</h1>
+          <div class="wizard__banner-skills">
+            <span class="wizard__skill">OST 11</span>
+            <span class="wizard__skill">OST 12</span>
+            <span class="wizard__skill">4e · 3e</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ INFO ÉLÈVE ═════════════════════════════════════════════════════ -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="student-name">Prénom et Nom</label>
+            <input
+              type="text"
+              id="student-name"
+              data-field="student-name"
+              placeholder="Ex : Marie Dupont"
+              spellcheck="true"
+              lang="fr"
+              autocomplete="name"
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="student-class">Classe</label>
+            <select id="student-class" data-field="student-class">
+              <option value="">— Sélectionner —</option>
+              <optgroup label="4ème">
+                <option value="401">4ème 1</option>
+                <option value="402">4ème 2</option>
+                <option value="403">4ème 3</option>
+                <option value="404">4ème 4</option>
+                <option value="405">4ème 5</option>
+              </optgroup>
+              <optgroup label="3ème">
+                <option value="302">3ème 2</option>
+                <option value="303">3ème 3</option>
+                <option value="304">3ème 4</option>
+                <option value="305">3ème 5</option>
+                <option value="306">3ème 6</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PROGRESSION (8 points) ════════════════════════════════════════ -->
+      <div
+        class="wizard__quiz-progress"
+        role="progressbar"
+        aria-label="Progression du quiz"
+        aria-valuemin="0"
+        aria-valuemax="8"
+      >
+        <span class="wizard__quiz-step" data-step="1" aria-label="Question 1"></span>
+        <span class="wizard__quiz-step" data-step="2" aria-label="Question 2"></span>
+        <span class="wizard__quiz-step" data-step="3" aria-label="Question 3"></span>
+        <span class="wizard__quiz-step" data-step="4" aria-label="Question 4"></span>
+        <span class="wizard__quiz-step" data-step="5" aria-label="Question 5"></span>
+        <span class="wizard__quiz-step" data-step="6" aria-label="Question 6"></span>
+        <span class="wizard__quiz-step" data-step="7" aria-label="Question 7"></span>
+        <span class="wizard__quiz-step" data-step="8" aria-label="Question 8"></span>
+      </div>
+
+      <!-- ═══ PHASES ═════════════════════════════════════════════════════════ -->
+      <div class="wizard__container">
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 1 — Accueil                  ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">📋</div>
+            <h2 class="wizard__phase-title">Bienvenue dans le Quiz IA</h2>
+            <p class="wizard__phase-subtitle">
+              Teste tes connaissances sur l'intelligence artificielle : apprentissage machine,
+              biais, impacts sociétaux et rédaction de prompts.
+            </p>
+          </div>
+
+          <div class="wizard__quiz-intro">
+            <ul>
+              <li>8 questions à choix unique (1 bonne réponse parmi 4)</li>
+              <li>Un feedback immédiat après chaque validation</li>
+              <li>Pas de retour en arrière une fois la réponse validée</li>
+              <li>Ton score est sauvegardé automatiquement à la fin</li>
+            </ul>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button id="quiz-start-btn" class="btn btn--primary" type="button">
+              Commencer le quiz →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 2 — Q1 : Définition IA        ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="2">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🤖</div>
+            <h2 class="wizard__phase-title">
+              Question 1
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Définition de l'IA</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Qu'est-ce que l'<strong>intelligence artificielle</strong> (IA) ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q1">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Un robot humanoïde capable d'éprouver des émotions</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Une technologie qui permet aux machines d'imiter certaines capacités humaines</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Un programme qui remplace totalement le cerveau humain</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Un site internet qui répond à toutes les questions</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q1"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q1">
+            <p class="wizard__feedback-correct">
+              ✅ Bien ! L'IA imite certaines capacités humaines (reconnaître, comprendre, analyser),
+              mais elle ne <em>pense</em> pas comme nous.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ L'IA est une technologie qui permet aux machines d'imiter certaines capacités humaines
+              (reconnaissance d'images, compréhension de texte, analyse de situations).
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="3" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 3 — Q2 : Apprentissage        ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="3">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🤖</div>
+            <h2 class="wizard__phase-title">
+              Question 2
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Processus d'apprentissage</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Pour apprendre à reconnaître un chat, que faut-il fournir à une IA ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q2">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Un dictionnaire avec la définition du mot « chat »</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Un seul exemple parfait de chat</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Un grand nombre de données (images de chats variées)</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Un programme qui décrit physiquement un chat</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q2"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q2">
+            <p class="wizard__feedback-correct">
+              ✅ Exact ! L'IA apprend par l'exemple : on lui montre beaucoup de données
+              (photos de chats) et elle construit elle-même les règles de reconnaissance.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ L'IA n'apprend pas avec des définitions ou des descriptions. Elle a besoin d'un
+              <strong>grand nombre de données d'exemple</strong> pour construire la classe « chat ».
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="4" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 4 — Q3 : Étapes de l'IA       ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="4">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🤖</div>
+            <h2 class="wizard__phase-title">
+              Question 3
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Étapes de fonctionnement</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Dans le fonctionnement d'une IA, quelle est la bonne séquence ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q3">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Exploitation → Apprentissage → Données</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Données → Apprentissage → Exploitation</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Apprentissage → Données → Exploitation</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Données → Exploitation → Apprentissage</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q3"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q3">
+            <p class="wizard__feedback-correct">
+              ✅ Bravo ! L'IA fonctionne en deux temps : d'abord elle apprend à partir des données,
+              ensuite elle exploite ce qu'elle a appris pour traiter de nouvelles données.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ La séquence correcte est <strong>Données → Apprentissage → Exploitation</strong>.
+              L'IA a d'abord besoin de données pour apprendre, puis elle peut exploiter cet apprentissage.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="5" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 5 — Q4 : Le biais             ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="5">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🤖</div>
+            <h2 class="wizard__phase-title">
+              Question 4
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Biais algorithmique</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Pourquoi une IA peut-elle être « biaisée » ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q4">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Parce qu'elle est mal codée par des programmeurs</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Parce qu'elle tombe en panne trop souvent</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Parce que les données sur lesquelles elle a appris ne sont pas représentatives</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Parce qu'elle consomme trop d'électricité</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q4"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q4">
+            <p class="wizard__feedback-correct">
+              ✅ Excellent ! Le biais vient des données d'apprentissage : si elles sont déséquilibrées,
+              l'IA reproduira ce déséquilibre dans ses réponses.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Le biais d'une IA vient de ses <strong>données d'apprentissage</strong>. Si les données
+              sont déséquilibrées ou stéréotypées, l'IA va reproduire ces déséquilibres dans ses réponses.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="6" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 6 — Q5 : Impacts environnement ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="6">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🤖</div>
+            <h2 class="wizard__phase-title">
+              Question 5
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Impacts environnementaux</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Quel est un impact environnemental majeur des grandes IA ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q5">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Elles polluent les océans avec du plastique</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Elles consomment énormément d'énergie et d'eau pour refroidir les calculateurs</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Elles font fondre les glaciers directement</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Elles n'ont aucun impact sur l'environnement</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q5"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q5">
+            <p class="wizard__feedback-correct">
+              ✅ Bien vu ! Les grandes IA tournent dans d'immenses centres de données qui consomment
+              beaucoup d'électricité et nécessitent des quantités importantes d'eau pour refroidir
+              les serveurs.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Les grandes IA ont un fort impact énergétique : elles tournent dans des centres de
+              données qui consomment beaucoup d'<strong>électricité</strong> et utilisent de grandes
+              quantités d'<strong>eau</strong> pour le refroidissement des calculateurs.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="7" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 7 — Q6 : Hallucinations       ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="7">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🤖</div>
+            <h2 class="wizard__phase-title">
+              Question 6
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Hallucinations de l'IA</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Qu'est-ce qu'une « hallucination » d'une IA ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q6">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">L'IA voit des images qui n'existent pas</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">L'IA refuse de répondre à une question</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">L'IA invente une réponse fausse en la présentant comme vraie</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">L'IA tombe en panne et redémarre</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q6"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q6">
+            <p class="wizard__feedback-correct">
+              ✅ Exactement ! Une IA est programmée pour donner une réponse, même si elle n'a pas la
+              bonne information. Elle peut alors générer des informations fausses qu'elle présente
+              avec assurance.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Une hallucination, c'est quand l'IA <strong>invente une réponse fausse</strong> et la
+              présente comme vraie. Comme elle est programmée pour répondre, elle peut générer du
+              contenu qui semble crédible mais qui est faux.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="8" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 8 — Q7 : Méthode ACTIF        ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="8">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🤖</div>
+            <h2 class="wizard__phase-title">
+              Question 7
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">L'art du prompt — méthode ACTIF</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Que signifie la lettre <strong>A</strong> dans la méthode ACTIF pour rédiger un bon prompt ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q7">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Affichage</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Action</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Algorithme</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Application</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q7"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q7">
+            <p class="wizard__feedback-correct">
+              ✅ Parfait ! Le <strong>A</strong> d'ACTIF, c'est l'<strong>Action</strong> : on commence
+              par dire à l'IA <em>ce qu'elle doit faire</em> (rédige, dessine, propose, illustre…).
+              ACTIF = <strong>A</strong>ction · <strong>C</strong>ontexte · <strong>T</strong>onalité ·
+              <strong>I</strong>dentité · <strong>F</strong>ormat.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Le <strong>A</strong> d'ACTIF correspond à <strong>Action</strong>. Un bon prompt commence
+              par un verbe d'action clair : « Rédige… », « Propose… », « Illustre… ».
+              ACTIF = <strong>A</strong>ction · <strong>C</strong>ontexte · <strong>T</strong>onalité ·
+              <strong>I</strong>dentité · <strong>F</strong>ormat.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="9" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 9 — Q8 : Esprit critique       ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="9">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🤖</div>
+            <h2 class="wizard__phase-title">
+              Question 8
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Esprit critique face à l'IA</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Tu utilises une IA pour préparer un exposé. Quelle est la bonne attitude ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q8">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Je copie-colle directement la réponse de l'IA dans mon exposé</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Je fais entièrement confiance à l'IA, elle ne se trompe jamais</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Je vérifie les informations avec d'autres sources et je reformule avec mes mots</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Je n'utilise jamais l'IA, c'est interdit</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q8"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q8">
+            <p class="wizard__feedback-correct">
+              ✅ Bravo ! L'IA est un outil utile, mais elle peut faire des erreurs (hallucinations, biais).
+              Il faut toujours vérifier ses réponses et se les approprier en les reformulant.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ L'IA est un <strong>outil</strong>, pas une réponse définitive. Il faut toujours
+              <strong>vérifier</strong> ses informations avec d'autres sources et
+              <strong>reformuler avec tes propres mots</strong> pour vraiment apprendre.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="10" hidden>
+              Voir mon bilan →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 10 — Bilan                   ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="10">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🏁</div>
+            <h2 class="wizard__phase-title">Bilan du quiz</h2>
+            <p class="wizard__phase-subtitle">Quiz IA 4e/3e</p>
+          </div>
+
+          <div class="wizard__score">
+            <div class="wizard__score-number">
+              <span id="quiz-score">—</span>
+              <span class="wizard__score-denom">/ 8</span>
+            </div>
+            <p class="wizard__score-label">Score final</p>
+            <p class="wizard__score-message" id="quiz-message"></p>
+          </div>
+
+          <!-- Avertissement pénalité 2e tentative (masqué par défaut) -->
+          <div id="quiz-penalty-notice" class="wizard__tips" hidden>
+            <p class="wizard__tips-title">⚠️ Deuxième tentative</p>
+            <div class="wizard__tips-content">
+              <p>
+                C'était ta <strong>2e tentative</strong> : ton score retenu est
+                <strong><span id="quiz-saved-score">—</span> / 8</strong>
+                (coefficient 0,5 appliqué).
+              </p>
+              <p>Tu ne pourras plus refaire ce quiz sur cet appareil.</p>
+            </div>
+          </div>
+
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">📚 Ressource pédagogique</p>
+            <div class="wizard__tips-content">
+              <p>
+                Inspiré de la fiche IA de l'Académie de Toulouse (CC BY-NC-SA).
+                Compétences : OST 11 · OST 12 — BO 2024.
+              </p>
+            </div>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button id="quiz-restart-btn" class="btn btn--secondary" type="button">
+              🔄 Recommencer
+            </button>
+          </div>
+        </section>
+
+      </div><!-- /.wizard__container -->
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Toast -->
+    <div class="wizard__toast" id="wizardToast" role="status" aria-live="polite">
+      <span class="wizard__toast-icon"></span>
+      <span class="wizard__toast-message"></span>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="/src/js/components.js"></script>
+    <script type="module" src="/src/js/activites/ia-quiz.js"></script>
+  </body>
+</html>
