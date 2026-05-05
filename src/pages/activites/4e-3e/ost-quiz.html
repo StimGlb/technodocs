@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Quiz Objets et Systèmes Techniques 5e/4e/3e — Objet technique, évolution, famille, lignée, diagramme pieuvre — TechnoDocs"
+    />
+    <title>Quiz OST | TechnoDocs</title>
+
+    <link rel="stylesheet" href="/src/css/style.css" />
+    <link rel="stylesheet" href="/src/css/wizard.css" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div id="header-placeholder"></div>
+
+    <main class="wizard wizard--quiz">
+
+      <!-- ═══ BANNIÈRE ═══════════════════════════════════════════════════════ -->
+      <div class="wizard__banner">
+        <div class="wizard__banner-icon">⚙️</div>
+        <div class="wizard__banner-content">
+          <h1 class="wizard__banner-title">Quiz — Objets et Systèmes Techniques</h1>
+          <div class="wizard__banner-skills">
+            <span class="wizard__skill">OST 11</span>
+            <span class="wizard__skill">OST 21</span>
+            <span class="wizard__skill">5e · 4e · 3e</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ INFO ÉLÈVE ═════════════════════════════════════════════════════ -->
+      <div class="wizard__student-info">
+        <div class="wizard__student-row">
+          <div class="wizard__student-field wizard__student-field--name">
+            <label for="student-name">Prénom et Nom</label>
+            <input
+              type="text"
+              id="student-name"
+              data-field="student-name"
+              placeholder="Ex : Marie Dupont"
+              spellcheck="true"
+              lang="fr"
+              autocomplete="name"
+            />
+          </div>
+          <div class="wizard__student-field wizard__student-field--class">
+            <label for="student-class">Classe</label>
+            <select id="student-class" data-field="student-class">
+              <option value="">— Sélectionner —</option>
+              <optgroup label="5ème">
+                <option value="501">5ème 1</option>
+                <option value="502">5ème 2</option>
+                <option value="503">5ème 3</option>
+                <option value="504">5ème 4</option>
+                <option value="505">5ème 5</option>
+              </optgroup>
+              <optgroup label="4ème">
+                <option value="401">4ème 1</option>
+                <option value="402">4ème 2</option>
+                <option value="403">4ème 3</option>
+                <option value="404">4ème 4</option>
+                <option value="405">4ème 5</option>
+              </optgroup>
+              <optgroup label="3ème">
+                <option value="302">3ème 2</option>
+                <option value="303">3ème 3</option>
+                <option value="304">3ème 4</option>
+                <option value="305">3ème 5</option>
+                <option value="306">3ème 6</option>
+              </optgroup>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PROGRESSION (8 points) ════════════════════════════════════════ -->
+      <div
+        class="wizard__quiz-progress"
+        role="progressbar"
+        aria-label="Progression du quiz"
+        aria-valuemin="0"
+        aria-valuemax="8"
+      >
+        <span class="wizard__quiz-step" data-step="1" aria-label="Question 1"></span>
+        <span class="wizard__quiz-step" data-step="2" aria-label="Question 2"></span>
+        <span class="wizard__quiz-step" data-step="3" aria-label="Question 3"></span>
+        <span class="wizard__quiz-step" data-step="4" aria-label="Question 4"></span>
+        <span class="wizard__quiz-step" data-step="5" aria-label="Question 5"></span>
+        <span class="wizard__quiz-step" data-step="6" aria-label="Question 6"></span>
+        <span class="wizard__quiz-step" data-step="7" aria-label="Question 7"></span>
+        <span class="wizard__quiz-step" data-step="8" aria-label="Question 8"></span>
+      </div>
+
+      <!-- ═══ PHASES ═════════════════════════════════════════════════════════ -->
+      <div class="wizard__container">
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 1 — Accueil                  ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase active" data-phase="1">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">📋</div>
+            <h2 class="wizard__phase-title">Bienvenue dans le Quiz OST</h2>
+            <p class="wizard__phase-subtitle">
+              Teste tes connaissances sur les objets et systèmes techniques : objet technique, évolution, famille, lignée et diagramme pieuvre.
+            </p>
+          </div>
+
+          <div class="wizard__quiz-intro">
+            <ul>
+              <li>8 questions à choix unique (1 bonne réponse parmi 4)</li>
+              <li>Un feedback immédiat après chaque validation</li>
+              <li>Pas de retour en arrière une fois la réponse validée</li>
+              <li>Ton score est sauvegardé automatiquement à la fin</li>
+            </ul>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button id="quiz-start-btn" class="btn btn--primary" type="button">
+              Commencer le quiz →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 2 — Q1 : OT vs naturel        ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="2">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">⚙️</div>
+            <h2 class="wizard__phase-title">
+              Question 1
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Objet technique vs objet naturel</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Parmi ces objets, lequel est un <strong>objet technique</strong> ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q1">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Un caillou</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Une branche d'arbre</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Une trottinette électrique</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Un nuage</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q1"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q1">
+            <p class="wizard__feedback-correct">
+              ✅ Bien ! Une trottinette électrique a été fabriquée par l'Homme pour répondre à un besoin : se déplacer. C'est la définition d'un objet technique.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Un objet technique est <strong>fabriqué par l'Homme</strong> pour répondre à un besoin. Le caillou, la branche et le nuage sont des objets naturels — ils n'ont pas été conçus intentionnellement. Seule la trottinette électrique est un objet technique.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="3" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 3 — Q2 : Fonction d'estime    ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="3">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">⚙️</div>
+            <h2 class="wizard__phase-title">
+              Question 2
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Fonction d'usage et fonction d'estime</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Elisa choisit ses écouteurs parce qu'ils sont <strong>rouge vif</strong> et qu'elle trouve ce coloris tendance. À quelle fonction cela correspond-il ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q2">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Fonction d'usage</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Fonction technique</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Fonction d'estime</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Principe technique</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q2"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q2">
+            <p class="wizard__feedback-correct">
+              ✅ Exact ! La fonction d'estime regroupe ce qui plaît à l'utilisateur : forme, couleur, marque. Elle ne concerne pas ce que l'objet fait, mais ce qu'il inspire.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Ce qui plaît à l'utilisateur (couleur, forme, marque) relève de la <strong>fonction d'estime</strong>. La <strong>fonction d'usage</strong>, c'est ce que l'objet fait réellement (ici : écouter de la musique).
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="4" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 4 — Q3 : Moteurs évolution    ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="4">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">⚙️</div>
+            <h2 class="wizard__phase-title">
+              Question 3
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Moteurs de l'évolution</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              En 1982, le CD audio remplace la cassette magnétique. Quel est le <strong>principal moteur</strong> de cette évolution ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q3">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">L'évolution des besoins des utilisateurs</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Une nouvelle technologie : la lecture optique laser</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">L'apparition de nouveaux matériaux</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Une réglementation environnementale</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q3"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q3">
+            <p class="wizard__feedback-correct">
+              ✅ Bravo ! Le passage de la cassette au CD repose sur l'invention de la lecture optique laser : un nouveau principe technique, pas un nouveau besoin ou un nouveau matériau.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Le CD audio repose sur la <strong>lecture optique laser</strong>, un nouveau principe technique qui n'existait pas pour la cassette magnétique. Les objets techniques évoluent souvent grâce à de nouvelles découvertes scientifiques ou inventions.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="5" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 5 — Q4 : Invention/Innovation ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="5">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">⚙️</div>
+            <h2 class="wizard__phase-title">
+              Question 4
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Invention vs innovation</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Le <strong>robot tondeuse</strong> (2005) tond l'herbe automatiquement. Les tondeuses existaient depuis 1830. S'agit-il d'une <strong>invention</strong> ou d'une <strong>innovation</strong> ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q4">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Une invention, car le robot est entièrement nouveau</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Une innovation, car c'est une nouveauté à partir d'une solution existante</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Ni l'un ni l'autre, car la fonction reste la même</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Une invention, car le principe technique a totalement changé</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q4"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q4">
+            <p class="wizard__feedback-correct">
+              ✅ Bien vu ! L'innovation part d'une solution existante (la tondeuse) pour la faire évoluer. Une invention, c'est une solution technique totalement nouvelle — comme le moteur thermique en 1890.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Une <strong>innovation</strong> améliore ou transforme une solution qui existe déjà. Le robot tondeuse reprend la fonction « couper l'herbe » avec un nouveau principe (automatisme). L'invention, c'est quand la solution technique est radicalement nouvelle (ex : le moteur thermique).
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="6" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 6 — Q5 : Famille d'objets     ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="6">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">⚙️</div>
+            <h2 class="wizard__phase-title">
+              Question 5
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Famille d'objets</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Le phonographe (1877), le disque vinyle (1948), la cassette (1963) et le streaming (2015) appartiennent à la même <strong>famille</strong> d'objets. Pourquoi ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q5">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Parce qu'ils utilisent tous le même principe technique</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Parce qu'ils ont été fabriqués par la même entreprise</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Parce qu'ils répondent tous au même besoin : écouter de la musique</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Parce qu'ils ont tous la même forme</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q5"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q5">
+            <p class="wizard__feedback-correct">
+              ✅ Exact ! Une famille regroupe tous les objets qui répondent au <strong>même besoin</strong>, quelle que soit leur forme ou leur principe technique.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Une <strong>famille d'objets</strong> regroupe des objets qui répondent au <strong>même besoin</strong> (ici : écouter de la musique). Ils peuvent avoir des formes, des matériaux et des principes techniques très différents — ce qui compte, c'est la mission commune.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="7" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 7 — Q6 : Lignée d'objets      ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="7">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">⚙️</div>
+            <h2 class="wizard__phase-title">
+              Question 6
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Lignée d'objets</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Parmi les appareils suivants, lesquels forment une même <strong>lignée</strong> au sein de la famille des tondeuses ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q6">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">La tondeuse manuelle (1830) et le robot tondeuse (2005), car ils tondent tous les deux</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">La tondeuse thermique (1890) et la tondeuse électrique (1958), car elles ont le même moteur</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">La tondeuse thermique (1890) et la tondeuse électrique à batterie (1958), car elles partagent le même principe de déplacement motorisé</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Toutes les tondeuses de 1830 à 2005 forment une seule et même lignée</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q6"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q6">
+            <p class="wizard__feedback-correct">
+              ✅ Bien ! Une lignée rassemble des objets d'une même famille qui utilisent le <strong>même principe technique</strong> et dont on peut suivre l'évolution chronologique.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Une <strong>lignée</strong> = même famille + <strong>même principe technique</strong> classé dans le temps. La tondeuse manuelle utilise la force humaine (principe différent), le robot tondeuse est autonome (autre principe). La tondeuse thermique et la tondeuse électrique partagent le principe du déplacement motorisé.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="8" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 8 — Q7 : Diagramme pieuvre    ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="8">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">⚙️</div>
+            <h2 class="wizard__phase-title">
+              Question 7
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Diagramme pieuvre</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Sur un diagramme pieuvre, où se place l'<strong>objet technique étudié</strong> ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q7">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">En haut du schéma, comme un titre</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">À gauche, relié aux utilisateurs par une flèche</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Au centre, relié à tous les éléments de son environnement</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">En bas, comme une conclusion</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q7"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q7">
+            <p class="wizard__feedback-correct">
+              ✅ Exact ! Le diagramme pieuvre place l'objet au centre. Les « tentacules » relient l'objet aux éléments extérieurs (utilisateur, environnement, contraintes) pour visualiser toutes ses interactions.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Dans le <strong>diagramme pieuvre</strong>, l'objet est placé <strong>au centre</strong>. Les branches qui en partent représentent les interactions avec l'utilisateur, l'environnement, et les contraintes extérieures. Cette disposition illustre l'idée que l'objet est en relation avec de multiples éléments.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="9" hidden>
+              Question suivante →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 9 — Q8 : Environnement→Objet  ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="9">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">⚙️</div>
+            <h2 class="wizard__phase-title">
+              Question 8
+              <span class="wizard__phase-counter">sur 8</span>
+            </h2>
+            <p class="wizard__phase-subtitle">Interactions objet ↔ environnement</p>
+          </div>
+
+          <div class="wizard__question">
+            <p class="wizard__question-text">
+              Une trottinette électrique utilisée sous la pluie glisse sur le sol mouillé. Quel type d'interaction cela illustre-t-il ?
+            </p>
+          </div>
+
+          <div class="wizard__options" data-question="q8">
+            <button class="wizard__option" type="button" data-value="A">
+              <span class="wizard__option-letter">A</span>
+              <span class="wizard__option-text">Utilisateur → Objet</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="B">
+              <span class="wizard__option-letter">B</span>
+              <span class="wizard__option-text">Objet → Utilisateur</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="C">
+              <span class="wizard__option-letter">C</span>
+              <span class="wizard__option-text">Objet → Environnement</span>
+            </button>
+            <button class="wizard__option" type="button" data-value="D">
+              <span class="wizard__option-letter">D</span>
+              <span class="wizard__option-text">Environnement → Objet</span>
+            </button>
+          </div>
+
+          <button
+            class="wizard__validate-btn btn btn--primary"
+            type="button"
+            data-question="q8"
+            disabled
+          >
+            Valider ma réponse
+          </button>
+
+          <div class="wizard__feedback" data-feedback="q8">
+            <p class="wizard__feedback-correct">
+              ✅ Bien ! La pluie (élément de l'environnement) agit sur la trottinette (objet) en dégradant l'adhérence. C'est une interaction Environnement → Objet.
+            </p>
+            <p class="wizard__feedback-incorrect">
+              ❌ Quand c'est le <strong>milieu extérieur</strong> (pluie, température, sol) qui agit sur l'objet, c'est une interaction <strong>Environnement → Objet</strong>. Quand l'objet agit sur son milieu (bruit, chaleur émise), c'est l'inverse : Objet → Environnement.
+            </p>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button class="wizard__next-btn btn btn--primary" type="button" data-goto-phase="10" hidden>
+              Voir mon bilan →
+            </button>
+          </div>
+        </section>
+
+        <!-- ╔══════════════════════════════════════╗
+             ║  PHASE 10 — Bilan                   ║
+             ╚══════════════════════════════════════╝ -->
+        <section class="wizard__phase" data-phase="10">
+          <div class="wizard__phase-header">
+            <div class="wizard__phase-icon">🏁</div>
+            <h2 class="wizard__phase-title">Bilan du quiz</h2>
+            <p class="wizard__phase-subtitle">Quiz OST 5e/4e/3e</p>
+          </div>
+
+          <div class="wizard__score">
+            <div class="wizard__score-number">
+              <span id="quiz-score">—</span>
+              <span class="wizard__score-denom">/ 8</span>
+            </div>
+            <p class="wizard__score-label">Score final</p>
+            <p class="wizard__score-message" id="quiz-message"></p>
+          </div>
+
+          <!-- Avertissement pénalité 2e tentative (masqué par défaut) -->
+          <div id="quiz-penalty-notice" class="wizard__tips" hidden>
+            <p class="wizard__tips-title">⚠️ Deuxième tentative</p>
+            <div class="wizard__tips-content">
+              <p>
+                C'était ta <strong>2e tentative</strong> : ton score retenu est
+                <strong><span id="quiz-saved-score">—</span> / 8</strong>
+                (coefficient 0,5 appliqué).
+              </p>
+              <p>Tu ne pourras plus refaire ce quiz sur cet appareil.</p>
+            </div>
+          </div>
+
+          <div class="wizard__tips">
+            <p class="wizard__tips-title">📚 Ressource pédagogique</p>
+            <div class="wizard__tips-content">
+              <p>
+                Inspiré de l'infographie Famille et Lignée de l'Académie de Toulouse (CC BY-NC-SA).
+                Compétences : OST 11 · OST 21 — BO 2024.
+              </p>
+            </div>
+          </div>
+
+          <div class="wizard__phase-nav">
+            <div></div>
+            <button id="quiz-restart-btn" class="btn btn--secondary" type="button">
+              🔄 Recommencer
+            </button>
+          </div>
+        </section>
+
+      </div><!-- /.wizard__container -->
+    </main>
+
+    <div id="footer-placeholder"></div>
+
+    <!-- Toast -->
+    <div class="wizard__toast" id="wizardToast" role="status" aria-live="polite">
+      <span class="wizard__toast-icon"></span>
+      <span class="wizard__toast-message"></span>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="/src/js/components.js"></script>
+    <script type="module" src="/src/js/activites/ost-quiz.js"></script>
+  </body>
+</html>
