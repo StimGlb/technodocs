@@ -39,6 +39,13 @@
   letter-spacing: 0;
 }
 
+/* Rangée 3 : Ressources + Artemis */
+.hero__secondary-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
 /* Modificateur taille — boutons secondaires plus petits */
 .btn--sm {
   padding: var(--space-2) var(--space-4);
@@ -88,7 +95,8 @@
 /* Mobile : empiler les rangées en pleine largeur */
 @media (max-width: 640px) {
   .hero__niveaux,
-  .hero__quizzes {
+  .hero__quizzes,
+  .hero__secondary-actions {
     flex-direction: column;
     align-items: stretch;
   }
