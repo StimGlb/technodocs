@@ -11,7 +11,7 @@
   "scratch": { "visible": true, "featured": false },
   "mblock": { "visible": true, "featured": false },
   "vittascience": { "visible": true, "featured": false },
-  "trinket": { "visible": true, "featured": false },
+  "trinket": { "visible": false, "featured": false },
   "flashcards-index": { "visible": true, "featured": false },
   "flash-reparabilite": { "visible": true, "featured": false },
   "activites-index": { "visible": true, "featured": false }

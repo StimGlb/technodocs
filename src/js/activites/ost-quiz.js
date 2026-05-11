@@ -256,8 +256,11 @@ async function saveToFirestore(savedScore, attemptNumber) {
     });
     incrementAttempts();
     console.log(`✅ Score sauvegardé (tentative ${attemptNumber}, score retenu : ${savedScore})`);
+    showToast('Score sauvegardé !', 'success');
   } catch (err) {
     console.error('❌ Erreur Firestore (quiz OST):', err);
+    state.saved = false; // Permettre une nouvelle tentative de sauvegarde
+    showToast('Erreur lors de la sauvegarde. Vérifie ta connexion.', 'error');
   }
 }
 
@@ -299,9 +302,13 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  document
-    .getElementById('quiz-restart-btn')
-    ?.addEventListener('click', () => window.location.reload());
+  document.getElementById('quiz-restart-btn')?.addEventListener('click', () => {
+    if (getAttempts() >= MAX_ATTEMPTS) {
+      showToast('Tu as déjà utilisé tes 2 tentatives pour ce quiz.', 'error');
+      return;
+    }
+    window.location.reload();
+  });
 
   goToPhase(1);
 });

@@ -8,6 +8,12 @@ ehthumbs.db
 Thumbs.db
 Desktop.ini
 
+# Windows reserved device names (created by accident by some tools under Git Bash)
+/nul
+/con
+/prn
+/aux
+
 # Editor directories and files
 .vscode/
 .idea/
