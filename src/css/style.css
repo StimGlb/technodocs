@@ -663,6 +663,26 @@ body.has-header main {
   width: 100%;
 }
 
+.btn--success {
+  background: #16a34a;
+  color: var(--color-white);
+  box-shadow: var(--shadow-md);
+}
+
+.btn--success:hover {
+  background: #15803d;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.btn--success:disabled,
+.btn--submitted {
+  background: #4ade80;
+  color: #14532d;
+  cursor: default;
+  pointer-events: none;
+}
+
 .btn__loader {
   width: 18px;
   height: 18px;

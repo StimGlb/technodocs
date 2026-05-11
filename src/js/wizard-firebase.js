@@ -630,7 +630,7 @@ export class WizardFirebase {
   }
 
   /**
-   * Termine le formulaire
+   * Termine le formulaire (ouvre la modale de complétion)
    */
   async complete() {
     // Sauvegarder immédiatement avant de marquer comme complet (sauvegarde de sécurité)
@@ -645,10 +645,88 @@ export class WizardFirebase {
   }
 
   /**
+   * Envoie les données à Firestore de manière définitive.
+   * Marque le document avec isSubmitted: true et submittedAt.
+   * Désactive le bouton d'envoi pour éviter les doubles soumissions.
+   */
+  async submit() {
+    if (!this.firestoreEnabled) {
+      this.showToast("Envoi impossible : Firestore non configuré", "error");
+      return;
+    }
+
+    const submitBtn = document.getElementById("submitBtn");
+
+    // Désactiver le bouton immédiatement pour éviter les doubles clics
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = "Envoi en cours…";
+    }
+
+    this.showSaveIndicator("saving");
+
+    try {
+      const docRef = doc(db, this.collectionName, this.docId);
+      this.collectAllFields();
+
+      const saveData = {
+        studentName: this.formData.studentName || "",
+        studentClass: this.formData.studentClass || "",
+        projectDate: this.formData.projectDate || "",
+        ...(this.wizardId && { wizard_id: this.wizardId }),
+        formData: this.formData,
+        progress: this.calculateProgress(),
+        completedPhases: this.completedPhases,
+        isComplete: this.isFormComplete(),
+        isSubmitted: true,
+        submittedAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
+      };
+
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        await updateDoc(docRef, saveData);
+      } else {
+        saveData.createdAt = serverTimestamp();
+        await setDoc(docRef, saveData);
+      }
+
+      this.isDirty = false;
+      this.updateSessionTimestamp();
+      this.showSaveIndicator("saved");
+      this.showToast("Réponses envoyées avec succès !", "success");
+
+      // Mettre à jour le bouton pour confirmer l'envoi
+      if (submitBtn) {
+        submitBtn.textContent = "Envoyé ✓";
+        submitBtn.classList.add("btn--submitted");
+      }
+
+      console.log("✅ Soumis dans Firestore (isSubmitted: true)");
+    } catch (error) {
+      console.error("❌ Erreur envoi Firestore:", error);
+      this.showSaveIndicator("error");
+      this.showToast("Erreur lors de l'envoi", "error");
+
+      // Réactiver le bouton en cas d'erreur
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = "Envoyer mes réponses";
+      }
+    }
+  }
+
+  /**
    * Réinitialise le formulaire
    */
   async reset() {
     try {
+      // Sauvegarder les données actuelles dans Firestore avant de vider le formulaire
+      // (garantit que rien n'est perdu, même si l'élève clique sur Recommencer)
+      if (this.firestoreEnabled && this.isDirty) {
+        await this.saveToFirestore();
+      }
+
       // On conserve les données existantes dans Firestore par sécurité.
       // On supprime uniquement l'ID local pour repartir sur un nouveau document.
 
@@ -793,11 +871,28 @@ export class WizardFirebase {
   }
 
   /**
-   * Affiche une modale
+   * Affiche une modale.
+   * Pour completionModal : injecte le bouton Envoyer si absent.
    */
   showModal(modalId) {
     const modal = document.getElementById(modalId);
-    if (modal) modal.classList.add("show");
+    if (!modal) return;
+
+    // Injecter le bouton Envoyer dans la completionModal si absent
+    if (modalId === "completionModal" && !modal.querySelector("#submitBtn")) {
+      const actions = modal.querySelector(".wizard__modal-actions");
+      if (actions) {
+        const submitBtn = document.createElement("button");
+        submitBtn.id = "submitBtn";
+        submitBtn.className = "btn btn--success";
+        submitBtn.textContent = "Envoyer mes réponses";
+        submitBtn.addEventListener("click", () => this.submit());
+        // Insérer en premier dans les actions
+        actions.insertBefore(submitBtn, actions.firstChild);
+      }
+    }
+
+    modal.classList.add("show");
   }
 
   /**
@@ -812,6 +907,7 @@ export class WizardFirebase {
 // Fonctions globales pour les onclick dans le HTML
 window.wizardGoToPhase = (phase) => window.wizardInstance?.goToPhase(phase);
 window.wizardComplete = () => window.wizardInstance?.complete();
+window.wizardSubmit = () => window.wizardInstance?.submit();
 window.wizardReset = () => window.wizardInstance?.reset();
 window.wizardExportJSON = () => window.wizardInstance?.exportJSON();
 window.wizardImportJSON = (e) => window.wizardInstance?.importJSON(e);
