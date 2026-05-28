@@ -8,9 +8,6 @@
   # Run the Vite build so import.meta.env VITE_* vars are embedded
   command = "npm run build"
 
-[build.environment]
-  NODE_VERSION = "20"
-
 # Local development configuration
 [dev]
   # Command to run for local development
@@ -23,34 +20,23 @@
   publish = "."
   # Auto-open browser
   autoLaunch = false
+  # Disable HTML proxy rewriting to prevent module path mangling
+  noHtmlProxy = true
 
 # Headers for caching and security
 [[headers]]
   for = "/*"
-      Content-Security-Policy = """
-      default-src 'self';
-      script-src 'self' https://www.gstatic.com;
-      style-src 'self' 'unsafe-inline' https://fonts.googleapis.com;
-      font-src 'self' https://fonts.gstatic.com;
-      img-src 'self' data: https:;
-      connect-src 'self' 
-        https://*.firebaseio.com 
-        https://*.googleapis.com 
-        https://firestore.googleapis.com 
-        https://identitytoolkit.googleapis.com;
-      frame-src https://*.firebaseapp.com;
-    """
-
   [headers.values]
+    # Content Security Policy (CSP) - Protection contre XSS
+    # Note: 'unsafe-inline' temporairement ajouté pour style-src pour permettre les styles inline dynamiques
+    # Firebase: scripts et data access from gstatic.com and googleapis.com
+    Content-Security-Policy = "default-src 'self'; script-src 'self' https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: blob: https:; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://firestore.googleapis.com https://identitytoolkit.googleapis.com https://www.gstatic.com; frame-src https://*.firebaseapp.com;"
+
     # Security headers renforcés pour la production
     X-Frame-Options = "DENY"
     X-Content-Type-Options = "nosniff"
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
-
-    # Content Security Policy (CSP) - Protection contre XSS
-    # Note: 'unsafe-inline' temporairement ajouté pour style-src pour permettre les styles inline dynamiques
-    # Firebase: scripts et data access from gstatic.com and googleapis.com
 
     # HTTP Strict Transport Security (HSTS) - Force HTTPS
     Strict-Transport-Security = "max-age=63072000; includeSubDomains; preload"
@@ -62,15 +48,15 @@
     Cache-Control = "public, max-age=0, must-revalidate"
 
 [[headers]]
-  for = "/*.css"
+  for = "/assets/*.css"
   [headers.values]
-    # Cache CSS files for 1 year
+    # Cache CSS files for 1 year (Vite outputs hashed filenames in /assets/)
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
-  for = "/*.js"
+  for = "/assets/*.js"
   [headers.values]
-    # Cache JS files for 1 year
+    # Cache JS files for 1 year (Vite outputs hashed filenames in /assets/)
     Cache-Control = "public, max-age=31536000, immutable"
 
 [[headers]]
@@ -91,11 +77,23 @@
     # Cache SVG files for 1 year
     Cache-Control = "public, max-age=31536000, immutable"
 
-# Redirect rules (also handled by _redirects file)
+# Redirect rules — fallback SPA pour les routes non trouvées
+# Exclut les assets statiques src/ pour éviter les 500 en dev:netlify
+[[redirects]]
+  from = "/src/*"
+  to = "/src/:splat"
+  status = 200
+
+# Servir les fichiers HTML statiques dans src/pages sans redirect
+[[redirects]]
+  from = "/src/pages/**/*.html"
+  to = "/src/pages/:splat.html"
+  status = 200
+
 [[redirects]]
   from = "/*"
   to = "/index.html"
-  status = 404
+  status = 200
 
 [context.deploy-preview]
   [[context.deploy-preview.redirects]]
@@ -103,5 +101,5 @@
     to = "/_dev.html"
     status = 302
 
-[[plugins]]
-  package = "@netlify/plugin-lighthouse"
+# [[plugins]]
+#   package = "@netlify/plugin-lighthouse"
